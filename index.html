@@ -3,244 +3,212 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Tech Aide | اللوحة الهندسية الشاملة</title>
+    <title>Smart Tech Aide | المساعد التقني الذكي</title>
+    <!-- ربط مكتبة Pi SDK الرسمية -->
     <script src="https://minepi.com"></script>
     <style>
         :root {
-            --dark-bg: #0b0f19;
-            --panel-bg: rgba(22, 30, 49, 0.9);
-            --neon-blue: #00d2ff;
-            --neon-green: #00f5d4;
-            --neon-purple: #9d4edd;
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
+            --primary-color: #6200ee;
+            --secondary-color: #03dac6;
+            --bg-color: #f5f5f7;
+            --card-bg: #ffffff;
+            --text-color: #333333;
         }
-        
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: radial-gradient(circle at top, #161b33 0%, var(--dark-bg) 70%);
-            color: var(--text-main);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             margin: 0;
             padding: 0;
-            min-height: 100vh;
         }
-
         header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
             text-align: center;
-            padding: 30px 20px;
-            background: linear-gradient(to bottom, rgba(11, 15, 25, 0.9), transparent);
-            border-bottom: 1px solid rgba(0, 210, 255, 0.2);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-
-        header h1 {
-            margin: 0;
-            font-size: 26px;
-            font-weight: 800;
-            color: #ffffff;
-            text-shadow: 0 0 15px rgba(0, 210, 255, 0.6);
-        }
-
-        header p {
-            margin: 8px 0 0;
-            font-size: 14px;
-            color: var(--neon-blue);
-            font-weight: 600;
-        }
-
+        header h1 { margin: 0; font-size: 24px; }
+        header p { margin: 5px 0 0; font-size: 14px; opacity: 0.9; }
         .container {
-            max-width: 650px;
-            margin: 20px auto 40px;
+            max-width: 600px;
+            margin: 20px auto;
             padding: 0 15px;
         }
-
         .card {
-            background: var(--panel-bg);
-            border: 1px solid rgba(0, 210, 255, 0.1);
-            border-radius: 16px;
-            padding: 22px;
-            margin-bottom: 25px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
-
         .card h2 {
             margin-top: 0;
-            font-size: 19px;
-            font-weight: 700;
-            color: #ffffff;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 18px;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--bg-color);
             padding-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
-
-        .form-group { margin-bottom: 18px; }
-        
+        .form-group {
+            margin-bottom: 15px;
+        }
         label {
             display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
+            margin-bottom: 5px;
+            font-weight: bold;
             font-size: 14px;
-            color: var(--text-muted);
         }
-
         input, select {
             width: 100%;
-            padding: 12px;
-            background: rgba(11, 15, 25, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 8px;
+            padding: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 6px;
             box-sizing: border-box;
             font-size: 16px;
-            color: #ffffff;
         }
-
         button {
-            background: linear-gradient(135deg, var(--neon-purple), #7209b7);
+            background-color: var(--primary-color);
             color: white;
             border: none;
-            padding: 14px 20px;
+            padding: 12px 20px;
             font-size: 16px;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             width: 100%;
             font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(157, 78, 221, 0.3);
+            transition: background 0.3s;
         }
-
-        button:hover {
-            box-shadow: 0 6px 20px rgba(157, 78, 221, 0.5);
-        }
-
-        button.btn-sec {
-            background: linear-gradient(135deg, #10b981, #059669);
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
-        }
-
+        button:hover { background-color: #4d00b8; }
+        button.btn-sec { background-color: #10b981; }
         .result-box {
-            background: rgba(0, 210, 255, 0.05);
-            border: 1px solid rgba(0, 210, 255, 0.2);
-            border-right: 5px solid var(--neon-blue);
+            background-color: #eef2ff;
+            border-right: 4px solid var(--primary-color);
             padding: 15px;
-            border-radius: 8px;
+            border-radius: 6px;
             margin-top: 15px;
             display: none;
         }
-
         .result-box.sec-style {
-            background: rgba(0, 245, 212, 0.05);
-            border: 1px solid rgba(0, 245, 212, 0.2);
-            border-right-color: var(--neon-green);
+            background-color: #ecfdf5;
+            border-right-color: #10b981;
         }
-
-        .result-box p {
-            margin: 6px 0;
-            font-size: 15px;
-        }
-
-        .value-highlight {
-            font-family: monospace;
-            font-weight: bold;
-            color: var(--neon-green);
-            font-size: 18px;
-            text-shadow: 0 0 5px rgba(0, 245, 212, 0.5);
-        }
-
+        .result-box p { margin: 5px 0; font-size: 15px; }
         .footer {
             text-align: center;
-            padding: 25px;
-            font-size: 13px;
-            color: var(--text-muted);
-            border-top: 1px solid rgba(255,255,255,0.05);
+            padding: 20px;
+            font-size: 12px;
+            color: #777777;
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>SMART TECH AIDE ⚡</h1>
-    <p>⚙️ اللوحة الهندسية الشاملة لكهراباء المنازل والمصانع والكنترول</p>
+    <h1>Smart Tech Aide ⚡</h1>
+    <p>المساعد الهندسي الشامل لكهرباء المنازل والمصانع والتحكم الآلي</p>
 </header>
 
 <div class="container">
 
-    <!-- ================== المنظومة السكنية (منازل) ================== -->
+    <!-- 🏠 1. حاسبة الأحمال وتوزيع دوائر المنزل -->
     <div class="card">
-        <h2>🏠 1. حسابات وتوزيع الدوائر الفرعية للمنازل</h2>
+        <h2>🏠 1. حاسبة الأحمال وتوزيع خطوط المنزل (220 فولت)</h2>
         <div class="form-group">
-            <label for="resAppliance">تصنيف الحمل الكهربائي:</label>
-            <select id="resAppliance" onchange="toggleResInput()">
-                <option value="lighting">💡 شبكة إنارة عادية</option>
-                <option value="sockets">🔌 برايز ومآخذ عامة</option>
-                <option value="ac1">❄️ تكييف هواء 1.5 حصان</option>
-                <option value="ac2">❄️ تكييف هواء 2.25 حصان</option>
-                <option value="ac3">❄️ تكييف هواء 3 حصان</option>
-                <option value="heater">🔥 سخان مياه حراري</option>
+            <label for="resAppliance">نوع الحمل الكهربائي المراد حسابه:</label>
+            <select id="resAppliance">
+                <option value="lighting">💡 دوائر إنارة سكنية عادية</option>
+                <option value="sockets">🔌 برايز ومآخذ عامة للأجهزة</option>
+                <option value="ac1">❄️ تكييف هواء (1.5 حصان)</option>
+                <option value="ac2">❄️ تكييف هواء (2.25 حصان)</option>
+                <option value="ac3">❄️ تكييف هواء (3 حصان)</option>
+                <option value="heater">🔥 سخان مياه كهربائي</option>
             </select>
         </div>
-        <button class="btn-sec" onclick="calculateResidential()">معالجة الحسابات السكنية</button>
+        <button class="btn-sec" onclick="calculateResidential()">احسب أحمال المنزل الفرعية</button>
         
-        <div id="resResult" class="result-box commissions-style sec-style">
-            <p><strong>تيار سحب الدائرة المتوقع:</strong> <span id="resCurrent" class="value-highlight">0</span> أمبير</p>
-            <p><strong>سعة القاطع المناسب (Breaker):</strong> <span id="resBreaker" class="value-highlight">0</span> أمبير</p>
-            <p><strong>مقطع السلك النحاسي المعتمد:</strong> <span id="resCable" class="value-highlight">0</span> مم²</p>
-            <p style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 8px; margin-top: 8px;">ℹ️ <span id="resNote" style="color: var(--text-muted); font-size: 14px;">-</span></p>
+        <div id="resResult" class="result-box sec-style">
+            <p><strong>تيار السحب المتوقع (Current):</strong> <span id="resCurrent">0</span> أمبير</p>
+            <p><strong>سعة القاطع الفرعي (Breaker):</strong> <span id="resBreaker">0</span> أمبير</p>
+            <p><strong>مقطع السلك النحاسي المعتمد:</strong> <span id="resCable">0</span> مم²</p>
+            <p><strong>توصية التركيب الهندسي:</strong> <span id="resNote">-</span></p>
         </div>
     </div>
 
-    <!-- ================== المنظومة الصناعية (محركات) ================== -->
+    <!-- 🏭 2. حاسبة المحركات واللوحات الصناعية -->
     <div class="card">
-        <h2>🏭 2. حسابات المحرك ولوحة التشغيل (3 فاز للمصانع)</h2>
+        <h2>🏭 2. حاسبة أحمال المحركات واللوحات (3 فاز - 380 فولت)</h2>
         <div class="form-group">
-            <label for="indPower">قدرة المحرك الميكانيكية:</label>
-            <input type="number" id="indPower" placeholder="أدخل القيمة الرقمية...">
+            <label for="powerInput">قدرة الحمل / الموتور الصناعي:</label>
+            <input type="number" id="powerInput" placeholder="أدخل القيمة الرقمية...">
         </div>
         <div class="form-group">
-            <label for="indUnit">وحدة القياس المعتمدة:</label>
-            <select id="indUnit">
-                <option value="hp">حصان ميكانيكي (HP)</option>
-                <option value="kw">كيلوواط كهربائي (kW)</option>
+            <label for="unitInput">وحدة القياس:</label>
+            <select id="unitInput">
+                <option value="hp">حصان (HP)</option>
+                <option value="kw">كيلوواط (kW)</option>
             </select>
         </div>
-        <button onclick="calculateIndustrial()">تحليل المكونات الصناعية والباور</button>
+        <button onclick="calculateLoad()">احسب المكونات الصناعية والباور</button>
         
-        <div id="indResult" class="result-box">
-            <p><strong>تيار الحمل الكامل (FLA):</strong> <span id="indCurrent" class="value-highlight">0</span> أمبير</p>
-            <p><strong>قاطع لوحة الحماية (MCCB):</strong> <span id="indBreaker" class="value-highlight">0</span> أمبير</p>
-            <p><strong>سعة الكتل المغناطيسية (Contactor):</strong> <span id="indContactor" class="value-highlight">0</span> أمبير</p>
-            <p><strong>نطاق معايرة الأوفرلود (Thermal Overload):</strong> <span id="indOverload" class="value-highlight">0</span> أمبير</p>
-            <p><strong>مقطع كابل النحاس المقترح بالدكت:</strong> <span id="indCable" class="value-highlight">0</span> مم²</p>
+        <div id="calcResult" class="result-box">
+            <p><strong>تيار الحمل الكامل للمحرك (FLA):</strong> <span id="currentRes">0</span> أمبير</p>
+            <p><strong>قاطع الحماية للوحة (MCCB):</strong> <span id="breakerRes">0</span> أمبير</p>
+            <p><strong>سعة الكونتاكتور المناسب (Contactor):</strong> <span id="contactorRes">0</span> أمبير</p>
+            <p><strong>مدى ضبط الأوفرلود (Overload):</strong> <span id="overloadRes">0</span> أمبير</p>
+            <p><strong>مقطع كابل النحاس المقترح بالدكت:</strong> <span id="cableRes">0</span> مم²</p>
         </div>
     </div>
 
-    <!-- ================== معامل القدرة ================== -->
+    <!-- 📉 3. حاسبة مكثفات تحسين معامل القدرة -->
     <div class="card">
-        <h2>📊 3. حاسبة مكثفات تحسين معامل القدرة (P.F)</h2>
+        <h2>📊 3. حاسبة مكثفات تحسين معامل القدرة للمصانع (Power Factor)</h2>
         <div class="form-group">
-            <label for="pfPower">الحمل الفعال الكلي للمصنع (kW):</label>
-            <input type="number" id="pfPower" placeholder="مثال: 120">
+            <label for="pfPower">الحمل الكلي الفعال للمصنع بكيلوواط (kW):</label>
+            <input type="number" id="pfPower" placeholder="مثال: 100">
         </div>
         <div class="form-group">
-            <label for="pfCurrent">معامل القدرة الحالي المقاس (cos φ1):</label>
-            <input type="number" id="pfCurrent" step="0.01" placeholder="مثال: 0.68">
+            <label for="pfCurrent">معامل القدرة الحالي المقاس بالموقع:</label>
+            <input type="number" id="pfCurrent" step="0.01" placeholder="مثال: 0.70">
         </div>
-        <button onclick="calculatePowerFactor()">حساب القدرة غير الفعالة المطلوبة</button>
+        <button onclick="calculatePowerFactor()">احسب سعة البنك المطلوب</button>
         
-        <div id="pfResult" class="result-box">
-            <p><strong>السعة الإجمالية المطلوبة للبنوك:</strong> <span id="kvarNeed" class="value-highlight">0</span> KVAR (كيلو فار)</p>
+        <div id="pfResult" class="result-box sec-style">
+            <p><strong>السعة الإجمالية المطلوبة للوحة المكثفات:</strong> <span id="kvarNeed">0</span> كيلو فار (KVAR)</p>
+            <p style="color: #666; font-size: 13px; margin-top: 5px;">توصية: تساعد على تجنب غرامات معامل القدرة المنخفض في فواتير كهرباء المصانع.</p>
         </div>
     </div>
+
+    <!-- 🛠️ 4. دليل تشخيص الأعطال التفاعلي -->
+    <div class="card">
+        <h2>🛠️ 4. المساعد الذكي لتشخيص أعطال الكنترول والشبكات</h2>
+        <div class="form-group">
+            <label for="faultSelect">اختر العطل الكهربائي الملاحظ:</label>
+            <select id="faultSelect" onchange="diagnoseFault()">
+                <option value="">-- اختر من القائمة --</option>
+                <option value="overload">المحرك يفصل أوفرلود (Overload) باستمرار بالمصنع</option>
+                <option value="contactor">الكونتاكتور يصدر صوتاً (زنة شديدة) ولا يلقط بثبات</option>
+                <option value="flicker">رعشة وتذبذب شديد في الإضاءة المنزلية عند بدء الأجهزة</option>
+                <option value="shock">وجود جهد تسريب وهزة كهربائية بهياكل الأجهزة المنزلية</option>
+            </select>
+        </div>
+        
+        <div id="faultResult" class="result-box">
+            <p><strong>السبب المحتمل:</strong> <span id="reasonRes">-</span></p>
+            <p><strong>خطوات الفحص والإصلاح المهنية:</strong> <span id="actionRes">-</span></p>
+        </div>
+    </div>
+
 </div>
 
 <div class="footer">
-    <p>لوحة التحكم الذكية العملاقة المحدثة © المهندس ماجد النمر 2026</p>
+    <p>جميع الحقوق محفوظة © المهندس المطور ماجد النمر 2026</p>
 </div>
 
 <script>
-    function toggleResInput() { }
+    // تهيئة منصة Pi SDK
+    Pi.init({ version: "2.0", sandbox: true });
 
+    // 1. دالة حساب أحمال المنازل
     function calculateResidential() {
         let type = document.getElementById('resAppliance').value;
         let current = 0; let breaker = 10; let cable = 1.5; let note = "";
@@ -253,3 +221,13 @@
         else if (type === 'heater') { current = 10.9; breaker = 16; cable = 4; note = "يفضل قاطع ثنائي القطب لضمان عزل الفازة والنيوترال تماماً أثناء الصيانة."; }
 
         document.getElementById('resCurrent').innerText = current.toFixed(1);
+        document.getElementById('resBreaker').innerText = breaker;
+        document.getElementById('resCable').innerText = cable;
+        document.getElementById('resNote').innerText = note;
+        document.getElementById('resResult').style.display = 'block';
+    }
+
+    // 2. دالة حساب المحركات والمصانع
+    function calculateLoad() {
+        let power = parseFloat(document.getElementById('powerInput').value);
+        let unit = document.getElementById('unitInput').value;
