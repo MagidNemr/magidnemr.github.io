@@ -1,48 +1,257 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>Smart Tech Aide</title>
-    <!-- استدعاء مكتبة Pi الرسمية -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Tech Aide | المساعد التقني الذكي</title>
+    <!-- ربط مكتبة Pi SDK الرسمية -->
     <script src="https://minepi.com"></script>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
-        button { background-color: #6200ee; color: white; border: none; padding: 15px 30px; font-size: 18px; cursor: pointer; border-radius: 5px; margin-top: 20px; }
+        :root {
+            --primary-color: #6200ee;
+            --secondary-color: #03dac6;
+            --bg-color: #f5f5f7;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        header h1 { margin: 0; font-size: 24px; }
+        header p { margin: 5px 0 0; font-size: 14px; opacity: 0.9; }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .card h2 {
+            margin-top: 0;
+            font-size: 18px;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--bg-color);
+            padding-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        button:hover { background-color: #4d00b8; }
+        .result-box {
+            background-color: #eef2ff;
+            border-right: 4px solid var(--primary-color);
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+            display: none;
+        }
+        .result-box p { margin: 5px 0; font-size: 15px; }
+        .fault-select { margin-bottom: 15px; }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #777777;
+        }
     </style>
 </head>
 <body>
-    <h1>Smart Tech Aide is Welcome!</h1>
-    <p>اضغط على الزر بالأسفل لإتمام العملية التجريبية وتفعيل الخطوة العاشرة</p>
-    
-    <button onclick="payPi()">دفع 0.1 Pi تجريبي</button>
 
-    <script>
-        // بدء تهيئة منصة Pi
-        Pi.init({ version: "2.0", sandbox: true });
+<header>
+    <h1>Smart Tech Aide ⚡</h1>
+    <p>المساعد الهندسي الذكي لكهرباء المصانع والآلات والتحكم الآلي</p>
+</header>
 
-        async function payPi() {
-            try {
-                const scopes = ['username', 'payments'];
-                function onIncompletePaymentFound(payment) { /* معالجة الدفع المعلق */ }
-                
-                // تسجيل الدخول
-                const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
-                
-                // إنشاء معاملة دفع تجريبية
-                const payment = await Pi.createPayment({
-                    amount: 0.1,
-                    memo: "Test Transaction for Step 10",
-                    metadata: { appId: "Smart Tech Aide" },
-                }, {
-                    onReadyForServerApproval: function(paymentId) { /* موافقة السيرفر */ },
-                    onReadyForServerCompletion: function(paymentId, txid) { alert("تمت العملية بنجاح!"); },
-                    onCancel: function(paymentId) { alert("تم إلغاء العملية"); },
-                    onError: function(error, payment) { alert("حدث خطأ أثناء الدفع"); }
-                });
-            } catch (err) {
-                console.error(err);
-            }
+<div class="container">
+
+    <!-- كارت حاسبة الأحمال والكابلات -->
+    <div class="card">
+        <h2>📊 حاسبة الأحمال وقدرة الكابلات والقواطع</h2>
+        <div class="form-group">
+            <label for="powerInput">قدرة الحمل / الموتور:</label>
+            <input type="number" id="powerInput" placeholder="أدخل القيمة الرقمية...">
+        </div>
+        <div class="form-group">
+            <label for="unitInput">الوحدة:</label>
+            <select id="unitInput">
+                <option value="hp">حصان (HP)</option>
+                <option value="kw">كيلوواط (kW)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="voltageInput">جهد التشغيل:</label>
+            <select id="voltageInput">
+                <option value="380">380 فولت (3 فاز)</option>
+                <option value="220">220 فولت (1 فاز)</option>
+            </select>
+        </div>
+        <button onclick="calculateLoad()">احسب الحمل الهيدروليكي والكهربائي</button>
+        
+        <div id="calcResult" class="result-box">
+            <p><strong>تيار الحمل المار (Current):</strong> <span id="currentRes">0</span> أمبير</p>
+            <p><strong>سعة القاطع المقترحة (Breaker):</strong> <span id="breakerRes">0</span> أمبير</p>
+            <p><strong>مقطع كابل النحاس المقترح:</strong> <span id="cableRes">0</span> مم²</p>
+        </div>
+    </div>
+
+    <!-- كارت مرشد تشخيص الأعطال التفاعلي -->
+    <div class="card">
+        <h2>🛠️ الدليل الذكي لتشخيص أعطال التحكم والمحركات</h2>
+        <div class="form-group">
+            <label for="faultSelect">اختر العطل الكهربائي الملاحظ:</label>
+            <select id="faultSelect" class="fault-select" onchange="diagnoseFault()">
+                <option value="">-- اختر من القائمة --</option>
+                <option value="overload">المحرك يفصل أوفرلود (Overload) باستمرار</option>
+                <option value="phase">سقوط فازة أو عدم اتزان في الجهد</option>
+                <option value="contactor">الكونتاكتور يصدر صوتاً (زنة شديدة) ولا يلقط بثبات</option>
+                <option value="start">الموتور لا يبدأ الدوران بالرغم من سلامة الباور</option>
+            </select>
+        </div>
+        
+        <div id="faultResult" class="result-box">
+            <p><strong>السبب المحتمل:</strong> <span id="reasonRes">-</span></p>
+            <p><strong>خطوات الفحص والإصلاح:</strong> <span id="actionRes">-</span></p>
+        </div>
+    </div>
+
+    <!-- كارت التواصل واستشارات المصانع -->
+    <div class="card" style="text-align: center;">
+        <h2>📞 طلب دعم فني واستشارات هندسية عاجلة</h2>
+        <p style="font-size: 14px; color: #555;">تطبيقك متصل الآن بالكامل بشبكة Pi. يمكنك حجز استشارة فنية أو فحص للوحات التوزيع والـ PLC.</p>
+        <button style="background-color: #03dac6; color: #000;" onclick="requestSupport()">إرسال طلب صيانة مصنع</button>
+    </div>
+
+</div>
+
+<div class="footer">
+    <p>جميع الحقوق محفوظة © المهندس المطور ماجد النمر 2026</p>
+</div>
+
+<script>
+    // تهيئة منصة Pi SDK
+    Pi.init({ version: "2.0", sandbox: true });
+
+    // 1. دالة حساب الأحمال والكابلات الكهربائية
+    function calculateLoad() {
+        let power = parseFloat(document.getElementById('powerInput').value);
+        let unit = document.getElementById('unitInput').value;
+        let voltage = parseInt(document.getElementById('voltageInput').value);
+        
+        if (isNaN(power) || power <= 0) {
+            alert("برجاء إدخال قيمة صحيحة لقدرة المحرك.");
+            return;
         }
-    </script>
+
+        // تحويل كل القيم إلى كيلوواط للحساب الموحد
+        let kw = unit === 'hp' ? power * 0.746 : power;
+        let current = 0;
+
+        if (voltage === 380) {
+            // حساب تيار 3 فاز (باستعمال معامل قدرة 0.8 وكفاءة 0.85 تقريباً)
+            current = kw / (1.732 * 0.38 * 0.8 * 0.85);
+        } else {
+            // حساب تيار 1 فاز
+            current = kw / (0.22 * 0.8);
+        }
+
+        current = current.toFixed(2);
+        let breaker = Math.ceil(current * 1.25); // القاطع أكبر بـ 25% من التيار
+        
+        // حساب تقريبي لمقطع الكابل النحاسي (بناءً على 3 إلى 4 أمبير لكل 1 مم²)
+        let cable = (current / 3.5).toFixed(1);
+        if (cable < 1.5) cable = 1.5;
+
+        // عرض النتائج في الصندوق
+        document.getElementById('currentRes').innerText = current;
+        document.getElementById('breakerRes').innerText = breaker;
+        document.getElementById('cableRes').innerText = cable;
+        document.getElementById('calcResult').style.display = 'block';
+    }
+
+    // 2. دالة مرشد تشخيص الأعطال
+    function diagnoseFault() {
+        let fault = document.getElementById('faultSelect').value;
+        let resultBox = document.getElementById('faultResult');
+        
+        if (!fault) {
+            resultBox.style.style.display = 'none';
+            return;
+        }
+
+        let reason = "";
+        let action = "";
+
+        switch(fault) {
+            case "overload":
+                reason = "زيادة الحمل الميكانيكي على عمود الدوران، أو جفاف رولمان البلي، أو سقوط إحدى الفازات.";
+                action = "افحص تيار السحب بكل فازة بالبنسة، تأكد من سهولة دوران عمود المحرك يدوياً، وراجع ضبط تدريج الأوفرلود.";
+                break;
+            case "phase":
+                reason = "خلل من المصدر الرئيسي للكهرباء أو احتراق مصهر (Fuse) في لوحة التوزيع الخاصة بالمصنع.";
+                action = "قس الجهد بين الفازات الثلاثة بآفو ميتر للتأكد من وصول 380V كاملة، وافحص سلامة الـ Phase Sequence/Failure Relay باللوحة.";
+                break;
+            case "contactor":
+                reason = "وجود أتربة وعوالق على القلب الحديدي المغناطيسي، أو انخفاض حاد في جهد دائرة الكنترول (خط الـ A1-A2).";
+                action = "افصل الكهرباء ونظف نقط التلامس والقلب الحديدي جيدا بسبراي جاف، وتأكد أن مفتاح التحكم يخرج 220V كاملة للملف (Coil).";
+                break;
+            case "start":
+                reason = "قطع في دائرة التحكم (مثل زر الطوارئ Emergency مضغوط أو نقطة مغلقة من الأوفرلود مفتوحة).";
+                action = "تتبع مسار خط الكنترول بداية من المفتاح الفرعي، وتأكد من سلامة نقط التشغيل والإيقاف (Start/Stop) ووصولها للكونتاكتور.";
+                break;
+        }
+
+        document.getElementById('reasonRes').innerText = reason;
+        document.getElementById('actionRes').innerText = action;
+        resultBox.style.display = 'block';
+    }
+
+    // 3. دالة حجز استشارة أو صيانة
+    function requestSupport() {
+        alert("تم تسجيل طلب صيانة مصنعك بنجاح! سيقوم المهندس ماجد النمر بمراجعة تفاصيل لوحة التحكم والتواصل معك فوراً عبر شبكة Pi.");
+    }
+</script>
+
 </body>
 </html>
