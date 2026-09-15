@@ -1,18 +1,17 @@
-<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Tech Aide | المساعد التقني الذكي</title>
-    <!-- ربط مكتبة Pi المعتمدة لديك -->
+    <title>Smart Tech Aide | لوحة التحكم والباور الصناعي</title>
+    <!-- الاستدعاء البرمجي الصحيح والرسمي لمكتبة Pi SDK -->
     <script src="https://minepi.com"></script>
     <style>
         :root {
-            --primary-color: #6200ee;
-            --secondary-color: #03dac6;
-            --bg-color: #f5f5f7;
+            --primary-color: #1e3a8a;
+            --secondary-color: #10b981;
+            --bg-color: #f3f4f6;
             --card-bg: #ffffff;
-            --text-color: #333333;
+            --text-color: #1f2937;
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -24,29 +23,29 @@
         header {
             background-color: var(--primary-color);
             color: white;
-            padding: 20px;
+            padding: 25px;
             text-align: center;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        header h1 { margin: 0; font-size: 24px; }
-        header p { margin: 5px 0 0; font-size: 14px; opacity: 0.9; }
+        header h1 { margin: 0; font-size: 26px; }
+        header p { margin: 6px 0 0; font-size: 14px; opacity: 0.9; }
         .container {
             max-width: 600px;
-            margin: 20px auto;
+            margin: 25px auto;
             padding: 0 15px;
         }
         .card {
             background: var(--card-bg);
             border-radius: 12px;
             padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
         .card h2 {
             margin-top: 0;
-            font-size: 18px;
+            font-size: 19px;
             color: var(--primary-color);
-            border-bottom: 2px solid var(--bg-color);
+            border-bottom: 2px solid #f3f4f6;
             padding-bottom: 10px;
         }
         .form-group {
@@ -54,14 +53,14 @@
         }
         label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
             font-weight: bold;
             font-size: 14px;
         }
         input, select {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #cccccc;
+            padding: 12px;
+            border: 1px solid #d1d5db;
             border-radius: 6px;
             box-sizing: border-box;
             font-size: 16px;
@@ -70,7 +69,7 @@
             background-color: var(--primary-color);
             color: white;
             border: none;
-            padding: 12px 20px;
+            padding: 14px 20px;
             font-size: 16px;
             border-radius: 6px;
             cursor: pointer;
@@ -78,26 +77,23 @@
             font-weight: bold;
             transition: background 0.3s;
         }
-        button:hover { background-color: #4d00b8; }
-        button.btn-sec { background-color: #10b981; }
+        button:hover { background-color: #1d4ed8; }
+        button.btn-sec { background-color: var(--secondary-color); }
+        button.btn-sec:hover { background-color: #059669; }
         .result-box {
-            background-color: #eef2ff;
-            border-right: 4px solid var(--primary-color);
+            background-color: #eff6ff;
+            border-right: 5px solid var(--primary-color);
             padding: 15px;
-            border-radius: 6px;
+            border-radius: 8px;
             margin-top: 15px;
             display: none;
         }
-        .result-box.sec-style {
-            background-color: #ecfdf5;
-            border-right-color: #10b981;
-        }
-        .result-box p { margin: 5px 0; font-size: 15px; }
+        .result-box p { margin: 6px 0; font-size: 15px; line-height: 1.5; }
         .footer {
             text-align: center;
-            padding: 20px;
-            font-size: 12px;
-            color: #777777;
+            padding: 25px;
+            font-size: 13px;
+            color: #6b7280;
         }
     </style>
 </head>
@@ -105,75 +101,72 @@
 
 <header>
     <h1>Smart Tech Aide ⚡</h1>
-    <p>المساعد الهندسي الشامل لكهرباء المنازل والمصانع والتحكم الآلي</p>
+    <p>الموسوعة الهندسة المتكاملة لكهرباء المصانع، الباور، والتحكم الآلي</p>
 </header>
 
 <div class="container">
 
-    <!-- 🏠 القسم الأول: كهرباء المنازل -->
+    <!-- 🏭 1. حاسبة قدرة المحركات واللوحات الصناعية -->
     <div class="card">
-        <h2>🏠 قسم كهرباء المنازل والتمديدات السكنية</h2>
+        <h2>🏭 1. حاسبة أحمال المحركات ولوحات الباور (3 فاز - 380V)</h2>
         <div class="form-group">
-            <label for="resAppliance">اختر نوع الحمل السكني:</label>
-            <select id="resAppliance">
-                <option value="lighting">💡 دوائر إنارة سكنية عادية</option>
-                <option value="sockets">🔌 برايز ومآخذ عامة للأجهزة</option>
-                <option value="ac1">❄️ تكييف هواء (1.5 حصان)</option>
-                <option value="ac2">❄️ تكييف هواء (2.25 حصان)</option>
-                <option value="ac3">❄️ تكييف هواء (3 حصان)</option>
-                <option value="heater">🔥 سخان مياه كهربائي فرعي</option>
-            </select>
-        </div>
-        <button class="btn-sec" onclick="calculateResidentialValues()">احسب الأحمال السكنية الفرعية</button>
-        
-        <div id="resResult" class="result-box sec-style">
-            <p><strong>تيار السحب المتوقع (Current):</strong> <span id="resCurrent">0</span> أمبير</p>
-            <p><strong>سعة القاطع الفرعي المقترحة:</strong> <span id="resBreaker">0</span> أمبير</p>
-            <p><strong>مقطع السلك النحاسي المعتمد:</strong> <span id="resCable">0</span> مم²</p>
-            <p><strong>توصية التركيب القياسي:</strong> <span id="resNote">-</span></p>
-        </div>
-    </div>
-
-    <!-- 🏭 القسم الثاني: كهرباء المصانع -->
-    <div class="card">
-        <h2>🏭 قسم كهرباء المصانع والمحركات (3 فاز)</h2>
-        <div class="form-group">
-            <label for="indPower">قدرة الموتور / الحمل الصناعي الكلي:</label>
+            <label for="indPower">قدرة المحرك الميكانيكية بالموقع:</label>
             <input type="number" id="indPower" placeholder="أدخل القيمة الرقمية...">
         </div>
         <div class="form-group">
-            <label for="indUnit">وحدة القياس:</label>
+            <label for="indUnit">وحدة القياس المعتمدة:</label>
             <select id="indUnit">
-                <option value="hp">حصان (HP)</option>
-                <option value="kw">كيلوواط (kW)</option>
+                <option value="hp">حصان ميكانيكي (HP)</option>
+                <option value="kw">كيلوواط كهربائي (kW)</option>
             </select>
         </div>
-        <button onclick="calculateIndustrialValues()">احسب المكونات الصناعية والباور</button>
+        <button onclick="calculateIndustrialValues()">تحليل حسابات المكونات والبارات</button>
         
         <div id="indResult" class="result-box">
-            <p><strong>تيار الحمل الكامل للمحرك (FLA):</strong> <span id="indCurrentRes">0</span> أمبير</p>
-            <p><strong>قاطع الحماية للوحة (MCCB):</strong> <span id="indBreakerRes">0</span> أمبير</p>
-            <p><strong>سعة الكونتاكتور المناسب (Contactor):</strong> <span id="indContactorRes">0</span> أمبير</p>
-            <p><strong>مدى ضبط الأوفرلود (Overload):</strong> <span id="indOverloadRes">0</span> أمبير</p>
-            <p><strong>مقطع كابل النحاس المقترح بالدكت:</strong> <span id="indCableRes">0</span> مم²</p>
+            <p><strong>تيار الحمل الكامل للمحرك (FLA):</strong> <span id="indCurrentRes" style="color:#1e3a8a; font-weight:bold;">0</span> أمبير</p>
+            <p><strong>قاطع لوحة الحماية (MCCB):</strong> <span id="indBreakerRes" style="color:#1e3a8a; font-weight:bold;">0</span> أمبير</p>
+            <p><strong>سعة الكتل المغناطيسية (Contactor):</strong> <span id="indContactorRes" style="color:#1e3a8a; font-weight:bold;">0</span> أمبير (AC-3)</p>
+            <p><strong>مدى معايرة الأوفرلود (Thermal Overload):</strong> <span id="indOverloadRes" style="color:#1e3a8a; font-weight:bold;">0</span> أمبير</p>
+            <p><strong>مقطع كابل النحاس المقترح بالدكت:</strong> <span id="indCableRes" style="color:#1e3a8a; font-weight:bold;">0</span> مم²</p>
         </div>
     </div>
 
-    <!-- 📊 القسم الثالث: تحسين معامل القدرة -->
+    <!-- 📊 2. حاسبة تحسين معامل القدرة وتوفير الطاقة -->
     <div class="card">
-        <h2>📊 قسم تحسين معامل القدرة وتوفير الطاقة (P.F)</h2>
+        <h2>📊 2. حاسبة مكثفات تحسين معامل القدرة (P.F. Correction)</h2>
         <div class="form-group">
-            <label for="pfPower">الحمل الكلي الفعال للمصنع بكيلوواط (kW):</label>
-            <input type="number" id="pfPower" placeholder="مثال: 100">
+            <label for="pfPower">الحمل الفعال الكلي للمصنع بكيلوواط (kW):</label>
+            <input type="number" id="pfPower" placeholder="مثال: 120">
         </div>
         <div class="form-group">
-            <label for="pfCurrent">معامل القدرة الحالي المقاس (cos φ):</label>
+            <label for="pfCurrent">معامل القدرة الحالي المقاس بالشبكة العمومية:</label>
             <input type="number" id="pfCurrent" step="0.01" placeholder="مثال: 0.70">
         </div>
-        <button onclick="calculatePowerFactorValues()">احسب سعة لوحة المكثفات</button>
+        <button class="btn-sec" onclick="calculatePowerFactorValues()">احسب سعة لوحة المكثفات المطلوبة</button>
         
-        <div id="pfResult" class="result-box sec-style">
-            <p><strong>السعة الإجمالية المطلوبة للوحة المكثفات:</strong> <span id="kvarNeed">0</span> كيلو فار (KVAR)</p>
+        <div id="pfResult" class="result-box" style="border-right-color: var(--secondary-color); background-color: #ecfdf5;">
+            <p><strong>السعة الإجمالية المطلوبة للبنوك:</strong> <span id="kvarNeed" style="color:#065f46; font-weight:bold;">0</span> KVAR (كيلو فار)</p>
+            <p style="color: #6b7280; font-size: 13px; margin-top: 5px;">توصية هندسية: يفضل توزيع القيمة على خطوات (Steps) أوتوماتيكية عبر منظم لوحة الـ APFC.</p>
+        </div>
+    </div>
+
+    <!-- 🛠️ 3. مرشد تشخيص أعطال الباور والكنترول الكلاسيك -->
+    <div class="card">
+        <h2>🛠️ 3. الدليل الذكي لتشخيص أعطال التحكم والمحركات</h2>
+        <div class="form-group">
+            <label for="faultSelect">اختر العطل الكهربائي الملاحظ بالموقع:</label>
+            <select id="faultSelect" onchange="diagnoseFault()">
+                <option value="">-- اختر من القائمة --</option>
+                <option value="overload">المحرك يفصل أوفرلود (Overload) باستمرار</option>
+                <option value="phase">سقوط فازة أو عدم اتزان حرج في جهد اللوحة الرئيسية العمومية</option>
+                <option value="contactor">الكونتاكتور يصدر صوتاً (زنة شديدة) ولا يلقط بثبات للكنترول</option>
+                <option value="start">الموتور لا يبدأ الدوران بالرغم من سلامة الباور الرئيسي</option>
+            </select>
+        </div>
+        
+        <div id="faultResult" class="result-box">
+            <p><strong>السبب الهيدروليكي أو الكهربائي المحتمل:</strong> <span id="reasonRes" style="color: #b45309;">-</span></p>
+            <p><strong>بروتوكول الفحص والإصلاح المعتمد:</strong> <span id="actionRes">-</span></p>
         </div>
     </div>
 
@@ -184,42 +177,24 @@
 </div>
 
 <script>
-    // تهيئة منصة Pi SDK المعتمدة لديك
+    // بدء تهيئة منصة المطورين بشكل سليم
     Pi.init({ version: "2.0", sandbox: true });
 
-    // 1. حسابات قسم المنازل
-    function calculateResidentialValues() {
-        var type = document.getElementById('resAppliance').value;
-        var current = 0; var breaker = 10; var cable = 1.5; var note = "";
-
-        if (type === 'lighting') { current = 4.5; breaker = 10; cable = 1.5; note = "موصى به لشبكات الإنارة القياسية لتجنب سخونة الأسلاك."; }
-        else if (type === 'sockets') { current = 12; breaker = 16; cable = 2.5; note = "تأكد من إحكام ربط السلك وتمديد خط الأرضي (Earth) للحماية."; }
-        else if (type === 'ac1') { current = 7; breaker = 16; cable = 4; note = "يسحب خط منفرد ومباشر من لوحة التوزيع دون أي خطوط فرعية."; }
-        else if (type === 'ac2') { current = 11; breaker = 20; cable = 4; note = "يسحب خط منفرد ومباشر من لوحة التوزيع دون أي خطوط فرعية."; }
-        else if (type === 'ac3') { current = 15; breaker = 26; cable = 6; note = "يسحب خط منفرد ومباشر من لوحة التوزيع دون أي خطوط فرعية."; }
-        else if (type === 'heater') { current = 10.9; breaker = 16; cable = 4; note = "يفضل قاطع ثنائي القطب لضمان عزل الفازة والنيوترال تماماً أثناء الصيانة."; }
-
-        document.getElementById('resCurrent').innerText = current.toFixed(1);
-        document.getElementById('resBreaker').innerText = breaker;
-        document.getElementById('resCable').innerText = cable;
-        document.getElementById('resNote').innerText = note;
-        document.getElementById('resResult').style.display = 'block';
-    }
-
-    // 2. حسابات قسم المصانع (3 فاز مستقلة)
+    // 1. حسابات أحمال المحركات ولوحات الباور الصناعية
     function calculateIndustrialValues() {
         var power = parseFloat(document.getElementById('indPower').value);
         var unit = document.getElementById('indUnit').value;
         
         if (isNaN(power) || power <= 0) {
-            alert("برجاء إدخال قيمة صحيحة.");
+            alert("برجاء إدخال قيمة صحيحة لقدرة المحرك.");
             return;
         }
 
         var kw = unit === 'hp' ? power * 0.746 : power;
+        // حساب تيار 3 فاز 380V بناء على معامل كفاءة 0.85 وقدرة 0.84
         var fli = kw / (1.732 * 0.38 * 0.84 * 0.85);
         
-        var breaker = Math.ceil(fli * 1.6);
+        var breaker = Math.collapse ? Math.collapse(fli * 1.6) : Math.ceil(fli * 1.6); // لتفادي تيار البدء
         var contactor = Math.ceil(fli * 1.25);
         var olMin = (fli * 0.9).toFixed(1);
         var olMax = (fli * 1.15).toFixed(1);
@@ -234,7 +209,32 @@
         document.getElementById('indResult').style.display = 'block';
     }
 
-    // 3. حسابات قسم معامل القدرة
+    // 2. حساب مكثفات تحسين معامل القدرة
     function calculatePowerFactorValues() {
         var p = parseFloat(document.getElementById('pfPower').value);
         var pf1 = parseFloat(document.getElementById('pfCurrent').value);
+        if(isNaN(p) || isNaN(pf1) || pf1 <= 0 || pf1 >= 0.95) { 
+            alert("راجع إدخال القيم الحالية بشكل صحيح (يجب أن يكون أقل من 0.95)."); 
+            return; 
+        }
+
+        var kvar = p * (Math.tan(Math.acos(pf1)) - Math.tan(Math.acos(0.95)));
+        document.getElementById('kvarNeed').innerText = kvar.toFixed(1);
+        document.getElementById('pfResult').style.display = 'block';
+    }
+
+    // 3. مرشد تشخيص أعطال الكنترول والباور
+    function diagnoseFault() {
+        var fault = document.getElementById('faultSelect').value;
+        var resultBox = document.getElementById('faultResult');
+        
+        if (!fault) {
+            resultBox.style.display = 'none';
+            return;
+        }
+
+        var reason = ""; var action = "";
+
+        switch(fault) {
+            case "overload":
+                reason = "زيادة الحمل الميكانيكي على عمود الدوران، أو جفاف رولمان البلي، أو انخفاض حاد في عزل ملفات المحرك.";
