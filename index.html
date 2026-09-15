@@ -11,6 +11,7 @@
             --panel-bg: rgba(17, 24, 39, 0.95);
             --neon-blue: #00d2ff;
             --neon-green: #00f5d4;
+            --neon-purple: #9d4edd;
             --text-main: #f3f4f6;
             --text-muted: #9ca3af;
         }
@@ -41,9 +42,10 @@
 
         header p {
             margin: 8px 0 0;
-            font-size: 13px;
+            font-size: 14px;
             color: var(--neon-blue);
             font-weight: 600;
+            letter-spacing: 0.5px;
         }
 
         .container {
@@ -131,7 +133,6 @@
             text-shadow: 0 0 5px rgba(0, 245, 212, 0.5);
         }
 
-        /* تنسيق قسم مكتبة الكتب */
         .book-item {
             display: flex;
             justify-content: space-between;
@@ -144,6 +145,7 @@
         }
         .book-info { font-size: 14px; font-weight: 600; }
         .book-info span { display: block; font-size: 12px; color: var(--text-muted); }
+        
         .download-btn {
             background: linear-gradient(135deg, #10b981, #059669);
             padding: 8px 14px;
@@ -153,6 +155,8 @@
             text-decoration: none;
             color: #fff;
             font-weight: bold;
+            cursor: pointer;
+            border: none;
         }
 
         .nav-links {
@@ -183,12 +187,11 @@
 
 <header>
     <h1>SMART TECH AIDE ⚡</h1>
-    <p>⚙️ اللوحة الهندسة الرقمية لكهرباء الآلات والباور الصناعي</p>
+    <p>« المنصة البرمجية المعتمدة لهندسة القوى والتحكم الآلي »</p>
 </header>
 
 <div class="container">
 
-    <!-- كارت حاسبة المصانع -->
     <div class="card">
         <h2>🏭 حاسبة أحمال المحركات ولوحات الباور (3 فاز)</h2>
         <div class="form-group">
@@ -213,20 +216,19 @@
         </div>
     </div>
 
-    <!-- 📚 كارت المكتبة الهندسية المضافة -->
+    <!-- كارت المكتبة مع رسالة التنبيه المؤقتة الذكية للكتب -->
     <div class="card">
         <h2>📚 المكتبة الفنية لكهرباء الهندسة والمصانع</h2>
         <div class="book-item">
             <div class="book-info">كتاب التحكم الآلي الكلاسيكي (Classic Control)<span>صيانة وتشغيل اللوحات</span></div>
-            <a href="https://github.io" class="download-btn">تحميل PDF</a>
+            <button onclick="showBookAlert('كتاب التحكم الآلي')" class="download-btn">تحميل PDF</button>
         </div>
         <div class="book-item">
             <div class="book-info">دليل الكود المصري للتركيبات الكهربائية<span>المجلد الأول - التمديدات</span></div>
-            <a href="https://github.io" class="download-btn">تحميل PDF</a>
+            <button onclick="showBookAlert('دليل الكود المصري')" class="download-btn">تحميل PDF</button>
         </div>
     </div>
 
-    <!-- أزرار الانتقال والروابط الفخمة بالأسفل -->
     <div class="nav-links">
         <a href="factor.html">📊 حاسبة مكثفات معامل القدرة (KVAR) ←</a>
         <a href="home.html">🏠 حاسبة أحمال وتمديدات المنازل الفرعية ←</a>
@@ -240,6 +242,7 @@
 
 <script>
     Pi.init({ version: "2.0", sandbox: true });
+    
     function calculateIndustrial() {
         var power = parseFloat(document.getElementById('indPower').value);
         var unit = document.getElementById('indUnit').value;
@@ -256,6 +259,11 @@
         document.getElementById('indOverloadRes').innerText = olMin + " - " + olMax;
         document.getElementById('indCableRes').innerText = cable;
         document.getElementById('indResult').style.display = 'block';
+    }
+
+    // دالة التنبيه الذكي عند الضغط على الكتاب لحين رفع الملفات الحقيقية
+    function showBookAlert(bookName) {
+        alert("جاري تجهيز رابط التحميل المباشر لـ (" + bookName + ") أونلاين على سيرفر المطورين.. يرجى المحاولة لاحقاً!");
     }
 </script>
 </body>
