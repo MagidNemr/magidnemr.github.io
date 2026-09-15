@@ -79,6 +79,7 @@
             transition: background 0.3s;
         }
         button:hover { background-color: #4d00b8; }
+        button.btn-sec { background-color: #10b981; }
         .result-box {
             background-color: #eef2ff;
             border-right: 4px solid var(--primary-color);
@@ -86,6 +87,10 @@
             border-radius: 6px;
             margin-top: 15px;
             display: none;
+        }
+        .result-box.sec-style {
+            background-color: #ecfdf5;
+            border-right-color: #10b981;
         }
         .result-box p { margin: 5px 0; font-size: 15px; }
         .footer {
@@ -100,12 +105,12 @@
 
 <header>
     <h1>Smart Tech Aide ⚡</h1>
-    <p>لوحة حسابات المحركات الصناعية والباور (خطوة 1)</p>
+    <p>لوحة حسابات المحركات ولوحات المكثفات للمصانع (خطوة 2)</p>
 </header>
 
 <div class="container">
 
-    <!-- 🏭 كارت حاسبة أحمال المحركات واللوحات الصناعية -->
+    <!-- 🏭 1. كارت حاسبة أحمال المحركات واللوحات الصناعية -->
     <div class="card">
         <h2>🏭 حاسبة أحمال المحركات ولوحات الباور (3 فاز - 380V)</h2>
         <div class="form-group">
@@ -127,6 +132,24 @@
             <p><strong>سعة الكونتاكتور المناسب (Contactor):</strong> <span id="indContactor">0</span> أمبير</p>
             <p><strong>مدى ضبط الأوفرلود (Overload):</strong> <span id="indOverload">0</span> أمبير</p>
             <p><strong>مقطع كابل النحاس المقترح بالدكت:</strong> <span id="indCable">0</span> مم²</p>
+        </div>
+    </div>
+
+    <!-- 📊 2. كارت حاسبة مكثفات تحسين معامل القدرة للمصانع -->
+    <div class="card">
+        <h2>📊 حاسبة مكثفات تحسين معامل القدرة للمصانع (Power Factor)</h2>
+        <div class="form-group">
+            <label for="pfPower">الحمل الكلي الفعال للمصنع بكيلوواط (kW):</label>
+            <input type="number" id="pfPower" placeholder="مثال: 100">
+        </div>
+        <div class="form-group">
+            <label for="pfCurrent">معامل القدرة الحالي المقاس بالموقع:</label>
+            <input type="number" id="pfCurrent" step="0.01" placeholder="مثال: 0.70">
+        </div>
+        <button class="btn-sec" onclick="calculatePowerFactor()">احسب سعة البنك المطلوب</button>
+        
+        <div id="pfResult" class="result-box sec-style">
+            <p><strong>السعة الإجمالية المطلوبة للوحة المكثفات:</strong> <span id="kvarNeed">0</span> كيلو فار (KVAR)</p>
         </div>
     </div>
 
@@ -159,6 +182,18 @@
         document.getElementById('indOverload').innerText = olMin + " - " + olMax;
         document.getElementById('indCable').innerText = cable;
         document.getElementById('indResult').style.display = 'block';
+    }
+
+    // دالة حساب مكثفات تحسين معامل القدرة
+    function calculatePowerFactor() {
+        var p = parseFloat(document.getElementById('pfPower').value);
+        var pf1 = parseFloat(document.getElementById('pfCurrent').value);
+        if(isNaN(p) || isNaN(pf1) || pf1 <= 0 || pf1 >= 0.95) { alert("راجع إدخال القيم الحالية بشكل صحيح."); return; }
+        
+        // حساب السعة المطلوبة للوصول إلى معامل قدرة مستهدف 0.95
+        var kvar = p * (Math.tan(Math.acos(pf1)) - Math.tan(Math.acos(0.95)));
+        document.getElementById('kvarNeed').innerText = kvar.toFixed(1);
+        document.getElementById('pfResult').style.display = 'block';
     }
 </script>
 
