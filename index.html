@@ -123,7 +123,6 @@
     <p>المساعد الهندسي الشامل | كهرباء المنازل والمصانع والتحكم الآلي</p>
 </header>
 
-<!-- تبويبات التنقل بين الأنظمة -->
 <div class="nav-tabs">
     <button class="tab-btn active" onclick="switchTab('residential')">🏠 كهرباء المنازل</button>
     <button class="tab-btn" onclick="switchTab('industrial')">🏭 كهرباء المصانع والكنترول</button>
@@ -131,9 +130,8 @@
 
 <div class="container">
 
-    <!-- ================== قسم كهرباء المنازل ================== -->
+    <!-- قسم كهرباء المنازل -->
     <div id="residential" class="tab-content active">
-        <!-- حاسبة الأحمال المنزلية -->
         <div class="card">
             <h2>🏠 حاسبة الأحمال وتوزيع دوائر المنزل</h2>
             <div class="form-group">
@@ -160,15 +158,14 @@
             </div>
             <button class="btn-sec" onclick="calculateResidential()">احسب الأحمال المنزلية</button>
             
-            <div id="resResult" class="result-box commissions-style sec-style">
+            <div id="resResult" class="result-box sec-style">
                 <p><strong>تيار سحب الدائرة المتوقع:</strong> <span id="resCurrent">0</span> أمبير</p>
-                <p><strong>سعة القاطع الفرعي (Breaker):</strong> <span id="resBreaker">0</span> أمبير (قطع أحادي)</p>
+                <p><strong>سعة القاطع الفرعي (Breaker):</strong> <span id="resBreaker">0</span> أمبير</p>
                 <p><strong>مقطع السلك النحاسي المعتمد:</strong> <span id="resCable">0</span> مم²</p>
                 <p><strong>ملاحظة التمديد:</strong> <span id="resNote">-</span></p>
             </div>
         </div>
 
-        <!-- دليل أعطال كهرباء المنازل -->
         <div class="card">
             <h2>🛠️ كاشف أعطال الشبكات المنزلية والتأريض</h2>
             <div class="form-group">
@@ -177,7 +174,7 @@
                     <option value="">-- اختر العطل --</option>
                     <option value="flicker">رعشة أو تذبذب في الإضاءة عند تشغيل الأجهزة الثقيلة</option>
                     <option value="tripping">القاطع الرئيسي يفصل عشوائياً بدون أحمال زائدة</option>
-                    <option value="shock">ماس كهربائي أو لسعة عند لمس الأجهزة المعدنية (الغسالة/الثلاجة)</option>
+                    <option value="shock">ماس كهربائي أو لسعة عند لمس الأجهزة المعدنية</option>
                 </select>
             </div>
             <div id="resFaultResult" class="result-box sec-style">
@@ -187,10 +184,8 @@
         </div>
     </div>
 
-
-    <!-- ================== قسم كهرباء المصانع والكنترول ================== -->
+    <!-- قسم كهرباء المصانع -->
     <div id="industrial" class="tab-content">
-        <!-- حاسبة محركات الباور واللوحات الصناعية -->
         <div class="card">
             <h2>🏭 حاسبة المحركات واللوحات (3 فاز)</h2>
             <div class="form-group">
@@ -209,13 +204,12 @@
             <div id="indResult" class="result-box">
                 <p><strong>تيار الحمل الكامل (FLA):</strong> <span id="indCurrent">0</span> أمبير</p>
                 <p><strong>سعة قاطع اللوحة (MCCB):</strong> <span id="indBreaker">0</span> أمبير</p>
-                <p><strong>سعة الكونتاكتور المناسب:</strong> <span id="indContactor">0</span> أمبير (AC-3)</p>
+                <p><strong>سعة الكونتاكتور المناسب:</strong> <span id="indContactor">0</span> أمبير</p>
                 <p><strong>مدى ضبط الأوفرلود (Overload Range):</strong> <span id="indOverload">0</span> أمبير</p>
-                <p><strong>مقطع كابل النحاس (في مجاري الكابلات):</strong> <span id="indCable">0</span> مم²</p>
+                <p><strong>مقطع كابل النحاس:</strong> <span id="indCable">0</span> مم²</p>
             </div>
         </div>
 
-        <!-- حاسبة تحسين معامل القدرة للمصانع -->
         <div class="card">
             <h2>📉 حاسبة مكثفات تحسين معامل القدرة (Power Factor)</h2>
             <div class="form-group">
@@ -234,3 +228,15 @@
             
             <div id="pfResult" class="result-box">
                 <p><strong>السعة المطلوبة للوحة المكثفات:</strong> <span id="kvarNeed">0</span> كيلو فار (KVAR)</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <p>جميع الحقوق محفوظة © المهندس المطور ماجد النمر 2026</p>
+</div>
+
+<script>
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
