@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -101,14 +102,38 @@
 
 <header>
     <h1>Smart Tech Aide ⚡</h1>
-    <p>الموسوعة الهندسة المتكاملة لكهرباء المصانع، الباور، والتحكم الآلي</p>
+    <p>الموسوعة الهندسية المتكاملة لكهرباء المصانع، الباور، والتحكم الآلي</p>
 </header>
 
 <div class="container">
 
-    <!-- 🏭 1. حاسبة قدرة المحركات واللوحات الصناعية -->
+    <!-- 🏠 1. حاسبة أحمال المنازل -->
     <div class="card">
-        <h2>🏭 1. حاسبة أحمال المحركات ولوحات الباور (3 فاز - 380V)</h2>
+        <h2>🏠 1. حاسبة أحمال وتوزيع خطوط المنزل (220V)</h2>
+        <div class="form-group">
+            <label for="resAppliance">نوع الحمل الكهربائي السكني:</label>
+            <select id="resAppliance">
+                <option value="lighting">💡 دوائر إنارة سكنية عادية</option>
+                <option value="sockets">🔌 برايز ومآخذ عامة للأجهزة</option>
+                <option value="ac1">❄️ تكييف هواء (1.5 حصان)</option>
+                <option value="ac2">❄️ تكييف هواء (2.25 حصان)</option>
+                <option value="ac3">❄️ تكييف هواء (3 حصان)</option>
+                <option value="heater">🔥 سخان مياه كهربائي فرعي</option>
+            </select>
+        </div>
+        <button class="btn-sec" onclick="calculateResidentialValues()">احسب أحمال المنزل الفرعية</button>
+        
+        <div id="resResult" class="result-box" style="border-right-color: var(--secondary-color); background-color: #ecfdf5;">
+            <p><strong>تيار السحب المتوقع (Current):</strong> <span id="resCurrent" style="color:#065f46; font-weight:bold;">0</span> أمبير</p>
+            <p><strong>سعة القاطع الفرعي المقترحة:</strong> <span id="resBreaker" style="color:#065f46; font-weight:bold;">0</span> أمبير</p>
+            <p><strong>مقطع السلك النحاسي المعتمد:</strong> <span id="resCable" style="color:#065f46; font-weight:bold;">0</span> مم²</p>
+            <p><strong>توصية التركيب الهندسي:</strong> <span id="resNote">-</span></p>
+        </div>
+    </div>
+
+    <!-- 🏭 2. حاسبة قدرة المحركات واللوحات الصناعية -->
+    <div class="card">
+        <h2>🏭 2. حاسبة أحمال المحركات ولوحات الباور (3 فاز - 380V)</h2>
         <div class="form-group">
             <label for="indPower">قدرة المحرك الميكانيكية بالموقع:</label>
             <input type="number" id="indPower" placeholder="أدخل القيمة الرقمية...">
@@ -131,9 +156,9 @@
         </div>
     </div>
 
-    <!-- 📊 2. حاسبة تحسين معامل القدرة وتوفير الطاقة -->
+    <!-- 📊 3. حاسبة تحسين معامل القدرة وتوفير الطاقة -->
     <div class="card">
-        <h2>📊 2. حاسبة مكثفات تحسين معامل القدرة (P.F. Correction)</h2>
+        <h2>📊 3. حاسبة مكثفات تحسين معامل القدرة (P.F. Correction)</h2>
         <div class="form-group">
             <label for="pfPower">الحمل الفعال الكلي للمصنع بكيلوواط (kW):</label>
             <input type="number" id="pfPower" placeholder="مثال: 120">
@@ -146,13 +171,12 @@
         
         <div id="pfResult" class="result-box" style="border-right-color: var(--secondary-color); background-color: #ecfdf5;">
             <p><strong>السعة الإجمالية المطلوبة للبنوك:</strong> <span id="kvarNeed" style="color:#065f46; font-weight:bold;">0</span> KVAR (كيلو فار)</p>
-            <p style="color: #6b7280; font-size: 13px; margin-top: 5px;">توصية هندسية: يفضل توزيع القيمة على خطوات (Steps) أوتوماتيكية عبر منظم لوحة الـ APFC.</p>
         </div>
     </div>
 
-    <!-- 🛠️ 3. مرشد تشخيص أعطال الباور والكنترول الكلاسيك -->
+    <!-- 🛠️ 4. مرشد تشخيص أعطال الباور والكنترول الكلاسيك -->
     <div class="card">
-        <h2>🛠️ 3. الدليل الذكي لتشخيص أعطال التحكم والمحركات</h2>
+        <h2>🛠️ 4. الدليل الذكي لتشخيص أعطال التحكم والمحركات</h2>
         <div class="form-group">
             <label for="faultSelect">اختر العطل الكهربائي الملاحظ بالموقع:</label>
             <select id="faultSelect" onchange="diagnoseFault()">
@@ -165,7 +189,7 @@
         </div>
         
         <div id="faultResult" class="result-box">
-            <p><strong>السبب الهيدروليكي أو الكهربائي المحتمل:</strong> <span id="reasonRes" style="color: #b45309;">-</span></p>
+            <p><strong>السبب المحتمل:</strong> <span id="reasonRes" style="color: #b45309;">-</span></p>
             <p><strong>بروتوكول الفحص والإصلاح المعتمد:</strong> <span id="actionRes">-</span></p>
         </div>
     </div>
@@ -177,64 +201,17 @@
 </div>
 
 <script>
-    // بدء تهيئة منصة المطورين بشكل سليم
     Pi.init({ version: "2.0", sandbox: true });
 
-    // 1. حسابات أحمال المحركات ولوحات الباور الصناعية
-    function calculateIndustrialValues() {
-        var power = parseFloat(document.getElementById('indPower').value);
-        var unit = document.getElementById('indUnit').value;
-        
-        if (isNaN(power) || power <= 0) {
-            alert("برجاء إدخال قيمة صحيحة لقدرة المحرك.");
-            return;
-        }
-
-        var kw = unit === 'hp' ? power * 0.746 : power;
-        // حساب تيار 3 فاز 380V بناء على معامل كفاءة 0.85 وقدرة 0.84
-        var fli = kw / (1.732 * 0.38 * 0.84 * 0.85);
-        
-        var breaker = Math.collapse ? Math.collapse(fli * 1.6) : Math.ceil(fli * 1.6); // لتفادي تيار البدء
-        var contactor = Math.ceil(fli * 1.25);
-        var olMin = (fli * 0.9).toFixed(1);
-        var olMax = (fli * 1.15).toFixed(1);
-        var cable = (fli / 2.8).toFixed(1);
-        if(cable < 2.5) cable = 2.5;
-
-        document.getElementById('indCurrentRes').innerText = fli.toFixed(2);
-        document.getElementById('indBreakerRes').innerText = breaker;
-        document.getElementById('indContactorRes').innerText = contactor;
-        document.getElementById('indOverloadRes').innerText = olMin + " - " + olMax;
-        document.getElementById('indCableRes').innerText = cable;
-        document.getElementById('indResult').style.display = 'block';
-    }
-
-    // 2. حساب مكثفات تحسين معامل القدرة
-    function calculatePowerFactorValues() {
-        var p = parseFloat(document.getElementById('pfPower').value);
-        var pf1 = parseFloat(document.getElementById('pfCurrent').value);
-        if(isNaN(p) || isNaN(pf1) || pf1 <= 0 || pf1 >= 0.95) { 
-            alert("راجع إدخال القيم الحالية بشكل صحيح (يجب أن يكون أقل من 0.95)."); 
-            return; 
-        }
-
-        var kvar = p * (Math.tan(Math.acos(pf1)) - Math.tan(Math.acos(0.95)));
-        document.getElementById('kvarNeed').innerText = kvar.toFixed(1);
-        document.getElementById('pfResult').style.display = 'block';
-    }
-
-    // 3. مرشد تشخيص أعطال الكنترول والباور
-    function diagnoseFault() {
-        var fault = document.getElementById('faultSelect').value;
-        var resultBox = document.getElementById('faultResult');
-        
-        if (!fault) {
-            resultBox.style.display = 'none';
-            return;
-        }
-
-        var reason = ""; var action = "";
-
-        switch(fault) {
-            case "overload":
-                reason = "زيادة الحمل الميكانيكي على عمود الدوران، أو جفاف رولمان البلي، أو انخفاض حاد في عزل ملفات المحرك.";
+    function calculateResidentialValues() {
+        var type = document.getElementById('resAppliance').value;
+        var current = 0; var breaker = 10; var cable = 1.5; var note = "";
+        if (type === 'lighting') { current = 4.5; breaker = 10; cable = 1.5; note = "موصى به لشبكات الإنارة القياسية لتجنب سخونة الأسلاك."; }
+        else if (type === 'sockets') { current = 12; breaker = 16; cable = 2.5; note = "تأكد من إحكام ربط السلك وتمديد خط الأرضي (Earth) للحماية."; }
+        else if (type === 'ac1') { current = 7; breaker = 16; cable = 4; note = "يسحب خط منفرد ومباشر من لوحة التوزيع دون أي خطوط فرعية."; }
+        else if (type === 'ac2') { current = 11; breaker = 20; cable = 4; note = "يسحب خط منفرد ومباشر من لوحة التوزيع دون أي خطوط فرعية."; }
+        else if (type === 'ac3') { current = 15; breaker = 26; cable = 6; note = "يسحب خط منفرد ومباشر من لوحة التوزيع دون أي خطوط فرعية."; }
+        else if (type === 'heater') { current = 10.9; breaker = 16; cable = 4; note = "يفضل قاطع ثنائي القطب لضمان عزل الفازة والنيوترال تماماً أثناء الصيانة."; }
+        document.getElementById('resCurrent').innerText = current.toFixed(1);
+        document.getElementById('resBreaker').innerText = breaker;
+        document.getElementById('resCable').innerText = cable;
