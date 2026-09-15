@@ -111,14 +111,14 @@
 
 <header>
     <h1>Smart Tech Aide ⚡</h1>
-    <p>لوحة حسابات المحركات والمكثفات وأحمال المنازل (خطوة 3)</p>
+    <p>المساعد الهندسي المتكامل لكهرباء المنازل والمصانع والباور والكنترول</p>
 </header>
 
 <div class="container">
 
     <!-- 🏭 1. كارت حاسبة أحمال المحركات واللوحات الصناعية -->
     <div class="card">
-        <h2>🏭 حاسبة أحمال المحركات ولوحات الباور (3 فاز - 380V)</h2>
+        <h2>🏭 1. حاسبة أحمال المحركات ولوحات الباور (3 فاز - 380V)</h2>
         <div class="form-group">
             <label for="indPower">قدرة المحرك الميكانيكية بالموقع:</label>
             <input type="number" id="indPower" placeholder="أدخل القيمة الرقمية...">
@@ -133,17 +133,17 @@
         <button onclick="calculateIndustrial()">احسب المكونات الصناعية والباور</button>
         
         <div id="indResult" class="result-box">
-            <p><strong>تيار الحمل الكامل للمحرك (FLA):</strong> <span id="indCurrent">0</span> أمبير</p>
-            <p><strong>قاطع لوحة الحماية (MCCB):</strong> <span id="indBreaker">0</span> أمبير</p>
-            <p><strong>سعة الكونتاكتور المناسب (Contactor):</strong> <span id="indContactor">0</span> أمبير</p>
-            <p><strong>مدى ضبط الأوفرلود (Overload):</strong> <span id="indOverload">0</span> أمبير</p>
-            <p><strong>مقطع كابل النحاس المقترح بالدكت:</strong> <span id="indCable">0</span> مم²</p>
+            <p><strong>تيار الحمل الكامل للمحرك (FLA):</strong> <span id="indCurrentRes">0</span> أمبير</p>
+            <p><strong>قاطع لوحة الحماية (MCCB):</strong> <span id="indBreakerRes">0</span> أمبير</p>
+            <p><strong>سعة الكونتاكتور المناسب (Contactor):</strong> <span id="indContactorRes">0</span> أمبير</p>
+            <p><strong>مدى ضبط الأوفرلود (Overload):</strong> <span id="indOverloadRes">0</span> أمبير</p>
+            <p><strong>مقطع كابل النحاس المقترح بالدكت:</strong> <span id="indCableRes">0</span> مم²</p>
         </div>
     </div>
 
     <!-- 📊 2. كارت حاسبة مكثفات تحسين معامل القدرة للمصانع -->
     <div class="card">
-        <h2>📊 حاسبة مكثفات تحسين معامل القدرة للمصانع (Power Factor)</h2>
+        <h2>📊 2. حاسبة مكثفات تحسين معامل القدرة للمصانع (Power Factor)</h2>
         <div class="form-group">
             <label for="pfPower">الحمل الكلي الفعال للمصنع بكيلوواط (kW):</label>
             <input type="number" id="pfPower" placeholder="مثال: 100">
@@ -161,7 +161,7 @@
 
     <!-- 🏠 3. كارت حاسبة أحمال وتوزيع خطوط المنزل -->
     <div class="card">
-        <h2>🏠 حاسبة الأحمال وتوزيع خطوط المنزل (220 فولت)</h2>
+        <h2>🏠 3. حاسبة الأحمال وتوزيع خطوط المنزل (220 فولت)</h2>
         <div class="form-group">
             <label for="resAppliance">نوع الحمل الكهربائي السكني:</label>
             <select id="resAppliance">
@@ -206,11 +206,11 @@
         var olMin = (fli * 0.9).toFixed(1); var olMax = (fli * 1.15).toFixed(1);
         var cable = (fli / 2.8).toFixed(1); if(cable < 2.5) cable = 2.5;
 
-        document.getElementById('indCurrent').innerText = fli.toFixed(2);
-        document.getElementById('indBreaker').innerText = breaker;
-        document.getElementById('indContactor').innerText = contactor;
-        document.getElementById('indOverload').innerText = olMin + " - " + olMax;
-        document.getElementById('indCable').innerText = cable;
+        document.getElementById('indCurrentRes').innerText = fli.toFixed(2);
+        document.getElementById('indBreakerRes').innerText = breaker;
+        document.getElementById('indContactorRes').innerText = contactor;
+        document.getElementById('indOverloadRes').innerText = olMin + " - " + olMax;
+        document.getElementById('indCableRes').innerText = cable;
         document.getElementById('indResult').style.display = 'block';
     }
 
@@ -234,4 +234,3 @@
         else if (type === 'sockets') { current = 12; breaker = 16; cable = 2.5; note = "تأكد من إحكام ربط السلك وتمديد خط الأرضي (Earth) للحماية."; }
         else if (type === 'ac1') { current = 7; breaker = 16; cable = 4; note = "يسحب خط منفرد ومباشر من لوحة التوزيع دون أي خطوط فرعية."; }
         else if (type === 'ac2') { current = 11; breaker = 20; cable = 4; note = "يسحب خط منفرد ومباشر من لوحة التوزيع دون أي خطوط فرعية."; }
-        else if (type === 'ac3') { current = 15; breaker = 26; cable = 6; note = "يسحب خط منفرد ومباشر من لوحة التوزيع دون أي خطوط فرعية."; }
