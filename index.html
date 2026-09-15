@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Tech Aide | المساعد التقني الذكي</title>
-    <!-- ربط مكتبة Pi SDK الرسمية -->
+    <!-- ربط مكتبة Pi المعتمدة لديك -->
     <script src="https://minepi.com"></script>
     <style>
         :root {
@@ -93,7 +93,6 @@
             border-right-color: #10b981;
         }
         .result-box p { margin: 5px 0; font-size: 15px; }
-        .fault-select { margin-bottom: 15px; }
         .footer {
             text-align: center;
             padding: 20px;
@@ -111,11 +110,11 @@
 
 <div class="container">
 
-    <!-- 🏠 كارت حاسبة الأحمال المنزلية (220 فولت) -->
+    <!-- 🏠 القسم الأول: كهرباء المنازل -->
     <div class="card">
-        <h2>🏠 1. حاسبة الأحمال وتوزيع خطوط المنزل (1 فاز)</h2>
+        <h2>🏠 قسم كهرباء المنازل والتمديدات السكنية</h2>
         <div class="form-group">
-            <label for="resAppliance">نوع الحمل الكهربائي السكني:</label>
+            <label for="resAppliance">اختر نوع الحمل السكني:</label>
             <select id="resAppliance">
                 <option value="lighting">💡 دوائر إنارة سكنية عادية</option>
                 <option value="sockets">🔌 برايز ومآخذ عامة للأجهزة</option>
@@ -125,87 +124,57 @@
                 <option value="heater">🔥 سخان مياه كهربائي فرعي</option>
             </select>
         </div>
-        <button class="btn-sec" onclick="calculateResidential()">احسب أحمال المنزل الفرعية</button>
+        <button class="btn-sec" onclick="calculateResidentialValues()">احسب الأحمال السكنية الفرعية</button>
         
         <div id="resResult" class="result-box sec-style">
             <p><strong>تيار السحب المتوقع (Current):</strong> <span id="resCurrent">0</span> أمبير</p>
             <p><strong>سعة القاطع الفرعي المقترحة:</strong> <span id="resBreaker">0</span> أمبير</p>
             <p><strong>مقطع السلك النحاسي المعتمد:</strong> <span id="resCable">0</span> مم²</p>
-            <p><strong>ملاحظة التركيب القياسي:</strong> <span id="resNote">-</span></p>
+            <p><strong>توصية التركيب القياسي:</strong> <span id="resNote">-</span></p>
         </div>
     </div>
 
-    <!-- 🏭 كارت حاسبة المحركات واللوحات الصناعية (380 فولت) -->
+    <!-- 🏭 القسم الثاني: كهرباء المصانع -->
     <div class="card">
-        <h2>🏭 2. حاسبة أحمال المحركات واللوحات (3 فاز)</h2>
+        <h2>🏭 قسم كهرباء المصانع والمحركات (3 فاز)</h2>
         <div class="form-group">
-            <label for="powerInput">قدرة الحمل / الموتور الصناعي:</label>
-            <input type="number" id="powerInput" placeholder="أدخل القيمة الرقمية...">
+            <label for="indPower">قدرة الموتور / الحمل الصناعي الكلي:</label>
+            <input type="number" id="indPower" placeholder="أدخل القيمة الرقمية...">
         </div>
         <div class="form-group">
-            <label for="unitInput">وحدة القدرة:</label>
-            <select id="unitInput">
+            <label for="indUnit">وحدة القياس:</label>
+            <select id="indUnit">
                 <option value="hp">حصان (HP)</option>
                 <option value="kw">كيلوواط (kW)</option>
             </select>
         </div>
-        <button onclick="calculateLoad()">احسب المكونات الصناعية والباور</button>
+        <button onclick="calculateIndustrialValues()">احسب المكونات الصناعية والباور</button>
         
-        <div id="calcResult" class="result-box">
-            <p><strong>تيار الحمل الكامل للمحرك (FLA):</strong> <span id="currentRes">0</span> أمبير</p>
-            <p><strong>قاطع الحماية للوحة (MCCB):</strong> <span id="breakerRes">0</span> أمبير</p>
-            <p><strong>سعة الكونتاكتور المناسب (Contactor):</strong> <span id="contactorRes">0</span> أمبير</p>
-            <p><strong>مدى ضبط الأوفرلود (Overload):</strong> <span id="overloadRes">0</span> أمبير</p>
-            <p><strong>مقطع كابل النحاس المقترح بالدكت:</strong> <span id="cableRes">0</span> مم²</p>
+        <div id="indResult" class="result-box">
+            <p><strong>تيار الحمل الكامل للمحرك (FLA):</strong> <span id="indCurrentRes">0</span> أمبير</p>
+            <p><strong>قاطع الحماية للوحة (MCCB):</strong> <span id="indBreakerRes">0</span> أمبير</p>
+            <p><strong>سعة الكونتاكتور المناسب (Contactor):</strong> <span id="indContactorRes">0</span> أمبير</p>
+            <p><strong>مدى ضبط الأوفرلود (Overload):</strong> <span id="indOverloadRes">0</span> أمبير</p>
+            <p><strong>مقطع كابل النحاس المقترح بالدكت:</strong> <span id="indCableRes">0</span> مم²</p>
         </div>
     </div>
 
-    <!-- 📉 كارت حاسبة مكثفات تحسين معامل القدرة للمصانع -->
+    <!-- 📊 القسم الثالث: تحسين معامل القدرة -->
     <div class="card">
-        <h2>📊 3. حاسبة مكثفات تحسين معامل القدرة (Power Factor)</h2>
+        <h2>📊 قسم تحسين معامل القدرة وتوفير الطاقة (P.F)</h2>
         <div class="form-group">
             <label for="pfPower">الحمل الكلي الفعال للمصنع بكيلوواط (kW):</label>
             <input type="number" id="pfPower" placeholder="مثال: 100">
         </div>
         <div class="form-group">
-            <label for="pfCurrent">معامل القدرة الحالي المقاس بالموقع (cos φ):</label>
+            <label for="pfCurrent">معامل القدرة الحالي المقاس (cos φ):</label>
             <input type="number" id="pfCurrent" step="0.01" placeholder="مثال: 0.70">
         </div>
-        <button onclick="calculatePowerFactor()">احسب سعة البنك المطلوب</button>
+        <button onclick="calculatePowerFactorValues()">احسب سعة لوحة المكثفات</button>
         
         <div id="pfResult" class="result-box sec-style">
             <p><strong>السعة الإجمالية المطلوبة للوحة المكثفات:</strong> <span id="kvarNeed">0</span> كيلو فار (KVAR)</p>
-            <p style="color: #666; font-size: 13px; margin-top: 5px;">تساعد على تحسين كفاءة الشبكة وتجنب غرامات شركات توزيع الكهرباء للمنشآت الصناعية.</p>
         </div>
-    </div>
-
-    <!-- 🛠️ كارت مرشد تشخيص الأعطال التفاعلي المطور -->
-    <div class="card">
-        <h2>🛠️ 4. المساعد الذكي لتشخيص أعطال الكنترول والشبكات</h2>
-        <div class="form-group">
-            <label for="faultSelect">اختر العطل الكهربائي الملاحظ بالموقع:</label>
-            <select id="faultSelect" class="fault-select" onchange="diagnoseFault()">
-                <option value="">-- اختر من القائمة --</option>
-                <option value="overload">المحرك يفصل أوفرلود (Overload) باستمرار بالمصنع</option>
-                <option value="phase">سقوط فازة أو عدم اتزان في جهد اللوحة الرئيسية</option>
-                <option value="contactor">الكونتاكتور يصدر صوتاً (زنة شديدة) ولا يلقط بثبات</option>
-                <option value="start">الموتور لا يبدأ الدوران بالرغم من سلامة الباور العمومي</option>
-                <option value="flicker">رعشة وتذبذب شديد في الإضاءة المنزلية عند بدء الأجهزة</option>
-                <option value="shock">وجود جهد تسريب وهزة كهربائية بهياكل الأجهزة المنزلية</option>
-            </select>
-        </div>
-        
-        <div id="faultResult" class="result-box">
-            <p><strong>السبب المحتمل:</strong> <span id="reasonRes">-</span></p>
-            <p><strong>خطوات الفحص والإصلاح المهنية:</strong> <span id="actionRes">-</span></p>
-        </div>
-    </div>
-
-    <!-- كارت التواصل واستشارات المصانع -->
-    <div class="card" style="text-align: center;">
-        <h2>📞 طلب دعم فني واستشارات هندسية عاجلة</h2>
-        <p style="font-size: 14px; color: #555;">تطبيقك متصل الآن بالكامل بشبكة Pi. يمكنك حجز استشارة فنية أو فحص للوحات التوزيع والـ PLC.</p>
-        <button style="background-color: #03dac6; color: #000;" onclick="requestSupport()">إرسال طلب صيانة مصنع</button>
     </div>
 
 </div>
@@ -215,16 +184,57 @@
 </div>
 
 <script>
-    // تهيئة منصة Pi SDK
+    // تهيئة منصة Pi SDK المعتمدة لديك
     Pi.init({ version: "2.0", sandbox: true });
 
-    // 1. دالة حساب أحمال المنازل
-    function calculateResidential() {
-        let type = document.getElementById('resAppliance').value;
-        let current = 0; let breaker = 10; let cable = 1.5; let note = "";
+    // 1. حسابات قسم المنازل
+    function calculateResidentialValues() {
+        var type = document.getElementById('resAppliance').value;
+        var current = 0; var breaker = 10; var cable = 1.5; var note = "";
 
         if (type === 'lighting') { current = 4.5; breaker = 10; cable = 1.5; note = "موصى به لشبكات الإنارة القياسية لتجنب سخونة الأسلاك."; }
         else if (type === 'sockets') { current = 12; breaker = 16; cable = 2.5; note = "تأكد من إحكام ربط السلك وتمديد خط الأرضي (Earth) للحماية."; }
         else if (type === 'ac1') { current = 7; breaker = 16; cable = 4; note = "يسحب خط منفرد ومباشر من لوحة التوزيع دون أي خطوط فرعية."; }
         else if (type === 'ac2') { current = 11; breaker = 20; cable = 4; note = "يسحب خط منفرد ومباشر من لوحة التوزيع دون أي خطوط فرعية."; }
         else if (type === 'ac3') { current = 15; breaker = 26; cable = 6; note = "يسحب خط منفرد ومباشر من لوحة التوزيع دون أي خطوط فرعية."; }
+        else if (type === 'heater') { current = 10.9; breaker = 16; cable = 4; note = "يفضل قاطع ثنائي القطب لضمان عزل الفازة والنيوترال تماماً أثناء الصيانة."; }
+
+        document.getElementById('resCurrent').innerText = current.toFixed(1);
+        document.getElementById('resBreaker').innerText = breaker;
+        document.getElementById('resCable').innerText = cable;
+        document.getElementById('resNote').innerText = note;
+        document.getElementById('resResult').style.display = 'block';
+    }
+
+    // 2. حسابات قسم المصانع (3 فاز مستقلة)
+    function calculateIndustrialValues() {
+        var power = parseFloat(document.getElementById('indPower').value);
+        var unit = document.getElementById('indUnit').value;
+        
+        if (isNaN(power) || power <= 0) {
+            alert("برجاء إدخال قيمة صحيحة.");
+            return;
+        }
+
+        var kw = unit === 'hp' ? power * 0.746 : power;
+        var fli = kw / (1.732 * 0.38 * 0.84 * 0.85);
+        
+        var breaker = Math.ceil(fli * 1.6);
+        var contactor = Math.ceil(fli * 1.25);
+        var olMin = (fli * 0.9).toFixed(1);
+        var olMax = (fli * 1.15).toFixed(1);
+        var cable = (fli / 2.8).toFixed(1);
+        if(cable < 2.5) cable = 2.5;
+
+        document.getElementById('indCurrentRes').innerText = fli.toFixed(2);
+        document.getElementById('indBreakerRes').innerText = breaker;
+        document.getElementById('indContactorRes').innerText = contactor;
+        document.getElementById('indOverloadRes').innerText = olMin + " - " + olMax;
+        document.getElementById('indCableRes').innerText = cable;
+        document.getElementById('indResult').style.display = 'block';
+    }
+
+    // 3. حسابات قسم معامل القدرة
+    function calculatePowerFactorValues() {
+        var p = parseFloat(document.getElementById('pfPower').value);
+        var pf1 = parseFloat(document.getElementById('pfCurrent').value);
