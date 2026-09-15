@@ -80,8 +80,6 @@
         }
         button:hover { background-color: #4d00b8; }
         button.btn-sec { background-color: #10b981; }
-        button.btn-orange { background-color: #f97316; }
-        button.btn-orange:hover { background-color: #ea580c; }
         .result-box {
             background-color: #eef2ff;
             border-right: 4px solid var(--primary-color);
@@ -93,10 +91,6 @@
         .result-box.sec-style {
             background-color: #ecfdf5;
             border-right-color: #10b981;
-        }
-        .result-box.orange-style {
-            background-color: #fff7ed;
-            border-right-color: #f97316;
         }
         .result-box p { margin: 5px 0; font-size: 15px; }
         .footer {
@@ -111,7 +105,7 @@
 
 <header>
     <h1>Smart Tech Aide ⚡</h1>
-    <p>لوحة حسابات المحركات والمكثفات وأحمال المنازل (خطوة 3)</p>
+    <p>لوحة حسابات المحركات ولوحات المكثفات للمصانع (خطوة 2)</p>
 </header>
 
 <div class="container">
@@ -159,30 +153,6 @@
         </div>
     </div>
 
-    <!-- 🏠 3. كارت حاسبة أحمال وتوزيع خطوط المنزل -->
-    <div class="card">
-        <h2>🏠 حاسبة الأحمال وتوزيع خطوط المنزل (220 فولت)</h2>
-        <div class="form-group">
-            <label for="resAppliance">نوع الحمل الكهربائي السكني:</label>
-            <select id="resAppliance">
-                <option value="lighting">💡 دوائر إنارة سكنية عادية</option>
-                <option value="sockets">🔌 برايز ومآخذ عامة للأجهزة</option>
-                <option value="ac1">❄️ تكييف هواء (1.5 حصان)</option>
-                <option value="ac2">❄️ تكييف هواء (2.25 حصان)</option>
-                <option value="ac3">❄️ تكييف هواء (3 حصان)</option>
-                <option value="heater">🔥 سخان مياه كهربائي فرعي</option>
-            </select>
-        </div>
-        <button class="btn-orange" onclick="calculateResidential()">احسب أحمال المنزل</button>
-        
-        <div id="resResult" class="result-box orange-style">
-            <p><strong>تيار السحب المتوقع (Current):</strong> <span id="resCurrent">0</span> أمبير</p>
-            <p><strong>سعة القاطع الفرعي المقترحة:</strong> <span id="resBreaker">0</span> أمبير</p>
-            <p><strong>مقطع السلك النحاسي المعتمد:</strong> <span id="resCable">0</span> مم²</p>
-            <p><strong>توصية التركيب الهندسي:</strong> <span id="resNote">-</span></p>
-        </div>
-    </div>
-
 </div>
 
 <div class="footer">
@@ -220,18 +190,12 @@
         var pf1 = parseFloat(document.getElementById('pfCurrent').value);
         if(isNaN(p) || isNaN(pf1) || pf1 <= 0 || pf1 >= 0.95) { alert("راجع إدخال القيم الحالية بشكل صحيح."); return; }
         
+        // حساب السعة المطلوبة للوصول إلى معامل قدرة مستهدف 0.95
         var kvar = p * (Math.tan(Math.acos(pf1)) - Math.tan(Math.acos(0.95)));
         document.getElementById('kvarNeed').innerText = kvar.toFixed(1);
         document.getElementById('pfResult').style.display = 'block';
     }
+</script>
 
-    // دالة حساب أحمال المنازل
-    function calculateResidential() {
-        var type = document.getElementById('resAppliance').value;
-        var current = 0; var breaker = 10; var cable = 1.5; var note = "";
-
-        if (type === 'lighting') { current = 4.5; breaker = 10; cable = 1.5; note = "موصى به لشبكات الإنارة القياسية لتجنب سخونة الأسلاك."; }
-        else if (type === 'sockets') { current = 12; breaker = 16; cable = 2.5; note = "تأكد من إحكام ربط السلك وتمديد خط الأرضي (Earth) للحماية."; }
-        else if (type === 'ac1') { current = 7; breaker = 16; cable = 4; note = "يسحب خط منفرد ومباشر من لوحة التوزيع دون أي خطوط فرعية."; }
-        else if (type === 'ac2') { current = 11; breaker = 20; cable = 4; note = "يسحب خط منفرد ومباشر من لوحة التوزيع دون أي خطوط فرعية."; }
-        else if (type === 'ac3') { current = 15; breaker = 26; cable = 6; note = "يسحب خط منفرد ومباشر من لوحة التوزيع دون أي خطوط فرعية."; }
+</body>
+</html>
