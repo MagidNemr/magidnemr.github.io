@@ -88,7 +88,7 @@
                 <option value="kw">كيلوواط (kW)</option>
             </select>
         </div>
-        <button onclick="calculateIndustrial()">تحليل المكونات الصناعية العمومية</button>
+        <button onclick="calculateIndustrialValues()">تحليل المكونات الصناعية العمومية</button>
         
         <div id="indResult" class="result-box">
             <p><strong>تيار الحمل الكامل (FLA):</strong> <span id="indCurrentRes" class="value-highlight">0</span> أمبير</p>
@@ -116,10 +116,10 @@
             <label for="wireCount">إجمالي عدد الأسلاك داخل الماسورة:</label>
             <input type="number" id="wireCount" placeholder="مثال: 4" min="1">
         </div>
-        <button class="btn-conduit" onclick="calculateConduit()">احسب قطر الماسورة المناسب</button>
+        <button class="btn-conduit" onclick="calculateConduitValues()">احسب قطر الماسورة المناسب</button>
         
         <div id="conduitResult" class="result-box">
-            <p><strong>القطر الخارجي المقترح للماسورة التجارية:</strong> <span id="conduitRes" class="value-highlight">0</span> ملم</p>
+            <p><strong>القطر الخارجي المقترح للماسورة العمومية:</strong> <span id="conduitRes" class="value-highlight">0</span> ملم</p>
             <p style="color: #9ca3af; font-size: 13px;">توصية الكود: تم الحساب بناءً على نسبة إشغال لا تتعدى 40% من مساحة مقطع الماسورة لتسهيل السحب ومنع السخونة.</p>
         </div>
     </div>
@@ -151,7 +151,7 @@
 <script>
     Pi.init({ version: "2.0", sandbox: true });
     
-    function calculateIndustrial() {
+    function calculateIndustrialValues() {
         var power = parseFloat(document.getElementById('indPower').value);
         var unit = document.getElementById('indUnit').value;
         if (isNaN(power) || power <= 0) { alert("برجاء إدخال قيمة صحيحة لقدرة المحرك."); return; }
@@ -174,7 +174,7 @@
         document.getElementById('indResult').style.display = 'block';
     }
 
-    function calculateConduit() {
+    function calculateConduitValues() {
         var size = parseFloat(document.getElementById('wireSize').value);
         var count = parseInt(document.getElementById('wireCount').value);
         if (isNaN(count) || count <= 0) { alert("يرجى إدخال عدد أسلاك صحيح."); return; }
@@ -184,3 +184,5 @@
         var diameter = Math.ceil(2 * Math.sqrt(requiredConduitArea / Math.PI));
         
         var finalDia = 16;
+        if (diameter <= 16) finalDia = 16;
+        else if (diameter <= 20) finalDia = 20;
