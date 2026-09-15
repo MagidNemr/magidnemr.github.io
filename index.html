@@ -1,1 +1,48 @@
-<h1>Smart Tech Aide is Welcome!</h1>
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Tech Aide</title>
+    <!-- استدعاء مكتبة Pi الرسمية -->
+    <script src="https://minepi.com"></script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
+        button { background-color: #6200ee; color: white; border: none; padding: 15px 30px; font-size: 18px; cursor: pointer; border-radius: 5px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Smart Tech Aide is Welcome!</h1>
+    <p>اضغط على الزر بالأسفل لإتمام العملية التجريبية وتفعيل الخطوة العاشرة</p>
+    
+    <button onclick="payPi()">دفع 0.1 Pi تجريبي</button>
+
+    <script>
+        // بدء تهيئة منصة Pi
+        Pi.init({ version: "2.0", sandbox: true });
+
+        async function payPi() {
+            try {
+                const scopes = ['username', 'payments'];
+                function onIncompletePaymentFound(payment) { /* معالجة الدفع المعلق */ }
+                
+                // تسجيل الدخول
+                const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
+                
+                // إنشاء معاملة دفع تجريبية
+                const payment = await Pi.createPayment({
+                    amount: 0.1,
+                    memo: "Test Transaction for Step 10",
+                    metadata: { appId: "Smart Tech Aide" },
+                }, {
+                    onReadyForServerApproval: function(paymentId) { /* موافقة السيرفر */ },
+                    onReadyForServerCompletion: function(paymentId, txid) { alert("تمت العملية بنجاح!"); },
+                    onCancel: function(paymentId) { alert("تم إلغاء العملية"); },
+                    onError: function(error, payment) { alert("حدث خطأ أثناء الدفع"); }
+                });
+            } catch (err) {
+                console.error(err);
+            }
+        }
+    </script>
+</body>
+</html>
