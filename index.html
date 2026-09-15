@@ -3,122 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Tech Aide | المساعد التقني الذكي</title>
-    <!-- رابط مكتبة الأول الشغال تماماً معك -->
+    <title>Smart Tech Aide | حاسبة المصانع</title>
     <script src="https://minepi.com"></script>
     <style>
-        :root {
-            --primary-color: #6200ee;
-            --secondary-color: #03dac6;
-            --bg-color: #f5f5f7;
-            --card-bg: #ffffff;
-            --text-color: #333333;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        header h1 { margin: 0; font-size: 24px; }
-        header p { margin: 5px 0 0; font-size: 14px; opacity: 0.9; }
-        .container {
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 0 15px;
-        }
-        .card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-        .card h2 {
-            margin-top: 0;
-            font-size: 18px;
-            color: var(--primary-color);
-            border-bottom: 2px solid var(--bg-color);
-            padding-bottom: 10px;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            font-size: 14px;
-        }
-        input, select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #cccccc;
-            border-radius: 6px;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
-        button {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            font-size: 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            width: 100%;
-            font-weight: bold;
-            transition: background 0.3s;
-        }
-        button:hover { background-color: #4d00b8; }
-        button.btn-sec { background-color: #10b981; }
-        button.btn-orange { background-color: #f97316; }
-        button.btn-orange:hover { background-color: #ea580c; }
-        .result-box {
-            background-color: #eef2ff;
-            border-right: 4px solid var(--primary-color);
-            padding: 15px;
-            border-radius: 6px;
-            margin-top: 15px;
-            display: none;
-        }
-        .result-box.sec-style {
-            background-color: #ecfdf5;
-            border-right-color: #10b981;
-        }
-        .result-box.orange-style {
-            background-color: #fff7ed;
-            border-right-color: #f97316;
-        }
-        .result-box p { margin: 5px 0; font-size: 15px; }
-        .footer {
-            text-align: center;
-            padding: 20px;
-            font-size: 12px;
-            color: #777777;
-        }
+        :root { --primary-color: #1e3a8a; --bg-color: #f5f5f7; --card-bg: #ffffff; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: #333; margin: 0; padding: 0; }
+        header { background-color: var(--primary-color); color: white; padding: 20px; text-align: center; }
+        .container { max-width: 600px; margin: 20px auto; padding: 0 15px; }
+        .card { background: var(--card-bg); border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #cccccc; border-radius: 6px; box-sizing: border-box; font-size: 16px; }
+        button { background-color: var(--primary-color); color: white; border: none; padding: 12px 20px; font-size: 16px; border-radius: 6px; cursor: pointer; width: 100%; font-weight: bold; }
+        .result-box { background-color: #eef2ff; border-right: 4px solid var(--primary-color); padding: 15px; border-radius: 6px; margin-top: 15px; display: none; }
+        .nav-links { display: flex; justify-content: space-around; margin-top: 20px; padding: 15px; background: #fff; border-radius: 8px; }
+        .nav-links a { color: var(--primary-color); font-weight: bold; text-decoration: none; }
     </style>
 </head>
 <body>
-
 <header>
     <h1>Smart Tech Aide ⚡</h1>
-    <p>المساعد الهندسي المتكامل لكهرباء المنازل والمصانع والباور والكنترول</p>
+    <p>المستودع الصناعي - حاسبة المحركات والباور (3 فاز)</p>
 </header>
-
 <div class="container">
-
-    <!-- 🏭 1. كارت حاسبة أحمال المحركات واللوحات الصناعية -->
     <div class="card">
-        <h2>🏭 1. حاسبة أحمال المحركات ولوحات الباور (3 فاز - 380V)</h2>
+        <h2>🏭 حاسبة أحمال المحركات ولوحات الباور (380V)</h2>
         <div class="form-group">
             <label for="indPower">قدرة المحرك الميكانيكية بالموقع:</label>
             <input type="number" id="indPower" placeholder="أدخل القيمة الرقمية...">
@@ -130,82 +39,32 @@
                 <option value="kw">كيلوواط (kW)</option>
             </select>
         </div>
-        <button onclick="calculateIndustrial()">احسب المكونات الصناعية والباور</button>
-        
+        <button onclick="calculateIndustrial()">احسب المكونات الصناعية</button>
         <div id="indResult" class="result-box">
-            <p><strong>تيار الحمل الكامل للمحرك (FLA):</strong> <span id="indCurrentRes">0</span> أمبير</p>
+            <p><strong>تيار الحمل الكامل (FLA):</strong> <span id="indCurrentRes">0</span> أمبير</p>
             <p><strong>قاطع لوحة الحماية (MCCB):</strong> <span id="indBreakerRes">0</span> أمبير</p>
-            <p><strong>سعة الكونتاكتور المناسب (Contactor):</strong> <span id="indContactorRes">0</span> أمبير</p>
-            <p><strong>مدى ضبط الأوفرلود (Overload):</strong> <span id="indOverloadRes">0</span> أمبير</p>
-            <p><strong>مقطع كابل النحاس المقترح بالدكت:</strong> <span id="indCableRes">0</span> مم²</p>
+            <p><strong>سعة الكونتاكتور (Contactor):</strong> <span id="indContactorRes">0</span> أمبير</p>
+            <p><strong>مدى ضبط الأوفرلود:</strong> <span id="indOverloadRes">0</span> أمبير</p>
+            <p><strong>مقطع كابل النحاس المقترح:</strong> <span id="indCableRes">0</span> مم²</p>
         </div>
     </div>
-
-    <!-- 📊 2. كارت حاسبة مكثفات تحسين معامل القدرة للمصانع -->
-    <div class="card">
-        <h2>📊 2. حاسبة مكثفات تحسين معامل القدرة للمصانع (Power Factor)</h2>
-        <div class="form-group">
-            <label for="pfPower">الحمل الكلي الفعال للمصنع بكيلوواط (kW):</label>
-            <input type="number" id="pfPower" placeholder="مثال: 100">
-        </div>
-        <div class="form-group">
-            <label for="pfCurrent">معامل القدرة الحالي المقاس بالموقع:</label>
-            <input type="number" id="pfCurrent" step="0.01" placeholder="مثال: 0.70">
-        </div>
-        <button class="btn-sec" onclick="calculatePowerFactor()">احسب سعة البنك المطلوب</button>
-        
-        <div id="pfResult" class="result-box sec-style">
-            <p><strong>السعة الإجمالية المطلوبة للوحة المكثفات:</strong> <span id="kvarNeed">0</span> كيلو فار (KVAR)</p>
-        </div>
+    <div class="nav-links">
+        <a href="factor.html">📊 الانتقال لحاسبة معامل القدرة ←</a>
+        <a href="home.html">🏠 الانتقال لحاسبة المنازل ←</a>
     </div>
-
-    <!-- 🏠 3. كارت حاسبة أحمال وتوزيع خطوط المنزل -->
-    <div class="card">
-        <h2>🏠 3. حاسبة الأحمال وتوزيع خطوط المنزل (220 فولت)</h2>
-        <div class="form-group">
-            <label for="resAppliance">نوع الحمل الكهربائي السكني:</label>
-            <select id="resAppliance">
-                <option value="lighting">💡 دوائر إنارة سكنية عادية</option>
-                <option value="sockets">🔌 برايز ومآخذ عامة للأجهزة</option>
-                <option value="ac1">❄️ تكييف هواء (1.5 حصان)</option>
-                <option value="ac2">❄️ تكييف هواء (2.25 حصان)</option>
-                <option value="ac3">❄️ تكييف هواء (3 حصان)</option>
-                <option value="heater">🔥 سخان مياه كهربائي فرعي</option>
-            </select>
-        </div>
-        <button class="btn-orange" onclick="calculateResidential()">احسب أحمال المنزل</button>
-        
-        <div id="resResult" class="result-box orange-style">
-            <p><strong>تيار السحب المتوقع (Current):</strong> <span id="resCurrent">0</span> أمبير</p>
-            <p><strong>سعة القاطع الفرعي المقترحة:</strong> <span id="resBreaker">0</span> أمبير</p>
-            <p><strong>مقطع السلك النحاسي المعتمد:</strong> <span id="resCable">0</span> مم²</p>
-            <p><strong>توصية التركيب الهندسي:</strong> <span id="resNote">-</span></p>
-        </div>
-    </div>
-
 </div>
-
-<div class="footer">
-    <p>جميع الحقوق محفوظة © المهندس المطور ماجد النمر 2026</p>
-</div>
-
 <script>
-    // تهيئة منصة Pi SDK
     Pi.init({ version: "2.0", sandbox: true });
-
-    // دالة حساب المحركات والمصانع
     function calculateIndustrial() {
         var power = parseFloat(document.getElementById('indPower').value);
         var unit = document.getElementById('indUnit').value;
-        if (isNaN(power) || power <= 0) { alert("برجاء إدخال قيمة صحيحة لقدرة المحرك."); return; }
-        
+        if (isNaN(power) || power <= 0) { alert("برجاء إدخال قيمة صحيحة."); return; }
         var kw = unit === 'hp' ? power * 0.746 : power;
         var fli = kw / (1.732 * 0.38 * 0.84 * 0.85);
         var breaker = Math.ceil(fli * 1.6);
         var contactor = Math.ceil(fli * 1.25);
         var olMin = (fli * 0.9).toFixed(1); var olMax = (fli * 1.15).toFixed(1);
         var cable = (fli / 2.8).toFixed(1); if(cable < 2.5) cable = 2.5;
-
         document.getElementById('indCurrentRes').innerText = fli.toFixed(2);
         document.getElementById('indBreakerRes').innerText = breaker;
         document.getElementById('indContactorRes').innerText = contactor;
@@ -213,24 +72,6 @@
         document.getElementById('indCableRes').innerText = cable;
         document.getElementById('indResult').style.display = 'block';
     }
-
-    // دالة حساب مكثفات تحسين معامل القدرة
-    function calculatePowerFactor() {
-        var p = parseFloat(document.getElementById('pfPower').value);
-        var pf1 = parseFloat(document.getElementById('pfCurrent').value);
-        if(isNaN(p) || isNaN(pf1) || pf1 <= 0 || pf1 >= 0.95) { alert("راجع إدخال القيم الحالية بشكل صحيح."); return; }
-        
-        var kvar = p * (Math.tan(Math.acos(pf1)) - Math.tan(Math.acos(0.95)));
-        document.getElementById('kvarNeed').innerText = kvar.toFixed(1);
-        document.getElementById('pfResult').style.display = 'block';
-    }
-
-    // دالة حساب أحمال المنازل (تم ضبط وإغلاق كافة الأقواس البرمجية بدقة)
-    function calculateResidential() {
-        var type = document.getElementById('resAppliance').value;
-        var current = 0; var breaker = 10; var cable = 1.5; var note = "";
-
-        if (type === 'lighting') { current = 4.5; breaker = 10; cable = 1.5; note = "موصى به لشبكات الإنارة القياسية لتجنب سخونة الأسلاك."; }
-        else if (type === 'sockets') { current = 12; breaker = 16; cable = 2.5; note = "تأكد من إحكام ربط السلك وتمديد خط الأرضي (Earth) للحماية."; }
-        else if (type === 'ac1') { current = 7; breaker = 16; cable = 4; note = "يسحب خط منفرد ومباشر من لوحة التوزيع دون أي خطوط فرعية."; }
-        else if (type === 'ac2') { current = 11; breaker = 20; cable = 4; note = "يسحب خط منفرد ومباشر من لوحة التوزيع دون أي خطوط فرعية."; }
+</script>
+</body>
+</html>
