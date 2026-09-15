@@ -4,20 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Tech Aide | اللوحة الهندسية</title>
+    <!-- رابط المكتبة الشغالة معاك تماماً -->
     <script src="https://minepi.com"></script>
     <style>
         :root {
-            --dark-bg: #090d16;
-            --panel-bg: rgba(17, 24, 39, 0.95);
+            --primary-color: #1e3a8a;
+            --secondary-color: #10b981;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-color: #1f2937;
             --neon-blue: #00d2ff;
             --neon-green: #00f5d4;
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
         }
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: radial-gradient(circle at top, #111827 0%, var(--dark-bg) 80%);
-            color: var(--text-main);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle at top, #111827 0%, #090d16 80%);
+            color: #f3f4f6;
             margin: 0;
             padding: 0;
             min-height: 100vh;
@@ -35,29 +37,32 @@
         header p { margin: 8px 0 0; font-size: 14px; color: var(--neon-blue); font-weight: 600; }
         .container { max-width: 600px; margin: 20px auto 40px; padding: 0 15px; }
         .card {
-            background: var(--panel-bg); border: 1px solid rgba(0, 210, 255, 0.15);
+            background: rgba(17, 24, 39, 0.95); border: 1px solid rgba(0, 210, 255, 0.15);
             border-radius: 16px; padding: 22px; margin-bottom: 25px;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5); backdrop-filter: blur(10px);
         }
         .card h2 { margin-top: 0; font-size: 18px; font-weight: 700; color: #ffffff; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 10px; }
         .form-group { margin-bottom: 18px; }
-        label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; color: var(--text-muted); }
+        label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; color: #9ca3af; }
         input, select { width: 100%; padding: 12px; background: rgba(9, 13, 22, 0.8); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px; box-sizing: border-box; font-size: 16px; color: #ffffff; }
+        
         button {
             background: linear-gradient(135deg, #6200ee, #7209b7); color: white; border: none; padding: 14px 20px; font-size: 16px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(157, 78, 221, 0.3);
         }
         button:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(157, 78, 221, 0.5); }
+        .btn-conduit { background: linear-gradient(135deg, #00d2ff, #00f5d4); color: #090d16 !important; }
+        
         .result-box { background: rgba(0, 210, 255, 0.05); border: 1px solid rgba(0, 210, 255, 0.2); border-right: 5px solid var(--neon-blue); padding: 15px; border-radius: 8px; margin-top: 15px; display: none; }
         .value-highlight { font-family: monospace; font-weight: bold; color: var(--neon-green); font-size: 18px; text-shadow: 0 0 5px rgba(0, 245, 212, 0.5); }
         .book-item { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 12px; border-radius: 8px; margin-bottom: 12px; }
-        .book-info { font-size: 14px; font-weight: 600; }
-        .book-info span { display: block; font-size: 12px; color: var(--text-muted); }
+        .book-info { font-size: 14px; font-weight: 600; text-align: right; }
+        .book-info span { display: block; font-size: 12px; color: #9ca3af; }
         .download-btn { background: linear-gradient(135deg, #10b981, #059669); padding: 8px 14px; font-size: 13px; border-radius: 6px; text-decoration: none; color: #fff; font-weight: bold; text-align: center; }
         .nav-links { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
         .nav-links a { text-align: center; background: rgba(0, 210, 255, 0.08); border: 1px solid rgba(0, 210, 255, 0.2); color: var(--neon-blue); padding: 12px; border-radius: 8px; font-weight: bold; text-decoration: none; transition: all 0.3s; }
         .nav-links a:hover { background: rgba(0, 210, 255, 0.15); box-shadow: 0 0 10px rgba(0, 210, 255, 0.2); }
-        .footer { text-align: center; padding: 25px; font-size: 12px; color: var(--text-muted); }
+        .footer { text-align: center; padding: 25px; font-size: 12px; color: #9ca3af; }
     </style>
 </head>
 <body>
@@ -69,15 +74,15 @@
 
 <div class="container">
 
-    <!-- 🏭 كارت حاسبة المحركات واللوحات -->
+    <!-- 🏭 1. كارت حاسبة المحركات واللوحات الصناعية -->
     <div class="card">
         <h2>🏭 حاسبة أحمال المحركات ولوحات الباور (3 فاز)</h2>
         <div class="form-group">
-            <label for="indPower">قدرة المحرك الميكانيكية بالموقع:</label>
+            <label for="indPower">قدرة المحرك الميكانيكية العمومية بالموقع:</label>
             <input type="number" id="indPower" placeholder="أدخل القيمة الرقمية...">
         </div>
         <div class="form-group">
-            <label for="indUnit">وحدة القدرة:</label>
+            <label for="indUnit">وحدة القدرة المعتمدة:</label>
             <select id="indUnit">
                 <option value="hp">حصان (HP)</option>
                 <option value="kw">كيلوواط (kW)</option>
@@ -94,7 +99,7 @@
         </div>
     </div>
 
-    <!-- 📏 حاسبة أقطار مواسير التمديد -->
+    <!-- 📏 2. كارت حاسبة أقطار مواسير التمديد -->
     <div class="card">
         <h2>📏 حاسبة أقطار مواسير تمديد الأسلاك (Conduit Fill)</h2>
         <div class="form-group">
@@ -111,11 +116,11 @@
             <label for="wireCount">إجمالي عدد الأسلاك داخل الماسورة:</label>
             <input type="number" id="wireCount" placeholder="مثال: 4" min="1">
         </div>
-        <button onclick="calculateConduit()" style="background: linear-gradient(135deg, #00d2ff, #00f5d4); color: #090d16;">احسب قطر الماسورة المناسب</button>
+        <button class="btn-conduit" onclick="calculateConduit()">احسب قطر الماسورة المناسب</button>
         
         <div id="conduitResult" class="result-box">
-            <p><strong>القطر الخارجي المقترح للماسورة:</strong> <span id="conduitRes" class="value-highlight">0</span> ملم</p>
-            <p style="color: var(--text-muted); font-size: 13px;">توصية الكود: تم الحساب بناءً على نسبة إشغال لا تتعدى 40% من مساحة مقطع الماسورة لتسهيل السحب ومنع السخونة.</p>
+            <p><strong>القطر الخارجي المقترح للماسورة التجارية:</strong> <span id="conduitRes" class="value-highlight">0</span> ملم</p>
+            <p style="color: #9ca3af; font-size: 13px;">توصية الكود: تم الحساب بناءً على نسبة إشغال لا تتعدى 40% من مساحة مقطع الماسورة لتسهيل السحب ومنع السخونة.</p>
         </div>
     </div>
 
@@ -149,13 +154,17 @@
     function calculateIndustrial() {
         var power = parseFloat(document.getElementById('indPower').value);
         var unit = document.getElementById('indUnit').value;
-        if (isNaN(power) || power <= 0) { alert("برجاء إدخال قيمة صحيحة."); return; }
-        var kw = unit === 'hp' ? power * 0.746 : power;
+        if (isNaN(power) || power <= 0) { alert("برجاء إدخال قيمة صحيحة لقدرة المحرك."); return; }
+        
+        var kw = (unit === 'hp') ? (power * 0.746) : power;
         var fli = kw / (1.732 * 0.38 * 0.84 * 0.85);
+        
         var breaker = Math.ceil(fli * 1.6);
         var contactor = Math.ceil(fli * 1.25);
-        var olMin = (fli * 0.9).toFixed(1); var olMax = (fli * 1.15).toFixed(1);
-        var cable = (fli / 2.8).toFixed(1); if(cable < 2.5) cable = 2.5;
+        var olMin = (fli * 0.9).toFixed(1); 
+        var olMax = (fli * 1.15).toFixed(1);
+        var cable = (fli / 2.8).toFixed(1); 
+        if(cable < 2.5) cable = 2.5;
         
         document.getElementById('indCurrentRes').innerText = fli.toFixed(2);
         document.getElementById('indBreakerRes').innerText = breaker;
@@ -175,9 +184,3 @@
         var diameter = Math.ceil(2 * Math.sqrt(requiredConduitArea / Math.PI));
         
         var finalDia = 16;
-        if (diameter <= 16) finalDia = 16;
-        else if (diameter <= 20) finalDia = 20;
-        else if (diameter <= 25) finalDia = 25;
-        else finalDia = 32;
-
-        document.getElementById('conduitRes').innerText = finalDia;
