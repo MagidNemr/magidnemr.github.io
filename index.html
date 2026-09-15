@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Tech Aide | لوحة التحكم والباور الصناعي</title>
-    <!-- الاستدعاء البرمجي الصحيح والرسمي لمكتبة Pi SDK -->
-    <script src="https://minepi.com"></script>
     <style>
         :root {
             --primary-color: #1e3a8a;
@@ -201,8 +199,6 @@
 </div>
 
 <script>
-    Pi.init({ version: "2.0", sandbox: true });
-
     function calculateResidentialValues() {
         var type = document.getElementById('resAppliance').value;
         var current = 0; var breaker = 10; var cable = 1.5; var note = "";
@@ -215,3 +211,4 @@
         document.getElementById('resCurrent').innerText = current.toFixed(1);
         document.getElementById('resBreaker').innerText = breaker;
         document.getElementById('resCable').innerText = cable;
+        document.getElementById('resNote').innerText = note;
