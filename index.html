@@ -80,6 +80,8 @@
         }
         button:hover { background-color: #4d00b8; }
         button.btn-sec { background-color: #10b981; }
+        button.btn-orange { background-color: #f97316; }
+        button.btn-orange:hover { background-color: #ea580c; }
         .result-box {
             background-color: #eef2ff;
             border-right: 4px solid var(--primary-color);
@@ -91,6 +93,10 @@
         .result-box.sec-style {
             background-color: #ecfdf5;
             border-right-color: #10b981;
+        }
+        .result-box.orange-style {
+            background-color: #fff7ed;
+            border-right-color: #f97316;
         }
         .result-box p { margin: 5px 0; font-size: 15px; }
         .footer {
@@ -105,14 +111,14 @@
 
 <header>
     <h1>Smart Tech Aide ⚡</h1>
-    <p>لوحة حسابات المحركات ولوحات المكثفات للمصانع (خطوة 2)</p>
+    <p>المساعد الهندسي المتكامل لكهرباء المنازل والمصانع والباور والكنترول</p>
 </header>
 
 <div class="container">
 
     <!-- 🏭 1. كارت حاسبة أحمال المحركات واللوحات الصناعية -->
     <div class="card">
-        <h2>🏭 حاسبة أحمال المحركات ولوحات الباور (3 فاز - 380V)</h2>
+        <h2>🏭 1. حاسبة أحمال المحركات ولوحات الباور (3 فاز - 380V)</h2>
         <div class="form-group">
             <label for="indPower">قدرة المحرك الميكانيكية بالموقع:</label>
             <input type="number" id="indPower" placeholder="أدخل القيمة الرقمية...">
@@ -127,17 +133,17 @@
         <button onclick="calculateIndustrial()">احسب المكونات الصناعية والباور</button>
         
         <div id="indResult" class="result-box">
-            <p><strong>تيار الحمل الكامل للمحرك (FLA):</strong> <span id="indCurrent">0</span> أمبير</p>
-            <p><strong>قاطع لوحة الحماية (MCCB):</strong> <span id="indBreaker">0</span> أمبير</p>
-            <p><strong>سعة الكونتاكتور المناسب (Contactor):</strong> <span id="indContactor">0</span> أمبير</p>
-            <p><strong>مدى ضبط الأوفرلود (Overload):</strong> <span id="indOverload">0</span> أمبير</p>
-            <p><strong>مقطع كابل النحاس المقترح بالدكت:</strong> <span id="indCable">0</span> مم²</p>
+            <p><strong>تيار الحمل الكامل للمحرك (FLA):</strong> <span id="indCurrentRes">0</span> أمبير</p>
+            <p><strong>قاطع لوحة الحماية (MCCB):</strong> <span id="indBreakerRes">0</span> أمبير</p>
+            <p><strong>سعة الكونتاكتور المناسب (Contactor):</strong> <span id="indContactorRes">0</span> أمبير</p>
+            <p><strong>مدى ضبط الأوفرلود (Overload):</strong> <span id="indOverloadRes">0</span> أمبير</p>
+            <p><strong>مقطع كابل النحاس المقترح بالدكت:</strong> <span id="indCableRes">0</span> مم²</p>
         </div>
     </div>
 
     <!-- 📊 2. كارت حاسبة مكثفات تحسين معامل القدرة للمصانع -->
     <div class="card">
-        <h2>📊 حاسبة مكثفات تحسين معامل القدرة للمصانع (Power Factor)</h2>
+        <h2>📊 2. حاسبة مكثفات تحسين معامل القدرة للمصانع (Power Factor)</h2>
         <div class="form-group">
             <label for="pfPower">الحمل الكلي الفعال للمصنع بكيلوواط (kW):</label>
             <input type="number" id="pfPower" placeholder="مثال: 100">
@@ -150,6 +156,30 @@
         
         <div id="pfResult" class="result-box sec-style">
             <p><strong>السعة الإجمالية المطلوبة للوحة المكثفات:</strong> <span id="kvarNeed">0</span> كيلو فار (KVAR)</p>
+        </div>
+    </div>
+
+    <!-- 🏠 3. كارت حاسبة أحمال وتوزيع خطوط المنزل -->
+    <div class="card">
+        <h2>🏠 3. حاسبة الأحمال وتوزيع خطوط المنزل (220 فولت)</h2>
+        <div class="form-group">
+            <label for="resAppliance">نوع الحمل الكهربائي السكني:</label>
+            <select id="resAppliance">
+                <option value="lighting">💡 دوائر إنارة سكنية عادية</option>
+                <option value="sockets">🔌 برايز ومآخذ عامة للأجهزة</option>
+                <option value="ac1">❄️ تكييف هواء (1.5 حصان)</option>
+                <option value="ac2">❄️ تكييف هواء (2.25 حصان)</option>
+                <option value="ac3">❄️ تكييف هواء (3 حصان)</option>
+                <option value="heater">🔥 سخان مياه كهربائي فرعي</option>
+            </select>
+        </div>
+        <button class="btn-orange" onclick="calculateResidential()">احسب أحمال المنزل</button>
+        
+        <div id="resResult" class="result-box orange-style">
+            <p><strong>تيار السحب المتوقع (Current):</strong> <span id="resCurrent">0</span> أمبير</p>
+            <p><strong>سعة القاطع الفرعي المقترحة:</strong> <span id="resBreaker">0</span> أمبير</p>
+            <p><strong>مقطع السلك النحاسي المعتمد:</strong> <span id="resCable">0</span> مم²</p>
+            <p><strong>توصية التركيب الهندسي:</strong> <span id="resNote">-</span></p>
         </div>
     </div>
 
@@ -176,11 +206,11 @@
         var olMin = (fli * 0.9).toFixed(1); var olMax = (fli * 1.15).toFixed(1);
         var cable = (fli / 2.8).toFixed(1); if(cable < 2.5) cable = 2.5;
 
-        document.getElementById('indCurrent').innerText = fli.toFixed(2);
-        document.getElementById('indBreaker').innerText = breaker;
-        document.getElementById('indContactor').innerText = contactor;
-        document.getElementById('indOverload').innerText = olMin + " - " + olMax;
-        document.getElementById('indCable').innerText = cable;
+        document.getElementById('indCurrentRes').innerText = fli.toFixed(2);
+        document.getElementById('indBreakerRes').innerText = breaker;
+        document.getElementById('indContactorRes').innerText = contactor;
+        document.getElementById('indOverloadRes').innerText = olMin + " - " + olMax;
+        document.getElementById('indCableRes').innerText = cable;
         document.getElementById('indResult').style.display = 'block';
     }
 
@@ -190,12 +220,17 @@
         var pf1 = parseFloat(document.getElementById('pfCurrent').value);
         if(isNaN(p) || isNaN(pf1) || pf1 <= 0 || pf1 >= 0.95) { alert("راجع إدخال القيم الحالية بشكل صحيح."); return; }
         
-        // حساب السعة المطلوبة للوصول إلى معامل قدرة مستهدف 0.95
         var kvar = p * (Math.tan(Math.acos(pf1)) - Math.tan(Math.acos(0.95)));
         document.getElementById('kvarNeed').innerText = kvar.toFixed(1);
         document.getElementById('pfResult').style.display = 'block';
     }
-</script>
 
-</body>
-</html>
+    // دالة حساب أحمال المنازل
+    function calculateResidential() {
+        var type = document.getElementById('resAppliance').value;
+        var current = 0; var breaker = 10; var cable = 1.5; var note = "";
+
+        if (type === 'lighting') { current = 4.5; breaker = 10; cable = 1.5; note = "موصى به لشبكات الإنارة القياسية لتجنب سخونة الأسلاك."; }
+        else if (type === 'sockets') { current = 12; breaker = 16; cable = 2.5; note = "تأكد من إحكام ربط السلك وتمديد خط الأرضي (Earth) للحماية."; }
+        else if (type === 'ac1') { current = 7; breaker = 16; cable = 4; note = "يسحب خط منفرد ومباشر من لوحة التوزيع دون أي خطوط فرعية."; }
+        else if (type === 'ac2') { current = 11; breaker = 20; cable = 4; note = "يسحب خط منفرد ومباشر من لوحة التوزيع دون أي خطوط فرعية."; }
