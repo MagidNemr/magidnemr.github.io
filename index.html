@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Tech Aide | اللوحة الهندسية</title>
-    <script src="https://minepi.com"></script>
     <style>
         :root {
             --dark-bg: #090d16;
@@ -92,6 +91,11 @@
             box-sizing: border-box;
             font-size: 16px;
             color: #ffffff;
+            outline: none;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--neon-blue);
         }
 
         button {
@@ -157,6 +161,8 @@
             font-weight: bold;
             cursor: pointer;
             border: none;
+            display: inline-block;
+            text-align: center;
         }
 
         /* ستايل زر المدونة المستقل الفخم فوق كارت المكتبة الفنية */
@@ -214,6 +220,7 @@
 
 <div class="container">
 
+    <!-- 1. كارت حاسبة أحمال المحركات ولوحات الباور (3 فاز) -->
     <div class="card">
         <h2>🏭 حاسبة أحمال المحركات ولوحات الباور (3 فاز)</h2>
         <div class="form-group">
@@ -238,21 +245,23 @@
         </div>
     </div>
 
-    <!-- زر المدونة الفخم والمستقل موضوع فوق كارت المكتبة الفنية مباشرة وموجه للرئيسية -->
+    <!-- زر المدونة مستقل وموضوع فوق كارت المكتبة الفنية وموجه للرئيسية مباشرة -->
     <a href="https://blogspot.com" target="_blank" class="blog-btn">🌐 مدونة النمر للمعلوميات</a>
 
+    <!-- كارت المكتبة الفنية -->
     <div class="card">
         <h2>📚 المكتبة الفنية لكهرباء الهندسة والمصانع</h2>
         <div class="book-item">
             <div class="book-info">كتاب التحكم الآلي الكلاسيكي (Classic Control)<span>صيانة وتشغيل اللوحات</span></div>
-            <button onclick="showBookAlert('كتاب التحكم الآلي')" class="download-btn">تحميل PDF</button>
+            <a href="https://blogspot.com2026/09/classic-control.html" target="_blank" class="download-btn">فتح من المدونة</a>
         </div>
         <div class="book-item">
             <div class="book-info">دليل الكود المصري للتركيبات الكهربائية<span>المجلد الأول - التمديدات</span></div>
-            <button onclick="showBookAlert('دليل الكود المصري')" class="download-btn">تحميل PDF</button>
+            <a href="https://blogspot.com2026/09/blog-post.html" target="_blank" class="download-btn">فتح من المدونة</a>
         </div>
     </div>
 
+    <!-- روابط التنقل السفلية المستقلة -->
     <div class="nav-links">
         <a href="conduit.html">📐 حاسبة أقطار مواسير التمديد (Conduit Fill) ←</a>
         <a href="factor.html">📊 حاسبة مكثفات معامل القدرة (KVAR) ←</a>
@@ -265,19 +274,18 @@
     <p>جميع الحقوق محفوظة © المهندس المطور ماجد النمر 2026</p>
 </div>
 
+<!-- معالجة وحماية دوال الصفحة البرمجية بالأسفل بشكل آمن يمنع التجميد -->
+<script src="https://minepi.com" async></script>
 <script>
-    Pi.init({ version: "2.0", sandbox: true });
+    window.onload = function() {
+        if (typeof Pi !== 'undefined') {
+            try {
+                Pi.init({ version: "2.0", sandbox: true });
+            } catch(e) {}
+        }
+    };
     
     function calculateIndustrial() {
         var power = parseFloat(document.getElementById('indPower').value);
         var unit = document.getElementById('indUnit').value;
         if (isNaN(power) || power <= 0) { alert("برجاء إدخال قيمة صحيحة."); return; }
-        var kw = unit === 'hp' ? power * 0.746 : power;
-        var fli = kw / (1.732 * 0.38 * 0.84 * 0.85);
-        var breaker = Math.ceil(fli * 1.6);
-        var contactor = Math.ceil(fli * 1.25);
-        var olMin = (fli * 0.9).toFixed(1); var olMax = (fli * 1.15).toFixed(1);
-        var cable = (fli / 2.8).toFixed(1); if(cable < 2.5) cable = 2.5;
-        document.getElementById('indCurrentRes').innerText = fli.toFixed(2);
-        document.getElementById('indBreakerRes').innerText = breaker;
-        document.getElementById('indContactorRes').innerText = contactor;
