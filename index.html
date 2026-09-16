@@ -157,6 +157,30 @@
             font-weight: bold;
             cursor: pointer;
             border: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        /* ستايل وتنسيق زر المدونة المستقل والبارز */
+        .blog-btn {
+            display: block;
+            text-align: center;
+            background: linear-gradient(135deg, var(--neon-purple), #7209b7);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(157, 78, 221, 0.2);
+            transition: all 0.3s;
+            border: 1px solid rgba(0, 210, 255, 0.3);
+            text-shadow: 0 0 8px rgba(255,255,255,0.3);
+        }
+        .blog-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(157, 78, 221, 0.4);
         }
 
         .nav-links {
@@ -192,6 +216,7 @@
 
 <div class="container">
 
+    <!-- كارت حاسبة أحمال المحركات ولوحات الباور (3 فاز) -->
     <div class="card">
         <h2>🏭 حاسبة أحمال المحركات ولوحات الباور (3 فاز)</h2>
         <div class="form-group">
@@ -216,20 +241,25 @@
         </div>
     </div>
 
-    <!-- كارت المكتبة مع رسالة التنبيه المؤقتة الذكية للكتب -->
+    <!-- زر المدونة مستقل وموضوع فوق كارت المكتبة الفنية تماماً وموجه للرئيسية -->
+    <a href="https://blogspot.com" target="_blank" class="blog-btn">🌐 مدونة النمر للمعلوميات</a>
+
+    <!-- كارت المكتبة الفنية المحدث بالروابط المباشرة الصحيحة للكتب المربوطة بالمدونة -->
     <div class="card">
         <h2>📚 المكتبة الفنية لكهرباء الهندسة والمصانع</h2>
         <div class="book-item">
             <div class="book-info">كتاب التحكم الآلي الكلاسيكي (Classic Control)<span>صيانة وتشغيل اللوحات</span></div>
-            <button onclick="showBookAlert('كتاب التحكم الآلي')" class="download-btn">تحميل PDF</button>
+            <a href="https://blogspot.com2026/09/classic-control.html" target="_blank" class="download-btn">فتح من المدونة</a>
         </div>
         <div class="book-item">
             <div class="book-info">دليل الكود المصري للتركيبات الكهربائية<span>المجلد الأول - التمديدات</span></div>
-            <button onclick="showBookAlert('دليل الكود المصري')" class="download-btn">تحميل PDF</button>
+            <a href="https://blogspot.com2026/09/blog-post.html" target="_blank" class="download-btn">فتح من المدونة</a>
         </div>
     </div>
 
+    <!-- روابط التنقل السفلية بعد إضافة وإدراج حاسبة أقطار مواسير التمديد بنجاح -->
     <div class="nav-links">
+        <a href="conduit.html">📐 حاسبة أقطار مواسير التمديد (Conduit Fill) ←</a>
         <a href="factor.html">📊 حاسبة مكثفات معامل القدرة (KVAR) ←</a>
         <a href="home.html">🏠 حاسبة أحمال وتمديدات المنازل الفرعية ←</a>
     </div>
@@ -252,19 +282,3 @@
         var breaker = Math.ceil(fli * 1.6);
         var contactor = Math.ceil(fli * 1.25);
         var olMin = (fli * 0.9).toFixed(1); var olMax = (fli * 1.15).toFixed(1);
-        var cable = (fli / 2.8).toFixed(1); if(cable < 2.5) cable = 2.5;
-        document.getElementById('indCurrentRes').innerText = fli.toFixed(2);
-        document.getElementById('indBreakerRes').innerText = breaker;
-        document.getElementById('indContactorRes').innerText = contactor;
-        document.getElementById('indOverloadRes').innerText = olMin + " - " + olMax;
-        document.getElementById('indCableRes').innerText = cable;
-        document.getElementById('indResult').style.display = 'block';
-    }
-
-    // دالة التنبيه الذكي عند الضغط على الكتاب لحين رفع الملفات الحقيقية
-    function showBookAlert(bookName) {
-        alert("جاري تجهيز رابط التحميل المباشر لـ (" + bookName + ") أونلاين على سيرفر المطورين.. يرجى المحاولة لاحقاً!");
-    }
-</script>
-</body>
-</html>
