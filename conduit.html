@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Tech Aide | حاسبة المواسير</title>
+    <script src="https://minepi.com"></script>
     <style>
         :root {
             --dark-bg: #090d16;
@@ -13,50 +14,18 @@
             --text-main: #f3f4f6;
             --text-muted: #9ca3af;
         }
-        body { 
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-            background: radial-gradient(circle at top, #111827 0%, var(--dark-bg) 80%); 
-            color: var(--text-main); 
-            margin: 0; 
-            padding: 0; 
-            min-height: 100vh; 
-        }
-        header { 
-            text-align: center; 
-            padding: 30px 20px; 
-            background: linear-gradient(to bottom, rgba(9, 13, 22, 0.9), transparent); 
-            border-bottom: 1px solid rgba(0, 210, 255, 0.2); 
-        }
+        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: radial-gradient(circle at top, #111827 0%, var(--dark-bg) 80%); color: var(--text-main); margin: 0; padding: 0; min-height: 100vh; }
+        header { text-align: center; padding: 30px 20px; background: linear-gradient(to bottom, rgba(9, 13, 22, 0.9), transparent); border-bottom: 1px solid rgba(0, 210, 255, 0.2); }
         header h1 { margin: 0; font-size: 26px; font-weight: 800; color: #ffffff; text-shadow: 0 0 15px rgba(0, 210, 255, 0.5); }
         header p { margin: 8px 0 0; font-size: 14px; color: var(--neon-blue); font-weight: 600; }
         .container { max-width: 600px; margin: 20px auto; padding: 0 15px; }
-        .card { 
-            background: var(--panel-bg); 
-            border: 1px solid rgba(0, 210, 255, 0.15); 
-            border-radius: 16px; 
-            padding: 22px; 
-            margin-bottom: 25px; 
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5); 
-            backdrop-filter: blur(10px); 
-        }
+        .card { background: var(--panel-bg); border: 1px solid rgba(0, 210, 255, 0.15); border-radius: 16px; padding: 22px; margin-bottom: 25px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5); backdrop-filter: blur(10px); }
         .card h2 { margin-top: 0; font-size: 18px; font-weight: 700; color: #ffffff; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 10px; }
         .form-group { margin-bottom: 18px; }
         label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; color: var(--text-muted); }
         input, select { width: 100%; padding: 12px; background: rgba(9, 13, 22, 0.8); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px; box-sizing: border-box; font-size: 16px; color: #ffffff; outline: none; }
         input:focus, select:focus { border-color: var(--neon-blue); }
-        button { 
-            background: linear-gradient(135deg, #00d2ff, #00f5d4); 
-            color: #090d16; 
-            border: none; 
-            padding: 14px 20px; 
-            font-size: 16px; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            width: 100%; 
-            font-weight: bold; 
-            transition: all 0.3s ease; 
-            box-shadow: 0 4px 15px rgba(0, 210, 255, 0.3); 
-        }
+        button { background: linear-gradient(135deg, #00d2ff, #00f5d4); color: #090d16; border: none; padding: 14px 20px; font-size: 16px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0, 210, 255, 0.3); }
         button:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0, 210, 255, 0.5); }
         .result-box { background: rgba(0, 210, 255, 0.05); border: 1px solid rgba(0, 210, 255, 0.2); border-right: 5px solid var(--neon-blue); padding: 15px; border-radius: 8px; margin-top: 15px; display: none; }
         .value-highlight { font-family: monospace; font-weight: bold; color: var(--neon-green); font-size: 18px; text-shadow: 0 0 5px rgba(0, 245, 212, 0.5); }
@@ -90,54 +59,32 @@
         </div>
         <button onclick="calculateConduitValues()">احسب قطر الماسورة المناسب</button>
         <div id="conduitResult" class="result-box">
-            <p><strong>القطر الخارجي المقترح للماسورة العمومية:</strong> <span id="conduitRes" class="value-highlight">0</span> ملم</p>
-            <p style="color: var(--text-muted); font-size: 13px; margin-top: 5px;">توصية الكود المصري: تم الحساب بناءً على نسبة إشغال لا تتعدى 40% من مساحة مقطع الماسورة لتسهيل السحب ومنع سخونة التمديدات.</p>
+            <!-- ناتج حركي حقيقي يتغير مباشرة بناءً على حاصل ضرب الخانتين -->
+            <p><strong>حاصل ضرب (المقطع × العدد):</strong> <span id="conduitOutputVal" class="value-highlight">0</span> ملم</p>
+            <p style="color: var(--text-muted); font-size: 13px; margin-top: 5px;">تم الحساب وتحديث الشاشة ديناميكياً بناءً على مدخلاتك الحالية الفورية.</p>
         </div>
     </div>
     <div class="nav-links">
         <a href="index.html">🏢 العودة لحاسبة المصانع العمومية الرئيسية</a>
-        <a href="blog.html">🌐 الانتقال لصفحة مدونة النمر للمعلوميات ←</a>
         <a href="home.html">🏠 الانتقال لحاسبة أحمال المنازل</a>
+        <a href="factor.html">📊 الانتقال لحاسبة مكثفات معامل القدرة</a>
     </div>
 </div>
 <div class="footer">
     <p>جميع الحقوق محفوظة © المهندس المطور ماجد النمر 2026</p>
 </div>
-
-<!-- معالجة ذكية للسكربت لمنع تعطل الأزرار -->
-<script src="https://minepi.com" async></script>
 <script>
-    window.onload = function() {
-        if (typeof Pi !== 'undefined') {
-            try { Pi.init({ version: "2.0", sandbox: true }); } catch(e) {}
-        }
-    };
-
+    Pi.init({ version: "2.0", sandbox: true });
+    
     function calculateConduitValues() {
         var size = parseFloat(document.getElementById('wireSize').value);
         var count = parseInt(document.getElementById('wireCount').value);
         if (isNaN(count) || count <= 0) { alert("يرجى إدخال عدد أسلاك صحيح."); return; }
         
-        // احتساب مساحة السلك الكلية شاملة القشرة العازلة الخارجية PVC لتتحرك الأرقام ديناميكياً
-        var singleWireDiameter = 2 * Math.sqrt(size / Math.PI) + 1.8; 
-        var singleWireArea = Math.PI * Math.pow((singleWireDiameter / 2), 2);
-        var totalWiresArea = singleWireArea * count;
-        
-        var requiredConduitArea = totalWiresArea / 0.40;
-        var calculatedDiameter = 2 * Math.sqrt(requiredConduitArea / Math.PI);
-        
-        // تحديد الأقطار التجارية المعتمدة في الكود المصري لتتغير طبقاً للمدخلات
-        var conduitDiameter = 16;
-        if (calculatedDiameter <= 16) {
-            conduitDiameter = 16;
-        } else if (calculatedDiameter <= 20) {
-            conduitDiameter = 20;
-        } else if (calculatedDiameter <= 25) {
-            conduitDiameter = 25;
-        } else {
-            conduitDiameter = 32;
-        }
-        document.getElementById('conduitRes').innerText = conduitDiameter;
+        // تنفيذ معادلتك المطلوبة حرفياً: ضرب مقطع السلك المختار في عدد الأسلاك المدخلة
+        var resultValue = (size * count).toFixed(1);
+
+        document.getElementById('conduitOutputVal').innerText = resultValue;
         document.getElementById('conduitResult').style.display = 'block';
     }
 </script>
