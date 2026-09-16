@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مدونة النمر للمعلوميات</title>
+    <script src="https://minepi.com"></script>
     <style>
         :root {
             --dark-bg: #090d16;
@@ -69,7 +70,7 @@
         <h2 style="color: white; margin-top: 0; font-size: 18px; margin-bottom: 15px;">مرحباً بك في المنصة الرسمية لمدونة النمر للمعلوميات</h2>
         <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 25px; line-height: 1.6;">اضغط على الزر بالأسفل للانتقال مباشرة وتصفح أحدث الكتب، المراجع الهندسية، شروحات التحكم الآلي والتركيبات الكهربائية القياسية.</p>
         
-        <!-- التوجيه الدقيق والمباشر للصفحة الرئيسية للمدونة دون الدخول للمشاركات -->
+        <!-- التوجيه المباشر إلى الصفحة الرئيسية للمدونة فوراً منعاً للمشاركات الداخلية -->
         <a href="https://blogspot.com" target="_blank" class="visit-btn">🌐 دخول مدونة النمر للمعلوميات الرئيسية</a>
     </div>
     
@@ -81,13 +82,8 @@
 <div class="footer">
     <p>جميع الحقوق محفوظة © المهندس المطور ماجد النمر 2026</p>
 </div>
-<script src="https://minepi.com" async></script>
 <script>
-    window.onload = function() {
-        if (typeof Pi !== 'undefined') {
-            try { Pi.init({ version: "2.0", sandbox: true }); } catch(e) {}
-        }
-    };
+    Pi.init({ version: "2.0", sandbox: true });
 </script>
 </body>
 </html>
