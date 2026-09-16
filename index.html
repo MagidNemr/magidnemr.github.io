@@ -76,7 +76,7 @@
         
         label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-weight: 600;
             font-size: 14px;
             color: var(--text-muted);
@@ -165,7 +165,6 @@
             text-align: center;
         }
 
-        /* زر المدونة المحدث ليظهر بأناقة فوق اسم المكتبة */
         .blog-btn {
             display: block;
             text-align: center;
@@ -220,7 +219,7 @@
 
 <div class="container">
 
-    <!-- 1. كارت حاسبة أحمال المحركات ولوحات الباور -->
+    <!-- كارت حاسبة المحركات واللوحات بعد إصلاح الـ IDs وضبط التفعيل -->
     <div class="card">
         <h2>🏭 حاسبة أحمال المحركات ولوحات الباور (3 فاز)</h2>
         <div class="form-group">
@@ -245,10 +244,10 @@
         </div>
     </div>
 
-    <!-- زر المدونة الرئيسي - موضوع هنا فوق عنوان كارت المكتبة تماماً -->
+    <!-- زر مدونة النمر الفخم والمستقل فوق عنوان كارت المكتبة تماماً -->
     <a href="https://blogspot.com" target="_blank" class="blog-btn">🌐 مدونة النمر للمعلوميات</a>
 
-    <!-- 2. كارت المكتبة الفنية لكهرباء الهندسة والمصانع -->
+    <!-- كارت المكتبة الفنية لكهرباء الهندسة والمصانع -->
     <div class="card">
         <h2>📚 المكتبة الفنية لكهرباء الهندسة والمصانع</h2>
         
@@ -265,7 +264,7 @@
         </div>
     </div>
 
-    <!-- 3. الروابط السفلية متضمنة حاسبة أقطار مواسير التمديد -->
+    <!-- قائمة روابط التوجيه السفلية متكاملة -->
     <div class="nav-links">
         <a href="conduit.html">📐 حاسبة أقطار مواسير التمديد (Conduit Fill) ←</a>
         <a href="factor.html">📊 حاسبة مكثفات معامل القدرة (KVAR) ←</a>
@@ -278,15 +277,16 @@
     <p>جميع الحقوق محفوظة © المهندس المطور ماجد النمر 2026</p>
 </div>
 
-<!-- تم تضمين مكتبة Pi بأمان لضمان عمل الصفحة في بيئة الاختبار بكفاءة عالية دون تهنيج -->
+<!-- معالجة ذكية وسلسة لملف Pi لضمان التشغيل الكفء دون تجميد المتصفح -->
 <script src="https://minepi.com" async></script>
 <script>
     window.onload = function() {
         if (typeof Pi !== 'undefined') {
-            try {
-                Pi.init({ version: "2.0", sandbox: true });
-            } catch(e) { console.log("Pi initialization bypassed"); }
+            try { Pi.init({ version: "2.0", sandbox: true }); } catch(e) {}
         }
     };
-    
+
     function calculateIndustrial() {
+        var power = parseFloat(document.getElementById('indPower').value);
+        var unit = document.getElementById('indUnit').value;
+        if (isNaN(power) || power <= 0) { alert("برجاء إدخال قيمة صحيحة."); return; }
