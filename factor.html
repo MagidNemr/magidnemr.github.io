@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Tech Aide | معامل القدرة</title>
-    <script src="https://minepi.com"></script>
     <style>
         :root {
             --dark-bg: #090d16;
@@ -42,7 +41,8 @@
         .card h2 { margin-top: 0; font-size: 18px; font-weight: 700; color: #ffffff; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 10px; }
         .form-group { margin-bottom: 18px; }
         label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; color: var(--text-muted); }
-        input { width: 100%; padding: 12px; background: rgba(9, 13, 22, 0.8); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px; box-sizing: border-box; font-size: 16px; color: #ffffff; }
+        input { width: 100%; padding: 12px; background: rgba(9, 13, 22, 0.8); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px; box-sizing: border-box; font-size: 16px; color: #ffffff; outline: none; }
+        input:focus { border-color: var(--neon-green); }
         button {
             background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; padding: 14px 20px; font-size: 16px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
@@ -80,10 +80,16 @@
     <div class="nav-links">
         <a href="index.html">🏢 العودة لحاسبة المصانع الرئيسية العمومية</a>
         <a href="home.html">🏠 الانتقال لحاسبة أحمال وتمديدات المنازل ←</a>
+        <a href="conduit.html">📐 الانتقال لحاسبة مواسير التمديد ←</a>
     </div>
 </div>
+<script src="https://minepi.com" async></script>
 <script>
-    Pi.init({ version: "2.0", sandbox: true });
+    window.onload = function() {
+        if (typeof Pi !== 'undefined') {
+            try { Pi.init({ version: "2.0", sandbox: true }); } catch(e) {}
+        }
+    };
     function calculatePowerFactor() {
         var p = parseFloat(document.getElementById('pfPower').value);
         var pf1 = parseFloat(document.getElementById('pfCurrent').value);
