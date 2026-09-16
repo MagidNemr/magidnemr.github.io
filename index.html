@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Tech Aide | اللوحة الهندسية</title>
-    <script src="https://minepi.com"></script>
     <style>
         :root {
             --dark-bg: #090d16;
@@ -92,6 +91,11 @@
             box-sizing: border-box;
             font-size: 16px;
             color: #ffffff;
+            outline: none;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--neon-blue);
         }
 
         button {
@@ -161,7 +165,6 @@
             text-align: center;
         }
 
-        /* ستايل وتنسيق زر المدونة المستقل والبارز */
         .blog-btn {
             display: block;
             text-align: center;
@@ -241,23 +244,27 @@
         </div>
     </div>
 
-    <!-- زر المدونة مستقل وموضوع فوق كارت المكتبة الفنية تماماً وموجه للرئيسية -->
+    <!-- زر المدونة مستقل وموضوع فوق كارت المكتبة تماماً وموجه للرئيسية مباشرة -->
     <a href="https://blogspot.com" target="_blank" class="blog-btn">🌐 مدونة النمر للمعلوميات</a>
 
-    <!-- كارت المكتبة الفنية المحدث بالروابط المباشرة الصحيحة للكتب المربوطة بالمدونة -->
+    <!-- كارت المكتبة الفنية لكهرباء الهندسة والمصانع -->
     <div class="card">
         <h2>📚 المكتبة الفنية لكهرباء الهندسة والمصانع</h2>
+        
+        <!-- كتاب التحكم الآلي برابط البلوجسبوت الجديد الشغال -->
         <div class="book-item">
             <div class="book-info">كتاب التحكم الآلي الكلاسيكي (Classic Control)<span>صيانة وتشغيل اللوحات</span></div>
             <a href="https://blogspot.com2026/09/classic-control.html" target="_blank" class="download-btn">فتح من المدونة</a>
         </div>
+        
+        <!-- دليل الكود المصري برابط البلوجسبوت الجديد الشغال -->
         <div class="book-item">
             <div class="book-info">دليل الكود المصري للتركيبات الكهربائية<span>المجلد الأول - التمديدات</span></div>
             <a href="https://blogspot.com2026/09/blog-post.html" target="_blank" class="download-btn">فتح من المدونة</a>
         </div>
     </div>
 
-    <!-- روابط التنقل السفلية بعد إضافة وإدراج حاسبة أقطار مواسير التمديد بنجاح -->
+    <!-- روابط التنقل السفلية المستقلة متضمنة حاسبة أقطار مواسير التمديد -->
     <div class="nav-links">
         <a href="conduit.html">📐 حاسبة أقطار مواسير التمديد (Conduit Fill) ←</a>
         <a href="factor.html">📊 حاسبة مكثفات معامل القدرة (KVAR) ←</a>
@@ -270,15 +277,16 @@
     <p>جميع الحقوق محفوظة © المهندس المطور ماجد النمر 2026</p>
 </div>
 
+<!-- معالجة ذكية ومستقرة لمكتبة Pi لمنع تعطيل المتصفح خارج بيئة الساندبوكس -->
+<script src="https://minepi.com" async></script>
 <script>
-    Pi.init({ version: "2.0", sandbox: true });
+    window.onload = function() {
+        if (typeof Pi !== 'undefined') {
+            try {
+                Pi.init({ version: "2.0", sandbox: true });
+            } catch(e) { console.log("Pi SDK Handled"); }
+        }
+    };
     
     function calculateIndustrial() {
         var power = parseFloat(document.getElementById('indPower').value);
-        var unit = document.getElementById('indUnit').value;
-        if (isNaN(power) || power <= 0) { alert("برجاء إدخال قيمة صحيحة."); return; }
-        var kw = unit === 'hp' ? power * 0.746 : power;
-        var fli = kw / (1.732 * 0.38 * 0.84 * 0.85);
-        var breaker = Math.ceil(fli * 1.6);
-        var contactor = Math.ceil(fli * 1.25);
-        var olMin = (fli * 0.9).toFixed(1); var olMax = (fli * 1.15).toFixed(1);
