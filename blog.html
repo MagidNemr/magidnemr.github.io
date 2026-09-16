@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدونة النمر للمعلوميات</title>
+    <script src="https://minepi.com"></script>
+    <style>
+        :root {
+            --dark-bg: #090d16;
+            --panel-bg: rgba(17, 24, 39, 0.95);
+            --neon-purple: #9d4edd;
+            --neon-blue: #00d2ff;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: radial-gradient(circle at top, #111827 0%, var(--dark-bg) 80%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(to bottom, rgba(9, 13, 22, 0.9), transparent);
+            border-bottom: 1px solid rgba(157, 78, 221, 0.2);
+        }
+        header h1 {
+            margin: 0; font-size: 26px; font-weight: 800; color: #ffffff;
+            text-shadow: 0 0 15px rgba(157, 78, 221, 0.5);
+        }
+        header p { margin: 8px 0 0; font-size: 14px; color: var(--neon-purple); font-weight: 600; }
+        .container { max-width: 600px; margin: 20px auto; padding: 0 15px; }
+        .card {
+            background: var(--panel-bg); border: 1px solid rgba(157, 78, 221, 0.15);
+            border-radius: 16px; padding: 22px; margin-bottom: 25px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5); backdrop-filter: blur(10px);
+        }
+        .visit-btn {
+            display: block;
+            text-align: center;
+            background: linear-gradient(135deg, var(--neon-purple), #7209b7);
+            color: white;
+            text-decoration: none;
+            padding: 15px;
+            font-size: 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(157, 78, 221, 0.3);
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+        }
+        .visit-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(157, 78, 221, 0.5); }
+        .nav-links { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+        .nav-links a { text-align: center; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-main); padding: 12px; border-radius: 8px; font-weight: bold; text-decoration: none; transition: all 0.3s; }
+        .nav-links a:hover { background: rgba(255, 255, 255, 0.08); }
+        .footer { text-align: center; padding: 25px; font-size: 12px; color: var(--text-muted); }
+    </style>
+</head>
+<body>
+<header>
+    <h1>مدونة النمر للمعلوميات 🌐</h1>
+    <p>« بوابة الشروحات والمراجع الهندسية والتقنية »</p>
+</header>
+<div class="container">
+    <div class="card" style="text-align: center;">
+        <h2 style="color: white; margin-top: 0; font-size: 18px; margin-bottom: 15px;">مرحباً بك في المنصة الرسمية لمدونة النمر للمعلوميات</h2>
+        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 25px; line-height: 1.6;">اضغط على الزر بالأسفل للانتقال مباشرة وتصفح أحدث الكتب، المراجع الهندسية، شروحات التحكم الآلي والتركيبات الكهربائية القياسية.</p>
+        
+        <!-- التوجيه المباشر للصفحة الرئيسية للمدونة -->
+        <a href="https://blogspot.com" target="_blank" class="visit-btn">🌐 دخول مدونة النمر للمعلوميات الرئيسية</a>
+    </div>
+    
+    <div class="nav-links">
+        <a href="index.html">🏢 العودة لحاسبة المصانع الرئيسية</a>
+        <a href="conduit.html">📐 الانتقال لحاسبة مواسير التمديد ←</a>
+    </div>
+</div>
+<div class="footer">
+    <p>جميع الحقوق محفوظة © المهندس المطور ماجد النمر 2026</p>
+</div>
+<script>
+    Pi.init({ version: "2.0", sandbox: true });
+</script>
+</body>
+</html>
