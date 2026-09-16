@@ -159,6 +159,28 @@
             border: none;
         }
 
+        /* ستايل زر المدونة المستقل الفخم فوق كارت المكتبة الفنية */
+        .blog-btn {
+            display: block;
+            text-align: center;
+            background: linear-gradient(135deg, var(--neon-purple), #7209b7);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(157, 78, 221, 0.2);
+            transition: all 0.3s;
+            border: 1px solid rgba(0, 210, 255, 0.3);
+            text-shadow: 0 0 8px rgba(255,255,255,0.3);
+        }
+        .blog-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(157, 78, 221, 0.4);
+        }
+
         .nav-links {
             display: flex;
             flex-direction: column;
@@ -216,7 +238,9 @@
         </div>
     </div>
 
-    <!-- كارت المكتبة مع رسالة التنبيه الفنية الأصلية -->
+    <!-- زر المدونة الفخم والمستقل موضوع فوق كارت المكتبة الفنية مباشرة وموجه للرئيسية -->
+    <a href="https://blogspot.com" target="_blank" class="blog-btn">🌐 مدونة النمر للمعلوميات</a>
+
     <div class="card">
         <h2>📚 المكتبة الفنية لكهرباء الهندسة والمصانع</h2>
         <div class="book-item">
@@ -229,7 +253,6 @@
         </div>
     </div>
 
-    <!-- قائمة روابط التنقل السفلية المستقلة المضاف إليها حاسبة المواسير -->
     <div class="nav-links">
         <a href="conduit.html">📐 حاسبة أقطار مواسير التمديد (Conduit Fill) ←</a>
         <a href="factor.html">📊 حاسبة مكثفات معامل القدرة (KVAR) ←</a>
@@ -258,14 +281,3 @@
         document.getElementById('indCurrentRes').innerText = fli.toFixed(2);
         document.getElementById('indBreakerRes').innerText = breaker;
         document.getElementById('indContactorRes').innerText = contactor;
-        document.getElementById('indOverloadRes').innerText = olMin + " - " + olMax;
-        document.getElementById('indCableRes').innerText = cable;
-        document.getElementById('indResult').style.display = 'block';
-    }
-
-    function showBookAlert(bookName) {
-        alert("جاري تجهيز رابط التحميل المباشر لـ (" + bookName + ") أونلاين على سيرفر المطورين.. يرجى المحاولة لاحقاً!");
-    }
-</script>
-</body>
-</html>
