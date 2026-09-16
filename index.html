@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Tech Aide | اللوحة الهندسية</title>
-    <script src="https://minepi.com"></script>
     <style>
         :root {
             --dark-bg: #090d16;
@@ -77,7 +76,7 @@
         
         label {
             display: block;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             font-weight: 600;
             font-size: 14px;
             color: var(--text-muted);
@@ -92,9 +91,14 @@
             box-sizing: border-box;
             font-size: 16px;
             color: #ffffff;
+            outline: none;
+        }
+        
+        input:focus, select:focus {
+            border-color: var(--neon-blue);
         }
 
-        button {
+        .btn-calc {
             background: linear-gradient(135deg, #6200ee, #7209b7);
             color: white;
             border: none;
@@ -108,7 +112,7 @@
             box-shadow: 0 4px 15px rgba(157, 78, 221, 0.3);
         }
 
-        button:hover {
+        .btn-calc:hover {
             transform: translateY(-1px);
             box-shadow: 0 6px 20px rgba(157, 78, 221, 0.5);
         }
@@ -161,7 +165,7 @@
             text-align: center;
         }
 
-        /* ستايل زر المدونة المستقل */
+        /* زر المدونة المحدث ليظهر بأناقة فوق اسم المكتبة */
         .blog-btn {
             display: block;
             text-align: center;
@@ -216,7 +220,7 @@
 
 <div class="container">
 
-    <!-- 1. كارت حاسبة أحمال المحركات ولوحات الباور (تعديل الـ IDs) -->
+    <!-- 1. كارت حاسبة أحمال المحركات ولوحات الباور -->
     <div class="card">
         <h2>🏭 حاسبة أحمال المحركات ولوحات الباور (3 فاز)</h2>
         <div class="form-group">
@@ -230,7 +234,7 @@
                 <option value="kw">كيلوواط (kW)</option>
             </select>
         </div>
-        <button onclick="calculateIndustrial()">تحليل المكونات الصناعية العمومية</button>
+        <button class="btn-calc" onclick="calculateIndustrial()">تحليل المكونات الصناعية العمومية</button>
         
         <div id="indResult" class="result-box">
             <p><strong>تيار الحمل الكامل (FLA):</strong> <span id="indCurrentRes" class="value-highlight">0</span> أمبير</p>
@@ -241,8 +245,8 @@
         </div>
     </div>
 
-    <!-- زر المدونة مستقل وموضوع فوق كارت المكتبة تماماً -->
-    <a href="https://blogspot.com" target="_blank" class="blog-btn">🌐 مدونة النمر للمعلوميات (الصفحة الرئيسية)</a>
+    <!-- زر المدونة الرئيسي - موضوع هنا فوق عنوان كارت المكتبة تماماً -->
+    <a href="https://blogspot.com" target="_blank" class="blog-btn">🌐 مدونة النمر للمعلوميات</a>
 
     <!-- 2. كارت المكتبة الفنية لكهرباء الهندسة والمصانع -->
     <div class="card">
@@ -261,7 +265,7 @@
         </div>
     </div>
 
-    <!-- 3. الروابط السفلية كاملة متضمنة حاسبة أقطار المواسير -->
+    <!-- 3. الروابط السفلية متضمنة حاسبة أقطار مواسير التمديد -->
     <div class="nav-links">
         <a href="conduit.html">📐 حاسبة أقطار مواسير التمديد (Conduit Fill) ←</a>
         <a href="factor.html">📊 حاسبة مكثفات معامل القدرة (KVAR) ←</a>
@@ -274,15 +278,15 @@
     <p>جميع الحقوق محفوظة © المهندس المطور ماجد النمر 2026</p>
 </div>
 
+<!-- تم تضمين مكتبة Pi بأمان لضمان عمل الصفحة في بيئة الاختبار بكفاءة عالية دون تهنيج -->
+<script src="https://minepi.com" async></script>
 <script>
-    Pi.init({ version: "2.0", sandbox: true });
+    window.onload = function() {
+        if (typeof Pi !== 'undefined') {
+            try {
+                Pi.init({ version: "2.0", sandbox: true });
+            } catch(e) { console.log("Pi initialization bypassed"); }
+        }
+    };
     
     function calculateIndustrial() {
-        var power = parseFloat(document.getElementById('indPower').value);
-        var unit = document.getElementById('indUnit').value;
-        if (isNaN(power) || power <= 0) { alert("برجاء إدخال قيمة صحيحة."); return; }
-        var kw = unit === 'hp' ? power * 0.746 : power;
-        var fli = kw / (1.732 * 0.38 * 0.84 * 0.85);
-        var breaker = Math.ceil(fli * 1.6);
-        var contactor = Math.ceil(fli * 1.25);
-        var olMin = (fli * 0.9).toFixed(1); var olMax = (fli * 1.15).toFixed(1);
