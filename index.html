@@ -165,6 +165,7 @@
             text-align: center;
         }
 
+        /* زر المدونة فخم وموضوع فوق كارت المكتبة تماماً */
         .blog-btn {
             display: block;
             text-align: center;
@@ -244,27 +245,23 @@
         </div>
     </div>
 
-    <!-- زر المدونة مستقل وموضوع فوق كارت المكتبة تماماً وموجه للرئيسية مباشرة -->
+    <!-- زر المدونة مستقل تماماً وموضوع فوق كارت المكتبة وموجه للرئيسية مباشرة -->
     <a href="https://blogspot.com" target="_blank" class="blog-btn">🌐 مدونة النمر للمعلوميات</a>
 
-    <!-- كارت المكتبة الفنية لكهرباء الهندسة والمصانع -->
+    <!-- كارت المكتبة الفنية -->
     <div class="card">
         <h2>📚 المكتبة الفنية لكهرباء الهندسة والمصانع</h2>
-        
-        <!-- كتاب التحكم الآلي برابط البلوجسبوت الجديد الشغال -->
         <div class="book-item">
             <div class="book-info">كتاب التحكم الآلي الكلاسيكي (Classic Control)<span>صيانة وتشغيل اللوحات</span></div>
             <a href="https://blogspot.com2026/09/classic-control.html" target="_blank" class="download-btn">فتح من المدونة</a>
         </div>
-        
-        <!-- دليل الكود المصري برابط البلوجسبوت الجديد الشغال -->
         <div class="book-item">
             <div class="book-info">دليل الكود المصري للتركيبات الكهربائية<span>المجلد الأول - التمديدات</span></div>
             <a href="https://blogspot.com2026/09/blog-post.html" target="_blank" class="download-btn">فتح من المدونة</a>
         </div>
     </div>
 
-    <!-- روابط التنقل السفلية المستقلة متضمنة حاسبة أقطار مواسير التمديد -->
+    <!-- روابط التنقل السفلية بعد إدراج حاسبة أقطار مواسير التمديد بنجاح -->
     <div class="nav-links">
         <a href="conduit.html">📐 حاسبة أقطار مواسير التمديد (Conduit Fill) ←</a>
         <a href="factor.html">📊 حاسبة مكثفات معامل القدرة (KVAR) ←</a>
@@ -277,16 +274,17 @@
     <p>جميع الحقوق محفوظة © المهندس المطور ماجد النمر 2026</p>
 </div>
 
-<!-- معالجة ذكية ومستقرة لمكتبة Pi لمنع تعطيل المتصفح خارج بيئة الساندبوكس -->
+<!-- تم تأمين مكتبة Pi ووضعها بذكاء بالأسفل لضمان عمل الصفحة فوراً وبدون أي تجميد -->
 <script src="https://minepi.com" async></script>
 <script>
     window.onload = function() {
         if (typeof Pi !== 'undefined') {
             try {
                 Pi.init({ version: "2.0", sandbox: true });
-            } catch(e) { console.log("Pi SDK Handled"); }
+            } catch(e) { console.log("Bypassed"); }
         }
     };
-    
+
     function calculateIndustrial() {
         var power = parseFloat(document.getElementById('indPower').value);
+        var unit = document.getElementById('indUnit').value;
