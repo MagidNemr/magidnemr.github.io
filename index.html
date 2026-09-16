@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Tech Aide</title>
     <style>
-        /* التنسيق العام للمنصة لتبدو فخمة وأنيقة وثابتة */
+        /* ستايل احترافي فخم ومتناسق تماماً مع الصورة */
         body {
             margin: 0;
             padding: 0;
-            background-color: #f7f9fc;
+            background-color: #f4f6f9;
             font-family: 'Segoe UI', Arial, sans-serif;
             display: flex;
             justify-content: center;
@@ -20,121 +20,152 @@
             max-width: 450px;
             background-color: #ffffff;
             min-height: 100vh;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             display: flex;
             flex-direction: column;
-            padding-bottom: 30px;
+            padding-bottom: 25px;
             box-sizing: border-box;
         }
         
-        /* الهيدر العلوي - بنفسجي فخم متطابق */
+        /* الهيدر العلوي الموحد بنفسجي فخم */
         .header {
-            background: linear-gradient(135deg, #5100cc 0%, #6200ee 100%);
+            background-color: #6200ee;
             color: #ffffff;
             text-align: center;
             padding: 30px 20px;
-            box-shadow: 0 4px 12px rgba(98, 0, 238, 0.2);
+            border-bottom: 4px solid #5100cc;
         }
         .header h1 {
-            margin: 0 0 12px 0;
-            font-size: 28px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
+            margin: 0 0 8px 0;
+            font-size: 26px;
+            font-weight: 700;
         }
         .header .sub-title {
             margin: 0;
-            font-size: 15px;
-            font-weight: 500;
+            font-size: 14px;
             opacity: 0.95;
             line-height: 1.5;
         }
 
-        /* الكروت البيضاء الأنيقة */
+        /* الكروت البيضاء الأنيقة بحواف ناعمة */
         .card {
             background: #ffffff;
-            border-radius: 14px;
-            padding: 22px;
-            margin: 16px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
             border: 1px solid #eef2ff;
         }
         .card-title {
             color: #6200ee;
-            font-size: 17px;
+            font-size: 16px;
             font-weight: 700;
             margin-top: 0;
-            margin-bottom: 20px;
-            line-height: 1.4;
+            margin-bottom: 18px;
         }
 
         /* عناصر حاسبة الأحمال */
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 15px;
         }
         .form-group label {
             display: block;
             margin-bottom: 8px;
             font-size: 14px;
             font-weight: 600;
-            color: #334155;
+            color: #475569;
         }
         .form-group input, .form-group select {
             width: 100%;
-            padding: 13px;
+            padding: 12px;
             border: 1px solid #cbd5e1;
-            border-radius: 10px;
+            border-radius: 8px;
             box-sizing: border-box;
             font-size: 14px;
-            color: #1e293b;
-            background-color: #f8fafc;
+            background-color: #fff;
             outline: none;
-            transition: border-color 0.2s;
         }
         .form-group input:focus, .form-group select:focus {
             border-color: #6200ee;
-            background-color: #ffffff;
         }
         .btn-calc {
             width: 100%;
-            background: linear-gradient(90deg, #6200ee 0%, #7c4dff 100%);
-            color: #ffffff;
+            background-color: #6200ee;
+            color: white;
             border: none;
             padding: 14px;
-            border-radius: 10px;
+            border-radius: 8px;
             font-size: 15px;
             font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(98, 0, 238, 0.2);
+            box-shadow: 0 4px 10px rgba(98, 0, 238, 0.15);
         }
 
-        /* روابط التنقل السفلية الزرقاء المريحة للعين */
+        /* حاوية عناصر الكتب */
+        .book-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #ffffff;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 12px;
+        }
+        .book-info {
+            flex: 1;
+            padding-left: 10px;
+        }
+        .book-info h4 {
+            margin: 0 0 4px 0;
+            font-size: 13px;
+            color: #1e293b;
+            font-weight: 700;
+        }
+        .book-info p {
+            margin: 0;
+            font-size: 11px;
+            color: #64748b;
+        }
+
+        /* أزرار الفتح الخضراء الأصلية والأنيقة */
+        .btn-open {
+            background-color: #00a86b;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 12px;
+            text-align: center;
+            min-width: 85px;
+            box-shadow: 0 2px 6px rgba(0, 168, 107, 0.2);
+        }
+
+        /* روابط التنقل السفلية المريحة والمنسقة */
         .btn-link-card {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            color: #1e40af;
+            color: #6200ee;
             text-decoration: none;
             font-weight: 700;
-            font-size: 15px;
-            background: #eff6ff;
+            font-size: 14px;
+            background: #ffffff;
             padding: 16px 20px;
             border-radius: 12px;
-            margin: 12px 16px;
-            border: 1px solid #dbeafe;
-            transition: all 0.2s;
-        }
-        .btn-link-card:hover {
-            background: #dbeafe;
+            margin: 12px 15px;
+            border: 1px solid #eef2ff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
 
         /* الفوتر السفلي */
         .footer {
             text-align: center;
             color: #64748b;
-            font-size: 13px;
+            font-size: 12px;
             margin-top: auto;
-            padding: 25px 15px 15px 15px;
-            border-top: 1px solid #f1f5f9;
+            padding: 20px 15px;
         }
     </style>
 </head>
@@ -145,11 +176,11 @@
     <!-- الهيدر العلوي للمنصة -->
     <div class="header">
         <h1>Smart Tech Aide</h1>
-        <div style="font-size: 26px; margin: 8px 0;">⚡</div>
+        <div style="font-size: 24px; margin: 5px 0;">⚡</div>
         <div class="sub-title">المنصة الهندسية الذكية لأنظمة التحكم والكهرباء الصناعية</div>
     </div>
 
-    <!-- 1. كارت حاسبة الأحمال وقدرة الكابلات (3 فاز) -->
+    <!-- 1. كارت حاسبة الأحمال وقدرة الكابلات -->
     <div class="card">
         <h3 class="card-title">📊 حاسبة الأحمال وقدرة الكابلات والقواطع (3 فاز)</h3>
         <div class="form-group">
@@ -166,61 +197,57 @@
         <button class="btn-calc">احسب الحمل الكهربائي</button>
     </div>
 
-    <!-- 2. كارت المكتبة الفنية الفخم والأنيق جداً (محدث) -->
-    <div class="card" style="border: 1px solid rgba(98, 0, 238, 0.15); background: #fafafa;">
+    <!-- 2. كارت المكتبة الفنية المطور والمنسق -->
+    <div class="card" style="border: 1px solid rgba(98, 0, 238, 0.15); background-color: #fafafa;">
         <h3 class="card-title" style="margin-bottom: 15px;">📚 المكتبة الفنية لكهرباء الهندسة والمصانع</h3>
         
-        <!-- زر مدونة النمر للمعلوميات الفخم الرئيسي -->
-        <a href="https://blogspot.com" target="_blank" style="display: block; text-align: center; background: linear-gradient(90deg, #6200ee 0%, #7c4dff 100%); color: #ffffff; text-decoration: none; padding: 14px; border-radius: 10px; font-weight: 700; font-size: 15px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(98, 0, 238, 0.25);">
+        <!-- زر مدونة النمر للمعلوميات موجه مباشرة للصفحة الرئيسية للمدونة -->
+        <a href="https://blogspot.com" target="_blank" style="display: block; text-align: center; background-color: #6200ee; color: #ffffff; text-decoration: none; padding: 13px; border-radius: 8px; font-weight: 700; font-size: 15px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(98, 0, 238, 0.15);">
             🌐 مدونة النمر للمعلوميات
         </a>
 
-        <!-- حاوية ترتيب الكتب والأزرار الخضراء الفخمة -->
-        <div style="display: flex; flex-direction: column; gap: 15px;">
+        <!-- قائمة الكتب الفنية -->
+        <div style="display: flex; flex-direction: column;">
             
             <!-- كتاب التحكم الآلي الكلاسيكي -->
-            <div style="display: flex; align-items: center; justify-content: space-between; background: #ffffff; padding: 14px; border-radius: 10px; border: 1px solid #e2e8f0; box-shadow: 0 2px 6px rgba(0,0,0,0.02);">
-                <div style="flex: 1; padding-left: 12px;">
-                    <h4 style="margin: 0 0 4px 0; font-size: 14px; color: #0f172a; font-weight: 700;">كتاب التحكم الآلي الكلاسيكي (Classic Control)</h4>
-                    <p style="margin: 0; font-size: 12px; color: #64748b; font-weight: 500;">صيانة وتشغيل اللوحات</p>
+            <div class="book-item">
+                <div class="book-info">
+                    <h4>كتاب التحكم الآلي الكلاسيكي (Classic Control)</h4>
+                    <p>صيانة وتشغيل اللوحات</p>
                 </div>
-                <a href="https://blogspot.com2026/09/classic-control.html" target="_blank" style="background: linear-gradient(135deg, #00b4d8 0%, #0077b6 100%); color: #ffffff; text-decoration: none; padding: 12px 14px; border-radius: 8px; font-weight: 700; font-size: 12px; text-align: center; min-width: 90px; box-shadow: 0 3px 8px rgba(0, 180, 216, 0.25);">
-                    فتح المجلد
+                <a href="https://blogspot.com2026/09/classic-control.html" target="_blank" class="btn-open">
+                    فتح من المدونة
                 </a>
             </div>
 
             <!-- دليل الكود المصري للتركيبات الكهربائية -->
-            <div style="display: flex; align-items: center; justify-content: space-between; background: #ffffff; padding: 14px; border-radius: 10px; border: 1px solid #e2e8f0; box-shadow: 0 2px 6px rgba(0,0,0,0.02);">
-                <div style="flex: 1; padding-left: 12px;">
-                    <h4 style="margin: 0 0 4px 0; font-size: 14px; color: #0f172a; font-weight: 700;">دليل الكود المصري للتركيبات الكهربائية</h4>
-                    <p style="margin: 0; font-size: 12px; color: #64748b; font-weight: 500;">المجلد الأول - التمديدات</p>
+            <div class="book-item">
+                <div class="book-info">
+                    <h4>دليل الكود المصري للتركيبات الكهربائية</h4>
+                    <p>المجلد الأول - التمديدات</p>
                 </div>
-                <a href="https://blogspot.com2026/09/blog-post.html" target="_blank" style="background: linear-gradient(135deg, #00b4d8 0%, #0077b6 100%); color: #ffffff; text-decoration: none; padding: 12px 14px; border-radius: 8px; font-weight: 700; font-size: 12px; text-align: center; min-width: 90px; box-shadow: 0 3px 8px rgba(0, 180, 216, 0.25);">
-                    فتح المجلد
+                <a href="https://blogspot.com2026/09/blog-post.html" target="_blank" class="btn-open">
+                    فتح من المدونة
                 </a>
             </div>
 
         </div>
     </div>
 
-    <!-- 3. روابط الحاسبات الفرعية السفلية الفخمة المتطابقة -->
+    <!-- 3. روابط الحاسبات الفرعية السفلية المنسقة بنفسجي طبقاً للصورة -->
     <a href="conduit.html" class="btn-link-card">
-        <span>📐 حاسبة أقطار مواسير التمديد (Conduit Fill)</span>
-        <span>←</span>
+        <span>📐 حاسبة أقطار مواسير التمديد (Conduit Fill) ←</span>
     </a>
 
     <a href="factor.html" class="btn-link-card">
-        <span>📊 حاسبة مكثفات معامل القدرة (KVAR)</span>
-        <span>←</span>
+        <span>📊 حاسبة مكثفات معامل القدرة (KVAR) ←</span>
     </a>
 
     <a href="home.html" class="btn-link-card">
-        <span>🏠 حاسبة أحمال وتمديدات المنازل الفرعية</span>
-        <span>←
-        </span>
+        <span>🏠 حاسبة أحمال وتمديدات المنازل الفرعية ←</span>
     </a>
 
-    <!-- الفوتر السفلي كما بالصورة الأصلية بالملي -->
+    <!-- الفوتر السفلي للمنصة -->
     <div class="footer">
         جميع الحقوق محفوظة © المهندس المطور ماجد النمر 2026
     </div>
