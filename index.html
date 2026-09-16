@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Tech Aide | اللوحة الهندسية</title>
+    <script src="https://minepi.com"></script>
     <style>
         :root {
             --dark-bg: #090d16;
@@ -91,11 +92,6 @@
             box-sizing: border-box;
             font-size: 16px;
             color: #ffffff;
-            outline: none;
-        }
-
-        input:focus, select:focus {
-            border-color: var(--neon-blue);
         }
 
         button {
@@ -147,9 +143,6 @@
             border-radius: 8px;
             margin-bottom: 12px;
         }
-        .book-item:hover {
-            background: rgba(255,255,255,0.05);
-        }
         .book-info { font-size: 14px; font-weight: 600; }
         .book-info span { display: block; font-size: 12px; color: var(--text-muted); }
         
@@ -164,8 +157,6 @@
             font-weight: bold;
             cursor: pointer;
             border: none;
-            display: inline-block;
-            text-align: center;
         }
 
         .nav-links {
@@ -201,7 +192,6 @@
 
 <div class="container">
 
-    <!-- كارت حاسبة أحمال المحركات -->
     <div class="card">
         <h2>🏭 حاسبة أحمال المحركات ولوحات الباور (3 فاز)</h2>
         <div class="form-group">
@@ -226,7 +216,6 @@
         </div>
     </div>
 
-    <!-- كارت المكتبة الفنية لكهرباء الهندسة والمصانع -->
     <div class="card">
         <h2>📚 المكتبة الفنية لكهرباء الهندسة والمصانع</h2>
         <div class="book-item">
@@ -239,9 +228,8 @@
         </div>
     </div>
 
-    <!-- روابط السحب السفلية المستقلة والتوجيه لصفحة المدونة المستقلة -->
     <div class="nav-links">
-        <a href="blog.html">🌐 دخول مدونة النمر للمعلوميات ←</a>
+        <a href="blog.html">🌐 مدونة النمر للمعلوميات ←</a>
         <a href="conduit.html">📐 حاسبة أقطار مواسير التمديد (Conduit Fill) ←</a>
         <a href="factor.html">📊 حاسبة مكثفات معامل القدرة (KVAR) ←</a>
         <a href="home.html">🏠 حاسبة أحمال وتمديدات المنازل الفرعية ←</a>
@@ -253,14 +241,8 @@
     <p>جميع الحقوق محفوظة © المهندس المطور ماجد النمر 2026</p>
 </div>
 
-<!-- تأمين المكتبة الخارجية لضمان عمل الجافا سكريبت والحسابات بدون تهنيج -->
-<script src="https://minepi.com" async></script>
 <script>
-    window.onload = function() {
-        if (typeof Pi !== 'undefined') {
-            try { Pi.init({ version: "2.0", sandbox: true }); } catch(e) {}
-        }
-    };
+    Pi.init({ version: "2.0", sandbox: true });
     
     function calculateIndustrial() {
         var power = parseFloat(document.getElementById('indPower').value);
@@ -281,3 +263,8 @@
     }
 
     function showBookAlert(bookName) {
+        alert("جاري تجهيز رابط التحميل المباشر لـ (" + bookName + ") أونلاين على سيرفر المطورين.. يرجى المحاولة لاحقاً!");
+    }
+</script>
+</body>
+</html>
