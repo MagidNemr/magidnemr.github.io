@@ -93,12 +93,12 @@
             color: #ffffff;
             outline: none;
         }
-
+        
         input:focus, select:focus {
             border-color: var(--neon-blue);
         }
 
-        button {
+        .btn-calc {
             background: linear-gradient(135deg, #6200ee, #7209b7);
             color: white;
             border: none;
@@ -112,20 +112,9 @@
             box-shadow: 0 4px 15px rgba(157, 78, 221, 0.3);
         }
 
-        button:hover {
+        .btn-calc:hover {
             transform: translateY(-1px);
             box-shadow: 0 6px 20px rgba(157, 78, 221, 0.5);
-        }
-
-        /* تنسيق مخصص لزر حاسبة المواسير المدمج ليتماشى مع الستايل النيوني اللامع */
-        .btn-conduit {
-            background: linear-gradient(135deg, #00d2ff, #00f5d4);
-            color: #090d16;
-            box-shadow: 0 4px 15px rgba(0, 210, 255, 0.3);
-        }
-
-        .btn-conduit:hover {
-            box-shadow: 0 6px 20px rgba(0, 210, 255, 0.5);
         }
 
         .result-box {
@@ -176,7 +165,7 @@
             text-align: center;
         }
 
-        /* ستايل زر المدونة المستقل ليكون فوق عنوان كارت المكتبة الفنية */
+        /* زر المدونة موضوع بشكل مستقل فوق كارت المكتبة الفنية */
         .blog-btn {
             display: block;
             text-align: center;
@@ -231,7 +220,7 @@
 
 <div class="container">
 
-    <!-- 1. كارت حاسبة أحمال المحركات ولوحات الباور (3 فاز) -->
+    <!-- 1. كارت حاسبة أحمال المحركات ولوحات الباور (تفعيل الـ IDs) -->
     <div class="card">
         <h2>🏭 حاسبة أحمال المحركات ولوحات الباور (3 فاز)</h2>
         <div class="form-group">
@@ -245,7 +234,7 @@
                 <option value="kw">كيلوواط (kW)</option>
             </select>
         </div>
-        <button onclick="calculateIndustrial()">تحليل المكونات الصناعية العمومية</button>
+        <button class="btn-calc" onclick="calculateIndustrial()">تحليل المكونات الصناعية العمومية</button>
         
         <div id="indResult" class="result-box">
             <p><strong>تيار الحمل الكامل (FLA):</strong> <span id="indCurrentRes" class="value-highlight">0</span> أمبير</p>
@@ -256,32 +245,47 @@
         </div>
     </div>
 
-    <!-- 2. كارت حاسبة أقطار مواسير التمديد (تمت إضافتها بنجاح كطلبك) -->
+    <!-- زر المدونة مستقل فوق كارت المكتبة تماماً وموجه للصفحة الرئيسية -->
+    <a href="https://blogspot.com" target="_blank" class="blog-btn">🌐 مدونة النمر للمعلوميات</a>
+
+    <!-- 2. كارت المكتبة الفنية لكهرباء الهندسة والمصانع -->
     <div class="card">
-        <h2>📏 حاسبة أقطار مواسير تمديد الأسلاك (Conduit Fill)</h2>
-        <div class="form-group">
-            <label for="wireSize">مقطع سلك النحاس المراد تمريره (مم²):</label>
-            <select id="wireSize">
-                <option value="1.5">1.5 مم²</option>
-                <option value="2.5">2.5 مم²</option>
-                <option value="4">4 مم²</option>
-                <option value="6">6 مم²</option>
-                <option value="10">10 مم²</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="wireCount">إجمالي عدد الأسلاك داخل الماسورة:</label>
-            <input type="number" id="wireCount" placeholder="مثال: 4" min="1">
-        </div>
-        <button class="btn-conduit" onclick="calculateConduitValues()">احسب قطر الماسورة المناسب</button>
+        <h2>📚 المكتبة الفنية لكهرباء الهندسة والمصانع</h2>
         
-        <div id="conduitResult" class="result-box">
-            <p><strong>القطر الخارجي المقترح للماسورة العمومية:</strong> <span id="conduitRes" class="value-highlight">0</span> ملم</p>
-            <p style="color: var(--text-muted); font-size: 13px; margin-top: 5px;">توصية الكود: تم الحساب بناءً على نسبة إشغال لا تتعدى 40% من مساحة مقطع الماسورة لتسهيل السحب ومنع سخونة التمديدات.</p>
+        <!-- كتاب التحكم الآلي برابط البلوجسبوت الجديد -->
+        <div class="book-item">
+            <div class="book-info">كتاب التحكم الآلي الكلاسيكي (Classic Control)<span>صيانة وتشغيل اللوحات</span></div>
+            <a href="https://blogspot.com2026/09/classic-control.html" target="_blank" class="download-btn">فتح من المدونة</a>
+        </div>
+        
+        <!-- دليل الكود المصري برابط البلوجسبوت الجديد -->
+        <div class="book-item">
+            <div class="book-info">دليل الكود المصري للتركيبات الكهربائية<span>المجلد الأول - التمديدات</span></div>
+            <a href="https://blogspot.com2026/09/blog-post.html" target="_blank" class="download-btn">فتح من المدونة</a>
         </div>
     </div>
 
-    <!-- زر مدونة النمر للمعلوميات مستقل وموضوع فوق كارت المكتبة الفنية مباشرة -->
-    <a href="https://blogspot.com" target="_blank" class="blog-btn">🌐 مدونة النمر للمعلوميات</a>
+    <!-- الروابط السفلية للتنقل بين الملفات المستقلة -->
+    <div class="nav-links">
+        <a href="conduit.html">📐 حاسبة أقطار مواسير التمديد (Conduit Fill) ←</a>
+        <a href="factor.html">📊 حاسبة مكثفات معامل القدرة (KVAR) ←</a>
+        <a href="home.html">🏠 حاسبة أحمال وتمديدات المنازل الفرعية ←</a>
+    </div>
 
-    <!-- 3. كارت المكتبة الفنية المحدث بالروابط المباشرة الصحيحة -->
+</div>
+
+<div class="footer">
+    <p>جميع الحقوق محفوظة © المهندس المطور ماجد النمر 2026</p>
+</div>
+
+<!-- معالجة ذكية ومستقرة لمكتبة Pi لمنع التعطيل وتهنيج الصفحة خارج الساندبوكس -->
+<script src="https://minepi.com" async></script>
+<script>
+    window.onload = function() {
+        if (typeof Pi !== 'undefined') {
+            try { Pi.init({ version: "2.0", sandbox: true }); } catch(e) {}
+        }
+    };
+
+    function calculateIndustrial() {
+        var power = parseFloat(document.getElementById('indPower').value);
