@@ -147,6 +147,7 @@
         .book-info span { display: block; font-size: 12px; color: var(--text-muted); }
         
         .download-btn {
+            display: inline-block;
             background: linear-gradient(135deg, #10b981, #059669);
             padding: 8px 14px;
             font-size: 13px;
@@ -155,8 +156,14 @@
             text-decoration: none;
             color: #fff;
             font-weight: bold;
-            cursor: pointer;
-            border: none;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 15px rgba(16, 185, 129, 0.4);
         }
 
         .nav-links {
@@ -216,20 +223,21 @@
         </div>
     </div>
 
-    <!-- كارت المكتبة مع رسالة التنبيه المؤقتة الذكية للكتب -->
     <div class="card">
         <h2>📚 المكتبة الفنية لكهرباء الهندسة والمصانع</h2>
         <div class="book-item">
             <div class="book-info">كتاب التحكم الآلي الكلاسيكي (Classic Control)<span>صيانة وتشغيل اللوحات</span></div>
-            <button onclick="showBookAlert('كتاب التحكم الآلي')" class="download-btn">تحميل PDF</button>
+            <a href="https://blogspot.com" class="download-btn">فتح بالمدونة</a>
         </div>
         <div class="book-item">
             <div class="book-info">دليل الكود المصري للتركيبات الكهربائية<span>المجلد الأول - التمديدات</span></div>
-            <button onclick="showBookAlert('دليل الكود المصري')" class="download-btn">تحميل PDF</button>
+            <a href="https://blogspot.com" class="download-btn">فتح بالمدونة</a>
         </div>
     </div>
 
+    <!-- قائمة الروابط وبداخلها حاسبة أقطار مواسير التمديد الأصلية الخاصة بك -->
     <div class="nav-links">
+        <a href="conduit.html">📐 حاسبة أقطار مواسير التمديد (Conduit Fill) ←</a>
         <a href="factor.html">📊 حاسبة مكثفات معامل القدرة (KVAR) ←</a>
         <a href="home.html">🏠 حاسبة أحمال وتمديدات المنازل الفرعية ←</a>
     </div>
@@ -259,11 +267,6 @@
         document.getElementById('indOverloadRes').innerText = olMin + " - " + olMax;
         document.getElementById('indCableRes').innerText = cable;
         document.getElementById('indResult').style.display = 'block';
-    }
-
-    // دالة التنبيه الذكي عند الضغط على الكتاب لحين رفع الملفات الحقيقية
-    function showBookAlert(bookName) {
-        alert("جاري تجهيز رابط التحميل المباشر لـ (" + bookName + ") أونلاين على سيرفر المطورين.. يرجى المحاولة لاحقاً!");
     }
 </script>
 </body>
