@@ -161,20 +161,22 @@
             text-align: center;
         }
 
+        /* ستايل زر المدونة المستقل */
         .blog-btn {
             display: block;
             text-align: center;
             background: linear-gradient(135deg, var(--neon-purple), #7209b7);
             color: #ffffff;
             text-decoration: none;
-            padding: 12px;
-            border-radius: 8px;
+            padding: 14px;
+            border-radius: 12px;
             font-weight: bold;
-            font-size: 14px;
-            margin-bottom: 18px;
+            font-size: 15px;
+            margin-bottom: 25px;
             box-shadow: 0 4px 15px rgba(157, 78, 221, 0.2);
             transition: all 0.3s;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(0, 210, 255, 0.3);
+            text-shadow: 0 0 8px rgba(255,255,255,0.3);
         }
         .blog-btn:hover {
             transform: translateY(-1px);
@@ -214,6 +216,7 @@
 
 <div class="container">
 
+    <!-- 1. كارت حاسبة أحمال المحركات ولوحات الباور (تعديل الـ IDs) -->
     <div class="card">
         <h2>🏭 حاسبة أحمال المحركات ولوحات الباور (3 فاز)</h2>
         <div class="form-group">
@@ -238,27 +241,29 @@
         </div>
     </div>
 
-    <!-- كارت المكتبة الفنية المنسق والمحدث بالروابط وزر المدونة الرئيسي -->
+    <!-- زر المدونة مستقل وموضوع فوق كارت المكتبة تماماً -->
+    <a href="https://blogspot.com" target="_blank" class="blog-btn">🌐 مدونة النمر للمعلوميات (الصفحة الرئيسية)</a>
+
+    <!-- 2. كارت المكتبة الفنية لكهرباء الهندسة والمصانع -->
     <div class="card">
         <h2>📚 المكتبة الفنية لكهرباء الهندسة والمصانع</h2>
-        
-        <!-- زر الانتقال الفخم للصفحة الرئيسية لمدونة النمر -->
-        <a href="https://magid-nemr.blogspot.com/" target="_blank" class="blog-btn">🌐 مدونة النمر للمعلوميات</a>
         
         <!-- كتاب التحكم الآلي -->
         <div class="book-item">
             <div class="book-info">كتاب التحكم الآلي الكلاسيكي (Classic Control)<span>صيانة وتشغيل اللوحات</span></div>
-            <a href="https://magid-nemr.blogspot.com/2026/09/classic-control.html" target="_blank" class="download-btn">فتح من المدونة</a>
+            <a href="https://blogspot.com2026/09/classic-control.html" target="_blank" class="download-btn">فتح من المدونة</a>
         </div>
         
         <!-- دليل الكود المصري -->
         <div class="book-item">
             <div class="book-info">دليل الكود المصري للتركيبات الكهربائية<span>المجلد الأول - التمديدات</span></div>
-            <a href="https://magid-nemr.blogspot.com/2026/09/blog-post.html" target="_blank" class="download-btn">فتح من المدونة</a>
+            <a href="https://blogspot.com2026/09/blog-post.html" target="_blank" class="download-btn">فتح من المدونة</a>
         </div>
     </div>
 
+    <!-- 3. الروابط السفلية كاملة متضمنة حاسبة أقطار المواسير -->
     <div class="nav-links">
+        <a href="conduit.html">📐 حاسبة أقطار مواسير التمديد (Conduit Fill) ←</a>
         <a href="factor.html">📊 حاسبة مكثفات معامل القدرة (KVAR) ←</a>
         <a href="home.html">🏠 حاسبة أحمال وتمديدات المنازل الفرعية ←</a>
     </div>
@@ -281,6 +286,3 @@
         var breaker = Math.ceil(fli * 1.6);
         var contactor = Math.ceil(fli * 1.25);
         var olMin = (fli * 0.9).toFixed(1); var olMax = (fli * 1.15).toFixed(1);
-        var cable = (fli / 2.8).toFixed(1); if(cable < 2.5) cable = 2.5;
-        document.getElementById('indCurrentRes').innerText = fli.toFixed(2);
-        document.getElementById('indBreakerRes').innerText = breaker;
