@@ -219,7 +219,7 @@
 
 <div class="container">
 
-    <!-- كارت حاسبة المحركات واللوحات بعد إصلاح الـ IDs وضبط التفعيل -->
+    <!-- 1. كارت حاسبة أحمال المحركات ولوحات الباور (مع تفعيل الـ IDs) -->
     <div class="card">
         <h2>🏭 حاسبة أحمال المحركات ولوحات الباور (3 فاز)</h2>
         <div class="form-group">
@@ -244,27 +244,25 @@
         </div>
     </div>
 
-    <!-- زر مدونة النمر الفخم والمستقل فوق عنوان كارت المكتبة تماماً -->
+    <!-- زر المدونة مستقل فوق عنوان كارت المكتبة تماماً -->
     <a href="https://blogspot.com" target="_blank" class="blog-btn">🌐 مدونة النمر للمعلوميات</a>
 
-    <!-- كارت المكتبة الفنية لكهرباء الهندسة والمصانع -->
+    <!-- 2. كارت المكتبة الفنية لكهرباء الهندسة والمصانع -->
     <div class="card">
         <h2>📚 المكتبة الفنية لكهرباء الهندسة والمصانع</h2>
         
-        <!-- كتاب التحكم الآلي -->
         <div class="book-item">
             <div class="book-info">كتاب التحكم الآلي الكلاسيكي (Classic Control)<span>صيانة وتشغيل اللوحات</span></div>
             <a href="https://blogspot.com2026/09/classic-control.html" target="_blank" class="download-btn">فتح من المدونة</a>
         </div>
         
-        <!-- دليل الكود المصري -->
         <div class="book-item">
             <div class="book-info">دليل الكود المصري للتركيبات الكهربائية<span>المجلد الأول - التمديدات</span></div>
             <a href="https://blogspot.com2026/09/blog-post.html" target="_blank" class="download-btn">فتح من المدونة</a>
         </div>
     </div>
 
-    <!-- قائمة روابط التوجيه السفلية متكاملة -->
+    <!-- روابط التنقل السفلية -->
     <div class="nav-links">
         <a href="conduit.html">📐 حاسبة أقطار مواسير التمديد (Conduit Fill) ←</a>
         <a href="factor.html">📊 حاسبة مكثفات معامل القدرة (KVAR) ←</a>
@@ -277,7 +275,7 @@
     <p>جميع الحقوق محفوظة © المهندس المطور ماجد النمر 2026</p>
 </div>
 
-<!-- معالجة ذكية وسلسة لملف Pi لضمان التشغيل الكفء دون تجميد المتصفح -->
+<!-- معالجة آمنة لسكربت Pi لمنع تهنيج الصفحة -->
 <script src="https://minepi.com" async></script>
 <script>
     window.onload = function() {
@@ -290,3 +288,5 @@
         var power = parseFloat(document.getElementById('indPower').value);
         var unit = document.getElementById('indUnit').value;
         if (isNaN(power) || power <= 0) { alert("برجاء إدخال قيمة صحيحة."); return; }
+        var kw = unit === 'hp' ? power * 0.746 : power;
+        var fli = kw / (1.732 * 0.38 * 0.84 * 0.85);
