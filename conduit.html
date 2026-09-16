@@ -3,281 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Tech Aide | اللوحة الهندسية</title>
+    <title>Smart Tech Aide | حاسبة المواسير</title>
     <style>
-        :root {
+        :root { 
             --dark-bg: #090d16;
             --panel-bg: rgba(17, 24, 39, 0.95);
-            --neon-blue: #00d2ff;
-            --neon-green: #00f5d4;
-            --neon-purple: #9d4edd;
-            --text-main: #f3f4f6;
+            --primary-color: #00d2ff; 
+            --neon-green: #10b981;
+            --text-main: #f3f4f6; 
             --text-muted: #9ca3af;
         }
-        
-        body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: radial-gradient(circle at top, #111827 0%, var(--dark-bg) 80%);
-            color: var(--text-main);
-            margin: 0;
-            padding: 0;
+        body { 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            background: radial-gradient(circle at top, #111827 0%, var(--dark-bg) 80%); 
+            color: var(--text-main); 
+            margin: 0; 
+            padding: 0; 
             min-height: 100vh;
         }
-
-        header {
+        header { 
             text-align: center;
             padding: 30px 20px;
             background: linear-gradient(to bottom, rgba(9, 13, 22, 0.9), transparent);
             border-bottom: 1px solid rgba(0, 210, 255, 0.2);
         }
-
-        header h1 {
-            margin: 0;
-            font-size: 26px;
-            font-weight: 800;
-            color: #ffffff;
+        header h1 { 
+            margin: 0; font-size: 26px; font-weight: 800; color: #ffffff;
             text-shadow: 0 0 15px rgba(0, 210, 255, 0.5);
         }
-
-        header p {
-            margin: 8px 0 0;
-            font-size: 14px;
-            color: var(--neon-blue);
-            font-weight: 600;
-            letter-spacing: 0.5px;
+        header p { margin: 5px 0 0; font-size: 14px; color: var(--primary-color); font-weight: 600; }
+        .container { max-width: 600px; margin: 20px auto 40px; padding: 0 15px; }
+        .card { 
+            background: var(--panel-bg); border: 1px solid rgba(0, 210, 255, 0.15);
+            border-radius: 16px; padding: 22px; margin-bottom: 25px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5); backdrop-filter: blur(10px);
         }
-
-        .container {
-            max-width: 600px;
-            margin: 20px auto 40px;
-            padding: 0 15px;
+        .card h2 { margin-top: 0; font-size: 18px; font-weight: 700; color: #ffffff; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 10px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 14px; color: var(--text-muted); }
+        input, select { 
+            width: 100%; padding: 12px; background: rgba(9, 13, 22, 0.8); 
+            border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px; 
+            box-sizing: border-box; font-size: 16px; color: #ffffff; outline: none;
         }
-
-        .card {
-            background: var(--panel-bg);
-            border: 1px solid rgba(0, 210, 255, 0.15);
-            border-radius: 16px;
-            padding: 22px;
-            margin-bottom: 25px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
+        input:focus, select:focus { border-color: var(--primary-color); }
+        button { 
+            background: linear-gradient(135deg, #00d2ff, #00f5d4); color: #090d16; 
+            border: none; padding: 14px 20px; font-size: 16px; border-radius: 8px; 
+            cursor: pointer; width: 100%; font-weight: bold; transition: all 0.3s ease; 
+            box-shadow: 0 4px 15px rgba(0, 210, 255, 0.3);
         }
-
-        .card h2 {
-            margin-top: 0;
-            font-size: 18px;
-            font-weight: 700;
-            color: #ffffff;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 10px;
+        button:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0, 210, 255, 0.5); }
+        .result-box { 
+            background: rgba(0, 210, 255, 0.05); border: 1px solid rgba(0, 210, 255, 0.2); 
+            border-right: 5px solid var(--primary-color); padding: 15px; border-radius: 8px; 
+            margin-top: 15px; display: none; 
         }
-
-        .form-group { margin-bottom: 18px; }
-        
-        label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: 600;
-            font-size: 14px;
-            color: var(--text-muted);
+        .value-highlight { font-family: monospace; font-weight: bold; color: var(--neon-green); font-size: 18px; text-shadow: 0 0 5px rgba(16, 185, 129, 0.5); }
+        .nav-links { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+        .nav-links a { 
+            text-align: center; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); 
+            color: var(--text-main); padding: 12px; border-radius: 8px; font-weight: bold; 
+            text-decoration: none; transition: all 0.3s; 
         }
-
-        input, select {
-            width: 100%;
-            padding: 12px;
-            background: rgba(9, 13, 22, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-size: 16px;
-            color: #ffffff;
-            outline: none;
-        }
-        
-        input:focus, select:focus {
-            border-color: var(--neon-blue);
-        }
-
-        .btn-calc {
-            background: linear-gradient(135deg, #6200ee, #7209b7);
-            color: white;
-            border: none;
-            padding: 14px 20px;
-            font-size: 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            width: 100%;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(157, 78, 221, 0.3);
-        }
-
-        .btn-calc:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(157, 78, 221, 0.5);
-        }
-
-        .result-box {
-            background: rgba(0, 210, 255, 0.05);
-            border: 1px solid rgba(0, 210, 255, 0.2);
-            border-right: 5px solid var(--neon-blue);
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-            display: none;
-        }
-
-        .result-box p { margin: 6px 0; font-size: 15px; }
-
-        .value-highlight {
-            font-family: monospace;
-            font-weight: bold;
-            color: var(--neon-green);
-            font-size: 18px;
-            text-shadow: 0 0 5px rgba(0, 245, 212, 0.5);
-        }
-
-        .book-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.05);
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 12px;
-        }
-        .book-info { font-size: 14px; font-weight: 600; }
-        .book-info span { display: block; font-size: 12px; color: var(--text-muted); }
-        
-        .download-btn {
-            background: linear-gradient(135deg, #10b981, #059669);
-            padding: 8px 14px;
-            font-size: 13px;
-            border-radius: 6px;
-            width: auto;
-            text-decoration: none;
-            color: #fff;
-            font-weight: bold;
-            cursor: pointer;
-            border: none;
-            display: inline-block;
-            text-align: center;
-        }
-
-        .blog-btn {
-            display: block;
-            text-align: center;
-            background: linear-gradient(135deg, var(--neon-purple), #7209b7);
-            color: #ffffff;
-            text-decoration: none;
-            padding: 14px;
-            border-radius: 12px;
-            font-weight: bold;
-            font-size: 15px;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 15px rgba(157, 78, 221, 0.2);
-            transition: all 0.3s;
-            border: 1px solid rgba(0, 210, 255, 0.3);
-            text-shadow: 0 0 8px rgba(255,255,255,0.3);
-        }
-        .blog-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(157, 78, 221, 0.4);
-        }
-
-        .nav-links {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        .nav-links a {
-            text-align: center;
-            background: rgba(0, 210, 255, 0.08);
-            border: 1px solid rgba(0, 210, 255, 0.2);
-            color: var(--neon-blue);
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: bold;
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-        .nav-links a:hover {
-            background: rgba(0, 210, 255, 0.15);
-            box-shadow: 0 0 10px rgba(0, 210, 255, 0.2);
-        }
+        .nav-links a:hover { background: rgba(255, 255, 255, 0.08); }
         .footer { text-align: center; padding: 25px; font-size: 12px; color: var(--text-muted); }
     </style>
 </head>
 <body>
-
 <header>
     <h1>SMART TECH AIDE ⚡</h1>
-    <p>« المنصة البرمجية المعتمدة لهندسة القوى والتحكم الآلي »</p>
+    <p>« مستودع التمديدات - حاسبة أقطار مواسير الأسلاك »</p>
 </header>
-
 <div class="container">
-
-    <!-- كارت حاسبة المحركات واللوحات بعد إصلاح الـ IDs وضبط التفعيل -->
     <div class="card">
-        <h2>🏭 حاسبة أحمال المحركات ولوحات الباور (3 فاز)</h2>
+        <h2>📏 حاسبة أقطار مواسير تمديد الأسلاك (Conduit Fill)</h2>
         <div class="form-group">
-            <label for="indPower">قدرة المحرك الميكانيكية بالموقع:</label>
-            <input type="number" id="indPower" placeholder="أدخل القيمة الرقمية...">
-        </div>
-        <div class="form-group">
-            <label for="indUnit">وحدة القدرة:</label>
-            <select id="indUnit">
-                <option value="hp">حصان (HP)</option>
-                <option value="kw">كيلوواط (kW)</option>
+            <label for="wireSize">مقطع سلك النحاس المراد تمريره (مم²):</label>
+            <select id="wireSize">
+                <option value="1.5">1.5 مم²</option>
+                <option value="2.5">2.5 مم²</option>
+                <option value="4">4 مم²</option>
+                <option value="6">6 مم²</option>
+                <option value="10">10 مم²</option>
             </select>
         </div>
-        <button class="btn-calc" onclick="calculateIndustrial()">تحليل المكونات الصناعية العمومية</button>
-        
-        <div id="indResult" class="result-box">
-            <p><strong>تيار الحمل الكامل (FLA):</strong> <span id="indCurrentRes" class="value-highlight">0</span> أمبير</p>
-            <p><strong>قاطع اللوحة الرئيسي (MCCB):</strong> <span id="indBreakerRes" class="value-highlight">0</span> أمبير</p>
-            <p><strong>سعة الكونتاكتور المناسب:</strong> <span id="indContactorRes" class="value-highlight">0</span> أمبير</p>
-            <p><strong>مدى ضبط الأوفرلود الحركي:</strong> <span id="indOverloadRes" class="value-highlight">0</span> أمبير</p>
-            <p><strong>مقطع كابل النحاس بالدكت:</strong> <span id="indCableRes" class="value-highlight">0</span> مم²</p>
+        <div class="form-group">
+            <label for="wireCount">إجمالي عدد الأسلاك داخل الماسورة:</label>
+            <input type="number" id="wireCount" placeholder="مثال: 4" min="1">
+        </div>
+        <button onclick="calculateConduitValues()">احسب قطر الماسورة المناسب</button>
+        <div id="conduitResult" class="result-box">
+            <p><strong>القطر الخارجي المقترح للماسورة العمومية:</strong> <span id="conduitRes" class="value-highlight">0</span> ملم</p>
+            <p style="color: var(--text-muted); font-size: 13px; margin-top: 5px;">توصية الكود: تم الحساب بناءً على نسبة إشغال لا تتعدى 40% من مساحة مقطع الماسورة لتسهيل السحب ومنع سخونة التمديدات.</p>
         </div>
     </div>
-
-    <!-- زر مدونة النمر الفخم والمستقل فوق عنوان كارت المكتبة تماماً -->
-    <a href="https://blogspot.com" target="_blank" class="blog-btn">🌐 مدونة النمر للمعلوميات</a>
-
-    <!-- كارت المكتبة الفنية لكهرباء الهندسة والمصانع -->
-    <div class="card">
-        <h2>📚 المكتبة الفنية لكهرباء الهندسة والمصانع</h2>
-        
-        <!-- كتاب التحكم الآلي -->
-        <div class="book-item">
-            <div class="book-info">كتاب التحكم الآلي الكلاسيكي (Classic Control)<span>صيانة وتشغيل اللوحات</span></div>
-            <a href="https://blogspot.com2026/09/classic-control.html" target="_blank" class="download-btn">فتح من المدونة</a>
-        </div>
-        
-        <!-- دليل الكود المصري -->
-        <div class="book-item">
-            <div class="book-info">دليل الكود المصري للتركيبات الكهربائية<span>المجلد الأول - التمديدات</span></div>
-            <a href="https://blogspot.com2026/09/blog-post.html" target="_blank" class="download-btn">فتح من المدونة</a>
-        </div>
-    </div>
-
-    <!-- قائمة روابط التوجيه السفلية متكاملة -->
     <div class="nav-links">
-        <a href="conduit.html">📐 حاسبة أقطار مواسير التمديد (Conduit Fill) ←</a>
-        <a href="factor.html">📊 حاسبة مكثفات معامل القدرة (KVAR) ←</a>
-        <a href="home.html">🏠 حاسبة أحمال وتمديدات المنازل الفرعية ←</a>
+        <a href="index.html">🏢 العودة لحاسبة المصانع العمومية الرئيسية</a>
+        <a href="home.html">🏠 الانتقال لحاسبة أحمال المنازل</a>
+        <a href="factor.html">📊 الانتقال لحاسبة مكثفات معامل القدرة</a>
     </div>
-
 </div>
-
 <div class="footer">
     <p>جميع الحقوق محفوظة © المهندس المطور ماجد النمر 2026</p>
 </div>
 
-<!-- معالجة ذكية وسلسة لملف Pi لضمان التشغيل الكفء دون تجميد المتصفح -->
 <script src="https://minepi.com" async></script>
 <script>
     window.onload = function() {
@@ -285,8 +115,24 @@
             try { Pi.init({ version: "2.0", sandbox: true }); } catch(e) {}
         }
     };
+    function calculateConduitValues() {
+        var size = parseFloat(document.getElementById('wireSize').value);
+        var count = parseInt(document.getElementById('wireCount').value);
+        if (isNaN(count) || count <= 0) { alert("يرجى إدخال عدد أسلاك صحيح."); return; }
+        
+        var totalArea = (Math.PI * Math.pow(Math.sqrt(size/Math.PI), 2)) * count;
+        var requiredConduitArea = totalArea / 0.40; 
+        var diameter = Math.ceil(2 * Math.sqrt(requiredConduitArea / Math.PI));
+        
+        var finalDia = 16;
+        if (diameter <= 16) finalDia = 16;
+        else if (diameter <= 20) finalDia = 20;
+        else if (diameter <= 25) finalDia = 25;
+        else finalDia = 32;
 
-    function calculateIndustrial() {
-        var power = parseFloat(document.getElementById('indPower').value);
-        var unit = document.getElementById('indUnit').value;
-        if (isNaN(power) || power <= 0) { alert("برجاء إدخال قيمة صحيحة."); return; }
+        document.getElementById('conduitRes').innerText = finalDia;
+        document.getElementById('conduitResult').style.display = 'block';
+    }
+</script>
+</body>
+</html>
