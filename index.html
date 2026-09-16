@@ -3,256 +3,284 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Tech Aide</title>
+    <title>Smart Tech Aide | اللوحة الهندسية</title>
+    <script src="https://minepi.com"></script>
     <style>
-        /* ستايل احترافي فخم ومتناسق تماماً مع الصورة */
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #f4f6f9;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            direction: rtl;
-        }
-        .app-container {
-            width: 100%;
-            max-width: 450px;
-            background-color: #ffffff;
-            min-height: 100vh;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            display: flex;
-            flex-direction: column;
-            padding-bottom: 25px;
-            box-sizing: border-box;
+        :root {
+            --dark-bg: #090d16;
+            --panel-bg: rgba(17, 24, 39, 0.95);
+            --neon-blue: #00d2ff;
+            --neon-green: #00f5d4;
+            --neon-purple: #9d4edd;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
         }
         
-        /* الهيدر العلوي الموحد بنفسجي فخم */
-        .header {
-            background-color: #6200ee;
-            color: #ffffff;
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: radial-gradient(circle at top, #111827 0%, var(--dark-bg) 80%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        header {
             text-align: center;
             padding: 30px 20px;
-            border-bottom: 4px solid #5100cc;
+            background: linear-gradient(to bottom, rgba(9, 13, 22, 0.9), transparent);
+            border-bottom: 1px solid rgba(0, 210, 255, 0.2);
         }
-        .header h1 {
-            margin: 0 0 8px 0;
-            font-size: 26px;
-            font-weight: 700;
-        }
-        .header .sub-title {
+
+        header h1 {
             margin: 0;
-            font-size: 14px;
-            opacity: 0.95;
-            line-height: 1.5;
+            font-size: 26px;
+            font-weight: 800;
+            color: #ffffff;
+            text-shadow: 0 0 15px rgba(0, 210, 255, 0.5);
         }
 
-        /* الكروت البيضاء الأنيقة بحواف ناعمة */
-        .card {
-            background: #ffffff;
-            border-radius: 12px;
-            padding: 20px;
-            margin: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-            border: 1px solid #eef2ff;
-        }
-        .card-title {
-            color: #6200ee;
-            font-size: 16px;
-            font-weight: 700;
-            margin-top: 0;
-            margin-bottom: 18px;
-        }
-
-        /* عناصر حاسبة الأحمال */
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
+        header p {
+            margin: 8px 0 0;
             font-size: 14px;
+            color: var(--neon-blue);
             font-weight: 600;
-            color: #475569;
+            letter-spacing: 0.5px;
         }
-        .form-group input, .form-group select {
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto 40px;
+            padding: 0 15px;
+        }
+
+        .card {
+            background: var(--panel-bg);
+            border: 1px solid rgba(0, 210, 255, 0.15);
+            border-radius: 16px;
+            padding: 22px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            font-size: 18px;
+            font-weight: 700;
+            color: #ffffff;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+        }
+
+        .form-group { margin-bottom: 18px; }
+        
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        input, select {
             width: 100%;
             padding: 12px;
-            border: 1px solid #cbd5e1;
+            background: rgba(9, 13, 22, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 8px;
             box-sizing: border-box;
-            font-size: 14px;
-            background-color: #fff;
-            outline: none;
+            font-size: 16px;
+            color: #ffffff;
         }
-        .form-group input:focus, .form-group select:focus {
-            border-color: #6200ee;
-        }
-        .btn-calc {
-            width: 100%;
-            background-color: #6200ee;
+
+        button {
+            background: linear-gradient(135deg, #6200ee, #7209b7);
             color: white;
             border: none;
-            padding: 14px;
+            padding: 14px 20px;
+            font-size: 16px;
             border-radius: 8px;
-            font-size: 15px;
-            font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(98, 0, 238, 0.15);
+            width: 100%;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(157, 78, 221, 0.3);
         }
 
-        /* حاوية عناصر الكتب */
+        button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(157, 78, 221, 0.5);
+        }
+
+        .result-box {
+            background: rgba(0, 210, 255, 0.05);
+            border: 1px solid rgba(0, 210, 255, 0.2);
+            border-right: 5px solid var(--neon-blue);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .result-box p { margin: 6px 0; font-size: 15px; }
+
+        .value-highlight {
+            font-family: monospace;
+            font-weight: bold;
+            color: var(--neon-green);
+            font-size: 18px;
+            text-shadow: 0 0 5px rgba(0, 245, 212, 0.5);
+        }
+
         .book-item {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            background: #ffffff;
+            align-items: center;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
             padding: 12px;
             border-radius: 8px;
-            border: 1px solid #e2e8f0;
             margin-bottom: 12px;
         }
-        .book-info {
-            flex: 1;
-            padding-left: 10px;
-        }
-        .book-info h4 {
-            margin: 0 0 4px 0;
+        .book-info { font-size: 14px; font-weight: 600; }
+        .book-info span { display: block; font-size: 12px; color: var(--text-muted); }
+        
+        .download-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            padding: 8px 14px;
             font-size: 13px;
-            color: #1e293b;
-            font-weight: 700;
-        }
-        .book-info p {
-            margin: 0;
-            font-size: 11px;
-            color: #64748b;
+            border-radius: 6px;
+            width: auto;
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            display: inline-block;
+            text-align: center;
         }
 
-        /* أزرار الفتح الخضراء الأصلية والأنيقة */
-        .btn-open {
-            background-color: #00a86b;
+        .blog-btn {
+            display: block;
+            text-align: center;
+            background: linear-gradient(135deg, var(--neon-purple), #7209b7);
             color: #ffffff;
             text-decoration: none;
-            padding: 10px 14px;
-            border-radius: 6px;
-            font-weight: 700;
-            font-size: 12px;
-            text-align: center;
-            min-width: 85px;
-            box-shadow: 0 2px 6px rgba(0, 168, 107, 0.2);
-        }
-
-        /* روابط التنقل السفلية المريحة والمنسقة */
-        .btn-link-card {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: #6200ee;
-            text-decoration: none;
-            font-weight: 700;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
             font-size: 14px;
-            background: #ffffff;
-            padding: 16px 20px;
-            border-radius: 12px;
-            margin: 12px 15px;
-            border: 1px solid #eef2ff;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            margin-bottom: 18px;
+            box-shadow: 0 4px 15px rgba(157, 78, 221, 0.2);
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .blog-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(157, 78, 221, 0.4);
         }
 
-        /* الفوتر السفلي */
-        .footer {
-            text-align: center;
-            color: #64748b;
-            font-size: 12px;
-            margin-top: auto;
-            padding: 20px 15px;
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
         }
+        .nav-links a {
+            text-align: center;
+            background: rgba(0, 210, 255, 0.08);
+            border: 1px solid rgba(0, 210, 255, 0.2);
+            color: var(--neon-blue);
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .nav-links a:hover {
+            background: rgba(0, 210, 255, 0.15);
+            box-shadow: 0 0 10px rgba(0, 210, 255, 0.2);
+        }
+        .footer { text-align: center; padding: 25px; font-size: 12px; color: var(--text-muted); }
     </style>
 </head>
 <body>
 
-<div class="app-container">
+<header>
+    <h1>SMART TECH AIDE ⚡</h1>
+    <p>« المنصة البرمجية المعتمدة لهندسة القوى والتحكم الآلي »</p>
+</header>
 
-    <!-- الهيدر العلوي للمنصة -->
-    <div class="header">
-        <h1>Smart Tech Aide</h1>
-        <div style="font-size: 24px; margin: 5px 0;">⚡</div>
-        <div class="sub-title">المنصة الهندسية الذكية لأنظمة التحكم والكهرباء الصناعية</div>
-    </div>
+<div class="container">
 
-    <!-- 1. كارت حاسبة الأحمال وقدرة الكابلات -->
     <div class="card">
-        <h3 class="card-title">📊 حاسبة الأحمال وقدرة الكابلات والقواطع (3 فاز)</h3>
+        <h2>🏭 حاسبة أحمال المحركات ولوحات الباور (3 فاز)</h2>
         <div class="form-group">
-            <label>قدرة الحمل / الموتور:</label>
-            <input type="text" placeholder="أدخل القيمة الرقمية...">
+            <label for="indPower">قدرة المحرك الميكانيكية بالموقع:</label>
+            <input type="number" id="indPower" placeholder="أدخل القيمة الرقمية...">
         </div>
         <div class="form-group">
-            <label>الوحدة:</label>
-            <select>
-                <option>حصان (HP)</option>
-                <option>كيلو وات (kW)</option>
+            <label for="indUnit">وحدة القدرة:</label>
+            <select id="indUnit">
+                <option value="hp">حصان (HP)</option>
+                <option value="kw">كيلوواط (kW)</option>
             </select>
         </div>
-        <button class="btn-calc">احسب الحمل الكهربائي</button>
-    </div>
-
-    <!-- 2. كارت المكتبة الفنية المطور والمنسق -->
-    <div class="card" style="border: 1px solid rgba(98, 0, 238, 0.15); background-color: #fafafa;">
-        <h3 class="card-title" style="margin-bottom: 15px;">📚 المكتبة الفنية لكهرباء الهندسة والمصانع</h3>
+        <button onclick="calculateIndustrial()">تحليل المكونات الصناعية العمومية</button>
         
-        <!-- زر مدونة النمر للمعلوميات موجه مباشرة للصفحة الرئيسية للمدونة -->
-        <a href="https://blogspot.com" target="_blank" style="display: block; text-align: center; background-color: #6200ee; color: #ffffff; text-decoration: none; padding: 13px; border-radius: 8px; font-weight: 700; font-size: 15px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(98, 0, 238, 0.15);">
-            🌐 مدونة النمر للمعلوميات
-        </a>
-
-        <!-- قائمة الكتب الفنية -->
-        <div style="display: flex; flex-direction: column;">
-            
-            <!-- كتاب التحكم الآلي الكلاسيكي -->
-            <div class="book-item">
-                <div class="book-info">
-                    <h4>كتاب التحكم الآلي الكلاسيكي (Classic Control)</h4>
-                    <p>صيانة وتشغيل اللوحات</p>
-                </div>
-                <a href="https://blogspot.com2026/09/classic-control.html" target="_blank" class="btn-open">
-                    فتح من المدونة
-                </a>
-            </div>
-
-            <!-- دليل الكود المصري للتركيبات الكهربائية -->
-            <div class="book-item">
-                <div class="book-info">
-                    <h4>دليل الكود المصري للتركيبات الكهربائية</h4>
-                    <p>المجلد الأول - التمديدات</p>
-                </div>
-                <a href="https://blogspot.com2026/09/blog-post.html" target="_blank" class="btn-open">
-                    فتح من المدونة
-                </a>
-            </div>
-
+        <div id="indResult" class="result-box">
+            <p><strong>تيار الحمل الكامل (FLA):</strong> <span id="indCurrentRes" class="value-highlight">0</span> أمبير</p>
+            <p><strong>قاطع اللوحة الرئيسي (MCCB):</strong> <span id="indBreakerRes" class="value-highlight">0</span> أمبير</p>
+            <p><strong>سعة الكونتاكتور المناسب:</strong> <span id="indContactorRes" class="value-highlight">0</span> أمبير</p>
+            <p><strong>مدى ضبط الأوفرلود الحركي:</strong> <span id="indOverloadRes" class="value-highlight">0</span> أمبير</p>
+            <p><strong>مقطع كابل النحاس بالدكت:</strong> <span id="indCableRes" class="value-highlight">0</span> مم²</p>
         </div>
     </div>
 
-    <!-- 3. روابط الحاسبات الفرعية السفلية المنسقة بنفسجي طبقاً للصورة -->
-    <a href="conduit.html" class="btn-link-card">
-        <span>📐 حاسبة أقطار مواسير التمديد (Conduit Fill) ←</span>
-    </a>
+    <!-- كارت المكتبة الفنية المنسق والمحدث بالروابط وزر المدونة الرئيسي -->
+    <div class="card">
+        <h2>📚 المكتبة الفنية لكهرباء الهندسة والمصانع</h2>
+        
+        <!-- زر الانتقال الفخم للصفحة الرئيسية لمدونة النمر -->
+        <a href="https://magid-nemr.blogspot.com/" target="_blank" class="blog-btn">🌐 مدونة النمر للمعلوميات</a>
+        
+        <!-- كتاب التحكم الآلي -->
+        <div class="book-item">
+            <div class="book-info">كتاب التحكم الآلي الكلاسيكي (Classic Control)<span>صيانة وتشغيل اللوحات</span></div>
+            <a href="https://magid-nemr.blogspot.com/2026/09/classic-control.html" target="_blank" class="download-btn">فتح من المدونة</a>
+        </div>
+        
+        <!-- دليل الكود المصري -->
+        <div class="book-item">
+            <div class="book-info">دليل الكود المصري للتركيبات الكهربائية<span>المجلد الأول - التمديدات</span></div>
+            <a href="https://magid-nemr.blogspot.com/2026/09/blog-post.html" target="_blank" class="download-btn">فتح من المدونة</a>
+        </div>
+    </div>
 
-    <a href="factor.html" class="btn-link-card">
-        <span>📊 حاسبة مكثفات معامل القدرة (KVAR) ←</span>
-    </a>
-
-    <a href="home.html" class="btn-link-card">
-        <span>🏠 حاسبة أحمال وتمديدات المنازل الفرعية ←</span>
-    </a>
-
-    <!-- الفوتر السفلي للمنصة -->
-    <div class="footer">
-        جميع الحقوق محفوظة © المهندس المطور ماجد النمر 2026
+    <div class="nav-links">
+        <a href="factor.html">📊 حاسبة مكثفات معامل القدرة (KVAR) ←</a>
+        <a href="home.html">🏠 حاسبة أحمال وتمديدات المنازل الفرعية ←</a>
     </div>
 
 </div>
 
-</body>
-</html>
+<div class="footer">
+    <p>جميع الحقوق محفوظة © المهندس المطور ماجد النمر 2026</p>
+</div>
+
+<script>
+    Pi.init({ version: "2.0", sandbox: true });
+    
+    function calculateIndustrial() {
+        var power = parseFloat(document.getElementById('indPower').value);
+        var unit = document.getElementById('indUnit').value;
+        if (isNaN(power) || power <= 0) { alert("برجاء إدخال قيمة صحيحة."); return; }
+        var kw = unit === 'hp' ? power * 0.746 : power;
+        var fli = kw / (1.732 * 0.38 * 0.84 * 0.85);
+        var breaker = Math.ceil(fli * 1.6);
+        var contactor = Math.ceil(fli * 1.25);
+        var olMin = (fli * 0.9).toFixed(1); var olMax = (fli * 1.15).toFixed(1);
+        var cable = (fli / 2.8).toFixed(1); if(cable < 2.5) cable = 2.5;
+        document.getElementById('indCurrentRes').innerText = fli.toFixed(2);
+        document.getElementById('indBreakerRes').innerText = breaker;
