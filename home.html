@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Tech Aide | حاسبة المنازل</title>
-    <script src="https://minepi.com"></script>
     <style>
         :root {
             --dark-bg: #090d16;
@@ -42,7 +41,8 @@
         .card h2 { margin-top: 0; font-size: 18px; font-weight: 700; color: #ffffff; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 10px; }
         .form-group { margin-bottom: 18px; }
         label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; color: var(--text-muted); }
-        select { width: 100%; padding: 12px; background: rgba(9, 13, 22, 0.8); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px; box-sizing: border-box; font-size: 16px; color: #ffffff; }
+        select { width: 100%; padding: 12px; background: rgba(9, 13, 22, 0.8); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px; box-sizing: border-box; font-size: 16px; color: #ffffff; outline: none; }
+        select:focus { border-color: var(--neon-orange); }
         button {
             background: linear-gradient(135deg, #f97316, #ea580c); color: white; border: none; padding: 14px 20px; font-size: 16px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
@@ -83,13 +83,27 @@
             <p style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 8px; margin-top: 8px;">ℹ️ <span id="resNote" style="color: var(--text-muted); font-size: 14px;">-</span></p>
         </div>
     </div>
+    
+    <!-- روابط التنقل السفلية بعد ربط ملف المواسير بنجاح -->
     <div class="nav-links">
         <a href="index.html">🏢 العودة لحاسبة المصانع العمومية</a>
         <a href="factor.html">📊 الانتقال لحاسبة مكثفات معامل القدرة ←</a>
+        <a href="conduit.html">📐 الانتقال لحاسبة مواسير التمديد ←</a>
     </div>
 </div>
+
+<div class="footer">
+    <p>جميع الحقوق محفوظة © المهندس المطور ماجد النمر 2026</p>
+</div>
+
+<!-- عزل وحماية السكربت لضمان الاستقرار الفني في المعاينة والتطبيق -->
+<script src="https://minepi.com" async></script>
 <script>
-    Pi.init({ version: "2.0", sandbox: true });
+    window.onload = function() {
+        if (typeof Pi !== 'undefined') {
+            try { Pi.init({ version: "2.0", sandbox: true }); } catch(e) {}
+        }
+    };
     function calculateResidential() {
         var type = document.getElementById('resAppliance').value;
         var current = 0; var breaker = 10; var cable = 1.5; var note = "";
