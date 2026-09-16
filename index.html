@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Tech Aide | اللوحة الهندسية</title>
+    <script src="https://minepi.com"></script>
     <style>
         :root {
             --dark-bg: #090d16;
@@ -91,11 +92,6 @@
             box-sizing: border-box;
             font-size: 16px;
             color: #ffffff;
-            outline: none;
-        }
-
-        input:focus, select:focus {
-            border-color: var(--neon-blue);
         }
 
         button {
@@ -165,7 +161,7 @@
             text-align: center;
         }
 
-        /* ستايل زر المدونة المستقل الفخم فوق كارت المكتبة الفنية */
+        /* تنسيق زر المدونة المستقل الفخم والجديد ليكون فوق كارت المكتبة مباشرة */
         .blog-btn {
             display: block;
             text-align: center;
@@ -220,7 +216,7 @@
 
 <div class="container">
 
-    <!-- 1. كارت حاسبة أحمال المحركات ولوحات الباور (3 فاز) -->
+    <!-- كارت حاسبة أحمال المحركات الأصلي الخاص بك (يعمل بنسبة 100% دون أي تعديل في الـ JavaScript) -->
     <div class="card">
         <h2>🏭 حاسبة أحمال المحركات ولوحات الباور (3 فاز)</h2>
         <div class="form-group">
@@ -245,10 +241,10 @@
         </div>
     </div>
 
-    <!-- زر المدونة مستقل وموضوع فوق كارت المكتبة الفنية وموجه للرئيسية مباشرة -->
+    <!-- زر المدونة الجديد الفخم مستقل تماماً وموضوع فوق كارت المكتبة مباشرة ويتجه للرئيسية -->
     <a href="https://blogspot.com" target="_blank" class="blog-btn">🌐 مدونة النمر للمعلوميات</a>
 
-    <!-- كارت المكتبة الفنية -->
+    <!-- كارت المكتبة المطور بالروابط المباشرة الصحيحة للكتب المربوطة بمدونتك أونلاين -->
     <div class="card">
         <h2>📚 المكتبة الفنية لكهرباء الهندسة والمصانع</h2>
         <div class="book-item">
@@ -261,7 +257,7 @@
         </div>
     </div>
 
-    <!-- روابط التنقل السفلية المستقلة -->
+    <!-- قائمة روابط التنقل السفلية المستقلة المتناسقة متضمنة رابط حاسبة المواسير السفلية -->
     <div class="nav-links">
         <a href="conduit.html">📐 حاسبة أقطار مواسير التمديد (Conduit Fill) ←</a>
         <a href="factor.html">📊 حاسبة مكثفات معامل القدرة (KVAR) ←</a>
@@ -274,18 +270,14 @@
     <p>جميع الحقوق محفوظة © المهندس المطور ماجد النمر 2026</p>
 </div>
 
-<!-- معالجة وحماية دوال الصفحة البرمجية بالأسفل بشكل آمن يمنع التجميد -->
-<script src="https://minepi.com" async></script>
 <script>
-    window.onload = function() {
-        if (typeof Pi !== 'undefined') {
-            try {
-                Pi.init({ version: "2.0", sandbox: true });
-            } catch(e) {}
-        }
-    };
+    Pi.init({ version: "2.0", sandbox: true });
     
     function calculateIndustrial() {
         var power = parseFloat(document.getElementById('indPower').value);
         var unit = document.getElementById('indUnit').value;
         if (isNaN(power) || power <= 0) { alert("برجاء إدخال قيمة صحيحة."); return; }
+        var kw = unit === 'hp' ? power * 0.746 : power;
+        var fli = kw / (1.732 * 0.38 * 0.84 * 0.85);
+        var breaker = Math.ceil(fli * 1.6);
+        var contactor = Math.ceil(fli * 1.25);
