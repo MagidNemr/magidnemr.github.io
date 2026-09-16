@@ -3,271 +3,204 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Tech Aide | اللوحة الهندسية</title>
-    <script src="https://minepi.com"></script>
+    <title>Smart Tech Aide</title>
     <style>
-        :root {
-            --dark-bg: #090d16;
-            --panel-bg: rgba(17, 24, 39, 0.95);
-            --neon-blue: #00d2ff;
-            --neon-green: #00f5d4;
-            --neon-purple: #9d4edd;
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
-        }
-        
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: radial-gradient(circle at top, #111827 0%, var(--dark-bg) 80%);
-            color: var(--text-main);
             margin: 0;
             padding: 0;
+            background-color: #f5f6fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+        }
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            background-color: #fdfdfd;
             min-height: 100vh;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 30px;
         }
-
-        header {
+        /* الهيدر العلوي البنفسجي */
+        .header {
+            background-color: #6200ee;
+            color: white;
             text-align: center;
-            padding: 30px 20px;
-            background: linear-gradient(to bottom, rgba(9, 13, 22, 0.9), transparent);
-            border-bottom: 1px solid rgba(0, 210, 255, 0.2);
+            padding: 25px 15px;
         }
-
-        header h1 {
-            margin: 0;
+        .header h1 {
+            margin: 0 0 10px 0;
             font-size: 26px;
-            font-weight: 800;
-            color: #ffffff;
-            text-shadow: 0 0 15px rgba(0, 210, 255, 0.5);
+            font-weight: bold;
         }
-
-        header p {
-            margin: 8px 0 0;
+        .header p {
+            margin: 0;
             font-size: 14px;
-            color: var(--neon-blue);
-            font-weight: 600;
-            letter-spacing: 0.5px;
+            opacity: 0.9;
         }
-
-        .container {
-            max-width: 600px;
-            margin: 20px auto 40px;
-            padding: 0 15px;
-        }
-
+        /* الكروت المشتركة */
         .card {
-            background: var(--panel-bg);
-            border: 1px solid rgba(0, 210, 255, 0.15);
-            border-radius: 16px;
-            padding: 22px;
-            margin-bottom: 25px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid #eef2ff;
         }
-
-        .card h2 {
+        .card-title {
+            color: #6200ee;
+            font-size: 16px;
+            font-weight: bold;
             margin-top: 0;
-            font-size: 18px;
-            font-weight: 700;
-            color: #ffffff;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-
-        .form-group { margin-bottom: 18px; }
-        
-        label {
+        /* حاسبة الأحمال */
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
             display: block;
-            margin-bottom: 6px;
-            font-weight: 600;
+            margin-bottom: 8px;
             font-size: 14px;
-            color: var(--text-muted);
+            color: #333;
         }
-
-        input, select {
+        .form-group input, .form-group select {
             width: 100%;
             padding: 12px;
-            background: rgba(9, 13, 22, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid #ddd;
             border-radius: 8px;
             box-sizing: border-box;
-            font-size: 16px;
-            color: #ffffff;
+            font-size: 14px;
+            background-color: #fff;
         }
-
-        button {
-            background: linear-gradient(135deg, #6200ee, #7209b7);
+        .btn-calc {
+            width: 100%;
+            background-color: #6200ee;
             color: white;
             border: none;
-            padding: 14px 20px;
-            font-size: 16px;
+            padding: 14px;
             border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
             cursor: pointer;
-            width: 100%;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(157, 78, 221, 0.3);
         }
-
-        button:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(157, 78, 221, 0.5);
-        }
-
-        .result-box {
-            background: rgba(0, 210, 255, 0.05);
-            border: 1px solid rgba(0, 210, 255, 0.2);
-            border-right: 5px solid var(--neon-blue);
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-            display: none;
-        }
-
-        .result-box p { margin: 6px 0; font-size: 15px; }
-
-        .value-highlight {
-            font-family: monospace;
-            font-weight: bold;
-            color: var(--neon-green);
-            font-size: 18px;
-            text-shadow: 0 0 5px rgba(0, 245, 212, 0.5);
-        }
-
-        .book-item {
+        /* أزرار روابط الحاسبات السفلية */
+        .btn-link-card {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.05);
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 12px;
-        }
-        .book-info { font-size: 14px; font-weight: 600; }
-        .book-info span { display: block; font-size: 12px; color: var(--text-muted); }
-        
-        .download-btn {
-            display: inline-block;
-            background: linear-gradient(135deg, #10b981, #059669);
-            padding: 8px 14px;
-            font-size: 13px;
-            border-radius: 6px;
-            width: auto;
+            color: #6200ee;
             text-decoration: none;
-            color: #fff;
             font-weight: bold;
+            font-size: 14px;
+        }
+        /* الفوتر السفلي */
+        .footer {
             text-align: center;
-            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);
-            transition: all 0.3s ease;
+            color: #777;
+            font-size: 12px;
+            margin-top: auto;
+            padding: 20px 15px 10px 15px;
         }
-
-        .download-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 15px rgba(16, 185, 129, 0.4);
-        }
-
-        .nav-links {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        .nav-links a {
-            text-align: center;
-            background: rgba(0, 210, 255, 0.08);
-            border: 1px solid rgba(0, 210, 255, 0.2);
-            color: var(--neon-blue);
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: bold;
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-        .nav-links a:hover {
-            background: rgba(0, 210, 255, 0.15);
-            box-shadow: 0 0 10px rgba(0, 210, 255, 0.2);
-        }
-        .footer { text-align: center; padding: 25px; font-size: 12px; color: var(--text-muted); }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>SMART TECH AIDE ⚡</h1>
-    <p>« المنصة البرمجية المعتمدة لهندسة القوى والتحكم الآلي »</p>
-</header>
+<div class="app-container">
 
-<div class="container">
+    <!-- الهيدر العلوي -->
+    <div class="header">
+        <h1>Smart Tech Aide</h1>
+        <div style="font-size: 24px; margin-bottom: 5px;">⚡</div>
+        <p>المنصة الهندسية الذكية لأنظمة التحكم والكهرباء الصناعية</p>
+    </div>
 
+    <!-- كارت حاسبة الأحمال وقدرة الكابلات -->
     <div class="card">
-        <h2>🏭 حاسبة أحمال المحركات ولوحات الباور (3 فاز)</h2>
+        <h3 class="card-title">📊 حاسبة الأحمال وقدرة الكابلات والقواطع (3 فاز)</h3>
         <div class="form-group">
-            <label for="indPower">قدرة المحرك الميكانيكية بالموقع:</label>
-            <input type="number" id="indPower" placeholder="أدخل القيمة الرقمية...">
+            <label>قدرة الحمل / الموتور:</label>
+            <input type="text" placeholder="أدخل القيمة الرقمية...">
         </div>
         <div class="form-group">
-            <label for="indUnit">وحدة القدرة:</label>
-            <select id="indUnit">
-                <option value="hp">حصان (HP)</option>
-                <option value="kw">كيلوواط (kW)</option>
+            <label>الوحدة:</label>
+            <select>
+                <option>حصان (HP)</option>
+                <option>كيلو وات (kW)</option>
             </select>
         </div>
-        <button onclick="calculateIndustrial()">تحليل المكونات الصناعية العمومية</button>
+        <button class="btn-calc">احسب الحمل الكهربائي</button>
+    </div>
+
+    <!-- كارت المكتبة الفنية المحدث بالكامل -->
+    <div class="card" style="border: 1px solid rgba(98, 0, 238, 0.15);">
+        <h3 class="card-title">📚 المكتبة الفنية لكهرباء الهندسة والمصانع</h3>
         
-        <div id="indResult" class="result-box">
-            <p><strong>تيار الحمل الكامل (FLA):</strong> <span id="indCurrentRes" class="value-highlight">0</span> أمبير</p>
-            <p><strong>قاطع اللوحة الرئيسي (MCCB):</strong> <span id="indBreakerRes" class="value-highlight">0</span> أمبير</p>
-            <p><strong>سعة الكونتاكتور المناسب:</strong> <span id="indContactorRes" class="value-highlight">0</span> أمبير</p>
-            <p><strong>مدى ضبط الأوفرلود الحركي:</strong> <span id="indOverloadRes" class="value-highlight">0</span> أمبير</p>
-            <p><strong>مقطع كابل النحاس بالدكت:</strong> <span id="indCableRes" class="value-highlight">0</span> مم²</p>
+        <!-- الزر الجديد المطلوب -->
+        <a href="https://blogspot.com" target="_blank" style="display: block; text-align: center; background: #6200ee; color: #ffffff; text-decoration: none; padding: 12px; border-radius: 8px; font-weight: bold; font-size: 15px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(98, 0, 238, 0.15);">
+            🌐 مدونة النمر للمعلوميات
+        </a>
+
+        <!-- حاوية الكتب والأزرار الخضراء -->
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+            
+            <!-- كتاب التحكم الآلي -->
+            <div style="display: flex; align-items: center; justify-content: space-between; background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0; min-height: 65px;">
+                <div style="flex: 1; padding-left: 10px;">
+                    <h4 style="margin: 0 0 4px 0; font-size: 13px; color: #1e293b; font-weight: bold;">كتاب التحكم الآلي الكلاسيكي (Classic Control)</h4>
+                    <p style="margin: 0; font-size: 11px; color: #64748b;">صيانة وتشغيل اللوحات</p>
+                </div>
+                <a href="https://blogspot.com2026/09/classic-control.html" target="_blank" style="background: #00a86b; color: #ffffff; text-decoration: none; padding: 10px 12px; border-radius: 6px; font-weight: bold; font-size: 12px; text-align: center; min-width: 85px; display: inline-block;">
+                    فتح من المدونة
+                </a>
+            </div>
+
+            <!-- دليل الكود المصري -->
+            <div style="display: flex; align-items: center; justify-content: space-between; background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0; min-height: 65px;">
+                <div style="flex: 1; padding-left: 10px;">
+                    <h4 style="margin: 0 0 4px 0; font-size: 13px; color: #1e293b; font-weight: bold;">دليل الكود المصري للتركيبات الكهربائية</h4>
+                    <p style="margin: 0; font-size: 11px; color: #64748b;">المجلد الأول - التمديدات</p>
+                </div>
+                <a href="https://blogspot.com2026/09/blog-post.html" target="_blank" style="background: #00a86b; color: #ffffff; text-decoration: none; padding: 10px 12px; border-radius: 6px; font-weight: bold; font-size: 12px; text-align: center; min-width: 85px; display: inline-block;">
+                    فتح من المدونة
+                </a>
+            </div>
         </div>
+    </div>
+
+    <!-- الروابط السفلية الأخرى المذكورة بالصورة -->
+    <div class="card">
+        <a href="#" class="btn-link-card">
+            <span>📐 حاسبة أقطار مواسير التمديد (Conduit Fill)</span>
+            <span>←</span>
+        </a>
     </div>
 
     <div class="card">
-        <h2>📚 المكتبة الفنية لكهرباء الهندسة والمصانع</h2>
-        <div class="book-item">
-            <div class="book-info">كتاب التحكم الآلي الكلاسيكي (Classic Control)<span>صيانة وتشغيل اللوحات</span></div>
-            <a href="https://blogspot.com" class="download-btn">فتح بالمدونة</a>
-        </div>
-        <div class="book-item">
-            <div class="book-info">دليل الكود المصري للتركيبات الكهربائية<span>المجلد الأول - التمديدات</span></div>
-            <a href="https://blogspot.com" class="download-btn">فتح بالمدونة</a>
-        </div>
+        <a href="#" class="btn-link-card">
+            <span>📊 حاسبة مكثفات معامل القدرة (KVAR)</span>
+            <span>←</span>
+        </a>
     </div>
 
-    <!-- قائمة الروابط وبداخلها حاسبة أقطار مواسير التمديد الأصلية الخاصة بك -->
-    <div class="nav-links">
-        <a href="conduit.html">📐 حاسبة أقطار مواسير التمديد (Conduit Fill) ←</a>
-        <a href="factor.html">📊 حاسبة مكثفات معامل القدرة (KVAR) ←</a>
-        <a href="home.html">🏠 حاسبة أحمال وتمديدات المنازل الفرعية ←</a>
+    <div class="card">
+        <a href="#" class="btn-link-card">
+            <span>🏠 حاسبة أحمال وتمديدات المنازل الفرعية</span>
+            <span>←</span>
+        </a>
+    </div>
+
+    <!-- الفوتر السفلي كما بالصورة -->
+    <div class="footer">
+        جميع الحقوق محفوظة © المهندس المطور ماجد النمر 2026
     </div>
 
 </div>
 
-<div class="footer">
-    <p>جميع الحقوق محفوظة © المهندس المطور ماجد النمر 2026</p>
-</div>
-
-<script>
-    Pi.init({ version: "2.0", sandbox: true });
-    
-    function calculateIndustrial() {
-        var power = parseFloat(document.getElementById('indPower').value);
-        var unit = document.getElementById('indUnit').value;
-        if (isNaN(power) || power <= 0) { alert("برجاء إدخال قيمة صحيحة."); return; }
-        var kw = unit === 'hp' ? power * 0.746 : power;
-        var fli = kw / (1.732 * 0.38 * 0.84 * 0.85);
-        var breaker = Math.ceil(fli * 1.6);
-        var contactor = Math.ceil(fli * 1.25);
-        var olMin = (fli * 0.9).toFixed(1); var olMax = (fli * 1.15).toFixed(1);
-        var cable = (fli / 2.8).toFixed(1); if(cable < 2.5) cable = 2.5;
-        document.getElementById('indCurrentRes').innerText = fli.toFixed(2);
-        document.getElementById('indBreakerRes').innerText = breaker;
-        document.getElementById('indContactorRes').innerText = contactor;
-        document.getElementById('indOverloadRes').innerText = olMin + " - " + olMax;
-        document.getElementById('indCableRes').innerText = cable;
-        document.getElementById('indResult').style.display = 'block';
-    }
-</script>
 </body>
 </html>
