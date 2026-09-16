@@ -3,198 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Tech Aide | المنصة الهندسية الذكية</title>
-    <!-- رابط مكتبة الأول الشغال تماماً معك -->
-    <script src="https://minepi.com"></script>
+    <title>المكتبة الفنية لكهرباء الهندسة والمصانع</title>
     <style>
-        :root {
-            --primary-color: #6200ee;
-            --secondary-color: #03dac6;
-            --bg-color: #f5f5f7;
-            --card-bg: #ffffff;
-            --text-color: #333333;
-        }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f4f6f9;
             margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: var(--primary-color);
-            color: white;
             padding: 20px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
-        header h1 { margin: 0; font-size: 24px; }
-        header p { margin: 5px 0 0; font-size: 14px; opacity: 0.9; }
         .container {
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 0 15px;
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 500px;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+            padding: 24px;
+            box-sizing: border-box;
+        }
+        .header {
+            text-align: center;
+            color: #6200ee;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #eef2ff;
+            padding-bottom: 15px;
+        }
+        .header span {
+            margin-left: 8px;
         }
         .card {
-            background: var(--card-bg);
+            border: 1px solid #eef2ff;
             border-radius: 12px;
-            padding: 20px;
+            padding: 16px;
             margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            transition: transform 0.2s;
         }
-        .card h2 {
-            margin-top: 0;
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+        .card-details {
+            flex-grow: 1;
+            padding-right: 12px;
+        }
+        .card-title {
             font-size: 18px;
-            color: var(--primary-color);
-            border-bottom: 2px solid var(--bg-color);
-            padding-bottom: 10px;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
             font-weight: bold;
+            color: #333333;
+            margin: 0 0 6px 0;
+        }
+        .card-subtitle {
             font-size: 14px;
-        }
-        input, select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #cccccc;
-            border-radius: 6px;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
-        button {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            font-size: 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            width: 100%;
-            font-weight: bold;
-            transition: background 0.3s;
-        }
-        button:hover { background-color: #4d00b8; }
-        .result-box {
-            background-color: #eef2ff;
-            border-right: 4px solid var(--primary-color);
-            padding: 15px;
-            border-radius: 6px;
-            margin-top: 15px;
-            display: none;
-        }
-        .result-box p { margin: 5px 0; font-size: 15px; }
-        .book-item { display: flex; justify-content: space-between; align-items: center; background: #fafafa; border: 1px solid #eee; padding: 12px; border-radius: 8px; margin-bottom: 12px; }
-        .book-info { font-size: 14px; font-weight: 600; text-align: right; color: var(--text-color); }
-        .book-info span { display: block; font-size: 12px; color: #777; }
-        .download-btn { background: linear-gradient(135deg, #10b981, #059669); padding: 8px 14px; font-size: 13px; border-radius: 6px; text-decoration: none; color: #fff; font-weight: bold; text-align: center; }
-        .nav-links { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
-        .nav-links a { text-align: center; background: #eef2ff; border: 1px solid #c7d2fe; color: var(--primary-color); padding: 12px; border-radius: 8px; font-weight: bold; text-decoration: none; transition: all 0.3s; }
-        .nav-links a:hover { background: #e0e7ff; }
-        .footer {
-            text-align: center;
-            padding: 20px;
-            font-size: 12px;
             color: #777777;
+            margin: 0;
+        }
+        .btn-open {
+            display: inline-block;
+            background-color: #00a859;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 14px 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 16px;
+            text-align: center;
+            min-width: 90px;
+            box-shadow: 0 4px 10px rgba(0, 168, 89, 0.2);
+            transition: background-color 0.2s;
+        }
+        .btn-open:hover {
+            background-color: #008f4c;
         }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>Smart Tech Aide ⚡</h1>
-    <p>المنصة الهندسية الذكية لأنظمة التحكم والكهرباء الصناعية</p>
-</header>
-
 <div class="container">
 
-    <!-- 🏭 كارت حاسبة الأحمال والكابلات الصناعية -->
+    <!-- عنوان المكتبة الفنية -->
+    <div class="header">
+        📚 <span>المكتبة الفنية لكهرباء الهندسة والمصانع</span>
+    </div>
+
+    <!-- كارت كتاب التحكم الآلي الكلاسيكي -->
     <div class="card">
-        <h2>📊 حاسبة الأحمال وقدرة الكابلات والقواطع (3 فاز)</h2>
-        <div class="form-group">
-            <label for="powerInput">قدرة الحمل / الموتور:</label>
-            <input type="number" id="powerInput" placeholder="أدخل القيمة الرقمية...">
-        </div>
-        <div class="form-group">
-            <label for="unitInput">الوحدة:</label>
-            <select id="unitInput">
-                <option value="hp">حصان (HP)</option>
-                <option value="kw">كيلوواط (kW)</option>
-            </select>
-        </div>
-        <button onclick="calculateLoad()">احسب الحمل الكهربائي</button>
-        
-        <div id="calcResult" class="result-box">
-            <p><strong>تيار الحمل الكامل (FLA):</strong> <span id="currentRes">0</span> أمبير</p>
-            <p><strong>قاطع الحماية للوحة (MCCB):</strong> <span id="breakerRes">0</span> أمبير</p>
-            <p><strong>سعة الكونتاكتور المناسب (Contactor):</strong> <span id="contactorRes">0</span> أمبير</p>
-            <p><strong>مدى ضبط الأوفرلود (Overload):</strong> <span id="overloadRes">0</span> أمبير</p>
-            <p><strong>مقطع كابل النحاس المقترح بالدكت:</strong> <span id="cableRes">0</span> مم²</p>
+        <a href="https://magid-nemr.blogspot.com/2026/09/classic-control.html" class="btn-open">
+            فتح<br>من<br>المدونة
+        </a>
+        <div class="card-details">
+            <h3 class="card-title">كتاب التحكم الآلي الكلاسيكي</h3>
+            <p class="card-subtitle">(Classic Control)<br>صيانة وتشغيل اللوحات</p>
         </div>
     </div>
 
-    <!-- 📚 كارت المكتبة الفنية المربوط بمدونتك بعد التحديث -->
+    <!-- كارت دليل الكود المصري للتركيبات الكهربائية -->
     <div class="card">
-        <h2>📚 المكتبة الفنية لكهرباء الهندسة والمصانع</h2>
-        <div class="book-item">
-            <div class="book-info">كتاب التحكم الآلي الكلاسيكي (Classic Control)<span>صيانة وتشغيل اللوحات</span></div>
-            <a href="https://blogspot.com" target="_blank" class="download-btn">فتح من المدونة</a>
+        <a href="https://magid-nemr.blogspot.com/2026/09/blog-post.html" class="btn-open">
+            فتح<br>من<br>المدونة
+        </a>
+        <div class="card-details">
+            <h3 class="card-title">دليل الكود المصري للتركيبات الكهربائية</h3>
+            <p class="card-subtitle">المجلد الأول - التمديدات</p>
         </div>
-        <div class="book-item">
-            <div class="book-info">دليل الكود المصري للتركيبات الكهربائية<span>المجلد الأول - التمديدات</span></div>
-            <a href="https://magid-nemr.blogspot.com/2026/09/blog-post.html" target="_blank" class="download-btn">فتح من المدونة</a>
-        </div>
-    </div>
-
-    <!-- روابط الانتقال الفعّالة للشاشات الفرعية الأخرى مستقلة تماماً -->
-    <div class="nav-links">
-        <a href="conduit.html">📏 حاسبة أقطار مواسير التمديد (Conduit Fill) ←</a>
-        <a href="factor.html">📊 حاسبة مكثفات معامل القدرة (KVAR) ←</a>
-        <a href="home.html">🏠 حاسبة أحمال وتمديدات المنازل الفرعية ←</a>
     </div>
 
 </div>
-
-<div class="footer">
-    <p>جميع الحقوق محفوظة © المهندس المطور ماجد النمر 2026</p>
-</div>
-
-<script>
-    // تهيئة منصة Pi SDK
-    Pi.init({ version: "2.0", sandbox: true });
-
-    // دالة حساب الأحمال والكابلات الكهربائية للأصلية
-    function calculateLoad() {
-        var power = parseFloat(document.getElementById('powerInput').value);
-        var unit = document.getElementById('unitInput').value;
-        
-        if (isNaN(power) || power <= 0) {
-            alert("برجاء إدخال قيمة صحيحة لقدرة المحرك.");
-            return;
-        }
-
-        var kw = (unit === 'hp') ? (power * 0.746) : power;
-        var fli = kw / (1.732 * 0.38 * 0.84 * 0.85);
-
-        var breaker = Math.ceil(fli * 1.6);
-        var contactor = Math.ceil(fli * 1.25);
-        var olMin = (fli * 0.9).toFixed(1); 
-        var olMax = (fli * 1.15).toFixed(1);
-        var cable = (fli / 2.8).toFixed(1); 
-        if(cable < 2.5) cable = 2.5;
-
-        document.getElementById('currentRes').innerText = fli.toFixed(2);
-        document.getElementById('breakerRes').innerText = breaker;
-        document.getElementById('contactorRes').innerText = contactor;
-        document.getElementById('overloadRes').innerText = olMin + " - " + olMax;
-        document.getElementById('cableRes').innerText = cable;
-        document.getElementById('calcResult').style.display = 'block';
-    }
-</script>
 
 </body>
 </html>
