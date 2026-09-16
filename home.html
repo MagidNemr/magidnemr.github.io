@@ -1,1 +1,111 @@
 
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Tech Aide | حاسبة المنازل</title>
+    <script src="https://minepi.com"></script>
+    <style>
+        :root {
+            --dark-bg: #090d16;
+            --panel-bg: rgba(17, 24, 39, 0.95);
+            --neon-orange: #f97316;
+            --neon-green: #00f5d4;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: radial-gradient(circle at top, #111827 0%, var(--dark-bg) 80%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(to bottom, rgba(9, 13, 22, 0.9), transparent);
+            border-bottom: 1px solid rgba(249, 115, 22, 0.2);
+        }
+        header h1 {
+            margin: 0; font-size: 26px; font-weight: 800; color: #ffffff;
+            text-shadow: 0 0 15px rgba(249, 115, 22, 0.5);
+        }
+        header p { margin: 8px 0 0; font-size: 14px; color: var(--neon-orange); font-weight: 600; }
+        .container { max-width: 600px; margin: 20px auto; padding: 0 15px; }
+        .card {
+            background: var(--panel-bg); border: 1px solid rgba(249, 115, 22, 0.15);
+            border-radius: 16px; padding: 22px; margin-bottom: 25px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5); backdrop-filter: blur(10px);
+        }
+        .card h2 { margin-top: 0; font-size: 18px; font-weight: 700; color: #ffffff; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 10px; }
+        .form-group { margin-bottom: 18px; }
+        label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; color: var(--text-muted); }
+        select { width: 100%; padding: 12px; background: rgba(9, 13, 22, 0.8); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px; box-sizing: border-box; font-size: 16px; color: #ffffff; }
+        button {
+            background: linear-gradient(135deg, #f97316, #ea580c); color: white; border: none; padding: 14px 20px; font-size: 16px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+        }
+        button:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(249, 115, 22, 0.5); }
+        .result-box { background: rgba(249, 115, 22, 0.05); border: 1px solid rgba(249, 115, 22, 0.2); border-right: 5px solid var(--neon-orange); padding: 15px; border-radius: 8px; margin-top: 15px; display: none; }
+        .value-highlight { font-family: monospace; font-weight: bold; color: var(--neon-green); font-size: 18px; text-shadow: 0 0 5px rgba(0, 245, 212, 0.5); }
+        .nav-links { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+        .nav-links a { text-align: center; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-main); padding: 12px; border-radius: 8px; font-weight: bold; text-decoration: none; transition: all 0.3s; }
+        .nav-links a:hover { background: rgba(255, 255, 255, 0.08); }
+        .footer { text-align: center; padding: 25px; font-size: 12px; color: var(--text-muted); }
+    </style>
+</head>
+<body>
+<header>
+    <h1>SMART TECH AIDE ⚡</h1>
+    <p>« المستودع السكني - لوحة حسابات وتوزيع خطوط المنزل »</p>
+</header>
+<div class="container">
+    <div class="card">
+        <h2>🏠 حاسبة الأحمال وتوزيع خطوط المنزل الفرعية</h2>
+        <div class="form-group">
+            <label for="resAppliance">نوع الحمل الكهربائي السكني المراد حسابه:</label>
+            <select id="resAppliance">
+                <option value="lighting">💡 دوائر إنارة سكنية عادية</option>
+                <option value="sockets">🔌 برايز ومآخذ عامة للأجهزة</option>
+                <option value="ac1">❄️ تكييف هواء (1.5 حصان)</option>
+                <option value="ac2">❄️ تكييف هواء (2.25 حصان)</option>
+                <option value="ac3">❄️ تكييف هواء (3 حصان)</option>
+                <option value="heater">🔥 سخان مياه كهربائي فرعي</option>
+            </select>
+        </div>
+        <button onclick="calculateResidential()">احسب تيار وسلك الدائرة</button>
+        <div id="resResult" class="result-box">
+            <p><strong>تيار السحب المتوقع (Current):</strong> <span id="resCurrent" class="value-highlight">0</span> أمبير</p>
+            <p><strong>سعة القاطع الفرعي المقترحة:</strong> <span id="resBreaker" class="value-highlight">0</span> أمبير</p>
+            <p><strong>مقطع السلك النحاسي المعتمد:</strong> <span id="resCable" class="value-highlight">0</span> مم²</p>
+            <p style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 8px; margin-top: 8px;">ℹ️ <span id="resNote" style="color: var(--text-muted); font-size: 14px;">-</span></p>
+        </div>
+    </div>
+    <div class="nav-links">
+        <a href="index.html">🏢 العودة لحاسبة المصانع العمومية</a>
+        <a href="factor.html">📊 الانتقال لحاسبة مكثفات معامل القدرة ←</a>
+    </div>
+</div>
+<script>
+    Pi.init({ version: "2.0", sandbox: true });
+    function calculateResidential() {
+        var type = document.getElementById('resAppliance').value;
+        var current = 0; var breaker = 10; var cable = 1.5; var note = "";
+        if (type === 'lighting') { current = 4.5; breaker = 10; cable = 1.5; note = "موصى به لشبكات الإنارة القياسية لتجنب سخونة الأسلاك."; }
+        else if (type === 'sockets') { current = 12; breaker = 16; cable = 2.5; note = "تأكد من إحكام ربط السلك وتمديد خط الأرضي (Earth) للحماية."; }
+        else if (type === 'ac1') { current = 7; breaker = 16; cable = 4; note = "يسحب خط منفرد ومباشر من لوحة التوزيع دون أي خطوط فرعية."; }
+        else if (type === 'ac2') { current = 11; breaker = 20; cable = 4; note = "يسحب خط منفرد ومباشر من لوحة التوزيع دون أي خطوط فرعية."; }
+        else if (type === 'ac3') { current = 15; breaker = 26; cable = 6; note = "يسحب خط منفرد ومباشر من لوحة التوزيع دون أي خطوط فرعية."; }
+        else if (type === 'heater') { current = 10.9; breaker = 16; cable = 4; note = "يفضل قاطع ثنائي القطب لضمان عزل الفازة والنيوترال تماماً أثناء الصيانة."; }
+        document.getElementById('resCurrent').innerText = current.toFixed(1);
+        document.getElementById('resBreaker').innerText = breaker;
+        document.getElementById('resCable').innerText = cable;
+        document.getElementById('resNote').innerText = note;
+        document.getElementById('resResult').style.display = 'block';
+    }
+</script>
+</body>
+</html>
