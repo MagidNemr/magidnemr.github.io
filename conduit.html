@@ -3,79 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Tech Aide | حاسبة المواسير</title>
-    <!-- رابط المكتبة المعتمدة والناجحة معك -->
-    <script src="https://minepi.com"></script>
+    <title>Smart Tech Aide | حاسبة مواسير التمديد</title>
     <style>
-        :root { --primary-color: #00d2ff; --bg-color: #f5f5f7; --card-bg: #ffffff; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: #333; margin: 0; padding: 0; }
-        header { background-color: #1e3a8a; color: white; padding: 20px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        header p { margin: 5px 0 0; font-size: 14px; color: var(--primary-color); font-weight: 600; }
-        .container { max-width: 600px; margin: 20px auto; padding: 0 15px; }
-        .card { background: var(--card-bg); border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 14px; }
-        input, select { width: 100%; padding: 10px; border: 1px solid #cccccc; border-radius: 6px; box-sizing: border-box; font-size: 16px; }
-        button { background: linear-gradient(135deg, #00d2ff, #00f5d4); color: #090d16; border: none; padding: 12px 20px; font-size: 16px; border-radius: 6px; cursor: pointer; width: 100%; font-weight: bold; transition: background 0.3s; }
-        .result-box { background-color: #eef2ff; border-right: 4px solid #1e3a8a; padding: 15px; border-radius: 6px; margin-top: 15px; display: none; }
-        .value-highlight { font-family: monospace; font-weight: bold; color: #10b981; font-size: 18px; }
-        .nav-links { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; padding: 15px; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        .nav-links a { text-align: center; color: #1e3a8a; font-weight: bold; text-decoration: none; font-size: 15px; }
+        :root {
+            --dark-bg: #090d16;
+            --panel-bg: rgba(17, 24, 39, 0.95);
+            --neon-blue: #00d2ff;
+            --neon-green: #00f5d4;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: radial-gradient(circle at top, #111827 0%, var(--dark-bg) 80%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: center;
+            padding: 25px 20px;
+            background: linear-gradient(to bottom, rgba(9, 13, 22, 0.9), transparent);
+            border-bottom: 1px solid rgba(0, 210, 255, 0.2);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 800;
+            color: #ffffff;
+            text-shadow: 0 0 15px rgba(0, 210, 255, 0.5);
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto 40px;
+            padding: 0 15px;
+        }
+
+        .card {
+            background: var(--panel-bg);
+            border: 1px solid rgba(0, 210, 255, 0.15);
+            border-radius: 16px;
+            padding: 22px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group { margin-bottom: 18px; }
+        
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            background: rgba(9, 13, 22, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 16px;
+            color: #ffffff;
+        }
+
+        button {
+            background: linear-gradient(135deg, #00d2ff, #005f73);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 210, 255, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(0, 210, 255, 0.5);
+        }
+
+        .result-box {
+            background: rgba(0, 210, 255, 0.05);
+            border: 1px solid rgba(0, 210, 255, 0.2);
+            border-right: 5px solid var(--neon-blue);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .result-box p { margin: 6px 0; font-size: 15px; }
+
+        .value-highlight {
+            font-family: monospace;
+            font-weight: bold;
+            color: var(--neon-green);
+            font-size: 18px;
+            text-shadow: 0 0 5px rgba(0, 245, 212, 0.5);
+        }
+
+        .back-btn {
+            display: block;
+            text-align: center;
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        .back-btn:hover { color: #ffffff; }
     </style>
 </head>
 <body>
+
 <header>
-    <h1>Smart Tech Aide ⚡</h1>
-    <p>« مستودع التمديدات - حاسبة أقطار مواسير الأسلاك »</p>
+    <h1>📐 حاسبة أقطار مواسير التمديد (Conduit Fill)</h1>
 </header>
+
 <div class="container">
     <div class="card">
-        <h2>📏 حاسبة أقطار مواسير تمديد الأسلاك (Conduit Fill)</h2>
         <div class="form-group">
-            <label for="wireSize">مقطع سلك النحاس المراد تمريره (مم²):</label>
+            <label>مقطع السلك الكهربائي المار (مم²):</label>
             <select id="wireSize">
                 <option value="1.5">1.5 مم²</option>
                 <option value="2.5">2.5 مم²</option>
                 <option value="4">4 مم²</option>
                 <option value="6">6 مم²</option>
                 <option value="10">10 مم²</option>
+                <option value="16">16 مم²</option>
             </select>
         </div>
+        
         <div class="form-group">
-            <label for="wireCount">إجمالي عدد الأسلاك داخل الماسورة:</label>
-            <input type="number" id="wireCount" placeholder="مثال: 4" min="1">
+            <label>عدد الأسلاك داخل الماسورة الواحدة:</label>
+            <input type="number" id="wireCount" min="1" value="3">
         </div>
-        <button onclick="calculateConduitValues()">احسب قطر الماسورة المناسب</button>
-        <div id="conduitResult" class="result-box">
-            <p><strong>القطر الخارجي المقترح للماسورة العمومية:</strong> <span id="conduitRes" class="value-highlight">0</span> ملم</p>
-            <p style="color: #777; font-size: 13px; margin-top: 5px;">توصية الكود: تم الحساب بناءً على نسبة إشغال لا تتعدى 40% من مساحة مقطع الماسورة لتسهيل السحب ومنع سخونة التمديدات.</p>
-        </div>
-    </div>
-    <div class="nav-links">
-        <a href="index.html">🏢 العودة لحاسبة المصانع العمومية الرئيسية</a>
-        <a href="home.html">🏠 الانتقال لحاسبة أحمال المنازل</a>
-    </div>
-</div>
-<script>
-    Pi.init({ version: "2.0", sandbox: true });
-    function calculateConduitValues() {
-        var size = parseFloat(document.getElementById('wireSize').value);
-        var count = parseInt(document.getElementById('wireCount').value);
-        if (isNaN(count) || count <= 0) { alert("يرجى إدخال عدد أسلاك صحيح."); return; }
-        
-        var totalArea = (Math.PI * Math.pow(Math.sqrt(size/Math.PI), 2)) * count;
-        var requiredConduitArea = totalArea / 0.40; 
-        var diameter = Math.ceil(2 * Math.sqrt(requiredConduitArea / Math.PI));
-        
-        var finalDia = 16;
-        if (diameter <= 16) finalDia = 16;
-        else if (diameter <= 20) finalDia = 20;
-        else if (diameter <= 25) finalDia = 25;
-        else finalDia = 32;
 
-        document.getElementById('conduitRes').innerText = finalDia;
+        <button onclick="calculateConduit()">حساب القطر المناسب للمتطلبات</button>
+        
+        <div id="conduitResult" class="result-box">
+            <p><strong>القطر الداخلي الأدنى الموصى به:</strong> <span id="conduitSizeRes" class="value-highlight">0</span> مم</p>
+            <p><strong>مقاس الماسورة التجاري الأقرب (بالبوصة):</strong> <span id="conduitInchRes" class="value-highlight">0</span> بوصة</p>
+            <p style="font-size: 12px; color: var(--text-muted); margin-top: 10px;">* الحسابات مبنية على نسبة إشغال 40% كحد أقصى وفقاً لمعايير الكود المصري.</p>
+        </div>
+    </div>
+    
+    <a href="index.html" class="back-btn">← العودة للوحة الرئيسية للمنصة</a>
+</div>
+
+<script>
+    function calculateConduit() {
+        var wireSize = parseFloat(document.getElementById('wireSize').value);
+        var count = parseInt(document.getElementById('wireCount').value);
+        
+        if (isNaN(count) || count <= 0) { 
+            alert("برجاء إدخال عدد أسلاك صحيح."); 
+            return; 
+        }
+        
+        // حساب القطر الفعلي التقريبي للسلك شامل طبقة العزل الخارجي
+        var wireDiameter = Math.sqrt(wireSize) * 1.55; 
+        var totalWireArea = (Math.PI * Math.pow(wireDiameter, 2) / 4) * count;
+        
+        // حساب مساحة الماسورة الكلية المطلوبة مع الالتزام بنسبة إشغال 40% كحد أقصى (كود مصري)
+        var requiredConduitArea = totalWireArea / 0.4;
+        var minInnerDiameter = Math.sqrt((4 * requiredConduitArea) / Math.PI);
+        
+        // مصفوفة تحديد المقاس التجاري الدقيق بالبوصة بناءً على المدى الرقمي الدقيق ليتغير ديناميكياً
+        var inchSize = "1/2";
+        if (minInnerDiameter > 16 && minInnerDiameter <= 22) {
+            inchSize = "3/4";
+        } else if (minInnerDiameter > 22 && minInnerDiameter <= 28) {
+            inchSize = "1";
+        } else if (minInnerDiameter > 28 && minInnerDiameter <= 36) {
+            inchSize = "1 1/4";
+        } else if (minInnerDiameter > 36 && minInnerDiameter <= 42) {
+            inchSize = "1 1/2";
+        } else if (minInnerDiameter > 42) {
+            inchSize = "2";
+        }
+
+        // تحديث وعرض القيم فوراً في الواجهة
+        document.getElementById('conduitSizeRes').innerText = minInnerDiameter.toFixed(1);
+        document.getElementById('conduitInchRes').innerText = inchSize;
         document.getElementById('conduitResult').style.display = 'block';
     }
 </script>
+
 </body>
 </html>
