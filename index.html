@@ -216,19 +216,55 @@
         </div>
     </div>
 
-    <div class="card">
+   <div class="card">
     <h2>📚 المكتبة الفنية لكهرباء الهندسة والمصانع</h2>
     
     <div class="book-item">
         <div class="book-info">كتاب التحكم الآلي الكلاسيكي <span>(Classic Control) وصيانة وتشغيل اللوحات</span></div>
-        <button onclick="window.location.href='https://magid-nemr.blogspot.com/2026/09/classic-control.html';" class="download-btn">تحميل PDF</button>
+        <button onclick="openSecureDownload('https://blogspot.com')" class="download-btn">تحميل PDF</button>
     </div>
     
     <div class="book-item">
         <div class="book-info">دليل الكود المصري للتركيبات الكهربائية <span>المجلد الأول - التمديدات</span></div>
-        <button onclick="window.location.href='https://magid-nemr.blogspot.com/2026/09/blog-post.html';" class="download-btn">تحميل PDF</button>
+        <button onclick="openSecureDownload('https://blogspot.com')" class="download-btn">تحميل PDF</button>
     </div>
 </div>
+
+<!-- النافذة الاحتياطية المنبثقة لضمان التنزيل الآمن -->
+<div id="downloadModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 99999; justify-content: center; align-items: center;">
+    <div style="background: #1e293b; padding: 25px; border-radius: 12px; width: 85%; max-width: 400px; text-align: center; border: 2px solid #0284c7; box-shadow: 0 10px 25px rgba(0,0,0,0.5); font-family: sans-serif;">
+        <h3 style="color: #fff; margin-top: 0; font-size: 18px;">اختر طريقة فتح الكتاب 📖</h3>
+        <p style="color: #94a3b8; font-size: 14px; margin-bottom: 20px;">لضمان التحميل السلس داخل متصفح Pi Browser</p>
+        
+        <button id="modalInternalBtn" onclick="processDownload(true)" style="width: 100%; padding: 12px; margin-bottom: 10px; background: #0284c7; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">فتح داخل المدونة (موصى به)</button>
+        <button id="modalExternalBtn" onclick="processDownload(false)" style="width: 100%; padding: 12px; margin-bottom: 15px; background: #10b981; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">فتح في متصفح خارجي 🌐</button>
+        
+        <button onclick="closeSecureDownload()" style="background: transparent; color: #cbd5e1; border: none; cursor: pointer; font-size: 14px; text-decoration: underline;">إلغاء</button>
+    </div>
+</div>
+
+<script>
+let currentTargetUrl = "";
+
+function openSecureDownload(url) {
+    currentTargetUrl = url;
+    document.getElementById("downloadModal").style.display = "flex";
+}
+
+function closeSecureDownload() {
+    document.getElementById("downloadModal").style.display = "none";
+}
+
+function processDownload(isInternal) {
+    closeSecureDownload();
+    if (isInternal) {
+        window.location.href = currentTargetUrl;
+    } else {
+        // فتح الرابط خارج البيئة المغلقة تماماً لمتصفح Pi لضمان التنزيل الفوري للـ PDF
+        window.open(currentTargetUrl, '_blank');
+    }
+}
+</script>
 
 <div class="nav-links">
     <!-- الرابط المحدث للمدونة -->
