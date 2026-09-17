@@ -216,60 +216,60 @@
         </div>
     </div>
 
-  <div class="card">
+    <div class="card">
     <h2>📚 المكتبة الفنية لكهرباء الهندسة والمصانع</h2>
     
     <div class="book-item">
         <div class="book-info">كتاب التحكم الآلي الكلاسيكي <span>(Classic Control) وصيانة وتشغيل اللوحات</span></div>
-        <button onclick="openSecureDownload('https://blogspot.com')" class="download-btn">تحميل PDF</button>
+        <button onclick="window.location.href='https://magid-nemr.blogspot.com/2026/09/classic-control.html';" class="download-btn">تحميل PDF</button>
     </div>
     
     <div class="book-item">
         <div class="book-info">دليل الكود المصري للتركيبات الكهربائية <span>المجلد الأول - التمديدات</span></div>
-        <button onclick="openSecureDownload('https://blogspot.com')" class="download-btn">تحميل PDF</button>
+        <button onclick="window.location.href='https://magid-nemr.blogspot.com/2026/09/blog-post.html';" class="download-btn">تحميل PDF</button>
     </div>
 </div>
 
 <div class="nav-links">
-    <a href="https://blogspot.com">🌐 مدونة النمر للمعلومات ←</a>
+    <!-- الرابط المحدث للمدونة -->
+    <a href="https://magid-nemr.blogspot.com/">🌐 مدونة النمر للمعلوميات ←</a>
+    
+    <!-- ⬇️ الحاسبات الخاصة بك موجودة هنا بالأسفل ولن تضيع ⬇️ -->
     <a href="conduit.html">📐 حاسبة أقطار مواسير التمديد (Conduit Fill)</a>
     <a href="factor.html">⚡ حاسبة مكثفات معامل القدرة (KVAR)</a>
     <a href="home.html">🏠 حاسبة أحمال وتمديدات المنازل الفنية</a>
 </div>
 
-<!-- النافذة الاحتياطية المنبثقة لضمان التنزيل الآمن -->
-<div id="downloadModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 99999; justify-content: center; align-items: center;">
-    <div style="background: #1e293b; padding: 25px; border-radius: 12px; width: 85%; max-width: 400px; text-align: center; border: 2px solid #0284c7; box-shadow: 0 10px 25px rgba(0,0,0,0.5); font-family: sans-serif;">
-        <h3 style="color: #fff; margin-top: 0; font-size: 18px;">اختر طريقة فتح الكتاب 📖</h3>
-        <p style="color: #94a3b8; font-size: 14px; margin-bottom: 20px;">لضمان التحميل السلس داخل متصفح Pi Browser</p>
-        
-        <button id="modalInternalBtn" onclick="processDownload(true)" style="width: 100%; padding: 12px; margin-bottom: 10px; background: #0284c7; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">فتح داخل المدونة (موصى به)</button>
-        <button id="modalExternalBtn" onclick="processDownload(false)" style="width: 100%; padding: 12px; margin-bottom: 15px; background: #10b981; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">فتح في متصفح خارجي 🌐</button>
-        
-        <button onclick="closeSecureDownload()" style="background: transparent; color: #cbd5e1; border: none; cursor: pointer; font-size: 14px; text-decoration: underline;">إلغاء</button>
-    </div>
+</div>
+
+<div class="footer">
+    <p>جميع الحقوق محفوظة © المهندس المطور ماجد النمر 2026</p>
 </div>
 
 <script>
-let currentTargetUrl = "";
-
-function openSecureDownload(url) {
-    currentTargetUrl = url;
-    document.getElementById("downloadModal").style.display = "flex";
-}
-
-function closeSecureDownload() {
-    document.getElementById("downloadModal").style.display = "none";
-}
-
-function processDownload(isInternal) {
-    closeSecureDownload();
-    if (isInternal) {
-        window.location.href = currentTargetUrl;
-    } else {
-        window.open(currentTargetUrl, '_blank');
+    Pi.init({ version: "2.0", sandbox: true });
+    
+    function calculateIndustrial() {
+        var power = parseFloat(document.getElementById('indPower').value);
+        var unit = document.getElementById('indUnit').value;
+        if (isNaN(power) || power <= 0) { alert("برجاء إدخال قيمة صحيحة."); return; }
+        var kw = unit === 'hp' ? power * 0.746 : power;
+        var fli = kw / (1.732 * 0.38 * 0.84 * 0.85);
+        var breaker = Math.ceil(fli * 1.6);
+        var contactor = Math.ceil(fli * 1.25);
+        var olMin = (fli * 0.9).toFixed(1); var olMax = (fli * 1.15).toFixed(1);
+        var cable = (fli / 2.8).toFixed(1); if(cable < 2.5) cable = 2.5;
+        document.getElementById('indCurrentRes').innerText = fli.toFixed(2);
+        document.getElementById('indBreakerRes').innerText = breaker;
+        document.getElementById('indContactorRes').innerText = contactor;
+        document.getElementById('indOverloadRes').innerText = olMin + " - " + olMax;
+        document.getElementById('indCableRes').innerText = cable;
+        document.getElementById('indResult').style.display = 'block';
     }
-}
+
+    function showBookAlert(bookName) {
+        alert("جاري تجهيز رابط التحميل المباشر لـ (" + bookName + ") أونلاين على سيرفر المطورين.. يرجى المحاولة لاحقاً!");
+    }
 </script>
 </body>
 </html>
