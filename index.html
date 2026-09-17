@@ -216,16 +216,31 @@
         </div>
     </div>
 
-    <!-- 🔍 صندوق البحث الهندسي الذكي عن الكتب -->
-<div class="card" style="max-width: 500px; margin: 15px auto; padding: 15px; background: #1e293b; border-radius: 12px; border: 1px solid #334155; font-family: sans-serif;">
-    <h3 style="color: #f1f5f9; font-size: 16px; margin-top: 0; text-align: center;">🔍 ابحث عن أي كتاب هندسي أو كهربائي</h3>
-    <div style="display: flex; gap: 8px; direction: rtl;">
-        <input type="text" id="bookSearchInput" placeholder="اكتب اسم الكتاب هنا... (مثلاً: كلاسيك كنترول)" style="flex: 1; padding: 10px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: white; font-size: 14px; text-align: right;">
-        <button onclick="executeBookSearch()" style="background: #0ea5e9; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px;">بحث</button>
+   <!-- 🔍 صندوق البحث الهندسي الذكي عن الكتب - إصدار المساحة الموسعة -->
+<div class="card" style="max-width: 500px; margin: 15px auto; padding: 15px; background: #1e293b; border-radius: 12px; border: 1px solid #334155; font-family: sans-serif; box-sizing: border-box;">
+    <h3 style="color: #f1f5f9; font-size: 16px; margin-top: 0; text-align: center; margin-bottom: 12px;">🔍 ابحث عن أي كتاب هندسي أو كهربائي</h3>
+    
+    <div style="display: flex; gap: 8px; direction: rtl; align-items: center; width: 100%;">
+        <!-- هنا جعلنا صندوق الكتابة يأخذ المساحة الكبرى بالكامل (flex: 4) ليصبح واسعاً جداً ومريحاً للكتابة -->
+        <input type="text" id="bookSearchInput" placeholder="اكتب اسم الكتاب هنا... (مثلاً: كلاسيك كنترول)" style="flex: 4; width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: white; font-size: 15px; text-align: right; box-sizing: border-box;">
+        
+        <!-- هنا جعلنا زر البحث صغير ومحدد على اليسار (flex: 1) ليصبح متناسقاً -->
+        <button onclick="executeBookSearch()" style="flex: 1; min-width: 80px; background: #0ea5e9; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 15px; box-sizing: border-box; text-align: center;">بحث</button>
     </div>
 </div>
 
 <script>
+function executeBookSearch() {
+    var query = document.getElementById("bookSearchInput").value.trim();
+    if (query !== "") {
+        // توجيه ذكي ومباشر لنتائج البحث الفورية داخل مدونتك الموثقة
+        var searchUrl = "https://blogspot.com" + encodeURIComponent(query);
+        window.location.href = searchUrl;
+    } else {
+        alert("من فضلك اكتب اسم الكتاب أولاً يا هندسة!");
+    }
+}
+</script>
 function executeBookSearch() {
     var query = document.getElementById("bookSearchInput").value.trim();
     if (query !== "") {
