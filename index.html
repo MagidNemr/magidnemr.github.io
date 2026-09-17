@@ -216,12 +216,14 @@
         </div>
     </div>
 
-  <!-- 🔍 صندوق البحث الهندسي الذكي عن الكتب (في الأعلى) -->
+ <!-- 🔍 صندوق البحث والتسمية الدقيقة المطلوبة (في الأعلى) -->
     <div class="card" style="max-width: 500px; margin: 15px auto; padding: 15px; background: #1e293b; border-radius: 12px; border: 1px solid #334155; font-family: sans-serif; box-sizing: border-box;">
-        <h3 style="color: #f1f5f9; font-size: 16px; margin-top: 0; text-align: center; margin-bottom: 12px;">🔍 ابحث عن أي كتاب هندسي أو كهربائي</h3>
+        <h3 style="color: #0ea5e9; font-size: 18px; margin-top: 0; text-align: center; margin-bottom: 5px;">ابحث</h3>
+        <p style="color: #94a3b8; font-size: 14px; text-align: center; margin-top: 0; margin-bottom: 15px; direction: rtl;">مكتبه وتحتها اكتب بحثي عن أى كتاب</p>
+        
         <div style="display: flex; gap: 8px; direction: rtl; align-items: center; width: 100%;">
-            <input type="text" id="bookSearchInput" placeholder="اكتب اسم الكتاب هنا... (مثلاً: كلاسيك كنترول)" style="flex: 4; width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: white; font-size: 15px; text-align: right; box-sizing: border-box;">
-            <button onclick="executeBookSearch(event)" style="flex: 1; min-width: 80px; background: #0ea5e9; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 15px; box-sizing: border-box; text-align: center;">بحث</button>
+            <input type="text" id="myUniqueBookSearchInput" placeholder="اكتب اسم الكتاب هنا... (مثلاً: كلاسيك كنترول)" style="flex: 4; width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: white; font-size: 15px; text-align: right; box-sizing: border-box;">
+            <button onclick="runMagedBookSearch(event)" style="flex: 1; min-width: 80px; background: #0ea5e9; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 15px; box-sizing: border-box; text-align: center;">بحث</button>
         </div>
     </div>
 
@@ -266,10 +268,10 @@
     </div>
 
 <script>
-// 1. سكريبت تشغيل محرك البحث الذكي
-function executeBookSearch(event) {
+// 1. تشغيل سكريبت محرك البحث المصحح بشكل نهائي ومستقل
+function runMagedBookSearch(event) {
     if(event) event.preventDefault();
-    var query = document.getElementById("bookSearchInput").value.trim();
+    var query = document.getElementById("myUniqueBookSearchInput").value.trim();
     if (query !== "") {
         var searchUrl = "https://blogspot.comsearch?q=" + encodeURIComponent(query);
         window.location.href = searchUrl;
@@ -278,11 +280,11 @@ function executeBookSearch(event) {
     }
 }
 
-// 2. سكريبت حاسبة أحمال المحركات الخاص بك (تمت إعادته وضمان تشغيله بأمان)
+// 2. تشغيل سكريبت حاسبة أحمال المحركات (تم ربطه بالمعرفات الحقيقية ليعمل فوراً)
 function calculateMotorLoad() {
-    var hpInput = document.getElementById("motorHP");
-    var efficiencyInput = document.getElementById("motorEff");
-    var phaseSelect = document.getElementById("motorPhase");
+    var hpInput = document.getElementById("motorHP") || document.getElementById("hp");
+    var efficiencyInput = document.getElementById("motorEff") || document.getElementById("efficiency");
+    var phaseSelect = document.getElementById("motorPhase") || document.getElementById("phase");
     
     if(hpInput && efficiencyInput) {
         var hp = parseFloat(hpInput.value);
@@ -291,18 +293,27 @@ function calculateMotorLoad() {
             var watts = hp * 746;
             var inputWatts = watts / eff;
             var current = 0;
-            if(phaseSelect && phaseSelect.value === "3") {
+            var phaseVal = phaseSelect ? phaseSelect.value : "3";
+            if(phaseVal === "3") {
                 current = inputWatts / (1.732 * 380 * 0.85);
             } else {
                 current = inputWatts / (220 * 0.85);
             }
-            var resultDiv = document.getElementById("motorResult");
+            var resultDiv = document.getElementById("motorResult") || document.getElementById("result");
             if(resultDiv) {
                 resultDiv.innerHTML = "تـيـار الـمـحـرك الـتـقـريـبـي: <strong style='color:#10b981;'>" + current.toFixed(2) + " أمبير</strong>";
             }
         }
     }
 }
+
+// ربط الحدث تلقائياً لضمان استجابة الحاسبة عند الإدخال في متصفح Pi
+document.addEventListener("DOMContentLoaded", function() {
+    var hpIn = document.getElementById("motorHP") || document.getElementById("hp");
+    var effIn = document.getElementById("motorEff") || document.getElementById("efficiency");
+    if(hpIn) hpIn.addEventListener("input", calculateMotorLoad);
+    if(effIn) effIn.addEventListener("input", calculateMotorLoad);
+});
 </script>
 </body>
 </html>
