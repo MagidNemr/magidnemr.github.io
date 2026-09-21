@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Tech Aide | اللوحة الهندسية</title>
-    <!-- تضمين مكتبة Pi Network (تأكد من تشغيلها داخل Pi Browser) -->
+    <!-- تضمين مكتبة Pi Network -->
     <script src="https://minepi.com"></script>
     <style>
         :root {
@@ -160,7 +160,6 @@
             border: none;
         }
 
-        /* تحسين أزرار التنقل لتتناسب مع هوية الواجهة */
         .modern-nav-container {
             margin-top: 20px;
         }
@@ -225,7 +224,7 @@
                 <option value="kw">كيلوواط (kW)</option>
             </select>
         </div>
-        <button onclick="calculateIndustrial()">تحليل المكونات الصناعية العمومية</button>
+        <button onclick="calculateIndustrial()">تحليل M المكونات الصناعية العمومية</button>
         
         <div id="indResult" class="result-box">
             <p><strong>تيار الحمل الكامل (FLA):</strong> <span id="indCurrentRes" class="value-highlight">0</span> أمبير</p>
@@ -242,59 +241,63 @@
         
         <div class="book-item">
             <div class="book-info">كتاب التحكم الآلي الكلاسيكي <span>(Classic Control) وصيانة وتشغيل اللوحات</span></div>
-            <button onclick="window.location.href='https://magid-nemr.blogspot.com/2026/09/classic-control.html';" class="download-btn">تحميل PDF</button>
+            <button onclick="window.location.href='https://blogspot.com';" class="download-btn">تحميل PDF</button>
         </div>
         
         <div class="book-item">
             <div class="book-info">دليل الكود المصري للتركيبات الكهربائية <span></span></div>
-            <button onclick="window.location.href='https://magid-nemr.blogspot.com/2026/09/blog-post.html';" class="download-btn">تحميل PDF</button>
+            <button onclick="window.location.href='https://blogspot.com';" class="download-btn">تحميل PDF</button>
         </div>
     </div>
 
-    <!-- أزرار التنقل والحاسبات المنسقة -->
+    <!-- أزرار التنقل والحاسبات -->
     <div class="modern-nav-container">
-        <!-- زر مدونة النمر الفيروزي -->
-        <a href="https://magid-nemr.blogspot.com/" class="nav-main-link">
+        <a href="https://blogspot.com" class="nav-main-link">
             <span>🌐 مدونة النمر للمعلوميات</span>
             <span>←</span>
         </a>
 
-        <!-- زر حاسبة أقطار المواسير -->
         <a href="conduit.html" class="nav-sub-link">
             <span>📐 حاسبة أقطار مواسير التمديد (Conduit Fill)</span>
             <span>➔</span>
         </a>
 
-        <!-- زر حاسبة مكثفات معامل القدرة -->
         <a href="factor.html" class="nav-sub-link">
             <span>⚡ حاسبة مكثفات معامل القدرة (KVAR)</span>
             <span>➔</span>
         </a>
 
-        <!-- زر حاسبة أحمال المنازل -->
         <a href="home.html" class="nav-sub-link">
             <span>🏠 حاسبة أحمال وتمديدات المنازل الفنية</span>
             <span>➔</span>
         </a>
     </div>
 
-</div> <!-- تم تصحيح إغلاق الحاوية الرئيسية هنا -->
+</div>
 
 <div class="footer">
     <p>جميع الحقوق محفوظة © المهندس المطور ماجد النمر 2026</p>
 </div>
 
 <script>
-    // التأكد من تهيئة بيئة Pi Network بأمان
+    // حماية تهيئة مكتبة Pi لتفادي انهيار السكربت في المتصفحات العادية
     try {
         if (typeof Pi !== 'undefined') {
             Pi.init({ version: "2.0", sandbox: true });
         }
     } catch(e) {
-        console.log("Pi Network SDK context error:", e);
+        console.log("Pi SDK Safe Skip:", e);
     }
     
     function calculateIndustrial() {
         var power = parseFloat(document.getElementById('indPower').value);
         var unit = document.getElementById('indUnit').value;
         if (isNaN(power) || power <= 0) { alert("برجاء إدخال قيمة صحيحة."); return; }
+        
+        var kw = unit === 'hp' ? power * 0.746 : power;
+        var fli = kw / (1.732 * 0.38 * 0.84 * 0.85);
+        
+        var breaker = Math.ceil(fli * 1.6);
+        var contactor = Math.ceil(fli * 1.25);
+        var olMin = (fli * 0.9).toFixed(1); 
+        var olMax = (fli * 1.15).toFixed(1);
