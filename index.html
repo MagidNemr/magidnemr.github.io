@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Tech Aide | اللوحة الهندسية</title>
-    <!-- تضمين مكتبة Pi Network -->
     <script src="https://minepi.com"></script>
     <style>
         :root {
@@ -160,44 +159,27 @@
             border: none;
         }
 
-        .modern-nav-container {
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
             margin-top: 20px;
         }
-        .nav-main-link {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: linear-gradient(135deg, #0ea5e9, #0284c7);
-            color: #ffffff;
-            padding: 14px 20px;
-            margin-bottom: 12px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 15px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
-        }
-        .nav-sub-link {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: #1e293b;
-            color: #f1f5f9;
-            padding: 12px 20px;
-            margin-bottom: 10px;
+        .nav-links a {
+            text-align: center;
+            background: rgba(0, 210, 255, 0.08);
+            border: 1px solid rgba(0, 210, 255, 0.2);
+            color: var(--neon-blue);
+            padding: 12px;
             border-radius: 8px;
+            font-weight: bold;
             text-decoration: none;
-            font-size: 14px;
-            border: 1px solid #334155;
-            transition: background 0.2s;
+            transition: all 0.3s;
         }
-        .nav-sub-link:hover {
-            background: #2d3748;
+        .nav-links a:hover {
+            background: rgba(0, 210, 255, 0.15);
+            box-shadow: 0 0 10px rgba(0, 210, 255, 0.2);
         }
-        .nav-sub-link span:last-child {
-            color: #64748b;
-        }
-
         .footer { text-align: center; padding: 25px; font-size: 12px; color: var(--text-muted); }
     </style>
 </head>
@@ -210,7 +192,6 @@
 
 <div class="container">
 
-    <!-- حاسبة الأحمال السليمة -->
     <div class="card">
         <h2>🏭 حاسبة أحمال المحركات ولوحات الباور (3 فاز)</h2>
         <div class="form-group">
@@ -235,70 +216,77 @@
         </div>
     </div>
 
-    <!-- المكتبة الفنية -->
+   <!-- 📚 كارت المكتبة الفنية - نسخة واحدة وبدون تكرار -->
     <div class="card">
         <h2>📚 دليل مهندسي القوى والصناعة</h2>
         
         <div class="book-item">
             <div class="book-info">كتاب التحكم الآلي الكلاسيكي <span>(Classic Control) وصيانة وتشغيل اللوحات</span></div>
-            <button onclick="window.location.href='https://blogspot.com';" class="download-btn">تحميل PDF</button>
+            <button onclick="window.location.href='https://magid-nemr.blogspot.com/2026/09/classic-control.html';" class="download-btn">تحميل PDF</button>
         </div>
         
         <div class="book-item">
             <div class="book-info">دليل الكود المصري للتركيبات الكهربائية <span></span></div>
-            <button onclick="window.location.href='https://blogspot.com';" class="download-btn">تحميل PDF</button>
+            <button onclick="window.location.href='https://magid-nemr.blogspot.com/2026/09/blog-post.html';" class="download-btn">تحميل PDF</button>
         </div>
     </div>
 
-    <!-- أزرار التنقل والحاسبات -->
-    <div class="modern-nav-container">
-        <a href="https://blogspot.com" class="nav-main-link">
+    <!-- 📐 أزرار التنقل والحاسبات المنسقة بأسلوب الكروت الأنيقة والحديثة -->
+    <div class="modern-nav-container" style="max-width: 500px; margin: 20px auto; padding: 0 15px; font-family: sans-serif;">
+        
+        <!-- زر مدونة النمر الفيروزي المميز -->
+        <a href="https://magid-nemr.blogspot.com/" style="display: flex; align-items: center; justify-content: space-between; background: linear-gradient(135deg, #0ea5e9, #0284c7); color: #ffffff; padding: 14px 20px; margin-bottom: 12px; border-radius: 10px; text-decoration: none; font-weight: bold; font-size: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.15);">
             <span>🌐 مدونة النمر للمعلوميات</span>
             <span>←</span>
         </a>
 
-        <a href="conduit.html" class="nav-sub-link">
+        <!-- زر حاسبة أقطار المواسير -->
+        <a href="conduit.html" style="display: flex; align-items: center; justify-content: space-between; background: #1e293b; color: #f1f5f9; padding: 12px 20px; margin-bottom: 10px; border-radius: 8px; text-decoration: none; font-size: 14px; border: 1px solid #334155;">
             <span>📐 حاسبة أقطار مواسير التمديد (Conduit Fill)</span>
-            <span>➔</span>
+            <span style="color: #64748b;">➔</span>
         </a>
 
-        <a href="factor.html" class="nav-sub-link">
+        <!-- زر حاسبة مكثفات معامل القدرة -->
+        <a href="factor.html" style="display: flex; align-items: center; justify-content: space-between; background: #1e293b; color: #f1f5f9; padding: 12px 20px; margin-bottom: 10px; border-radius: 8px; text-decoration: none; font-size: 14px; border: 1px solid #334155;">
             <span>⚡ حاسبة مكثفات معامل القدرة (KVAR)</span>
-            <span>➔</span>
+            <span style="color: #64748b;">➔</span>
         </a>
 
-        <a href="home.html" class="nav-sub-link">
+        <!-- زر حاسبة أحمال المنازل -->
+        <a href="home.html" style="display: flex; align-items: center; justify-content: space-between; background: #1e293b; color: #f1f5f9; padding: 12px 20px; margin-bottom: 15px; border-radius: 8px; text-decoration: none; font-size: 14px; border: 1px solid #334155;">
             <span>🏠 حاسبة أحمال وتمديدات المنازل الفنية</span>
-            <span>➔</span>
+            <span style="color: #64748b;">➔</span>
         </a>
-    </div>
-
-</div>
+    </div></div>
 
 <div class="footer">
     <p>جميع الحقوق محفوظة © المهندس المطور ماجد النمر 2026</p>
 </div>
 
 <script>
-    try {
-        if (typeof Pi !== 'undefined') {
-            Pi.init({ version: "2.0", sandbox: true });
-        }
-    } catch(e) {
-        console.log("Pi SDK Safe Skip:", e);
-    }
+    Pi.init({ version: "2.0", sandbox: true });
     
     function calculateIndustrial() {
         var power = parseFloat(document.getElementById('indPower').value);
         var unit = document.getElementById('indUnit').value;
         if (isNaN(power) || power <= 0) { alert("برجاء إدخال قيمة صحيحة."); return; }
-        
         var kw = unit === 'hp' ? power * 0.746 : power;
         var fli = kw / (1.732 * 0.38 * 0.84 * 0.85);
-        
         var breaker = Math.ceil(fli * 1.6);
         var contactor = Math.ceil(fli * 1.25);
-        var olMin = (fli * 0.9).toFixed(1); 
-        var olMax = (fli * 1.15).toFixed(1);
-        var cable = (fli / 2.8).toFixed(1); 
-        if(cable < 2.5) cable = 2.5;
+        var olMin = (fli * 0.9).toFixed(1); var olMax = (fli * 1.15).toFixed(1);
+        var cable = (fli / 2.8).toFixed(1); if(cable < 2.5) cable = 2.5;
+        document.getElementById('indCurrentRes').innerText = fli.toFixed(2);
+        document.getElementById('indBreakerRes').innerText = breaker;
+        document.getElementById('indContactorRes').innerText = contactor;
+        document.getElementById('indOverloadRes').innerText = olMin + " - " + olMax;
+        document.getElementById('indCableRes').innerText = cable;
+        document.getElementById('indResult').style.display = 'block';
+    }
+
+    function showBookAlert(bookName) {
+        alert("جاري تجهيز رابط التحميل المباشر لـ (" + bookName + ") أونلاين على سيرفر المطورين.. يرجى المحاولة لاحقاً!");
+    }
+</script>
+</body>
+</html>
