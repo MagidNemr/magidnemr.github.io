@@ -210,7 +210,7 @@
 
 <div class="container">
 
-    <!-- حاسبة الأحمال -->
+    <!-- حاسبة الأحمال السليمة -->
     <div class="card">
         <h2>🏭 حاسبة أحمال المحركات ولوحات الباور (3 فاز)</h2>
         <div class="form-group">
@@ -224,7 +224,7 @@
                 <option value="kw">كيلوواط (kW)</option>
             </select>
         </div>
-        <button onclick="calculateIndustrial()">تحليل M المكونات الصناعية العمومية</button>
+        <button onclick="calculateIndustrial()">تحليل المكونات الصناعية العمومية</button>
         
         <div id="indResult" class="result-box">
             <p><strong>تيار الحمل الكامل (FLA):</strong> <span id="indCurrentRes" class="value-highlight">0</span> أمبير</p>
@@ -280,7 +280,6 @@
 </div>
 
 <script>
-    // حماية تهيئة مكتبة Pi لتفادي انهيار السكربت في المتصفحات العادية
     try {
         if (typeof Pi !== 'undefined') {
             Pi.init({ version: "2.0", sandbox: true });
@@ -301,3 +300,5 @@
         var contactor = Math.ceil(fli * 1.25);
         var olMin = (fli * 0.9).toFixed(1); 
         var olMax = (fli * 1.15).toFixed(1);
+        var cable = (fli / 2.8).toFixed(1); 
+        if(cable < 2.5) cable = 2.5;
