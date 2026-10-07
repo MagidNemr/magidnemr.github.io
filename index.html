@@ -89,24 +89,13 @@
             font-weight: bold;
             font-size: 13px;
         }
-        .neon-link {
-            display: block;
+        .result-box {
+            margin-top: 15px;
             padding: 12px;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-bottom: 10px;
-            font-weight: bold;
-            text-align: center;
-        }
-        .book-card {
-            background: #20202c;
-            padding: 10px;
-            border-radius: 6px;
-            margin-top: 8px;
-            border-right: 3px solid #ff9900;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background: #1c1c28;
+            border-right: 4px solid #ffcc00;
+            border-radius: 4px;
+            line-height: 1.6;
         }
     </style>
 </head>
@@ -129,7 +118,7 @@
             <option value="kW">كيلو واط (kW)</option>
         </select>
         <button class="action-btn" onclick="analyzeMotor()">تحليل المكونات الصناعية للعمومية</button>
-        <div id="calcResult" style="margin-top:12px; color:#ffcc00; font-size:14px;"></div>
+        <div id="calcResult"></div>
     </div>
 
     <!-- 2. قسم دليل مهندسي القوى كودك الأصلي -->
@@ -144,72 +133,62 @@
             <a href="https://blogspot.com" target="_blank" class="pdf-btn">تحميل PDF</a>
         </div>
     </div>
-
-    <!-- 3. قسم المكتبة الفنية والبحث المفتوح عن الكتب المطلبوبة -->
-    <div class="section-box">
-        <div class="section-title">📚 المكتبه الفنيه</div>
-        <label>مكتبه وتحتها اكتب بحثي عن أى كتاب:</label>
-        <input type="text" id="librarySearch" placeholder="ابحث عن اسم الكتاب هنا..." oninput="searchBooks()">
-        
-        <!-- حاوية الكتب المفتوحة المحدثة تلقائياً -->
-        <div id="booksContainer"></div>
-    </div>
 </div>
 
 <script>
-    // دالة حاسبة المحركات الأصلية الخاصة بك (تأكد من كتابة العمليات الحسابية المناسبة بداخلها لاحقاً)
+    // تهيئة وتوثيق شبكة Pi المبدئي لضمان عدم توقف البرنامج داخل Pi Browser
+    try {
+        Pi.init({ version: "2.0", sandbox: true });
+        document.getElementById("userStatus").innerText = "⚡ متصل بشبكة Pi Network بنجاح";
+    } catch (e) {
+        console.log("Pi SDK status:", e);
+        document.getElementById("userStatus").innerText = "وضع المعاينة المحلي المحمي";
+    }
+
+    // دالة تحليل أحمال المحرك الهندسية 3 فاز
     function analyzeMotor() {
-        const power = document.getElementById('motorPower').value;
-        const unit = document.getElementById('powerUnit').value;
-        const resultDiv = document.getElementById('calcResult');
-        
-        if(!power) {
-            resultDiv.innerHTML = "يرجى إدخال القدرة أولاً.";
+        const powerInput = parseFloat(document.getElementById("motorPower").value);
+        const unit = document.getElementById("powerUnit").value;
+        const resultDiv = document.getElementById("calcResult");
+
+        if (isNaN(powerInput) || powerInput <= 0) {
+            resultDiv.innerHTML = "<p style='color:#ff3333;'>برجاء إدخال قيمة رقمية صحيحة أكبر من الصفر.</p>";
             return;
         }
-        resultDiv.innerHTML = `تم تحليل القدرة: ${power} ${unit} بنجاح.`;
-    }
 
-    // قاعدة بيانات الكتب الافتراضية لعرضها والبحث داخلها
-    const technicalBooks = [
-        { title: "كتاب التحكم الآلي الكلاسيكي (Classic Control)", desc: "شرح دوائر التحكم وصيانة اللوحات الصناعية" },
-        { title: "دليل الكود المصري للتركيبات الكهربائية", desc: "المواصفات القياسية للتمديدات والشبكات" },
-        { title: "حسابات الأحمال الكهربائية للمنشآت", desc: "طرق حساب الأحمال وتحديد القواطع والكابلات" }
-    ];
+        // تحويل القدرة إلى كيلو واط ثابت للحساب
+        let powerKW = powerInput;
+        if (unit === "HP") {
+            powerKW = powerInput * 0.746; // 1 حصان = 0.746 كيلو واط
+        }
 
-    // دالة عرض وتصفية الكتب بناءً على مدخلات البحث
-    function renderBooks(booksToDisplay) {
-        const container = document.getElementById('booksContainer');
-        container.innerHTML = '';
+        // قانون حساب التيار لـ 3 فاز (الجهد الافتراضي المعتمد 380 فولت، معامل القدرة 0.85، الكفاءة 0.85)
+        // الفولتية الافتراضية للشبكات الصناعية بمصر والشرق الأوسط 380V
+        const voltage = 380;
+        const pf = 0.85;
+        const efficiency = 0.85;
         
-        booksToDisplay.forEach(book => {
-            const card = document.createElement('div');
-            card.className = 'book-card';
-            card.innerHTML = `
-                <div>
-                    <div style="font-size:14px; font-weight:bold; color:#fff;">${book.title}</div>
-                    <div style="font-size:11px; color:#aaa; margin-top:2px;">${book.desc}</div>
-                </div>
-                <a href="https://blogspot.com" target="_blank" class="pdf-btn">تحميل PDF</a>
-            `;
-            container.appendChild(card);
-        });
-    }
+        // حساب شدة تيار الحمل الكامل (FLA) بالـ أمبير
+        const current = (powerKW * 1000) / (Math.sqrt(3) * voltage * pf * efficiency);
+        
+        // حساب سعة القاطع الموصى به (تأمين بدء المحرك حماية مغناطيسية وحرارية 125% إلى 150%)
+        const breakerSize = current * 1.25;
+        
+        // مقطع السلك النحاسي التقريبي المعتمد (أمان 4 أمبير لكل 1 مم مربع داخل اللوحات)
+        const wireSize = current / 4;
 
-    // دالة التصفية والبحث الفوري الفعالة
-    function searchBooks() {
-        const query = document.getElementById('librarySearch').value.toLowerCase();
-        const filtered = technicalBooks.filter(book => 
-            book.title.toLowerCase().includes(query) || 
-            book.desc.toLowerCase().includes(query)
-        );
-        renderBooks(filtered);
+        // طباعة النتائج بتنسيق منظم داخل واجهتك
+        resultDiv.innerHTML = `
+            <div class="result-box">
+                <strong style="color: #00ffcc;">📊 النتائج التقديرية للحمل (3-Phase):</strong><br>
+                ⚡ تيار الحمل الكامل (FLA): <span style="color:#ffcc00;">${current.toFixed(2)} أمبير</span><br>
+                🔌 سعة القاطع المقترحة (Breaker): <span style="color:#ffcc00;">${breakerSize.toFixed(1)} أمبير</span><br>
+                📐 مقطع الكابل النحاسي الأدنى: <span style="color:#ffcc00;">${wireSize.toFixed(1)} مم²</span>
+            </div>
+        `;
     }
-
-    // تشغيل العرض التلقائي للكتب عند فتح التطبيق
-    window.onload = function() {
-        renderBooks(technicalBooks);
-    };
 </script>
+
 </body>
-</html>
+    </html>
+    
