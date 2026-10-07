@@ -4,46 +4,212 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Tech Aide</title>
-    <!-- استدعاء مكتبة Pi SDK الرسمية للتحقق والمدفوعات -->
+    <!-- استدعاء مكتبة Pi SDK الرسمية للتوثيق -->
     <script src="https://minepi.com"></script>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; background-color: #0b0b0f; color: #ffffff; padding: 20px; }
-        .menu-container { max-width: 500px; margin: 30px auto; background: #13131a; padding: 25px; border-radius: 12px; border: 1px solid #00ffcc; box-shadow: 0 0 15px rgba(0, 255, 204, 0.2); }
-        .btn-link { display: block; padding: 15px; margin: 12px 0; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 18px; transition: 0.3s; }
-        .btn-link:hover { transform: scale(1.02); }
-        #userStatus { color: #00ffcc; font-weight: bold; margin-bottom: 20px; }
+        body {
+            background-color: #0b0b0f;
+            color: #ffffff;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            padding: 20px;
+            direction: rtl;
+            text-align: right;
+        }
+        .main-container {
+            max-width: 550px;
+            margin: 0 auto;
+            background: #121216;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #00ffcc;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
+        }
+        .app-title {
+            text-align: center;
+            color: #ffcc00;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        .app-subtitle {
+            text-align: center;
+            color: #00ffcc;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+        .section-box {
+            background: #181822;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            margin-bottom: 20px;
+        }
+        .section-title {
+            color: #ff9900;
+            font-size: 16px;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        label { display: block; margin-bottom: 5px; color: #ccc; font-size: 14px; }
+        input[type="number"], input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            background: #222230;
+            border: 1px solid #444;
+            color: #fff;
+            border-radius: 5px;
+            box-sizing: border-box;
+            outline: none;
+        }
+        input:focus, select:focus { border-color: #00ffcc; }
+        .action-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(to right, #b300b3, #e600e6);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(230, 0, 230, 0.4);
+        }
+        .pdf-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #222;
+        }
+        .pdf-btn {
+            background: #00cc66;
+            color: white;
+            padding: 6px 12px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 13px;
+        }
+        .neon-link {
+            display: block;
+            padding: 12px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .book-card {
+            background: #20202c;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 8px;
+            border-right: 3px solid #ff9900;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
 
-    <div class="menu-container">
-        <h2>تطبيق Smart Tech Aide</h2>
-        <!-- مكان ظهور اسم المستخدم بعد التحقق من شبكة Pi -->
-        <div id="userStatus">جاري الاتصال بشبكة Pi...</div>
+<div class="main-container">
+    <div class="app-title">⚡ SMART TECH AIDE</div>
+    <div class="app-subtitle">« المنصة البرمجية المعتمدة لهندسة القوى والتحكم الآلي »</div>
+    <div id="userStatus" style="text-align:center; color:#00ffcc; font-size:12px; margin-bottom:15px;">جاري الاتصال بشبكة Pi...</div>
 
-        <!-- الأزرار الحسابية المرتبطة بملفات مستودعك القديمة بأمان وبدون أي تعديل -->
-        <a href="conduit.html" class="btn-link" style="background: #222; color: #ffcc00; border: 1px solid #ffcc00;">📐 حاسبة أقطار مواسير التمديد</a>
-        <a href="factor.html" class="btn-link" style="background: #222; color: #00ffcc; border: 1px solid #00ffcc;">⚡ حاسبة الأحمال وقواطع 3 فاز</a>
+    <!-- 1. قسم حاسبة الأحمال المظبوط والثابت -->
+    <div class="section-box">
+        <div class="section-title">📂 حاسبة أحمال المحركات لوحات الباور (3 فاز)</div>
+        <label>قدرة المحرك الميكانيكية بالموقع:</label>
+        <input type="number" id="motorPower" placeholder="أدخل القيمة الرقمية...">
         
-        <!-- التعديل المظبوط: ربط زر المكتبة بالملف المستقل والجديد الذي أنشأته سابقاً -->
-        <a href="search-library.html" class="btn-link" style="background: #222; color: #ff9900; border: 1px solid #ff9900;">📚 المكتبة الفنية للكتب والكورسات</a>
-        
-        <!-- زر التوجيه المباشر لمدونتك للربح المزدوج -->
-        <a href="https://blogspot.com" target="_blank" class="btn-link" style="background: #00a3a3; color: white;">🌐 مدونة النمر للمعلومات</a>
+        <label>وحدة القدرة:</label>
+        <select id="powerUnit">
+            <option value="HP">حصان (HP)</option>
+            <option value="kW">كيلو واط (kW)</option>
+        </select>
+        <button class="action-btn" onclick="analyzeMotor()">تحليل المكونات الصناعية للعمومية</button>
+        <div id="calcResult" style="margin-top:12px; color:#ffcc00; font-size:14px;"></div>
     </div>
 
-    <script>
-        // كود تشغيل التحقق الرسمي المربوط بمتصفح Pi Browser
-        window.onload = function() {
-            if (window.Pi) {
-                Pi.init({ version: "2.0", sandbox: true });
-                Pi.authenticate(["username"], function(auth) {
-                    document.getElementById("userStatus").innerText = "مرحباً يا بشمهندس: " + auth.user.username;
-                }, function(error) {
-                    document.getElementById("userStatus").innerText = "يرجى فتح التطبيق من داخل متصفح Pi Browser";
-                });
-            }
-        };
-    </script>
+    <!-- 2. قسم دليل مهندسي القوى -->
+    <div class="section-box">
+        <div class="section-title">📚 دليل مهندسي القوى والصناعة</div>
+        <div class="pdf-row">
+            <div>كتاب التحكم الآلي الكلاسيكي<br><span style="font-size:11px; color:#888;">(Classic Control) وصيانة وتشغيل اللوحات</span></div>
+            <a href="https://blogspot.com" target="_blank" class="pdf-btn">تحميل PDF</a>
+        </div>
+        <div class="pdf-row" style="border-bottom: none;">
+            <div>دليل الكود المصري للتركيبات الكهربائية</div>
+            <a href="https://blogspot.com" target="_blank" class="pdf-btn">تحميل PDF</a>
+        </div>
+    </div>
+
+    <!-- 3. قسم التعديل المتفق عليه: واجهة البحث الذكي عن الكتب -->
+    <div class="section-box" style="border-color: #ff9900;">
+        <div class="section-title" style="color:#00ffcc;">🔍 المكتبة الفنية المفتوحة</div>
+        <label style="color:#ff9900;">مكتبه وتحتها اكتب بحثي عن أى كتاب:</label>
+        <input type="text" id="librarySearch" onkeyup="filterBooks()" placeholder="ابحث باسم الكتاب أو الكلمة الدلالية...">
+        
+        <ul id="booksContainer" style="list-style:none; padding:0; margin:0;">
+            <!-- الكتب تفرش تلقائياً هنا -->
+        </ul>
+    </div>
+
+    <!-- 4. الأزرار المضيئة السفلية للربح والتنقل -->
+    <div style="margin-top: 20px;">
+        <a href="https://blogspot.com" target="_blank" class="neon-link" style="background: #00a3a3; color: white;">🌐 مدونة النمر للمعلومات</a>
+        <a href="conduit.html" class="neon-link" style="background: #222; color: #ffcc00; border: 1px solid #ffcc00;">📐 حاسبة أقطار مواسير التمديد (Conduit Fill)</a>
+        <a href="factor.html" class="neon-link" style="background: #222; color: #00ffcc; border: 1px solid #00ffcc;">⚡ حاسبة مكثفات معامل القدرة (KVAR)</a>
+        <a href="home.html" class="neon-link" style="background: #222; color: #ff9966; border: 1px solid #ff9966;">🏠 حاسبة أحمال وتمديدات المنازل الفنية</a>
+    </div>
+</div>
+
+<script>
+// مصفوفة كتب المكتبة الفنية الفورية
+const booksDatabase = [
+    { tags: "كلاسيك كنترول تحكم الي وجيه جرجس الاول", title: "كتاب التحكم الآلي الكلاسيكي - ج1 (د. وجيه جرجس)", url: "https://blogspot.com" },
+    { tags: "كلاسيك كنترول تحكم الي وجيه جرجس الثاني", title: "كتاب التحكم الآلي الكلاسيكي - ج2 (د. وجيه جرجس)", url: "https://blogspot.com" },
+    { tags: "الكود المصري تركيبات كهربائية احمال قوى", title: "دليل الكود المصري المعتمد للتركيبات الكهربائية", url: "https://blogspot.com" },
+    { tags: "تبريد وتكييف هواء صيانة تشغيل محركات", title: "موسوعة صيانة وتشغيل منظومات التكييف", url: "https://blogspot.com" },
+    { tags: "تصنيع تصميم قوالب بلاستيك شنط مصانع خطوط انتاج", title: "دليل خطوط تصنيع البلاستيك ودراسات الجدوى", url: "https://blogspot.com" }
+];
+
+function showBooks(data) {
+    const container = document.getElementById('booksContainer');
+    container.innerHTML = "";
+    data.forEach(book => {
+        let li = document.createElement('li');
+        li.className = "book-card";
+        li.innerHTML = `<div><strong>${book.title}</strong></div><a href="${book.url}" target="_blank" class="pdf-btn" style="background:#ff9900;">تصفح</a>`;
+        container.appendChild(li);
+    });
+}
+
+// عرض الكتب تلقائياً عند فتح الواجهة
+window.onload = function() {
+    showBooks(booksDatabase);
+    if (window.Pi) {
+        Pi.init({ version: "2.0", sandbox: true });
+        Pi.authenticate(["username"], function(auth) {
+            document.getElementById("userStatus").innerText = "مرحباً مهندس: " + auth.user.username;
+        }, function(error) { console.error(error); });
+    }
+};
+
+function filterBooks() {
+    let val = document.getElementById('librarySearch').value.toLowerCase().trim();
+    let filtered = booksDatabase.filter(b => b.tags.toLowerCase().includes(val) || b.title.toLowerCase().includes(val));
+    showBooks(filtered);
+}
+
+function analyzeMotor() {
+    let p = parseFloat(document.getElementById('motorPower').value);
+    let u = document.getElementById('powerUnit').value;
+    if(isNaN(p) || p <= 0) return;
+    let current = (u === 'HP') ? (p * 1.5) : (p * 2);
+    document.getElementById('calcResult').innerHTML = `تيار الحمل الكامل المحسوب: <strong>${current.toFixed(1)} أمبير</strong><br>سعة القاطع المقترحة (Start): <strong>${(current * 2.5).toFixed(1)} أمبير</strong>`;
+}
+</script>
 </body>
 </html>
