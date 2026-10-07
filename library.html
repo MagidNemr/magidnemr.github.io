@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المكتبة الفنية المفتوحة - المهندس ماجد</title>
+    <style>
+        /* التنسيق الداكن المتوافق مع واجهة تطبيقك النيون */
+        body {
+            background-color: #0b0b0f;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            margin: 0;
+            text-align: center;
+        }
+        .library-container {
+            max-width: 600px;
+            margin: 30px auto;
+            background: #13131a;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #00ffcc;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
+        }
+        h2 {
+            color: #ff9900;
+            margin-bottom: 5px;
+        }
+        .subtitle {
+            color: #888899;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .search-box {
+            width: 90%;
+            padding: 12px 15px;
+            font-size: 16px;
+            background: #1f1f2e;
+            border: 1px solid #444;
+            border-radius: 8px;
+            color: #fff;
+            margin-bottom: 25px;
+            text-align: right;
+            outline: none;
+            transition: 0.3s;
+        }
+        .search-box:focus {
+            border-color: #ff9900;
+            box-shadow: 0 0 8px rgba(255, 153, 0, 0.4);
+        }
+        .books-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: right;
+        }
+        .book-item {
+            background: #1a1a24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border-right: 4px solid #b300b3;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.2s;
+        }
+        .book-item:hover {
+            transform: scale(1.02);
+            background: #222230;
+        }
+        .book-info strong {
+            display: block;
+            color: #ffffff;
+            font-size: 16px;
+        }
+        .book-info span {
+            color: #00ffcc;
+            font-size: 12px;
+        }
+        .download-btn {
+            background: linear-gradient(to right, #00cc66, #00994d);
+            color: white;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 14px;
+            box-shadow: 0 0 5px rgba(0, 204, 102, 0.3);
+        }
+        .no-results {
+            color: #ff4444;
+            padding: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="library-container">
+        <h2>المكتبة الفنية</h2>
+        <div class="subtitle">مكتبه وتحتها اكتب بحثي عن أى كتاب</div>
+        
+        <!-- خانة البحث الذكي الفوري -->
+        <input type="text" id="librarySearch" onkeyup="filterBooks()" placeholder="ابحث عن الكتب الهندسية أو الصناعية...">
+        
+        <!-- قائمة الكتب المرتبطة بمدونتك وميديا فاير مباشرة -->
+        <ul id="booksList" class="books-list">
+            
+            <li class="book-item" data-title="دوائر التحكم الآلي الكلاسيكي الجزء الأول وجيه جرجس كلاسيك كنترول">
+                <div class="book-info">
+                    <strong>كتاب التحكم الآلي الكلاسيكي - الجزء الأول</strong>
+                    <span>تأليف: د. وجيه جرجس (دون بوسكو)</span>
+                </div>
+                <!-- استبدل بالرابط الخاص بك بعد رفعه -->
+                <a href="YOUR_MEDIAFIRE_LINK_PART_1" target="_blank" class="download-btn">تحميل PDF</a>
+            </li>
+
+            <li class="book-item" data-title="دوائر التحكم الآلي الكلاسيكي الجزء الثاني وجيه جرجس كلاسيك كنترول">
+                <div class="book-info">
+                    <strong>كتاب التحكم الآلي الكلاسيكي - الجزء الثاني</strong>
+                    <span>تأليف: د. وجيه جرجس (دون بوسكو)</span>
+                </div>
+                <!-- رابط الجزء الثاني المرفوع لديك -->
+                <a href="YOUR_MEDIAFIRE_LINK_PART_2" target="_blank" class="download-btn">تحميل PDF</a>
+            </li>
+
+            <li class="book-item" data-title="الكود المصري للتركيبات الكهربائية توزيع أحمال قوى">
+                <div class="book-info">
+                    <strong>دليل الكود المصري للتركيبات الكهربائية</strong>
+                    <span>المواصفات القياسية المصرية</span>
+                </div>
+                <a href="https://blogspot.com" target="_blank" class="download-btn">تحميل PDF</a>
+            </li>
+
+            <li class="book-item" data-title="تبريد وتكييف هواء صيانة تشغيل محركات صيانة">
+                <div class="book-info">
+                    <strong>دليل مهندس التبريد والتكييف</strong>
+                    <span>صيانة وتشغيل المنظومات</span>
+                </div>
+                <a href="https://blogspot.com" target="_blank" class="download-btn">تحميل PDF</a>
+            </li>
+            
+        </ul>
+        
+        <div id="noResultsMessage" class="no-results">عذراً، لم يتم العثور على هذا الكتاب في المكتبة.</div>
+    </div>
+
+    <script>
+        // دالة تصفية وفرز الكتب فورياً أثناء الكتابة
+        function filterBooks() {
+            let input = document.getElementById('librarySearch').value.toLowerCase();
+            let bookItems = document.getElementsByClassName('book-item');
+            let hasResults = false;
+
+            for (let i = 0; i < bookItems.length; i++) {
+                let searchTags = bookItems[i].getAttribute('data-title').toLowerCase();
+                
+                if (searchTags.includes(input)) {
+                    bookItems[i].style.display = "flex";
+                    hasResults = true;
+                } else {
+                    bookItems[i].style.display = "none";
+                }
+            }
+
+            // إظهار رسالة عدم وجود نتائج في حال لم يطابق البحث أي كتاب
+            let noResults = document.getElementById('noResultsMessage');
+            if (hasResults) {
+                noResults.style.display = "none";
+            } else {
+                noResults.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
