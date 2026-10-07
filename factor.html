@@ -1,10 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Tech Aide | معامل القدرة</title>
+    <!-- استدعاء ملف Pi SDK الرسمي من مساره الصحيح للشبكة -->
     <script src="https://minepi.com"></script>
     <style>
         :root {
@@ -43,17 +43,18 @@
         .card h2 { margin-top: 0; font-size: 18px; font-weight: 700; color: #ffffff; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 10px; }
         .form-group { margin-bottom: 18px; }
         label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; color: var(--text-muted); }
-        input { width: 100%; padding: 12px; background: rgba(9, 13, 22, 0.8); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px; box-sizing: border-box; font-size: 16px; color: #ffffff; }
+        input { width: 100%; padding: 12px; background: rgba(9, 13, 22, 0.8); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px; box-sizing: border-box; font-size: 16px; color: #ffffff; outline: none; text-align: center; }
+        input:focus { border-color: var(--neon-blue); }
         button {
             background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; padding: 14px 20px; font-size: 16px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
         }
         button:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5); }
-        .result-box { background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2); border-right: 5px solid var(--neon-green); padding: 15px; border-radius: 8px; margin-top: 15px; display: none; }
+        .result-box { background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2); border-right: 5px solid var(--neon-green); padding: 18px; border-radius: 8px; margin-top: 15px; display: none; text-align: right; line-height: 1.7; }
         .value-highlight { font-family: monospace; font-weight: bold; color: #00f5d4; font-size: 18px; text-shadow: 0 0 5px rgba(0, 245, 212, 0.5); }
         .nav-links { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
         .nav-links a { text-align: center; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-main); padding: 12px; border-radius: 8px; font-weight: bold; text-decoration: none; transition: all 0.3s; }
-        .nav-links a:hover { background: rgba(255, 255, 255, 0.08); }
+        .nav-links a:hover { background: rgba(255, 255, 255, 0.08); color: var(--neon-blue); }
         .footer { text-align: center; padding: 25px; font-size: 12px; color: var(--text-muted); }
     </style>
 </head>
@@ -74,24 +75,89 @@
             <input type="number" id="pfCurrent" step="0.01" placeholder="مثال: 0.70">
         </div>
         <button onclick="calculatePowerFactor()">احسب سعة لوحة المكثفات</button>
+        
+        <!-- صندوق استعراض كامل المعلومات المفيدة بعد المعالجة -->
         <div id="pfResult" class="result-box">
-            <p><strong>السعة الإجمالية المطلوبة للبنوك:</strong> <span id="kvarNeed" class="value-highlight">0</span> كيلو فار (KVAR)</p>
+            <h3 style="margin-top: 0; color: #ffffff; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 5px;">⚡ تقرير تحسين كفاءة القدرة للشبكة:</h3>
+            <p>• القدرة غير الفعالة الكلية المطلوبة للتعويض: <span id="kvarNeed" class="value-highlight">0</span> كيلو فار (KVAR)</p>
+            <p>• سحب التيار الكهربائي الكلي قبل التحسين: <span id="ampBefore" class="value-highlight">0</span> أمبير</p>
+            <p>• سحب التيار الكهربائي المتوقع بعد التحسين المستهدف: <span id="ampAfter" class="value-highlight">0</span> أمبير</p>
+            <p>• نسبة خفض الحمل الحراري على الموصلات واللوحات: <span id="savingRatio" class="value-highlight">0</span> %</p>
+            <p style="font-size: 15px; border-top: 1px solid rgba(16, 185, 129, 0.2); padding-top: 10px;">
+                ⚙️ <strong>التوزيع المقترح للمكثفات بالموقع:</strong> <br><span id="stepDistribution" style="color: #fbbf24; font-size: 13px;">-</span>
+            </p>
         </div>
     </div>
+    
     <div class="nav-links">
-        <a href="index.html">🏢 العودة لحاسبة المصانع الرئيسية العمومية</a>
+        <a href="index.html">🏢 العودة للوحة المنصة الرئيسية العمومية</a>
+        <a href="conduit.html">📐 الانتقال إلى حاسبة أقطار مواسير التمديد</a>
         <a href="home.html">🏠 الانتقال لحاسبة أحمال وتمديدات المنازل ←</a>
     </div>
+    
+    <div class="footer">
+        جميع الحقوق محفوظة © 2026 - المهندس ماجد النمر للمعلومات
+    </div>
 </div>
+
 <script>
-    Pi.init({ version: "2.0", sandbox: true });
+    // تهيئة ربط الـ SDK الخاص بـ Pi Network وتوثيق البيئة
+    try {
+        Pi.init({ version: "2.0", sandbox: true });
+    } catch (e) {
+        console.log("Running in standard web environment.");
+    }
+
     function calculatePowerFactor() {
         var p = parseFloat(document.getElementById('pfPower').value);
         var pf1 = parseFloat(document.getElementById('pfCurrent').value);
-        if(isNaN(p) || isNaN(pf1) || pf1 <= 0 || pf1 >= 0.95) { alert("يرجى إدخال قيم صحيحة (يجب أن يكون معامل القدرة الحالي أقل من 0.95)."); return; }
-        var kvar = p * (Math.tan(Math.acos(pf1)) - Math.tan(Math.acos(0.95)));
-        document.getElementById('kvarNeed').innerText = kvar.toFixed(1);
-        document.getElementById('pfResult').style.display = 'block';
+        var resultBox = document.getElementById('pfResult');
+        
+        // القيمة المعيارية المستهدفة لتفادي الغرامات في الكود المصري
+        var pf2 = 0.95; 
+
+        if (isNaN(p) || isNaN(pf1) || pf1 <= 0 || pf1 >= 1) { 
+            alert("يرجى إدخال قيم صحيحة للموقع (يجب أن يكون معامل القدرة الحالي أكبر من 0 وأقل من 1)."); 
+            return;
+        }
+        
+        if (pf1 >= pf2) {
+            alert("معامل القدرة الحالي للموقع ممتاز ومطابق للمواصفات بالفعل ولا يحتاج لتحسين!");
+            return;
+        }
+
+        // حساب زوايا الطور لمعاملات القدرة القديمة والجديدة
+        var angle1 = Math.acos(pf1);
+        var angle2 = Math.acos(pf2);
+        
+        // حساب سعة لوحة المكثفات المطلوبة بالكيلو فار
+        var kvar = p * (Math.tan(angle1) - Math.tan(angle2));
+        
+        // حساب تيارات الجهد الثلاثي (380 فولت) قبل وبعد تحسين الشبكة
+        var currentBefore = p / (380 * Math.sqrt(3) * pf1) * 1000;
+        var currentAfter = p / (380 * Math.sqrt(3) * pf2) * 1000;
+        var percentSaving = ((currentBefore - currentAfter) / currentBefore) * 100;
+
+        // تحديد خطوات التوزيع الهندسي للوحة أوتوماتيكية تبعا للسعة الإجمالية لضمان دقة التنظيم
+        var distributionText = "";
+        if (kvar <= 15) {
+            distributionText = "يفضل استخدام مكثف ثابت بمقاس " + Math.ceil(kvar) + " كيلو فار متصل مباشرة مع الحمل الرئيسي.";
+        } else if (kvar <= 45) {
+            var stepSize = (kvar / 3).toFixed(1);
+            distributionText = "لوحة أوتوماتيكية مقسمة على 3 خطوات متساوية بسعة تقريبية: " + stepSize + " كيلو فار لكل خطوة.";
+        } else {
+            var stepSize = (kvar / 6).toFixed(1);
+            distributionText = "لوحة تنظيم آلية (APFC) مقسمة على 6 خطوات لحماية الشبكة بسعة تقريبية: " + stepSize + " كيلو فار لكل خطوة.";
+        }
+
+        // إخراج وتحديث كافة البيانات الفنية على واجهة الشاشة للعميل
+        document.getElementById('kvarNeed').innerText = kvar.toFixed(2);
+        document.getElementById('ampBefore').innerText = currentBefore.toFixed(1);
+        document.getElementById('ampAfter').innerText = currentAfter.toFixed(1);
+        document.getElementById('savingRatio').innerText = percentSaving.toFixed(1);
+        document.getElementById('stepDistribution').innerText = distributionText;
+
+        resultBox.style.display = "block";
     }
 </script>
 </body>
