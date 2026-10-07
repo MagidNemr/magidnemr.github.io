@@ -58,7 +58,7 @@
             box-shadow: 0 4px 15px rgba(0, 210, 255, 0.3); 
         }
         button:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0, 210, 255, 0.5); }
-        .result-box { background: rgba(0, 210, 255, 0.05); border: 1px solid rgba(0, 210, 255, 0.2); border-right: 5px solid var(--neon-blue); padding: 15px; border-radius: 8px; margin-top: 15px; display: none; }
+        .result-box { background: rgba(0, 210, 255, 0.05); border: 1px solid rgba(0, 210, 255, 0.2); border-right: 5px solid var(--neon-blue); padding: 18px; border-radius: 8px; margin-top: 15px; display: none; text-align: right; line-height: 1.7; }
         .value-highlight { font-family: monospace; font-weight: bold; color: var(--neon-green); font-size: 18px; text-shadow: 0 0 5px rgba(0, 245, 212, 0.5); }
         .nav-links { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
         .nav-links a { text-align: center; background: rgba(0, 210, 255, 0.08); border: 1px solid rgba(0, 210, 255, 0.2); color: var(--neon-blue); padding: 12px; border-radius: 8px; font-weight: bold; text-decoration: none; transition: all 0.3s; }
@@ -89,40 +89,83 @@
             <input type="number" id="wireCount" placeholder="أدخل عدد الأسلاك..." min="1">
         </div>
         <button onclick="calculateConduitValues()">احسب قطر الماسورة المناسب</button>
+        
+        <!-- صندوق استعراض كافة التفاصيل الفنية المفيدة للموقع -->
         <div id="conduitResult" class="result-box">
-            <p><strong>حاصل ضرب (المقطع × العدد):</strong> <span id="conduitOutputVal" class="value-highlight">0</span> ملم</p>
-            <p style="color: var(--text-muted); font-size: 13px; margin-top: 5px;">تم الحساب وتحديث الشاشة ديناميكياً بناءً على مدخلاتك الحالية الفورية.</p>
+            <h3 style="margin-top: 0; color: #ffffff; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 5px;">📊 التقرير الفني الشامل للتمديدات:</h3>
+            <p>• المساحة الكلية الصافية للموصلات بالعازل: <span id="totalAreaOut" class="value-highlight">0</span> مم²</p>
+            <p>• نسبة الإشغال المطبقة بالموقع: <span class="value-highlight">40%</span> (تبقاً للكود القياسي)</p>
+            <p>• الحد الأدنى للقطر الداخلي المطلوب للماسورة: <span id="minDiaOut" class="value-highlight">0</span> مم</p>
+            <p style="font-size: 16px; border-top: 1px solid rgba(0, 210, 255, 0.2); padding-top: 10px;">
+                👈 المقاس التجاري المعتمد للماسورة: <span id="commercialSizeOut" class="value-highlight" style="color: #fbbf24;">0</span>
+            </p>
         </div>
     </div>
+
+    <!-- روابط التنقل والرجوع للرئيسية وباقي الحاسبات -->
     <div class="nav-links">
-        <a href="index.html">🏢 العودة لحاسبة المصانع العمومية الرئيسية</a>
-        <a href="home.html">🏠 الانتقال لحاسبة أحمال المنازل</a>
-        <a href="factor.html">📊 الانتقال لحاسبة مكثفات معامل القدرة</a>
+        <a href="index.html">⬅ العودة إلى اللوحة الرئيسية للمنصة</a>
+        <a href="factor.html">⚡ الانتقال إلى حاسبة المكثفات (KVAR)</a>
+        <a href="home.html">🏠 الانتقال إلى حاسبة أحمال المنازل</a>
+    </div>
+
+    <div class="footer">
+        جميع الحقوق محفوظة © 2026 - المهندس ماجد النمر للمعلومات
     </div>
 </div>
-<div class="footer">
-    <p>جميع الحقوق محفوظة © المهندس المطور ماجد النمر 2026</p>
-</div>
 
-<!-- تأمين المكتبة بالأسفل بشكل آمن لمنع تجميد دالة الحساب -->
-<script src="https://minepi.com" async></script>
 <script>
-    window.onload = function() {
-        if (typeof Pi !== 'undefined') {
-            try { Pi.init({ version: "2.0", sandbox: true }); } catch(e) {}
-        }
-    };
-
     function calculateConduitValues() {
-        var size = parseFloat(document.getElementById('wireSize').value);
-        var count = parseInt(document.getElementById('wireCount').value);
-        if (isNaN(count) || count <= 0) { alert("يرجى إدخال عدد أسلاك صحيح."); return; }
-        
-        // تنفيذ معادلتك المباشرة الفورية: ضرب مقطع السلك المختار في عدد الأسلاك المدخلة
-        var resultValue = (size * count).toFixed(1);
+        let size = parseFloat(document.getElementById('wireSize').value);
+        let count = parseInt(document.getElementById('wireCount').value);
+        let resultBox = document.getElementById('conduitResult');
 
-        document.getElementById('conduitOutputVal').innerText = resultValue;
-        document.getElementById('conduitResult').style.display = 'block';
+        if (isNaN(count) || count <= 0) {
+            alert("يرجى إدخال عدد أسلاك صحيح أكبر من الصفر.");
+            return;
+        }
+
+        // جدول دقيق للأقطار الخارجية التقريبية للأسلاك السويدي شاملة عازل PVC حسب مقطع النحاس
+        let wireOuterDiameters = {
+            1.5: 3.0,
+            2.5: 3.7,
+            4: 4.3,
+            6: 4.9,
+            10: 6.2
+        };
+
+        let d = wireOuterDiameters[size];
+        // مساحة مقطع السلك الواحد الدائرية شاملة العازل (ط نق تربيع)
+        let singleWireArea = (Math.PI / 4) * Math.pow(d, 2);
+        
+        // إجمالي مساحة الأسلاك مع تطبيق معامل الأمان 1.5 للأسلاك لسهولة الحركة بالموقع
+        let effectiveCount = count * 1.5;
+        let totalArea = effectiveCount * singleWireArea;
+
+        // الكود يشترط ألا تتعدى مساحة الأسلاك 40% من مساحة الماسورة الداخلية
+        let minConduitArea = totalArea / 0.4;
+        let minInnerDiameter = Math.sqrt((minConduitArea * 4) / Math.PI);
+
+        // اختيار المقاس التجاري الفعلي المتاح بالسوق المصري (بالملم والبوصة المقابلة)
+        let commercialSize = "";
+        if (minInnerDiameter <= 16) {
+            commercialSize = "16 مم (1/2 بوصة)";
+        } else if (minInnerDiameter <= 23) {
+            commercialSize = "23 مم (3/4 بوصة)";
+        } else if (minInnerDiameter <= 29) {
+            commercialSize = "29 مم (1 بوصة)";
+        } else if (minInnerDiameter <= 36) {
+            commercialSize = "36 مم (1 و 1/4 بوصة)";
+        } else {
+            commercialSize = "50 مم (2 بوصة أو أكثر - يفضل تقسيم الأسلاك)";
+        }
+
+        // طباعة وإظهار كافة النتائج بالتفصيل الفني المفيد
+        document.getElementById('totalAreaOut').innerText = totalArea.toFixed(1);
+        document.getElementById('minDiaOut').innerText = minInnerDiameter.toFixed(1);
+        document.getElementById('commercialSizeOut').innerText = commercialSize;
+
+        resultBox.style.display = "block";
     }
 </script>
 </body>
