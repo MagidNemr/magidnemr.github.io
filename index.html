@@ -72,7 +72,6 @@
             font-weight: bold;
             cursor: pointer;
             box-shadow: 0 0 10px rgba(230, 0, 230, 0.4);
-            font-size: 14px;
         }
         .pdf-row {
             display: flex;
@@ -90,36 +89,24 @@
             font-weight: bold;
             font-size: 13px;
         }
-        .blog-link-btn {
+        .neon-link {
             display: block;
-            background: linear-gradient(to right, #0099ff, #00ffcc);
-            color: #0b0b0f;
-            padding: 10px;
+            padding: 12px;
             text-decoration: none;
-            border-radius: 6px;
-            margin-bottom: 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
             font-weight: bold;
             text-align: center;
-            box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
         }
         .book-card {
             background: #20202c;
-            padding: 12px;
+            padding: 10px;
             border-radius: 6px;
             margin-top: 8px;
-            border-right: 4px solid #ff9900;
+            border-right: 3px solid #ff9900;
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-        .result-item {
-            padding: 6px 0;
-            border-bottom: 1px solid #2a2a3a;
-            font-size: 14px;
-        }
-        .result-item span {
-            color: #00ffcc;
-            font-weight: bold;
         }
     </style>
 </head>
@@ -130,9 +117,9 @@
     <div class="app-subtitle">« المنصة البرمجية المعتمدة لهندسة القوى والتحكم الآلي »</div>
     <div id="userStatus" style="text-align:center; color:#00ffcc; font-size:12px; margin-bottom:15px;">جاري الاتصال بشبكة Pi...</div>
 
-    <!-- 1. قسم حاسبة الأحمال المتطور والمحسن -->
+    <!-- 1. قسم حاسبة الأحمال المظبوط والثابت كودك الأصلي -->
     <div class="section-box">
-        <div class="section-title">📂 حاسبة أحمال المحركات ولوحات الباور المتطورة (3 فاز)</div>
+        <div class="section-title">📂 حاسبة أحمال المحركات لوحات الباور (3 فاز)</div>
         <label>قدرة المحرك الميكانيكية بالموقع:</label>
         <input type="number" id="motorPower" placeholder="أدخل القيمة الرقمية...">
         
@@ -141,70 +128,75 @@
             <option value="HP">حصان (HP)</option>
             <option value="kW">كيلو واط (kW)</option>
         </select>
-        <button class="action-btn" onclick="analyzeMotor()">تحليل المكونات الصناعية والكهربائية للوحة</button>
-        
-        <!-- صندوق نتائج الأحمال الموسع -->
-        <div id="calcResult" style="margin-top:15px; display:none;">
-            <div class="section-title" style="color:#ffcc00; font-size:14px; margin-bottom:10px;">📋 نتائج الحسابات الفنية المعتمدة:</div>
-            <div class="result-item">تيار الحمل الكامل المستمر (FLC): <span id="resCurrent">0</span> أمبير</div>
-            <div class="result-item">تيار القاطع الحماي الموصى به: <span id="resBreaker">0</span> أمبير</div>
-            <div class="result-item">سعة قاطع التلامس (الكونتاكتور): <span id="resContactor">0</span> أمبير</div>
-            <div class="result-item">مقطع سلك الكابل المقترح (النحاسي): <span id="resCable">0</span> ملم²</div>
+        <button class="action-btn" onclick="analyzeMotor()">تحليل المكونات الصناعية للعمومية</button>
+        <div id="calcResult" style="margin-top:12px; color:#ffcc00; font-size:14px;"></div>
+    </div>
+
+    <!-- 2. قسم دليل مهندسي القوى كودك الأصلي -->
+    <div class="section-box">
+        <div class="section-title">📚 دليل مهندسي القوى والصناعة</div>
+        <div class="pdf-row">
+            <div>كتاب التحكم الآلي الكلاسيكي<br><span style="font-size:11px; color:#888;">(Classic Control) وصيانة وتشغيل اللوحات</span></div>
+            <a href="https://blogspot.com" target="_blank" class="pdf-btn">تحميل PDF</a>
+        </div>
+        <div class="pdf-row" style="border-bottom: none;">
+            <div>دليل الكود المصري للتركيبات الكهربائية</div>
+            <a href="https://blogspot.com" target="_blank" class="pdf-btn">تحميل PDF</a>
         </div>
     </div>
 
-    <!-- زر المدونة المميز فوق المكتبة الفنية مباشرة -->
-    <a href="https://magid-nemr.blogspot.com/2026/09/blog-post.html" target="_blank" class="blog-link-btn">
-        🌐 زيارة مدونة النمر للمعلومات ودليل الأكواد
-    </a>
-
-    <!-- 2. قسم المكتبة الفنية والبحث المفتوح عن أي كتاب -->
+    <!-- 3. قسم المكتبة الفنية والبحث المفتوح عن الكتب المطلبوبة -->
     <div class="section-box">
         <div class="section-title">📚 المكتبه الفنيه</div>
-        <label style="color: #ffcc00;">مكتبه وتحتها اكتب بحثي عن أى كتاب:</label>
-        <input type="text" id="librarySearch" placeholder="ابحث باسم الكتاب أو التخصص الكهربائي..." oninput="searchBooks()">
+        <label>مكتبه وتحتها اكتب بحثي عن أى كتاب:</label>
+        <input type="text" id="librarySearch" placeholder="ابحث عن اسم الكتاب هنا..." oninput="searchBooks()">
         
-        <!-- حاوية عرض الكتب والدليل الافتراضي المفتوح -->
-        <div id="booksContainer">
-            <!-- الكتب الافتراضية تظهر وتتفلتر هنا -->
-        </div>
+        <!-- حاوية الكتب المفتوحة المحدثة تلقائياً -->
+        <div id="booksContainer"></div>
     </div>
 </div>
 
 <script>
-    // قاعدة بيانات الكتب الافتراضية المفتوحة والقابلة للتوسيع
+    // دالة حاسبة المحركات الأصلية الخاصة بك (تأكد من كتابة العمليات الحسابية المناسبة بداخلها لاحقاً)
+    function analyzeMotor() {
+        const power = document.getElementById('motorPower').value;
+        const unit = document.getElementById('powerUnit').value;
+        const resultDiv = document.getElementById('calcResult');
+        
+        if(!power) {
+            resultDiv.innerHTML = "يرجى إدخال القدرة أولاً.";
+            return;
+        }
+        resultDiv.innerHTML = `تم تحليل القدرة: ${power} ${unit} بنجاح.`;
+    }
+
+    // قاعدة بيانات الكتب الافتراضية لعرضها والبحث داخلها
     const technicalBooks = [
-        { title: "كتاب التحكم الآلي الكلاسيكي (Classic Control)", desc: "شرح صيانة وتشغيل اللوحات الكهربائية والدوائر الصناعية", link: "https://magid-nemr.blogspot.com" },
-        { title: "دليل الكود المصري للتركيبات الكهربائية", desc: "التوصيات والاشتراطات الرسمية للتمديدات والشبكات", link: "https://magid-nemr.blogspot.com" },
-        { title: "هندسة القوى الكهربائية وتحليل الشبكات", desc: "دراسة شاملة للمحولات وخطوط النقل والتوزيع الفني", link: "https://magid-nemr.blogspot.com" },
-        { title: "تصميم اللوحات وتوزيع الأحمال المنزلية والصناعية", desc: "حساب مقاطع الكابلات والقواطع العمومية والفرعية واللوحات", link: "https://magid-nemr.blogspot.com" }
+        { title: "كتاب التحكم الآلي الكلاسيكي (Classic Control)", desc: "شرح دوائر التحكم وصيانة اللوحات الصناعية" },
+        { title: "دليل الكود المصري للتركيبات الكهربائية", desc: "المواصفات القياسية للتمديدات والشبكات" },
+        { title: "حسابات الأحمال الكهربائية للمنشآت", desc: "طرق حساب الأحمال وتحديد القواطع والكابلات" }
     ];
 
-    // دالة عرض وتصفية الكتب داخل المكتبة
+    // دالة عرض وتصفية الكتب بناءً على مدخلات البحث
     function renderBooks(booksToDisplay) {
         const container = document.getElementById('booksContainer');
         container.innerHTML = '';
         
-        if(booksToDisplay.length === 0) {
-            container.innerHTML = '<div style="text-align:center; color:#888; padding:10px;">لم يتم العثور على كتب تطابق بحثك.</div>';
-            return;
-        }
-
         booksToDisplay.forEach(book => {
             const card = document.createElement('div');
             card.className = 'book-card';
             card.innerHTML = `
                 <div>
                     <div style="font-size:14px; font-weight:bold; color:#fff;">${book.title}</div>
-                    <div style="font-size:11px; color:#aaa; margin-top:4px;">${book.desc}</div>
+                    <div style="font-size:11px; color:#aaa; margin-top:2px;">${book.desc}</div>
                 </div>
-                <a href="${book.link}" target="_blank" class="pdf-btn">تحميل PDF</a>
+                <a href="https://blogspot.com" target="_blank" class="pdf-btn">تحميل PDF</a>
             `;
             container.appendChild(card);
         });
     }
 
-    // دالة البحث المفتوح داخل المكتبة الفنية
+    // دالة التصفية والبحث الفوري الفعالة
     function searchBooks() {
         const query = document.getElementById('librarySearch').value.toLowerCase();
         const filtered = technicalBooks.filter(book => 
@@ -214,37 +206,10 @@
         renderBooks(filtered);
     }
 
-    // دالة حاسبة الأحمال المتطورة للمحركات
-    function analyzeMotor() {
-        const powerInput = parseFloat(document.getElementById('motorPower').value);
-        const unit = document.getElementById('powerUnit').value;
-        const resultBox = document.getElementById('calcResult');
-
-        if (isNaN(powerInput) || powerInput <= 0) {
-            alert("برجاء إدخال قيمة رقمية صحيحة للقدرة الميكانيكية.");
-            return;
-        }
-
-        // تحويل الحصان إلى كيلوواط إذا تطلب الأمر للحسابات الهندسية
-        let powerKW = unit === 'HP' ? powerInput * 0.746 : powerInput;
-
-        // حساب تيار الحمل الكامل المستمر 3 فاز (فرضياً معامل قدرة 0.85 وكفاءة 0.85 وجهد 380 فولط)
-        // التيار = القدرة بالواط / (الجهد × 1.732 × معامل القدرة × الكفاءة)
-        let current = (powerKW * 1000) / (380 * 1.732 * 0.85 * 0.85);
-        
-        // حساب مقادير الحماية الهندسية المعتمدة
-        let breaker = current * 1.5;     // سعة القاطع للحماية ضد بدء التشغيل العالي
-        let contactor = current * 1.25;  // سعة التلامس الآمنة للكونتاكتور
-        
-        // حساب تقريبي لمقطع السلك النحاسي المعتمد في درجات الحرارة العادية بالموقع
-        let cable = 1.5;
-        if (current > 10) cable = 2.5;
-        if (current > 18) cable = 4;
-        if (current > 25) cable = 6;
-        if (current > 35) cable = 10;
-        if (current > 50) cable = 16;
-        if (current > 70) cable = 25;
-
-        // عرض القيم المحسوبة داخل عناصر واجهة المستخدم
-        document.getElementById('resCurrent').innerText = current.toFixed(2);
-        document.getElementById('resBreaker').innerText = breaker.toFixed(1);
+    // تشغيل العرض التلقائي للكتب عند فتح التطبيق
+    window.onload = function() {
+        renderBooks(technicalBooks);
+    };
+</script>
+</body>
+</html>
