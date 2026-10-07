@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محرك بحث المكتبة الفنية</title>
+    <style>
+        body {
+            background-color: #0d0d13;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            direction: rtl;
+            text-align: right;
+        }
+        .search-wrapper {
+            max-width: 550px;
+            margin: 40px auto;
+            background: #161622;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #ff9900;
+            box-shadow: 0 0 15px rgba(255, 153, 0, 0.2);
+        }
+        h2 { color: #00ffcc; text-align: center; margin-bottom: 5px; }
+        .hint-text { text-align: center; color: #888; font-size: 13px; margin-bottom: 20px; }
+        .search-bar {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            background: #202030;
+            border: 1px solid #444;
+            border-radius: 6px;
+            color: #fff;
+            box-sizing: border-box;
+            outline: none;
+        }
+        .search-bar:focus { border-color: #00ffcc; box-shadow: 0 0 8px rgba(0, 255, 204, 0.3); }
+        .results-container { margin-top: 20px; list-style: none; padding: 0; }
+        .book-card {
+            background: #1d1d2b;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-right: 4px solid #ff9900;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .book-btn {
+            background: #00cc66;
+            color: #fff;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .no-data { text-align: center; color: #ff4444; margin-top: 15px; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="search-wrapper">
+    <h2>المكتبة الفنية الفورية</h2>
+    <p class="hint-text">مكتبه وتحتها اكتب بحثي عن أى كتاب</p>
+    
+    <!-- خانة البحث الفوري -->
+    <input type="text" id="userInput" onkeyup="executeSearch()" class="search-bar" placeholder="اكتب اسم الكتاب أو الكورس الكهربائي للبحث...">
+    
+    <ul id="displayContainer" class="results-container">
+        <!-- الكتب والنتائج تظهر هنا تلقائياً -->
+    </ul>
+    <div id="emptyMessage" class="no-data">عذراً، هذا الكتاب غير متوفر حالياً في قسم هندسة القوى والتحكم.</div>
+</div>
+
+<script>
+// 1. مصفوفة البيانات المستقلة للكتب لتجنب أي تداخل
+const electricalBooksDatabase = [
+    { name: "كتاب التحكم الآلي الكلاسيكي الجزء الأول وجيه جرجس كلاسيك كنترول", displayTitle: "كتاب التحكم الآلي الكلاسيكي - الجزء الأول (د. وجيه جرجس)", targetUrl: "https://blogspot.com" },
+    { name: "كتاب التحكم الآلي الكلاسيكي الجزء الثاني وجيه جرجس كلاسيك كنترول", displayTitle: "كتاب التحكم الآلي الكلاسيكي - الجزء الثاني (د. وجيه جرجس)", targetUrl: "https://blogspot.com" },
+    { name: "الكود المصري للتركيبات الكهربائية توزيع أحمال قوى شبكات", displayTitle: "دليل الكود المصري المعتمد للتركيبات الكهربائية", targetUrl: "https://blogspot.com" },
+    { name: "تبريد وتكييف هواء صيانة تشغيل محركات فريون تكييف", displayTitle: "موسوعة صيانة وتشغيل منظومات التبريد وتكييف الهواء", targetUrl: "https://blogspot.com" },
+    { name: "تصنيع وتصميم قوالب البلاستيك والشنط خطوط انتاج مصانع", displayTitle: "دليل دراسات جدوى خطوط تصنيع البلاستيك والشنط", targetUrl: "https://blogspot.com" }
+];
+
+// 2. محرك الفرز والبحث الذكي الفوري
+function executeSearch() {
+    let query = document.getElementById('userInput').value.toLowerCase().trim();
+    let container = document.getElementById('displayContainer');
+    let msg = document.getElementById('emptyMessage');
+    
+    container.innerHTML = ""; // تنظيف القائمة عند كل حرف مكتوب
+    
+    if(query === "") {
+        msg.style.display = "none";
+        return; // لا يعرض شيئاً إذا كانت الخانة فارغة تماماً لراحة المستخدم
+    }
+    
+    let matchFound = false;
+    
+    electricalBooksDatabase.forEach(item => {
+        if(item.name.toLowerCase().includes(query)) {
+            matchFound = true;
+            let li = document.createElement('li');
+            li.className = "book-card";
+            li.innerHTML = `
+                <div><strong>${item.displayTitle}</strong></div>
+                <a href="${item.targetUrl}" target="_blank" class="book-btn">انتقل للمدونة والتحميل</a>
+            `;
+            container.appendChild(li);
+        }
+    });
+    
+    msg.style.display = matchFound ? "none" : "block";
+}
+</script>
+
+</body>
+</html>
