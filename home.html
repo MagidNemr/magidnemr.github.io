@@ -1,10 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Tech Aide | حاسبة المنازل</title>
+    <!-- استدعاء ملف Pi SDK الرسمي من مساره الصحيح للشبكة -->
     <script src="https://minepi.com"></script>
     <style>
         :root {
@@ -14,6 +14,7 @@
             --neon-green: #00f5d4;
             --text-main: #f3f4f6;
             --text-muted: #9ca3af;
+            --neon-blue: #00d2ff;
         }
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -34,7 +35,7 @@
             text-shadow: 0 0 15px rgba(249, 115, 22, 0.5);
         }
         header p { margin: 8px 0 0; font-size: 14px; color: var(--neon-orange); font-weight: 600; }
-        .container { max-width: 600px; margin: 20px auto; padding: 0 15px; }
+        .container { max-width: 600px; margin: 20px auto 40px; padding: 0 15px; }
         .card {
             background: var(--panel-bg); border: 1px solid rgba(249, 115, 22, 0.15);
             border-radius: 16px; padding: 22px; margin-bottom: 25px;
@@ -43,17 +44,18 @@
         .card h2 { margin-top: 0; font-size: 18px; font-weight: 700; color: #ffffff; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 10px; }
         .form-group { margin-bottom: 18px; }
         label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; color: var(--text-muted); }
-        select { width: 100%; padding: 12px; background: rgba(9, 13, 22, 0.8); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px; box-sizing: border-box; font-size: 16px; color: #ffffff; }
+        select { width: 100%; padding: 12px; background: rgba(9, 13, 22, 0.8); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px; box-sizing: border-box; font-size: 16px; color: #ffffff; outline: none; }
+        select:focus { border-color: var(--neon-orange); }
         button {
             background: linear-gradient(135deg, #f97316, #ea580c); color: white; border: none; padding: 14px 20px; font-size: 16px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
         }
         button:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(249, 115, 22, 0.5); }
-        .result-box { background: rgba(249, 115, 22, 0.05); border: 1px solid rgba(249, 115, 22, 0.2); border-right: 5px solid var(--neon-orange); padding: 15px; border-radius: 8px; margin-top: 15px; display: none; }
+        .result-box { background: rgba(249, 115, 22, 0.05); border: 1px solid rgba(249, 115, 22, 0.2); border-right: 5px solid var(--neon-orange); padding: 18px; border-radius: 8px; margin-top: 15px; display: none; text-align: right; line-height: 1.7; }
         .value-highlight { font-family: monospace; font-weight: bold; color: var(--neon-green); font-size: 18px; text-shadow: 0 0 5px rgba(0, 245, 212, 0.5); }
         .nav-links { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
         .nav-links a { text-align: center; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-main); padding: 12px; border-radius: 8px; font-weight: bold; text-decoration: none; transition: all 0.3s; }
-        .nav-links a:hover { background: rgba(255, 255, 255, 0.08); }
+        .nav-links a:hover { background: rgba(255, 255, 255, 0.08); color: var(--neon-blue); }
         .footer { text-align: center; padding: 25px; font-size: 12px; color: var(--text-muted); }
     </style>
 </head>
@@ -77,34 +79,96 @@
             </select>
         </div>
         <button onclick="calculateResidential()">احسب تيار وسلك الدائرة</button>
+        
+        <!-- صندوق استعراض كافة التفاصيل الفنية المقررة هندسياً للمباني -->
         <div id="resResult" class="result-box">
-            <p><strong>تيار السحب المتوقع (Current):</strong> <span id="resCurrent" class="value-highlight">0</span> أمبير</p>
-            <p><strong>سعة القاطع الفرعي المقترحة:</strong> <span id="resBreaker" class="value-highlight">0</span> أمبير</p>
-            <p><strong>مقطع السلك النحاسي المعتمد:</strong> <span id="resCable" class="value-highlight">0</span> مم²</p>
-            <p style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 8px; margin-top: 8px;">ℹ️ <span id="resNote" style="color: var(--text-muted); font-size: 14px;">-</span></p>
+            <h3 style="margin-top: 0; color: #ffffff; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 5px;">📋 المواصفات الفنية المعتمدة للدائرة:</h3>
+            <p>• تيار السحب المقدر للأجهزة (Current): <span id="resCurrent" class="value-highlight">0</span> أمبير</p>
+            <p>• سعة القاطع الفرعي المقترحة باللوحة: <span id="resBreaker" class="value-highlight">0</span> أمبير (حماية خطية)</p>
+            <p>• مساحة مقطع السلك النحاسي المعتمد: <span id="resCable" class="value-highlight">0</span> مم² (السويدي الأصلي)</p>
+            <p style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; margin-top: 10px; font-size: 13px; color: #fbbf24;">
+                ℹ️ <strong>ملاحظة هندسية للموقع:</strong> <br><span id="resNote">-</span>
+            </p>
         </div>
     </div>
+    
+    <!-- روابط التنقل السلس والربط بالملف الرئيسي وباقي حاسبات المشروع -->
     <div class="nav-links">
-        <a href="index.html">🏢 العودة لحاسبة المصانع العمومية</a>
-        <a href="factor.html">📊 الانتقال لحاسبة مكثفات معامل القدرة ←</a>
+        <a href="index.html">🏢 العودة للوحة المنصة الرئيسية العمومية</a>
+        <a href="conduit.html">📐 الانتقال إلى حاسبة أقطار مواسير التمديد</a>
+        <a href="factor.html">⚡ الانتقال إلى حاسبة مكثفات معامل القدرة (KVAR)</a>
+    </div>
+    
+    <div class="footer">
+        جميع الحقوق محفوظة © 2026 - المهندس ماجد النمر للمعلومات
     </div>
 </div>
+
 <script>
-    Pi.init({ version: "2.0", sandbox: true });
+    // تهيئة وتفعيل بيئة الـ SDK لـ Pi Network
+    try {
+        Pi.init({ version: "2.0", sandbox: true });
+    } catch (e) {
+        console.log("Running in standard web environment.");
+    }
+
     function calculateResidential() {
-        var type = document.getElementById('resAppliance').value;
-        var current = 0; var breaker = 10; var cable = 1.5; var note = "";
-        if (type === 'lighting') { current = 4.5; breaker = 10; cable = 1.5; note = "موصى به لشبكات الإنارة القياسية لتجنب سخونة الأسلاك."; }
-        else if (type === 'sockets') { current = 12; breaker = 16; cable = 2.5; note = "تأكد من إحكام ربط السلك وتمديد خط الأرضي (Earth) للحماية."; }
-        else if (type === 'ac1') { current = 7; breaker = 16; cable = 4; note = "يسحب خط منفرد ومباشر من لوحة التوزيع دون أي خطوط فرعية."; }
-        else if (type === 'ac2') { current = 11; breaker = 20; cable = 4; note = "يسحب خط منفرد ومباشر من لوحة التوزيع دون أي خطوط فرعية."; }
-        else if (type === 'ac3') { current = 15; breaker = 26; cable = 6; note = "يسحب خط منفرد ومباشر من لوحة التوزيع دون أي خطوط فرعية."; }
-        else if (type === 'heater') { current = 10.9; breaker = 16; cable = 4; note = "يفضل قاطع ثنائي القطب لضمان عزل الفازة والنيوترال تماماً أثناء الصيانة."; }
+        var appliance = document.getElementById('resAppliance').value;
+        var resultBox = document.getElementById('resResult');
+        
+        // متغيرات الحسابات الفنية
+        var current = 0;
+        var breaker = 0;
+        var cable = 0;
+        var note = "";
+
+        // تطبيق معايير هندسة التوزيع السكني بدقة طبقاً للأحمال الفردية (جهد فاز واحد 220 فولت)
+        switch(appliance) {
+            case "lighting":
+                current = 4.5; // فرضية الحد الأقصى لـ 10 كشافات أو نقاط إنارة بالخط
+                breaker = 10;
+                cable = 1.5;
+                note = "خط الإنارة العادي يتم تمديده داخل ماسورة سعة 16 مم، ولا يجوز خلط خطوط الإنارة مع البرايز على نفس المفتاح.";
+                break;
+            case "sockets":
+                current = 10.0; // الحد الأقصى لتوزيع البرايز العادية بالمطبخ والغرف
+                breaker = 16;
+                cable = 2.5;
+                note = "يفضل ألا يزيد عدد البرايز على الخط الواحد عن 6 مآخذ، ويتم استخدام أسلاك نحاس مقطع 2.5 مم² للأمان.";
+                break;
+            case "ac1":
+                current = 7.0; // سحب تكييف 1.5 حصان
+                breaker = 16;
+                cable = 4;
+                note = "التكييف حمل مستمر ويحتاج إلى خط مستقل تماماً (لينيا منفصلة) من اللوحة مباشرة دون أي لحامات.";
+                break;
+            case "ac2":
+                current = 11.0; // سحب تكييف 2.25 حصان
+                breaker = 20;
+                cable = 4;
+                note = "يتم استخدام مفتاح حماية فرعي بقوة 20 أمبير، ويفضل استخدام أسلاك نحاس صافي معتمد مقطع 4 مم².";
+                break;
+            case "ac3":
+                current = 15.0; // سحب تكييف 3 حصان
+                breaker = 26;
+                cable = 6;
+                note = "نظراً لتيار بدء التشغيل العالي للمحرك، يشترط الكود سلك مقطع 6 مم² وقاطع 26 أو 32 أمبير لضمان الاستقرار.";
+                break;
+            case "heater":
+                current = 9.0; // متوسط سخان 2000 واط سكني
+                breaker = 16;
+                cable = 4;
+                note = "السخانات الكهربائية تصنف أحمالاً حرارية خطرة، ويجب تمديد سلك نحاس 4 مم² مع ربط طرف التأريض (Earth) إجبارياً لحماية الأرواح.";
+                break;
+        }
+
+        // إخراج وتحديث تفاصيل التوزيع السكني على الواجهة أمام المستخدم
         document.getElementById('resCurrent').innerText = current.toFixed(1);
         document.getElementById('resBreaker').innerText = breaker;
         document.getElementById('resCable').innerText = cable;
         document.getElementById('resNote').innerText = note;
-        document.getElementById('resResult').style.display = 'block';
+
+        resultBox.style.display = "block";
     }
 </script>
 </body>
