@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Tech Aide</title>
-    <!-- استدعاء مكتبة Pi SDK الرسمية -->
-    <script src="https://minepi.com"></script>
     <style>
         body {
             background-color: #0b0b0f;
@@ -136,9 +134,9 @@
 <div class="main-container">
     <div class="app-title">⚡ SMART TECH AIDE</div>
     <div class="app-subtitle">« المنصة البرمجية المعتمدة لهندسة القوى والتحكم الآلي »</div>
-    <div id="userStatus" style="text-align:center; color:#00ffcc; font-size:12px; margin-bottom:15px;">المنصة جاهزة للعمل الحسابي الفوري</div>
+    <div style="text-align:center; color:#00ffcc; font-size:12px; margin-bottom:15px;">النظام يعمل بشكل فوري ومستقل</div>
 
-    <!-- 1. قسم حاسبة الأحمال (ثابت ويعمل داخلياً) -->
+    <!-- حاسبة الأحمال -->
     <div class="section-box">
         <div class="section-title">📂 حاسبة أحمال المحركات لوحات الباور (3 فاز)</div>
         <label>قدرة المحرك الميكانيكية بالموقع:</label>
@@ -151,11 +149,10 @@
         </select>
         <button class="action-btn" type="button" onclick="analyzeMotor()">تحليل المكونات الصناعية للعمومية</button>
         
-        <!-- صندوق طباعة النتائج الستة المطور -->
         <div id="calcResult" style="margin-top:15px; background: #1a1a24; padding: 12px; border-radius: 6px; display: none; border: 1px solid #ff9900;"></div>
     </div>
 
-    <!-- 2. قسم دليل الكتب الثابتة والتحميل -->
+    <!-- دليل الكتب الثابتة -->
     <div class="section-box">
         <div class="section-title">📚 دليل مهندسي القوى والصناعة</div>
         <div class="pdf-row">
@@ -168,7 +165,7 @@
         </div>
     </div>
 
-    <!-- 3. قسم المكتبة المفتوحة مع زر البحث والفرز الداخلي/الخارجي -->
+    <!-- المكتبة المفتوحة -->
     <div class="section-box" style="border-color: #ff9900;">
         <div class="section-title" style="color:#00ffcc;">🔍 المكتبة الفنية المفتوحة</div>
         <label style="color:#ff9900;">مكتبه وتحتها اكتب بحثي عن أى كتاب:</label>
@@ -179,11 +176,11 @@
         </div>
         
         <ul id="booksContainer" style="list-style:none; padding:0; margin:0;">
-            <!-- قائمة الكتب تفرش تلقائياً هنا -->
+            <!-- الكتب تظهر تلقائياً هنا -->
         </ul>
     </div>
 
-    <!-- 4. الأزرار المضيئة السفلية للتنقل بين الصفحات والربح -->
+    <!-- روابط التنقل السفلية -->
     <div style="margin-top: 20px;">
         <a href="https://blogspot.com" target="_blank" class="neon-link" style="background: #00a3a3; color: white;">🌐 مدونة النمر للمعلومات</a>
         <a href="conduit.html" class="neon-link" style="background: #222; color: #ffcc00; border: 1px solid #ffcc00;">📐 حاسبة أقطار مواسير التمديد (Conduit Fill)</a>
@@ -193,7 +190,6 @@
 </div>
 
 <script>
-// قاعدة بيانات الكتب الافتراضية
 const booksDatabase = [
     { tags: "كلاسيك كنترول تحكم الي وجيه جرجس الاول", title: "كتاب التحكم الآلي الكلاسيكي - ج1 (د. وجيه جرجس)", url: "https://blogspot.com" },
     { tags: "كلاسيك كنترول تحكم الي وجيه جرجس الثاني", title: "كتاب التحكم الآلي الكلاسيكي - ج2 (د. وجيه جرجس)", url: "https://blogspot.com" },
@@ -202,11 +198,9 @@ const booksDatabase = [
     { tags: "تصنيع تصميم قوالب بلاستيك شنط مصانع خطوط انتاج", title: "دليل خطوط تصنيع البلاستيك ودراسات الجدوى", url: "https://blogspot.com" }
 ];
 
-// دالة فرش وعرض الكتب في القائمة
 function showBooks(data, query = "") {
     const container = document.getElementById('booksContainer');
     container.innerHTML = "";
-    
     if (data.length > 0) {
         data.forEach(book => {
             let li = document.createElement('li');
@@ -219,25 +213,37 @@ function showBooks(data, query = "") {
         li.className = "book-card";
         li.style.borderRight = "3px solid #ff4444";
         li.innerHTML = `
-            <div><strong style="color:#ff4444;">لم يُعثر عليه داخلياً، ابحث في جوجل عن:</strong><br><span style="font-size:12px; color:#aaa;">${query}</span></div>
+            <div><strong style="color:#ff4444;">لم يُعثر عليه داخلياً، ابحث في جوجل:</strong><br><span style="font-size:12px; color:#aaa;">${query}</span></div>
             <a href="https://google.com{encodeURIComponent(query)}+pdf" target="_blank" class="pdf-btn" style="background:#00a3a3;">بحث خارجي</a>
         `;
         container.appendChild(li);
     }
 }
 
-// تحميل الكتب تلقائياً عند فتح الصفحة وتجهيز الـ Pi SDK
 window.onload = function() {
     showBooks(booksDatabase);
-    if (window.Pi) {
-        try {
-            Pi.init({ version: "2.0", sandbox: true });
-            Pi.authenticate(["username"], function(auth) {
-                document.getElementById("userStatus").innerText = "مرحباً مهندس: " + auth.user.username;
-            }, function(err) { console.log("Pi SDK background integration active."); });
-        } catch(e) { console.log("Pi System initial check bypassed."); }
-    }
 };
 
-// دالة الفلترة والبحث عند الضغط على زر البحث
 function filterBooks() {
+    let val = document.getElementById('librarySearch').value.toLowerCase().trim();
+    let filtered = booksDatabase.filter(b => b.tags.toLowerCase().includes(val) || b.title.toLowerCase().includes(val));
+    showBooks(filtered, val);
+}
+
+function analyzeMotor() {
+    let p = parseFloat(document.getElementById('motorPower').value);
+    let u = document.getElementById('powerUnit').value;
+    let resBox = document.getElementById('calcResult');
+    
+    if(isNaN(p) || p <= 0) {
+        alert("يرجى إدخال قيمة رقمية صحيحة لقدرة المحرك");
+        resBox.style.display = "none";
+        return;
+    }
+    
+    let current = (u === 'HP') ? (p * 1.5) : (p * 2);
+    let breaker = current * 2.5; 
+    let contactor = current * 1.25; 
+    let overloadMin = current * 0.9;
+    let overloadMax = current * 1.15;
+    let cableSize = (current <= 16) ? 2.5 : (current <= 23) ? 4 : (current <= 31) ? 6 : (current <= 43) ? 10 : 16;
