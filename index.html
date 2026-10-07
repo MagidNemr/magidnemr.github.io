@@ -3,192 +3,293 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Tech Aide</title>
-    <!-- استدعاء مكتبة Pi SDK الرسمية للتوثيق -->
+    <title>SMART TECH AIDE</title>
     <script src="https://minepi.com"></script>
     <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #111827;
+            --border-glow: #10b981;
+            --accent-yellow: #fbbf24;
+            --text-main: #ffffff;
+            --text-muted: #9ca3af;
+            --btn-pink: #d946ef;
+            --btn-green: #22c55e;
+        }
+
         body {
-            background-color: #0b0b0f;
-            color: #ffffff;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            padding: 20px;
-            direction: rtl;
-            text-align: right;
-        }
-        .main-container {
-            max-width: 550px;
-            margin: 0 auto;
-            background: #121216;
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid #00ffcc;
-            box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
-        }
-        .app-title {
-            text-align: center;
-            color: #ffcc00;
-            font-size: 24px;
-            margin-bottom: 5px;
-        }
-        .app-subtitle {
-            text-align: center;
-            color: #00ffcc;
-            font-size: 13px;
-            margin-bottom: 20px;
-        }
-        .section-box {
-            background: #181822;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
             padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 450px;
+            border: 2px solid var(--border-glow);
+            border-radius: 15px;
+            padding: 20px;
+            background-color: var(--card-bg);
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+            box-sizing: border-box;
+        }
+
+        .header {
+            text-align: center;
             margin-bottom: 20px;
         }
-        .section-title {
-            color: #ff9900;
+
+        .header h1 {
+            color: var(--accent-yellow);
+            font-size: 24px;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .header p {
+            color: var(--border-glow);
+            font-size: 13px;
+            margin: 5px 0;
+        }
+
+        .pi-status {
+            color: var(--accent-yellow);
+            font-size: 12px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .card {
+            border: 1px solid #374151;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .card-title {
+            color: var(--accent-yellow);
             font-size: 16px;
             margin-top: 0;
             margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        label { display: block; margin-bottom: 5px; color: #ccc; font-size: 14px; }
-        input[type="number"], input[type="text"], select {
+
+        label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: var(--text-muted);
+        }
+
+        input, select {
             width: 100%;
             padding: 10px;
-            margin-bottom: 15px;
-            background: #222230;
-            border: 1px solid #444;
-            color: #fff;
-            border-radius: 5px;
+            border-radius: 6px;
+            border: 1px solid #4b5563;
+            background-color: #1f2937;
+            color: white;
             box-sizing: border-box;
-            outline: none;
+            margin-bottom: 15px;
+            text-align: center;
         }
-        input:focus, select:focus { border-color: #00ffcc; }
-        .action-btn {
+
+        .btn {
             width: 100%;
             padding: 12px;
-            background: linear-gradient(to right, #b300b3, #e600e6);
-            color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
+            color: white;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 0 10px rgba(230, 0, 230, 0.4);
+            font-size: 14px;
+            transition: background 0.2s;
         }
-        .pdf-row {
+
+        .btn-pink { background-color: var(--btn-pink); }
+        .btn-green { background-color: var(--btn-green); }
+        .btn-orange { background-color: #f97316; padding: 6px 12px; width: auto; }
+        
+        .calc-toggle-btn {
+            background-color: #1f2937;
+            border: 1px solid var(--accent-yellow);
+            color: var(--accent-yellow);
+            text-align: right;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            width: 100%;
+            font-size: 14px;
+            cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #222;
         }
-        .pdf-btn {
-            background: #00cc66;
-            color: white;
-            padding: 6px 12px;
-            text-decoration: none;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 13px;
+
+        .hidden-panel {
+            display: none;
+            border: 1px solid var(--border-glow);
+            background-color: #111827;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
         }
+
         .result-box {
-            margin-top: 15px;
+            background-color: #1f2937;
+            border: 1px dashed var(--border-glow);
             padding: 12px;
-            background: #1c1c28;
-            border-right: 4px solid #ffcc00;
-            border-radius: 4px;
+            border-radius: 6px;
+            margin-top: 10px;
+            text-align: right;
+            color: #34d399;
+            font-size: 13px;
             line-height: 1.6;
+            display: none;
+        }
+
+        .book-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #1f2937;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            border-right: 4px solid var(--accent-yellow);
+        }
+
+        .book-info { font-size: 13px; }
+        
+        .blog-link-btn {
+            background-color: #06b6d4;
+            color: white;
+            text-align: center;
+            padding: 12px;
+            border-radius: 8px;
+            display: block;
+            text-decoration: none;
+            font-weight: bold;
+            margin-bottom: 15px;
         }
     </style>
 </head>
 <body>
 
-<div class="main-container">
-    <div class="app-title">⚡ SMART TECH AIDE</div>
-    <div class="app-subtitle">« المنصة البرمجية المعتمدة لهندسة القوى والتحكم الآلي »</div>
-    <div id="userStatus" style="text-align:center; color:#00ffcc; font-size:12px; margin-bottom:15px;">جاري الاتصال بشبكة Pi...</div>
+<div class="container">
+    
+    <div class="header">
+        <h1>SMART TECH AIDE ⚡</h1>
+        <p>« المنصة البرمجية المعتمدة لهندسة القوى والتحكم الآلي »</p>
+    </div>
 
-    <!-- 1. قسم حاسبة الأحمال المظبوط والثابت كودك الأصلي -->
-    <div class="section-box">
-        <div class="section-title">📂 حاسبة أحمال المحركات لوحات الباور (3 فاز)</div>
+    <div id="pi-status" class="pi-status">جاري الاتصال بشبكة Pi...</div>
+
+    <!-- 1. حاسبة أحمال المحركات (3 فاز) المحدثة بالكامل -->
+    <div class="card">
+        <div class="card-title">📂 حاسبة أحمال المحركات لوحات الباور (3 فاز)</div>
         <label>قدرة المحرك الميكانيكية بالموقع:</label>
-        <input type="number" id="motorPower" placeholder="أدخل القيمة الرقمية...">
+        <input type="number" id="motor-power" placeholder="أدخل القيمة الرقمية...">
         
         <label>وحدة القدرة:</label>
-        <select id="powerUnit">
-            <option value="HP">حصان (HP)</option>
-            <option value="kW">كيلو واط (kW)</option>
+        <select id="motor-unit">
+            <option value="hp">حصان (HP)</option>
+            <option value="kw">كيلو واط (kW)</option>
         </select>
-        <button class="action-btn" onclick="analyzeMotor()">تحليل المكونات الصناعية للعمومية</button>
-        <div id="calcResult"></div>
+        
+        <button class="btn btn-pink" onclick="calculateMotor()">تحليل المكونات الصناعية للعمومية</button>
+        <div id="motor-result" class="result-box"></div>
     </div>
 
-    <!-- 2. قسم دليل مهندسي القوى كودك الأصلي -->
-    <div class="section-box">
-        <div class="section-title">📚 دليل مهندسي القوى والصناعة</div>
-        <div class="pdf-row">
-            <div>كتاب التحكم الآلي الكلاسيكي<br><span style="font-size:11px; color:#888;">(Classic Control) وصيانة وتشغيل اللوحات</span></div>
-            <a href="https://blogspot.com" target="_blank" class="pdf-btn">تحميل PDF</a>
+    <!-- 2. دليل مهندسي القوى والصناعة -->
+    <div class="card">
+        <div class="card-title">📚 دليل مهندسي القوى والصناعة</div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <span style="font-size: 13px;">كتاب التحكم الآلي الكلاسيكي (صيانة وتشغيل اللوحات)</span>
+            <button class="btn btn-green" style="width:auto; padding:5px 10px;">تحميل PDF</button>
         </div>
-        <div class="pdf-row" style="border-bottom: none;">
-            <div>دليل الكود المصري للتركيبات الكهربائية</div>
-            <a href="https://blogspot.com" target="_blank" class="pdf-btn">تحميل PDF</a>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 13px;">دليل الكود المصري للتركيبات الكهربائية</span>
+            <button class="btn btn-green" style="width:auto; padding:5px 10px;">تحميل PDF</button>
         </div>
     </div>
-</div>
 
-<script>
-    // تهيئة وتوثيق شبكة Pi المبدئي لضمان عدم توقف البرنامج داخل Pi Browser
-    try {
-        Pi.init({ version: "2.0", sandbox: true });
-        document.getElementById("userStatus").innerText = "⚡ متصل بشبكة Pi Network بنجاح";
-    } catch (e) {
-        console.log("Pi SDK status:", e);
-        document.getElementById("userStatus").innerText = "وضع المعاينة المحلي المحمي";
-    }
-
-    // دالة تحليل أحمال المحرك الهندسية 3 فاز
-    function analyzeMotor() {
-        const powerInput = parseFloat(document.getElementById("motorPower").value);
-        const unit = document.getElementById("powerUnit").value;
-        const resultDiv = document.getElementById("calcResult");
-
-        if (isNaN(powerInput) || powerInput <= 0) {
-            resultDiv.innerHTML = "<p style='color:#ff3333;'>برجاء إدخال قيمة رقمية صحيحة أكبر من الصفر.</p>";
-            return;
-        }
-
-        // تحويل القدرة إلى كيلو واط ثابت للحساب
-        let powerKW = powerInput;
-        if (unit === "HP") {
-            powerKW = powerInput * 0.746; // 1 حصان = 0.746 كيلو واط
-        }
-
-        // قانون حساب التيار لـ 3 فاز (الجهد الافتراضي المعتمد 380 فولت، معامل القدرة 0.85، الكفاءة 0.85)
-        // الفولتية الافتراضية للشبكات الصناعية بمصر والشرق الأوسط 380V
-        const voltage = 380;
-        const pf = 0.85;
-        const efficiency = 0.85;
+    <!-- 3. المكتبة الفنية المفتوحة مع خاصية البحث -->
+    <div class="card">
+        <div class="card-title">🔍 المكتبة الفنية المفتوحة</div>
+        <label>مكتبه وتحتها اكتب بحثي عن أى كتاب:</label>
+        <input type="text" id="book-search" onkeyup="searchBooks()" placeholder="ابحث عن اسم الكتاب هنا...">
         
-        // حساب شدة تيار الحمل الكامل (FLA) بالـ أمبير
-        const current = (powerKW * 1000) / (Math.sqrt(3) * voltage * pf * efficiency);
-        
-        // حساب سعة القاطع الموصى به (تأمين بدء المحرك حماية مغناطيسية وحرارية 125% إلى 150%)
-        const breakerSize = current * 1.25;
-        
-        // مقطع السلك النحاسي التقريبي المعتمد (أمان 4 أمبير لكل 1 مم مربع داخل اللوحات)
-        const wireSize = current / 4;
-
-        // طباعة النتائج بتنسيق منظم داخل واجهتك
-        resultDiv.innerHTML = `
-            <div class="result-box">
-                <strong style="color: #00ffcc;">📊 النتائج التقديرية للحمل (3-Phase):</strong><br>
-                ⚡ تيار الحمل الكامل (FLA): <span style="color:#ffcc00;">${current.toFixed(2)} أمبير</span><br>
-                🔌 سعة القاطع المقترحة (Breaker): <span style="color:#ffcc00;">${breakerSize.toFixed(1)} أمبير</span><br>
-                📐 مقطع الكابل النحاسي الأدنى: <span style="color:#ffcc00;">${wireSize.toFixed(1)} مم²</span>
+        <div id="books-list">
+            <div class="book-item">
+                <div class="book-info">كتاب التحكم الآلي الكلاسيكي - ج1 (د. وجيه جرجس)</div>
+                <button class="btn btn-orange">تصفح</button>
             </div>
-        `;
-    }
-</script>
+            <div class="book-item">
+                <div class="book-info">كتاب التحكم الآلي الكلاسيكي - ج2 (د. وجيه جرجس)</div>
+                <button class="btn btn-orange">تصفح</button>
+            </div>
+            <div class="book-item">
+                <div class="book-info">دليل الكود المصري المعتمد للتركيبات الكهربائية</div>
+                <button class="btn btn-orange">تصفح</button>
+            </div>
+            <div class="book-item">
+                <div class="book-info">موسوعة صيانة وتشغيل منظومات التكييف</div>
+                <button class="btn btn-orange">تصفح</button>
+            </div>
+            <div class="book-item">
+                <div class="book-info">دليل خطوط تصنيع البلاستيك ودراسات الجدوى</div>
+                <button class="btn btn-orange">تصفح</button>
+            </div>
+        </div>
+    </div>
 
-</body>
-    </html>
+    <a href="https://blogspot.com" target="_blank" class="blog-link-btn">🌐 مدونة النمر للمعلومات</a>
+
+    <!-- أزرار تفعيل التبويبات الفرعية للمشروع -->
+    <button class="calc-toggle-btn" onclick="togglePanel('conduit-panel')">
+        <span>📐 حاسبة أقطار مواسير التمديد (Conduit Fill)</span>
+        <span>▼</span>
+    </button>
     
+    <div id="conduit-panel" class="hidden-panel">
+        <label>عدد الموصلات داخل الماسورة نفس المقاس:</label>
+        <input type="number" id="wire-count" placeholder="مثال: 4">
+        <label>مقطع السلك الفعلي (مم²):</label>
+        <input type="number" id="wire-size" placeholder="مثال: 4">
+        <button class="btn btn-pink" onclick="calculateConduit()">احسب القطر المناسب بالتفصيل</button>
+        <div id="conduit-result" class="result-box"></div>
+    </div>
+
+    <button class="calc-toggle-btn" onclick="togglePanel('kvar-panel')">
+        <span>⚡ حاسبة مكثفات معامل القدرة (KVAR)</span>
+        <span>▼</span>
+    </button>
+    
+    <div id="kvar-panel" class="hidden-panel">
+        <label>الحمل الكلي الفعلي بالكيلو واط (kW):</label>
+        <input type="number" id="load-kw" placeholder="أدخل الحمل الكلي...">
+        <label>معامل القدرة الحالي (الحقيقي بالموقع):</label>
+        <input type="number" id="pf-current" step="0.01" placeholder="مثال: 0.72">
+        <label>معامل القدرة المستهدف (المطلوب تحسينه):</label>
+        <input type="number" id="pf-target" step="0.01" value="0.95">
+        <button class="btn btn-pink" onclick="calculateKvar()">تحليل سعة وخطوات المكثفات</button>
+        <div id="kvar-result" class="result-box"></div>
+    </div>
+
+    <button class="calc-toggle-btn" onclick="togglePanel('house-panel')">
+        <span>🏠 حاسبة أحمال وتمديدات المنازل الفنية</span>
+        <span>▼</span>
+    </button>
+
+                
