@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محرك بحث المكتبة الفنية</title>
+    <title>محرك بحث المكتبة الفنية المطور</title>
     <style>
         body {
             background-color: #0d0d13;
@@ -36,6 +36,17 @@
             outline: none;
         }
         .search-bar:focus { border-color: #00ffcc; box-shadow: 0 0 8px rgba(0, 255, 204, 0.3); }
+        
+        /* تنسيق مساحة الإعلانات المربحة */
+        .ad-banner-slot {
+            margin: 20px 0;
+            padding: 10px;
+            background: #1a1a26;
+            border: 1px dashed #00ffcc;
+            border-radius: 6px;
+            text-align: center;
+        }
+
         .results-container { margin-top: 20px; list-style: none; padding: 0; }
         .book-card {
             background: #1d1d2b;
@@ -68,33 +79,40 @@
     <!-- خانة البحث الفوري -->
     <input type="text" id="userInput" onkeyup="executeSearch()" class="search-bar" placeholder="اكتب اسم الكتاب أو الكورس الكهربائي للبحث...">
     
+    <!-- قسم الإعلانات لتعظيم الأرباح المدمجة -->
+    <div class="ad-banner-slot">
+        <span style="color: #666; font-size: 11px; display: block; margin-bottom: 5px;">إعلان مدعوم</span>
+        <!-- ضع شفرة إعلان Adsterra أو AdSense الخاصة بك هنا -->
+        <div id="ad-placement">
+            <p style="color: #00ffcc; font-size: 13px; margin: 5px 0;">[ جاري تحميل الإعلان المربح... ]</p>
+        </div>
+    </div>
+
     <ul id="displayContainer" class="results-container">
-        <!-- الكتب والنتائج تظهر هنا تلقائياً -->
+        <!-- النتائج تظهر هنا -->
     </ul>
     <div id="emptyMessage" class="no-data">عذراً، هذا الكتاب غير متوفر حالياً في قسم هندسة القوى والتحكم.</div>
 </div>
 
 <script>
-// 1. مصفوفة البيانات المستقلة للكتب لتجنب أي تداخل
 const electricalBooksDatabase = [
     { name: "كتاب التحكم الآلي الكلاسيكي الجزء الأول وجيه جرجس كلاسيك كنترول", displayTitle: "كتاب التحكم الآلي الكلاسيكي - الجزء الأول (د. وجيه جرجس)", targetUrl: "https://blogspot.com" },
     { name: "كتاب التحكم الآلي الكلاسيكي الجزء الثاني وجيه جرجس كلاسيك كنترول", displayTitle: "كتاب التحكم الآلي الكلاسيكي - الجزء الثاني (د. وجيه جرجس)", targetUrl: "https://blogspot.com" },
     { name: "الكود المصري للتركيبات الكهربائية توزيع أحمال قوى شبكات", displayTitle: "دليل الكود المصري المعتمد للتركيبات الكهربائية", targetUrl: "https://blogspot.com" },
-    { name: "تبريد وتكييف هواء صيانة تشغيل محركات فريون تكييف", displayTitle: "موسوعة صيانة وتشغيل منظومات التبريد وتكييف الهواء", targetUrl: "https://blogspot.com" },
+    { name: "تبريد وتكييف هواء صيانة تشغيل محركات فريون تكييف", displayTitle: "موسوعة صيانة وتشغيل منظومات التبريد وتكييف الهوا", targetUrl: "https://blogspot.com" },
     { name: "تصنيع وتصميم قوالب البلاستيك والشنط خطوط انتاج مصانع", displayTitle: "دليل دراسات جدوى خطوط تصنيع البلاستيك والشنط", targetUrl: "https://blogspot.com" }
 ];
 
-// 2. محرك الفرز والبحث الذكي الفوري
 function executeSearch() {
     let query = document.getElementById('userInput').value.toLowerCase().trim();
     let container = document.getElementById('displayContainer');
     let msg = document.getElementById('emptyMessage');
     
-    container.innerHTML = ""; // تنظيف القائمة عند كل حرف مكتوب
+    container.innerHTML = ""; 
     
     if(query === "") {
         msg.style.display = "none";
-        return; // لا يعرض شيئاً إذا كانت الخانة فارغة تماماً لراحة المستخدم
+        return; 
     }
     
     let matchFound = false;
@@ -117,4 +135,5 @@ function executeSearch() {
 </script>
 
 </body>
-</html>
+    </html>
+    
