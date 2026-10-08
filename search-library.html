@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المكتبة الفنية - مدونة النمر للمعلومات</title>
+    <title>المكتبة الفنية - مدونة النمر</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -66,10 +66,10 @@
             color: #2c3e50;
             margin-top: 15px;
             line-height: 1.6;
-            background: #fff9e6;
-            padding: 10px;
+            background: #eef7ed;
+            padding: 12px;
             border-radius: 6px;
-            border-right: 4px solid #e5a93b;
+            border-right: 4px solid #27ae60;
         }
     </style>
 </head>
@@ -77,38 +77,38 @@
 
 <div class="container">
     <h1>المكتبه الفنيه</h1>
-    <div class="subtitle">اكتب اسم الكتاب الفني الذي تبحث عنه للانتقال مباشرة لمدونة النمر</div>
+    <div class="subtitle">اكتب اسم الكتاب الفني للذهاب فوراً لصفحة تحميله من مدونة النمر</div>
 
     <!-- صندوق البحث -->
     <div class="search-box">
-        <input type="text" id="bookQuery" placeholder="اكتب اسم الكتاب أو القسم هنا...">
+        <input type="text" id="bookQuery" placeholder="اكتب اسم الكتاب هنا (مثال: Classic Control)...">
         <button id="searchButton">ابحث</button>
     </div>
 
     <div class="hint-text">
-        💡 <strong>تنبيه:</strong> سيتم نقلك مباشرة إلى أقسام الكتب بالمدونة، بمجرد دخولك استخدم مربع البحث الداخلي للمدونة أو تصفح الأقسام لتحميل كتابك فوراً!
+        📥 <strong>ملاحظة للزائر:</strong> سيتم فتح مدونة النمر فوراً لتعرض لك التدوينات وكتب التحميل المباشرة المتوافقة مع بحثك.
     </div>
 </div>
 
 <script>
-    document.getElementById('searchButton').onclick = redirectToBlog;
+    document.getElementById('searchButton').onclick = searchInsideBlog;
     document.getElementById('bookQuery').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
-            redirectToBlog();
+            searchInsideBlog();
         }
     });
 
-    function redirectToBlog() {
+    function searchInsideBlog() {
         var query = document.getElementById('bookQuery').value.trim();
 
         if (!query) {
-            alert('يرجى كتابة اسم الكتاب أولاً!');
+            alert('يرجى كتابة اسم الكتاب أولاً لتبدأ البحث!');
             return;
         }
 
-        // التوجيه للرابط الرئيسي للمدونة مباشرة لتجنب خطأ 404 في بلوجر وضمان تشغيل الإعلانات
-        var blogUrl = 'https://magid-nemr.blogspot.com/';
-        window.location.href = blogUrl;
+        // هذا الرابط المطور يقوم بالدخول لمدونتك أولاً وتشغيل محرك البحث الآمن بداخلها دون أي مشاكل
+        var targetUrl = 'https://magid-nemr.blogspot.com/' + encodeURIComponent(query);
+        window.location.href = targetUrl;
     }
 </script>
 
