@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المكتبة الفنية - بحث عن الكتب</title>
+    <title>المكتبة الفنية - بحث وتحميل الكتب</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -109,18 +109,19 @@
             white-space: nowrap;
             text-overflow: ellipsis;
         }
-        .btn-view {
+        .btn-download {
             display: block;
-            padding: 8px 12px;
-            background-color: #3498db;
+            padding: 10px 12px;
+            background-color: #27ae60;
             color: white;
             text-decoration: none;
             border-radius: 5px;
             font-size: 13px;
             font-weight: bold;
+            transition: background-color 0.3s;
         }
-        .btn-view:hover {
-            background-color: #2980b9;
+        .btn-download:hover {
+            background-color: #219653;
         }
         .loading, .no-results {
             grid-column: 1 / -1;
@@ -135,17 +136,17 @@
 
 <div class="container">
     <h1>المكتبه الفنيه</h1>
-    <div class="subtitle">مكتبه وتحتها اكتب بحثي عن أى كتاب</div>
+    <div class="subtitle">ابحث عن أي كتاب للانتقال إلى مدونة النمر للتحميل المباشر</div>
 
     <!-- صندوق البحث -->
     <div class="search-box">
-        <input type="text" id="bookQuery" placeholder="اكتب اسم الكتاب أو التخصص الفني أو المؤلف...">
+        <input type="text" id="bookQuery" placeholder="اكتب اسم الكتاب أو التخصص الفني...">
         <button id="searchButton">ابحث</button>
     </div>
 
     <!-- شبكة عرض النتائج -->
     <div class="results-grid" id="booksResult">
-        <!-- سيتم توليد الكروت هنا ديناميكياً بواسطة الجافاسكريبت -->
+        <!-- يتم إنشاء الكروت ديناميكياً هنا -->
     </div>
 </div>
 
@@ -169,12 +170,11 @@
         container.innerHTML = '<div class="loading">⏳ جاري البحث في المكتبة الفنية...</div>';
 
         try {
-            // استدعاء واجهة برمجة تطبيقات Google Books للبحث عن العناوين المدخلة
             const url = `https://googleapis.com{encodeURIComponent(query)}&maxResults=12`;
             const response = await fetch(url);
             const data = await response.json();
 
-            container.innerHTML = ''; // تفريغ الحاوية
+            container.innerHTML = ''; 
 
             if (!data.items || data.items.length === 0) {
                 container.innerHTML = '<div class="no-results">❌ عذراً، لم نجد كتباً تطابق بحثك. جرب كلمات أخرى.</div>';
@@ -186,30 +186,28 @@
                 const title = volumeInfo.title || 'عنوان غير متوفر';
                 const authors = volumeInfo.authors ? volumeInfo.authors.join(', ') : 'مؤلف غير معروف';
                 
-                // جلب صورة الغلاف البديلة في حال عدم توفر غلاف أصلي
                 let thumbnail = 'https://placeholder.com';
                 if (volumeInfo.imageLinks && volumeInfo.imageLinks.thumbnail) {
-                    // استبدال http بـ https لضمان عملها بأمان داخل Pi Browser
                     thumbnail = volumeInfo.imageLinks.thumbnail.replace('http://', 'https://');
                 }
                 
-                const previewUrl = volumeInfo.previewLink || '#';
+                // هنا نقوم بإنشاء رابط البحث التلقائي داخل مدونتك باستخدام اسم الكتاب لزيادة الأرباح
+                const blogSearchUrl = `https://blogspot.com{encodeURIComponent(title)}`;
 
-                // بناء كارت الكتاب
                 const card = document.createElement('div');
                 card.className = 'book-card';
                 card.innerHTML = `
                     <img src="${thumbnail}" alt="${title}">
                     <div class="book-title" title="${title}">${title}</div>
                     <div class="book-author">${authors}</div>
-                    <a href="${previewUrl}" target="_blank" class="btn-view">قراءة / معاينة</a>
+                    <a href="${blogSearchUrl}" target="_blank" class="btn-download">📥 تحميل من المدونة</a>
                 `;
                 container.appendChild(card);
             });
 
         } catch (error) {
-            console.error('Error fetching data:', error);
-            container.innerHTML = '<div class="no-results" style="color: red;">⚠️ حدث خطأ في الاتصال بالخادم، يرجى المحاولة لاحقاً.</div>';
+            console.error('Error:', error);
+            container.innerHTML = '<div class="no-results" style="color: red;">⚠️ حدث خطأ، يرجى المحاولة لاحقاً.</div>';
         }
     }
 </script>
