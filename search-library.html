@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المكتبة الفنية - مدونة النمر</title>
+    <title>المكتبة الفنية - مدونة النمر للمعلوميات</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -11,105 +11,67 @@
             margin: 0;
             padding: 20px;
             color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
         .container {
-            max-width: 600px;
-            margin: 50px auto;
+            max-width: 500px;
             background: #fff;
-            padding: 30px;
+            padding: 40px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             text-align: center;
         }
         h1 {
             color: #2c3e50;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
         }
-        .subtitle {
+        p {
             color: #7f8c8d;
-            font-size: 14px;
+            font-size: 15px;
             margin-bottom: 25px;
+            line-height: 1.6;
         }
-        .search-box {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        input[type="text"] {
-            flex: 1;
-            padding: 12px 20px;
-            font-size: 16px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-        input[type="text"]:focus {
-            border-color: #e5a93b;
-        }
-        button {
-            padding: 12px 25px;
+        .btn-go {
+            display: inline-block;
+            padding: 14px 30px;
             font-size: 16px;
             background-color: #e5a93b;
             color: white;
-            border: none;
+            text-decoration: none;
             border-radius: 8px;
-            cursor: pointer;
             font-weight: bold;
+            box-shadow: 0 4px 6px rgba(229, 169, 59, 0.2);
             transition: background 0.3s;
         }
-        button:hover {
+        .btn-go:hover {
             background-color: #d4982a;
-        }
-        .hint-text {
-            font-size: 14px;
-            color: #2c3e50;
-            margin-top: 15px;
-            line-height: 1.6;
-            background: #eef7ed;
-            padding: 12px;
-            border-radius: 6px;
-            border-right: 4px solid #27ae60;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>المكتبه الفنيه</h1>
-    <div class="subtitle">اكتب اسم الكتاب الفني للذهاب فوراً لصفحة تحميله من مدونة النمر</div>
-
-    <!-- صندوق البحث -->
-    <div class="search-box">
-        <input type="text" id="bookQuery" placeholder="اكتب اسم الكتاب هنا (مثال: Classic Control)...">
-        <button id="searchButton">ابحث</button>
-    </div>
-
-    <div class="hint-text">
-        📥 <strong>ملاحظة للزائر:</strong> سيتم فتح مدونة النمر فوراً لتعرض لك التدوينات وكتب التحميل المباشرة المتوافقة مع بحثك.
-    </div>
+    <h1>📚 المكتبه الفنيه</h1>
+    <p>مكتبة البحث وتحميل أي كتاب فني أو هندسي مجاناً عبر مدونة النمر للمعلوميات.</p>
+    
+    <!-- استبدل الرابط أدناه برابط المقال الذي نشرته في بلوجر -->
+    <a href="https://blogspot.com" id="blogLink" class="btn-go">انتقل للمدونة وابحث عن كتابك الآن</a>
 </div>
 
 <script>
-    document.getElementById('searchButton').onclick = searchInsideBlog;
-    document.getElementById('bookQuery').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            searchInsideBlog();
-        }
-    });
-
-    function searchInsideBlog() {
-        var query = document.getElementById('bookQuery').value.trim();
-
-        if (!query) {
-            alert('يرجى كتابة اسم الكتاب أولاً لتبدأ البحث!');
-            return;
-        }
-
-        // هذا الرابط المطور يقوم بالدخول لمدونتك أولاً وتشغيل محرك البحث الآمن بداخلها دون أي مشاكل
-        var targetUrl = 'https://magid-nemr.blogspot.com/' + encodeURIComponent(query);
-        window.location.href = targetUrl;
-    }
+    // كود لتوجيه الزائر تلقائياً بعد 3 ثوانٍ لزيادة الأرباح، أو يمكنه الضغط مباشرة على الزر
+    window.onload = function() {
+        var articleUrl = "https://magid-nemr.blogspot.com/2026/10/blog-post_08.html"; // 👈 ضع رابط المقال هنا بين العلامتين
+        
+        document.getElementById("blogLink").href = articleUrl;
+        
+        setTimeout(function() {
+            window.location.href = articleUrl;
+        }, 3000); // التوجيه التلقائي بعد 3 ثوانٍ
+    };
 </script>
 
 </body>
