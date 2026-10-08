@@ -43,10 +43,6 @@
             border: 2px solid #ddd;
             border-radius: 8px;
             outline: none;
-            transition: border-color 0.3s;
-        }
-        input[type="text"]:focus {
-            border-color: #e5a93b;
         }
         button {
             padding: 12px 25px;
@@ -57,15 +53,12 @@
             border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #d4982a;
         }
         .results-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 20px;
+            margin-top: 20px;
         }
         .book-card {
             background: #fff;
@@ -77,10 +70,6 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: transform 0.2s;
-        }
-        .book-card:hover {
-            transform: translateY(-5px);
         }
         .book-card img {
             max-width: 100%;
@@ -94,20 +83,6 @@
             font-weight: bold;
             margin: 5px 0;
             color: #2c3e50;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            height: 40px;
-        }
-        .book-author {
-            font-size: 13px;
-            color: #7f8c8d;
-            margin-bottom: 15px;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
         }
         .btn-download {
             display: block;
@@ -118,17 +93,13 @@
             border-radius: 5px;
             font-size: 13px;
             font-weight: bold;
-            transition: background-color 0.3s;
-        }
-        .btn-download:hover {
-            background-color: #219653;
+            margin-top: 10px;
         }
         .loading, .no-results {
             grid-column: 1 / -1;
             text-align: center;
             padding: 20px;
             color: #7f8c8d;
-            font-size: 16px;
         }
     </style>
 </head>
@@ -136,79 +107,70 @@
 
 <div class="container">
     <h1>المكتبه الفنيه</h1>
-    <div class="subtitle">ابحث عن أي كتاب للانتقال إلى مدونة النمر للتحميل المباشر</div>
+    <div class="subtitle">ابحث عن أي كتاب للانتقال إلى مدونة النمر للمعلوميات للتحميل المباشر</div>
 
-    <!-- صندوق البحث -->
     <div class="search-box">
-        <input type="text" id="bookQuery" placeholder="اكتب اسم الكتاب أو التخصص الفني...">
+        <input type="text" id="bookQuery" placeholder="اكتب اسم الكتاب هنا (مثال: Classic Control)...">
         <button id="searchButton">ابحث</button>
     </div>
 
-    <!-- شبكة عرض النتائج -->
-    <div class="results-grid" id="booksResult">
-        <!-- يتم إنشاء الكروت ديناميكياً هنا -->
-    </div>
+    <div class="results-grid" id="booksResult"></div>
 </div>
 
 <script>
-    document.getElementById('searchButton').addEventListener('click', executeBookSearch);
-    document.getElementById('bookQuery').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            executeBookSearch();
-        }
-    });
-
-    async function executeBookSearch() {
-        const query = document.getElementById('bookQuery').value.trim();
-        const container = document.getElementById('booksResult');
+    document.getElementById('searchButton').onclick = executeBookSearch;
+    
+    function executeBookSearch() {
+        var query = document.getElementById('bookQuery').value.trim();
+        var container = document.getElementById('booksResult');
 
         if (!query) {
-            alert('يرجى كتابة كلمة للبحث أولاً!');
+            alert('يرجى كتابة اسم الكتاب أولاً!');
             return;
         }
 
-        container.innerHTML = '<div class="loading">⏳ جاري البحث في المكتبة الفنية...</div>';
+        container.innerHTML = '<div class="loading">⏳ جاري البحث وجلب الروابط المباشرة...</div>';
 
-        try {
-            const url = `https://googleapis.com{encodeURIComponent(query)}&maxResults=12`;
-            const response = await fetch(url);
-            const data = await response.json();
+        // استخدام الاتصال التقليدي المتوافق مع متصفحات الأجهزة القديمة وبيئة Pi
+        var xhr = new XMLHttpRequest();
+        var url = 'https://googleapis.com' + encodeURIComponent(query) + '&maxResults=10';
+        
+        xhr.open('GET', url, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                container.innerHTML = ''; 
+                if (xhr.status === 200) {
+                    var data = JSON.parse(xhr.responseText);
+                    if (!data.items || data.items.length === 0) {
+                        container.innerHTML = '<div class="no-results">❌ لم نجد كتباً تطابق بحثك. جرب كلمة أخرى مثل "Control".</div>';
+                        return;
+                    }
 
-            container.innerHTML = ''; 
+                    data.items.forEach(function(item) {
+                        var volumeInfo = item.volumeInfo;
+                        var title = volumeInfo.title || 'عنوان غير متوفر';
+                        
+                        var thumbnail = 'https://placeholder.com';
+                        if (volumeInfo.imageLinks && volumeInfo.imageLinks.thumbnail) {
+                            thumbnail = volumeInfo.imageLinks.thumbnail.replace('http://', 'https://');
+                        }
+                        
+                        // رابط التوجيه لمدونة النمر مع كلمة البحث
+                        var blogSearchUrl = 'https://magid-nemr.blogspot.com/' + encodeURIComponent(title);
 
-            if (!data.items || data.items.length === 0) {
-                container.innerHTML = '<div class="no-results">❌ عذراً، لم نجد كتباً تطابق بحثك. جرب كلمات أخرى.</div>';
-                return;
-            }
-
-            data.items.forEach(item => {
-                const volumeInfo = item.volumeInfo;
-                const title = volumeInfo.title || 'عنوان غير متوفر';
-                const authors = volumeInfo.authors ? volumeInfo.authors.join(', ') : 'مؤلف غير معروف';
-                
-                let thumbnail = 'https://placeholder.com';
-                if (volumeInfo.imageLinks && volumeInfo.imageLinks.thumbnail) {
-                    thumbnail = volumeInfo.imageLinks.thumbnail.replace('http://', 'https://');
+                        var card = document.createElement('div');
+                        card.className = 'book-card';
+                        card.innerHTML = '<img src="' + thumbnail + '">' +
+                                         '<div class="book-title">' + title + '</div>' +
+                                         '<a href="' + blogSearchUrl + '" target="_blank" class="btn-download">📥 تحميل من المدونة</a>';
+                        container.appendChild(card);
+                    });
+                } else {
+                    container.innerHTML = '<div class="no-results" style="color: red;">⚠️ حدث خطأ في الشبكة. تأكد من اتصال الإنترنت داخل Pi Browser.</div>';
                 }
-                
-                // هنا نقوم بإنشاء رابط البحث التلقائي داخل مدونتك باستخدام اسم الكتاب لزيادة الأرباح
-                const blogSearchUrl = `https://blogspot.com{encodeURIComponent(title)}`;
-
-                const card = document.createElement('div');
-                card.className = 'book-card';
-                card.innerHTML = `
-                    <img src="${thumbnail}" alt="${title}">
-                    <div class="book-title" title="${title}">${title}</div>
-                    <div class="book-author">${authors}</div>
-                    <a href="${blogSearchUrl}" target="_blank" class="btn-download">📥 تحميل من المدونة</a>
-                `;
-                container.appendChild(card);
-            });
-
-        } catch (error) {
-            console.error('Error:', error);
-            container.innerHTML = '<div class="no-results" style="color: red;">⚠️ حدث خطأ، يرجى المحاولة لاحقاً.</div>';
-        }
+            }
+        };
+        xhr.send();
     }
 </script>
 
