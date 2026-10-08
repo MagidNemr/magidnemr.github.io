@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المكتبة الفنية - مدونة النمر للمعلوميات</title>
+    <title>المكتبة الفنية - مدونة النمر للمعلومات</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -62,10 +62,14 @@
             background-color: #d4982a;
         }
         .hint-text {
-            font-size: 13px;
-            color: #95a5a6;
+            font-size: 14px;
+            color: #2c3e50;
             margin-top: 15px;
             line-height: 1.6;
+            background: #fff9e6;
+            padding: 10px;
+            border-radius: 6px;
+            border-right: 4px solid #e5a93b;
         }
     </style>
 </head>
@@ -73,16 +77,16 @@
 
 <div class="container">
     <h1>المكتبه الفنيه</h1>
-    <div class="subtitle">ابحث عن أى كتاب للذهاب إلى صفحة التحميل المباشر بمدونة النمرللمعلوميات</div>
+    <div class="subtitle">اكتب اسم الكتاب الفني الذي تبحث عنه للانتقال مباشرة لمدونة النمر</div>
 
-    <!-- صندوق البحث المباشر -->
+    <!-- صندوق البحث -->
     <div class="search-box">
-        <input type="text" id="bookQuery" placeholder="اكتب اسم الكتاب أو التخصص الفني هنا...">
+        <input type="text" id="bookQuery" placeholder="اكتب اسم الكتاب أو القسم هنا...">
         <button id="searchButton">ابحث</button>
     </div>
 
     <div class="hint-text">
-        سيتم توجيهك تلقائياً لنتائج التحميل الآمنة داخل مدونة النمر للمعلومات.
+        💡 <strong>تنبيه:</strong> سيتم نقلك مباشرة إلى أقسام الكتب بالمدونة، بمجرد دخولك استخدم مربع البحث الداخلي للمدونة أو تصفح الأقسام لتحميل كتابك فوراً!
     </div>
 </div>
 
@@ -98,12 +102,12 @@
         var query = document.getElementById('bookQuery').value.trim();
 
         if (!query) {
-            alert('يرجى كتابة اسم الكتاب أولاً للبحث!');
+            alert('يرجى كتابة اسم الكتاب أولاً!');
             return;
         }
 
-        // تحويل المستخدم فوراً لصفحة البحث داخل مدونة النمر بدون أي تعليق
-        var blogUrl = 'https://magid-nemr.blogspot.com/' + encodeURIComponent(query);
+        // التوجيه للرابط الرئيسي للمدونة مباشرة لتجنب خطأ 404 في بلوجر وضمان تشغيل الإعلانات
+        var blogUrl = 'https://magid-nemr.blogspot.com/';
         window.location.href = blogUrl;
     }
 </script>
