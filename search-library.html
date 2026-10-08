@@ -3,137 +3,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محرك بحث المكتبة الفنية المطور</title>
+    <title>المكتبة الفنية - بحث عن الكتب</title>
     <style>
         body {
-            background-color: #0d0d13;
-            color: #ffffff;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
             padding: 20px;
-            direction: rtl;
-            text-align: right;
+            color: #333;
         }
-        .search-wrapper {
-            max-width: 550px;
-            margin: 40px auto;
-            background: #161622;
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
             padding: 30px;
             border-radius: 12px;
-            border: 1px solid #ff9900;
-            box-shadow: 0 0 15px rgba(255, 153, 0, 0.2);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
-        h2 { color: #00ffcc; text-align: center; margin-bottom: 5px; }
-        .hint-text { text-align: center; color: #888; font-size: 13px; margin-bottom: 20px; }
-        .search-bar {
-            width: 100%;
-            padding: 12px;
-            font-size: 16px;
-            background: #202030;
-            border: 1px solid #444;
-            border-radius: 6px;
-            color: #fff;
-            box-sizing: border-box;
-            outline: none;
-        }
-        .search-bar:focus { border-color: #00ffcc; box-shadow: 0 0 8px rgba(0, 255, 204, 0.3); }
-        
-        /* تنسيق مساحة الإعلانات المربحة */
-        .ad-banner-slot {
-            margin: 20px 0;
-            padding: 10px;
-            background: #1a1a26;
-            border: 1px dashed #00ffcc;
-            border-radius: 6px;
+        h1 {
             text-align: center;
+            color: #2c3e50;
+            margin-bottom: 5px;
         }
-
-        .results-container { margin-top: 20px; list-style: none; padding: 0; }
-        .book-card {
-            background: #1d1d2b;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            border-right: 4px solid #ff9900;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .book-btn {
-            background: #00cc66;
-            color: #fff;
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-weight: bold;
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
             font-size: 14px;
+            margin-bottom: 25px;
         }
-        .no-data { text-align: center; color: #ff4444; margin-top: 15px; display: none; }
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        input[type="text"]:focus {
+            border-color: #e5a93b;
+        }
+        button {
+            padding: 12px 25px;
+            font-size: 16px;
+            background-color: #e5a93b;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #d4982a;
+        }
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .book-card {
+            background: #fff;
+            border: 1px solid #e1e8ed;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s;
+        }
+        .book-card:hover {
+            transform: translateY(-5px);
+        }
+        .book-card img {
+            max-width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 12px;
+        }
+        .book-title {
+            font-size: 15px;
+            font-weight: bold;
+            margin: 5px 0;
+            color: #2c3e50;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            height: 40px;
+        }
+        .book-author {
+            font-size: 13px;
+            color: #7f8c8d;
+            margin-bottom: 15px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        .btn-view {
+            display: block;
+            padding: 8px 12px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        .btn-view:hover {
+            background-color: #2980b9;
+        }
+        .loading, .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 20px;
+            color: #7f8c8d;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
 
-<div class="search-wrapper">
-    <h2>المكتبة الفنية الفورية</h2>
-    <p class="hint-text">مكتبه وتحتها اكتب بحثي عن أى كتاب</p>
-    
-    <!-- خانة البحث الفوري -->
-    <input type="text" id="userInput" onkeyup="executeSearch()" class="search-bar" placeholder="اكتب اسم الكتاب أو الكورس الكهربائي للبحث...">
-    
-    <!-- قسم الإعلانات لتعظيم الأرباح المدمجة -->
-    <div class="ad-banner-slot">
-        <span style="color: #666; font-size: 11px; display: block; margin-bottom: 5px;">إعلان مدعوم</span>
-        <!-- ضع شفرة إعلان Adsterra أو AdSense الخاصة بك هنا -->
-        <div id="ad-placement">
-            <p style="color: #00ffcc; font-size: 13px; margin: 5px 0;">[ جاري تحميل الإعلان المربح... ]</p>
-        </div>
+<div class="container">
+    <h1>المكتبه الفنيه</h1>
+    <div class="subtitle">مكتبه وتحتها اكتب بحثي عن أى كتاب</div>
+
+    <!-- صندوق البحث -->
+    <div class="search-box">
+        <input type="text" id="bookQuery" placeholder="اكتب اسم الكتاب أو التخصص الفني أو المؤلف...">
+        <button id="searchButton">ابحث</button>
     </div>
 
-    <ul id="displayContainer" class="results-container">
-        <!-- النتائج تظهر هنا -->
-    </ul>
-    <div id="emptyMessage" class="no-data">عذراً، هذا الكتاب غير متوفر حالياً في قسم هندسة القوى والتحكم.</div>
+    <!-- شبكة عرض النتائج -->
+    <div class="results-grid" id="booksResult">
+        <!-- سيتم توليد الكروت هنا ديناميكياً بواسطة الجافاسكريبت -->
+    </div>
 </div>
 
 <script>
-const electricalBooksDatabase = [
-    { name: "كتاب التحكم الآلي الكلاسيكي الجزء الأول وجيه جرجس كلاسيك كنترول", displayTitle: "كتاب التحكم الآلي الكلاسيكي - الجزء الأول (د. وجيه جرجس)", targetUrl: "https://blogspot.com" },
-    { name: "كتاب التحكم الآلي الكلاسيكي الجزء الثاني وجيه جرجس كلاسيك كنترول", displayTitle: "كتاب التحكم الآلي الكلاسيكي - الجزء الثاني (د. وجيه جرجس)", targetUrl: "https://blogspot.com" },
-    { name: "الكود المصري للتركيبات الكهربائية توزيع أحمال قوى شبكات", displayTitle: "دليل الكود المصري المعتمد للتركيبات الكهربائية", targetUrl: "https://blogspot.com" },
-    { name: "تبريد وتكييف هواء صيانة تشغيل محركات فريون تكييف", displayTitle: "موسوعة صيانة وتشغيل منظومات التبريد وتكييف الهوا", targetUrl: "https://blogspot.com" },
-    { name: "تصنيع وتصميم قوالب البلاستيك والشنط خطوط انتاج مصانع", displayTitle: "دليل دراسات جدوى خطوط تصنيع البلاستيك والشنط", targetUrl: "https://blogspot.com" }
-];
-
-function executeSearch() {
-    let query = document.getElementById('userInput').value.toLowerCase().trim();
-    let container = document.getElementById('displayContainer');
-    let msg = document.getElementById('emptyMessage');
-    
-    container.innerHTML = ""; 
-    
-    if(query === "") {
-        msg.style.display = "none";
-        return; 
-    }
-    
-    let matchFound = false;
-    
-    electricalBooksDatabase.forEach(item => {
-        if(item.name.toLowerCase().includes(query)) {
-            matchFound = true;
-            let li = document.createElement('li');
-            li.className = "book-card";
-            li.innerHTML = `
-                <div><strong>${item.displayTitle}</strong></div>
-                <a href="${item.targetUrl}" target="_blank" class="book-btn">انتقل للمدونة والتحميل</a>
-            `;
-            container.appendChild(li);
+    document.getElementById('searchButton').addEventListener('click', executeBookSearch);
+    document.getElementById('bookQuery').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            executeBookSearch();
         }
     });
-    
-    msg.style.display = matchFound ? "none" : "block";
-}
+
+    async function executeBookSearch() {
+        const query = document.getElementById('bookQuery').value.trim();
+        const container = document.getElementById('booksResult');
+
+        if (!query) {
+            alert('يرجى كتابة كلمة للبحث أولاً!');
+            return;
+        }
+
+        container.innerHTML = '<div class="loading">⏳ جاري البحث في المكتبة الفنية...</div>';
+
+        try {
+            // استدعاء واجهة برمجة تطبيقات Google Books للبحث عن العناوين المدخلة
+            const url = `https://googleapis.com{encodeURIComponent(query)}&maxResults=12`;
+            const response = await fetch(url);
+            const data = await response.json();
+
+            container.innerHTML = ''; // تفريغ الحاوية
+
+            if (!data.items || data.items.length === 0) {
+                container.innerHTML = '<div class="no-results">❌ عذراً، لم نجد كتباً تطابق بحثك. جرب كلمات أخرى.</div>';
+                return;
+            }
+
+            data.items.forEach(item => {
+                const volumeInfo = item.volumeInfo;
+                const title = volumeInfo.title || 'عنوان غير متوفر';
+                const authors = volumeInfo.authors ? volumeInfo.authors.join(', ') : 'مؤلف غير معروف';
+                
+                // جلب صورة الغلاف البديلة في حال عدم توفر غلاف أصلي
+                let thumbnail = 'https://placeholder.com';
+                if (volumeInfo.imageLinks && volumeInfo.imageLinks.thumbnail) {
+                    // استبدال http بـ https لضمان عملها بأمان داخل Pi Browser
+                    thumbnail = volumeInfo.imageLinks.thumbnail.replace('http://', 'https://');
+                }
+                
+                const previewUrl = volumeInfo.previewLink || '#';
+
+                // بناء كارت الكتاب
+                const card = document.createElement('div');
+                card.className = 'book-card';
+                card.innerHTML = `
+                    <img src="${thumbnail}" alt="${title}">
+                    <div class="book-title" title="${title}">${title}</div>
+                    <div class="book-author">${authors}</div>
+                    <a href="${previewUrl}" target="_blank" class="btn-view">قراءة / معاينة</a>
+                `;
+                container.appendChild(card);
+            });
+
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            container.innerHTML = '<div class="no-results" style="color: red;">⚠️ حدث خطأ في الاتصال بالخادم، يرجى المحاولة لاحقاً.</div>';
+        }
+    }
 </script>
 
 </body>
-    </html>
-    
+</html>
