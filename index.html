@@ -297,5 +297,55 @@
         alert("جاري تجهيز رابط التحميل المباشر لـ (" + bookName + ") أونلاين على سيرفر المطورين.. يرجى المحاولة لاحقاً!");
     }
 </script>
+    <!-- 1. استدعاء مكتبة Pi SDK الرسمية وتفعيل بيئة الاختبار -->
+<script src="https://minepi.com"></script>
+<script>
+  // تهيئة المكتبة وضبط وضع الاختبار (Sandbox)
+  Pi.init({ version: "2.0", sandbox: true });
+</script>
+
+<!-- 2. كود الدفع والربط مع أزرار التحميل -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // ابحث عن أزرار تحميل الكتب بناءً على النصوص الموجودة في تطبيقك
+    const downloadButtons = document.querySelectorAll('button, a');
+    
+    downloadButtons.forEach(button => {
+        // التحقق من أن هذا هو زر تحميل كتاب التحكم الآلي
+        if (button.textContent.includes("كتاب التحكم الآلي الكلاسيكي") || button.closest('div')?.textContent.includes("كتاب التحكم الآلي")) {
+            
+            button.addEventListener("click", function(event) {
+                // إيقاف التحميل المباشر مؤقتاً لحين إتمام الدفع
+                event.preventDefault(); 
+                
+                // تشغيل واجهة دفع Pi التجريبية
+                Pi.createPayment({
+                    amount: 0.1, // قيمة الكتاب التجريبية بعملة Pi
+                    memo: "شراء كتاب التحكم الآلي الكلاسيكي PDF", // الوصف الموضح للمستخدم
+                    metadata: { bookId: "classic-control-pdf" },
+                }, {
+                    onReadyForServerApproval: function(paymentId) {
+                        console.log("المعاملة تنتظر موافقة السيرفر: ", paymentId);
+                        // في بيئة الاختبار يمكنك تخطي هذه الخطوة أو إرسالها لسيرفرك للتوثيق
+                    },
+                    onReadyForServerCompletion: function(paymentId, txid) {
+                        console.log("تم الدفع بنجاح! رقم التحويل الفعلي: ", txid);
+                        alert("تم الدفع بنجاح! سيبدأ تحميل الكتاب الآن.");
+                        
+                        // توجيه المستخدم للرابط الفعلي لملف الـ PDF بعد نجاح الدفع
+                        window.open("رابط_ملف_الـ_PDF_الخاص_بالكتاب_هنا", "_blank");
+                    },
+                    onCancel: function(paymentId) {
+                        alert("تم إلغاء عملية الدفع من قبلك.");
+                    },
+                    onError: function(error, paymentId) {
+                        alert("حدث خطأ أثناء معالجة الدفع: " + error.message);
+                    }
+                });
+            });
+        }
+    });
+});
+</script>
 </body>
 </html>
