@@ -15,7 +15,49 @@
             --text-main: #f3f4f6;
             --text-muted: #9ca3af;
         }
-        
+        <!-- صندوق الشات بوت الذي سيظهر أسفل الحاسبات الهندسية -->
+<div class="card" style="margin-top: 30px;">
+    <h2>🤖 مساعدك الهندسي الذكي (Pi AI)</h2>
+    <div id="chatHistory" style="height: 200px; overflow-y: auto; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; margin-bottom: 10px; font-size: 14px;">
+        <p style="color: var(--neon-blue);">مرحباً بك! أنا مساعدك الكهربائي الذكي، اسألني عن الأحمال أو الأكواد الهندسية...</p>
+    </div>
+    <div style="display: flex; gap: 10px;">
+        <input type="text" id="userInput" placeholder="اكتب سؤالك الهندسي هنا..." style="margin-bottom: 0;">
+        <button onclick="askPiAI()" style="width: auto; padding: 10px 20px;">إرسال</button>
+    </div>
+</div>
+
+<!-- كود الـ JavaScript لربط الشات مع ذكاء Pi الاصطناعي -->
+<script>
+async function askPiAI() {
+    const inputElement = document.getElementById("userInput");
+    const chatHistory = document.getElementById("chatHistory");
+    const userMessage = inputElement.value.trim();
+    
+    if (!userMessage) return;
+
+    // عرض رسالة المستخدم في الشاشة
+    chatHistory.innerHTML += `<p style="color: #fff;"><strong>أنت:</strong> ${userMessage}</p>`;
+    inputElement.value = "";
+    chatHistory.scrollTop = chatHistory.scrollHeight;
+
+    try {
+        // استدعاء محرك الذكاء الاصطناعي لشبكة Pi Network
+        const response = await Pi.ai.chat({
+            message: userMessage,
+            // يمكنك توجيه الذكاء الاصطناعي ليتحدث كمهندس كهرباء فقط
+            systemInstruction: "أنت مهندس كهربائي خبير ومساعد فني لتطبيق Smart Tech Aide. أجب باختصار واحترافية."
+        });
+
+        // عرض رد الذكاء الاصطناعي داخل موقعك
+        chatHistory.innerHTML += `<p style="color: var(--neon-green);"><strong>Pi AI:</strong> ${response.reply}</p>`;
+    } catch (error) {
+        chatHistory.innerHTML += `<p style="color: red;">خطأ في الاتصال: ${error.message}</p>`;
+    }
+    
+    chatHistory.scrollTop = chatHistory.scrollHeight;
+}
+</script>
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background: radial-gradient(circle at top, #111827 0%, var(--dark-bg) 80%);
