@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Tech Aide | المساعد الذكي</title>
+    <!-- استدعاء مكتبة Pi SDK الرسمية للمطورين -->
+    <script src="https://minepi.com"></script>
+    <style>
+        :root {
+            --dark-bg: #090d16;
+            --panel-bg: rgba(17, 24, 39, 0.95);
+            --neon-blue: #00d2ff;
+            --neon-green: #00f5d4;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: radial-gradient(circle at top, #111827 0%, var(--dark-bg) 80%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(to bottom, rgba(9, 13, 22, 0.9), transparent);
+            border-bottom: 1px solid rgba(0, 210, 255, 0.2);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 800;
+            color: #ffffff;
+            text-shadow: 0 0 15px rgba(0, 210, 255, 0.5);
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            margin: auto;
+            padding: 15px;
+            box-sizing: border-box;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card {
+            background: var(--panel-bg);
+            border: 1px solid rgba(0, 210, 255, 0.15);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #chatHistory {
+            flex: 1;
+            height: 300px;
+            overflow-y: auto;
+            background: rgba(9, 13, 22, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .msg { margin-bottom: 12px; font-size: 15px; line-height: 1.5; }
+        .user-msg { color: #ffffff; }
+        .ai-msg { color: var(--neon-green); border-right: 3px solid var(--neon-blue); padding-right: 8px; }
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+        }
+
+        input {
+            flex: 1;
+            padding: 12px;
+            background: rgba(9, 13, 22, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 16px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #6200ee, #7209b7);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(157, 78, 221, 0.4);
+        }
+        
+        .back-link {
+            text-align: center;
+            margin-top: 15px;
+            color: var(--neon-blue);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🤖 المساعد الهندسي الذكي</h1>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <div id="chatHistory">
+                <div class="msg ai-msg"><strong>المساعد الرقمي:</strong> مرحباً بك يا باشمهندس! أنا هنا لمساعدتك في حسابات الأحمال، مكثفات تحسين معامل القدرة، وتمديدات القوى الكهربائية وفقاً للكود. اسألني عن أي شيء.</div>
+            </div>
+            <div class="input-area">
+                <input type="text" id="userInput" placeholder="اكتب سؤالك الكهربائي الفني هنا...">
+                <button onclick="askPiAI()">إرسال</button>
+            </div>
+        </div>
+        <a href="index.html" class="back-link">← العودة للوحة الحاسبات الرئيسية</a>
+    </div>
+
+    <script>
+        // تهيئة البيئة التجريبية للـ SDK داخل صفحة الذكاء الاصطناعي
+        Pi.init({ version: "2.0", sandbox: true });
+
+        async function askPiAI() {
+            const inputElement = document.getElementById("userInput");
+            const chatHistory = document.getElementById("chatHistory");
+            const userMessage = inputElement.value.trim();
+            
+            if (!userMessage) return;
+
+            // 1. عرض رسالة المهندس المستخدم في الشاشة
+            chatHistory.innerHTML += `<div class="msg user-msg"><strong>أنت:</strong> ${userMessage}</div>`;
+            inputElement.value = "";
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+
+            try {
+                // 2. استدعاء محرك الذكاء الاصطناعي لشبكة Pi Network
+                const response = await Pi.ai.chat({
+                    message: userMessage,
+                    systemInstruction: "أنت مهندس كهربائي خبير ومساعد فني مدمج داخل تطبيق Smart Tech Aide. أجب عن الأسئلة الكهربائية والصناعية باختصار واحترافية شديدة وبالمصطلحات الهندسية الصحيحة."
+                });
+
+                // 3. عرض رد الذكاء الاصطناعي المباشر
+                chatHistory.innerHTML += `<div class="msg ai-msg"><strong>المساعد الرقمي:</strong> ${response.reply}</div>`;
+            } catch (error) {
+                chatHistory.innerHTML += `<div class="msg" style="color: red;"><strong>خطأ:</strong> تعذر الاتصال بمحرك باي (تأكد من تشغيل الصفحة داخل Pi Browser).</div>`;
+            }
+            
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        }
+    </script>
+</body>
+</html>
