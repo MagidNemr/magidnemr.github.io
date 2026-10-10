@@ -240,6 +240,28 @@
                 🔍 اضغط هنا للبحث عن الكتب وتحميلها
             </button>
         </div>
+
+    <!-- صندوق البحث الذكي المربوط بالمدونة داخل المكتبة الفنية -->
+        <div class="modern-nav-container" style="margin-bottom: 15px; padding: 12px 15px; background: #111c24; border: 1px solid #00ffcc; border-radius: 8px; box-sizing: border-box; width: 100%;">
+            <label style="color: #00ffcc; font-weight: bold; display: block; margin-bottom: 8px; font-size: 14px; text-align: right;">📚 ابحث عن أى كتاب في المكتبة الفنية:</label>
+            <div style="display: flex; gap: 8px; direction: rtl;">
+                <input type="text" id="bookSearchInput" placeholder="اكتب اسم الكتاب الكهربائي هنا..." style="flex: 1; padding: 10px; background: #0d161c; border: 1px solid #334155; color: #fff; border-radius: 6px; outline: none; font-size: 14px; text-align: right;">
+                <button onclick="searchInNimerBlog()" style="padding: 0 20px; background: #00ffcc; color: #000; border: none; font-weight: bold; border-radius: 6px; cursor: pointer; font-size: 14px; transition: 0.2s;">ابحث</button>
+            </div>
+        </div>
+
+        <script>
+        function searchInNimerBlog() {
+            const query = document.getElementById('bookSearchInput').value.trim();
+            if (query) {
+                // الكود مدمج به رابط مدونتك الفعلي المحدث لتوجيه الزائر فوراً لنتائج البحث
+                const blogUrl = "https://magid-nemr.blogspot.com/"; 
+                window.open(blogUrl + encodeURIComponent(query), '_blank');
+            } else {
+                alert('برجاء كتابة اسم الكتاب أولاً يا هندسة!');
+            }
+        }
+        </script>
     <!-- 📐 أزرار التنقل والحاسبات المنسقة بأسلوب الكروت الأنيقة والحديثة -->
     <div class="modern-nav-container" style="max-width: 500px; margin: 20px auto; padding: 0 15px; font-family: sans-serif;">
         
