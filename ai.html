@@ -5,47 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>المستشار الكهربائي الذكي - Smart Tech Aide</title>
     <style>
-        /* تصميم متناسق وموزون تماماً مع أبعاد كروت صفحة index.html */
+        /* تصميم متناسق تماماً مع الألوان الداكنة لمشروعك */
         body {
             background-color: #0b1116;
             color: #ffffff;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            padding: 15px; /* نفس الهامش الخارجي لصفحتك الرئيسية */
+            padding: 0;
+            height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            box-sizing: border-box;
-        }
-        .main-wrapper {
-            width: 100%;
-            max-width: 500px; /* نفس الحد الأقصى لعرض مستطيل مدونة النمر وباقي الأزرار */
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+            overflow: hidden;
         }
         .header-bar {
             background: #111c24;
-            border: 1px solid #00ffcc; /* نفس إطار كروت الأزرار الحسابية */
-            border-radius: 8px; /* نفس انحناء زوايا الأزرار عندك */
-            padding: 12px 15px;
+            border-bottom: 2px solid #00ffcc;
+            padding: 12px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 15px rgba(0, 255, 204, 0.1);
-            box-sizing: border-box;
+            box-shadow: 0 4px 15px rgba(0, 255, 204, 0.15);
         }
         .header-bar h2 {
             color: #00ffcc;
             margin: 0;
-            font-size: 16px;
-            font-weight: bold;
+            font-size: 18px;
         }
         .back-link {
             color: #a0aec0;
             text-decoration: none;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: bold;
             padding: 6px 12px;
             border: 1px solid #1a2a35;
@@ -58,14 +47,10 @@
             border-color: #00ffcc;
         }
         .iframe-container {
+            flex: 1;
             width: 100%;
-            height: 75vh; /* ارتفاع ممتاز ومناسب جداً للشات داخل المستطيل */
-            background: #111c24;
-            border: 1px solid #00ffcc; /* جعل الإطار متطابق بالملي مع كروت الأزرار */
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 255, 204, 0.1);
-            box-sizing: border-box;
+            height: calc(100vh - 60px);
+            background: #0b1116;
         }
         iframe {
             border: none;
@@ -76,21 +61,19 @@
 </head>
 <body>
 
-    <div class="main-wrapper">
-        <!-- شريط علوي بنفس مقاس المستطيل الموزون -->
-        <div class="header-bar">
-            <h2>⚡ المستشار الكهربائي الذكي (AI)</h2>
-            <a href="index.html" class="back-link">⬅️ العودة للرئيسية</a>
-        </div>
+    <!-- شريط علوي أنيق يحتوي على زر العودة للرئيسية -->
+    <div class="header-bar">
+        <h2>⚡ المستشار الكهربائي الذكي (AI) - النمر للمعلوميات</h2>
+        <a href="index.html" class="back-link">⬅️ العودة للرئيسية</a>
+    </div>
 
-        <!-- مستطيل الشات الذكي بمقاس مساوي تماماً لمدونة النمر وباقي الكروت -->
-        <div class="iframe-container">
-            <iframe
-                src="https://chatbase.co"
-                referrerpolicy="no-referrer-when-downgrade"
-                allow="microphone"
-            ></iframe>
-        </div>
+    <!-- حاوية الشات بوت المضمن بأمان كامل -->
+    <div class="iframe-container">
+        <iframe
+            src="https://www.chatbase.co/chatbot-iframe/My4yAuZurG3j0QBX22rkp"
+            referrerpolicy="no-referrer-when-downgrade"
+            allow="microphone"
+        ></iframe>
     </div>
 
 </body>
