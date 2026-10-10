@@ -3,76 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المكتبة الفنية - مدونة النمر للمعلوميات</title>
+    <title>المكتبة الفنية الذكية - Smart Tech Aide</title>
     <style>
+        /* تصميم متناسق وموزون تماماً مع أبعاد وألوان مشروعك الداكنة */
         body {
+            background-color: #0b1116;
+            color: #ffffff;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
             margin: 0;
-            padding: 20px;
-            color: #333;
+            padding: 15px;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
+            box-sizing: border-box;
         }
-        .container {
+        .main-wrapper {
+            width: 100%;
             max-width: 500px;
-            background: #fff;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-        p {
-            color: #7f8c8d;
-            font-size: 15px;
-            margin-bottom: 25px;
-            line-height: 1.6;
-        }
-        .btn-go {
-            display: inline-block;
-            padding: 14px 30px;
-            font-size: 16px;
-            background-color: #e5a93b;
-            color: white;
-            text-decoration: none;
+        .header-bar {
+            background: #111c24;
+            border: 1px solid #00ffcc;
             border-radius: 8px;
-            font-weight: bold;
-            box-shadow: 0 4px 6px rgba(229, 169, 59, 0.2);
-            transition: background 0.3s;
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 255, 204, 0.1);
+            box-sizing: border-box;
         }
-        .btn-go:hover {
-            background-color: #d4982a;
+        .header-bar h2 {
+            color: #00ffcc;
+            margin: 0;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .back-link {
+            color: #a0aec0;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: bold;
+            padding: 6px 12px;
+            border: 1px solid #1a2a35;
+            border-radius: 6px;
+            background: #0d161c;
+            transition: 0.2s;
+        }
+        .back-link:hover {
+            color: #00ffcc;
+            border-color: #00ffcc;
+        }
+        .iframe-container {
+            width: 100%;
+            height: 78vh;
+            background: #111c24;
+            border: 1px solid #00ffcc;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 255, 204, 0.1);
+            box-sizing: border-box;
+        }
+        iframe {
+            border: none;
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>📚 المكتبه الفنيه</h1>
-    <p>مكتبة البحث وتحميل أي كتاب فني أو هندسي مجاناً عبر مدونة النمر للمعلوميات.</p>
-    
-    <!-- استبدل الرابط أدناه برابط المقال الذي نشرته في بلوجر -->
-    <a href="https://blogspot.com" id="blogLink" class="btn-go">انتقل للمدونة وابحث عن كتابك الآن</a>
-</div>
+    <div class="main-wrapper">
+        <!-- شريط علوي أنيق يحتوي على زر العودة للرئيسية الاندكس -->
+        <div class="header-bar">
+            <h2>📚 مساعد المكتبة الفنية الذكي</h2>
+            <a href="index.html" class="back-link">⬅️ العودة للرئيسية</a>
+        </div>
 
-<script>
-    // كود لتوجيه الزائر تلقائياً بعد 3 ثوانٍ لزيادة الأرباح، أو يمكنه الضغط مباشرة على الزر
-    window.onload = function() {
-        var articleUrl = "https://magid-nemr.blogspot.com/2026/10/blog-post_08.html"; // 👈 ضع رابط المقال هنا بين العلامتين
-        
-        document.getElementById("blogLink").href = articleUrl;
-        
-        setTimeout(function() {
-            window.location.href = articleUrl;
-        }, 3000); // التوجيه التلقائي بعد 3 ثوانٍ
-    };
-</script>
+        <!-- مستطيل الشات مفرود وموزون وبنفس رابط البوت الخاص بمدونتك ليجلب الكتب فورا -->
+        <div class="iframe-container">
+            <iframe
+                src="https://www.chatbase.co/chatbot-iframe/My4yAuZurG3j0QBX22rkp"
+                referrerpolicy="no-referrer-when-downgrade"
+                allow="microphone"
+            ></iframe>
+        </div>
+    </div>
 
 </body>
 </html>
