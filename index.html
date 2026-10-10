@@ -232,7 +232,7 @@
     </div>
 <!-- صندوق البحث الذكي المفرود والمستوي بالملي -->
         <div class="modern-nav-container" style="width: 100%; max-width: 500px; margin-bottom: 10px; padding: 12px 15px; background: #111c24; border: 1px solid #00ffcc; border-radius: 8px; box-sizing: border-box; display: block;">
-            <span style="color: #00ffcc; font-weight: bold; font-size: 14px; text-align: right; display: block; margin-bottom: 8px;">📚 ابحث عن أى كتاب في المكتبة الفنية:</span>
+            <span style="color: #00ffcc; font-weight: bold; font-size: 14px; text-align: right; display: block; margin-bottom: 8px;">📚 ابحث عن أى كتاب في المكتبة :</span>
             <div style="display: flex; gap: 8px; direction: rtl; align-items: center; width: 100%; box-sizing: border-box;">
                 <input type="text" id="bookSearchInput" placeholder="اكتب اسم الكتاب هنا..." style="flex: 3; padding: 10px; background: #0d161c; border: 1px solid #334155; color: #fff; border-radius: 6px; outline: none; font-size: 14px; text-align: right; box-sizing: border-box; width: 100%;">
                 <button onclick="searchInNimerBlog()" style="flex: 1; padding: 10px 5px; background: #00ffcc; color: #000; border: none; font-weight: bold; border-radius: 6px; cursor: pointer; font-size: 14px; white-space: nowrap; box-sizing: border-box; width: 100%;">ابحث</button>
@@ -242,7 +242,42 @@
        async function searchInNimerBlog() {
             var query = document.getElementById('bookSearchInput').value.trim();
             var responseDiv = document.getElementById('bookAiResponse');
-            
+            if (!query) {
+                alert('برجاء كتابة اسم الكتاب أولاً يا هندسة!');
+                return;
+            }
+
+            if (!responseDiv) {
+                responseDiv = document.createElement('div');
+                responseDiv.id = 'bookAiResponse';
+                responseDiv.style.cssText = "margin-top: 12px; padding: 12px; background: #0d161c; border: 1px solid #00ffcc; border-radius: 6px; color: #fff; font-size: 14px; text-align: right; line-height: 1.6; width: 100%; box-sizing: border-box;";
+                document.getElementById('bookSearchInput').parentElement.parentElement.appendChild(responseDiv);
+            }
+
+            responseDiv.style.display = "block";
+            responseDiv.innerHTML = "🔄 جاري البحث واستخراج روابط الكتاب بالذكاء الاصطناعي...";
+
+            try {
+                // الاتصال الآمن ببوت مدونة النمر على Chatbase ليرد فوراً بالروابط
+                var res = await fetch("https://chatbase.co", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        messages: [{ role: "user", content: "ابحث عن روابط تحميل ومعلومات تخص كتاب: " + query }],
+                        chatbotId: "My4yAuZurG3j0QBX22rkp"
+                    })
+                });
+                var data = await res.json();
+                if (data && data.text) {
+                    responseDiv.innerHTML = data.text;
+                } else if (data && data.message) {
+                    responseDiv.innerHTML = data.message;
+                } else {
+                    responseDiv.innerHTML = "❌ نعتذر، لم نتمكن من جلب رد تفاعلي حالياً. يرجى مراجعة المدونة.";
+                }
+            } catch (e) {
+                responseDiv.innerHTML = "❌ حدث خطأ أثناء الاتصال بالمكتبة الذكية، يرجى المحاولة لاحقاً.";
+            }
             if (!query) {
                 alert('برجاء كتابة اسم الكتاب أولاً يا هندسة!');
                 return;
