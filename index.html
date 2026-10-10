@@ -235,88 +235,9 @@
             <span style="color: #00ffcc; font-weight: bold; font-size: 14px; text-align: right; display: block; margin-bottom: 8px;">📚 ابحث عن أى كتاب في المكتبة :</span>
             <div style="display: flex; gap: 8px; direction: rtl; align-items: center; width: 100%; box-sizing: border-box;">
                 <input type="text" id="bookSearchInput" placeholder="اكتب اسم الكتاب هنا..." style="flex: 3; padding: 10px; background: #0d161c; border: 1px solid #334155; color: #fff; border-radius: 6px; outline: none; font-size: 14px; text-align: right; box-sizing: border-box; width: 100%;">
-                <button onclick="searchInNimerBlog()" style="flex: 1; padding: 10px 5px; background: #00ffcc; color: #000; border: none; font-weight: bold; border-radius: 6px; cursor: pointer; font-size: 14px; white-space: nowrap; box-sizing: border-box; width: 100%;">ابحث</button>
-            </div>
-        </div>
-        <script>
-       async function searchInNimerBlog() {
-            var query = document.getElementById('bookSearchInput').value.trim();
-            var responseDiv = document.getElementById('bookAiResponse');
-            if (!query) {
-                alert('برجاء كتابة اسم الكتاب أولاً يا هندسة!');
-                return;
-            }
+               <button onclick="window.location.href='search-library.html'" style="flex: 1; padding: 10px; background: #00ffcc; color: #000; border: none; font-weight: bold; border-radius: 6px; cursor: pointer; font-size: 14px; white-space: nowrap; width: 100%;">ابحث</button>
 
-            if (!responseDiv) {
-                responseDiv = document.createElement('div');
-                responseDiv.id = 'bookAiResponse';
-                responseDiv.style.cssText = "margin-top: 12px; padding: 12px; background: #0d161c; border: 1px solid #00ffcc; border-radius: 6px; color: #fff; font-size: 14px; text-align: right; line-height: 1.6; width: 100%; box-sizing: border-box;";
-                document.getElementById('bookSearchInput').parentElement.parentElement.appendChild(responseDiv);
-            }
-
-            responseDiv.style.display = "block";
-            responseDiv.innerHTML = "🔄 جاري البحث واستخراج روابط الكتاب بالذكاء الاصطناعي...";
-
-            try {
-                // الاتصال الآمن ببوت مدونة النمر على Chatbase ليرد فوراً بالروابط
-                var res = await fetch("https://chatbase.co", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        messages: [{ role: "user", content: "ابحث عن روابط تحميل ومعلومات تخص كتاب: " + query }],
-                        chatbotId: "My4yAuZurG3j0QBX22rkp"
-                    })
-                });
-                var data = await res.json();
-                if (data && data.text) {
-                    responseDiv.innerHTML = data.text;
-                } else if (data && data.message) {
-                    responseDiv.innerHTML = data.message;
-                } else {
-                    responseDiv.innerHTML = "❌ نعتذر، لم نتمكن من جلب رد تفاعلي حالياً. يرجى مراجعة المدونة.";
-                }
-            } catch (e) {
-                responseDiv.innerHTML = "❌ حدث خطأ أثناء الاتصال بالمكتبة الذكية، يرجى المحاولة لاحقاً.";
-            }
-            if (!query) {
-                alert('برجاء كتابة اسم الكتاب أولاً يا هندسة!');
-                return;
-            }
-            
-            if (!responseDiv) {
-                // إذا لم تكن حاوية الرد موجودة، يتم إنشاؤها تلقائياً أسفل الخانة
-                responseDiv = document.createElement('div');
-                responseDiv.id = 'bookAiResponse';
-                responseDiv.style.cssText = "margin-top: 12px; padding: 12px; background: #0d161c; border: 1px solid #00ffcc; border-radius: 6px; color: #fff; font-size: 14px; text-align: right; line-height: 1.6;";
-                document.getElementById('bookSearchInput').parentElement.parentElement.appendChild(responseDiv);
-            }
-            
-            responseDiv.style.display = "block";
-            responseDiv.innerHTML = "🔄 جاري البحث واستخراج روابط الكتاب بالذكاء الاصطناعي...";
-
-            try {
-                // الاتصال المباشر ببوت مدونة النمر على شات بيس لعرض النتيجة التفاعلية فوراً
-                var res = await fetch("https://chatbase.co", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        messages: [{ role: "user", content: "ابحث في مراجع مدونة النمر عن روابط تحميل ومعلومات تخص: " + query }],
-                        chatbotId: "My4yAuZurG3j0QBX22rkp"
-                    })
-                });
-                var data = await res.json();
-                if (data && data.text) {
-                    responseDiv.innerHTML = data.text;
-                } else if (data && data.message) {
-                    responseDiv.innerHTML = data.message;
-                } else {
-                    responseDiv.innerHTML = "❌ نعتذر، لم نتمكن من جلب رد تفاعلي حالياً. يرجى مراجعة المدونة.";
-                }
-            } catch (e) {
-                responseDiv.innerHTML = "❌ حدث خطأ أثناء الاتصال بالمكتبة الذكية، يرجى المحاولة لاحقاً.";
-            }
-        }
-        </script>
+           </div>
         
         <!-- زر مدونة النمر الفيروزي المميز -->
         <a href="https://magid-nemr.blogspot.com/" style="display: flex; align-items: center; justify-content: space-between; background: linear-gradient(135deg, #0ea5e9, #0284c7); color: #ffffff; padding: 14px 20px; margin-bottom: 12px; border-radius: 10px; text-decoration: none; font-weight: bold; font-size: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.15);">
