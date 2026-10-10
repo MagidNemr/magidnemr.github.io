@@ -301,7 +301,15 @@
         document.getElementById('indCableRes').innerText = cable;
         document.getElementById('indResult').style.display = 'block';
     }
-
+function searchInNimerBlog() {
+    var query = document.getElementById('bookSearchInput').value.trim();
+    if (query) {
+        var blogUrl = "https://blogspot.com";
+        window.open(blogUrl + encodeURIComponent(query), '_blank');
+    } else {
+        alert('برجاء كتابة اسم الكتاب أولاً يا هندسة!');
+    }
+}
     function showBookAlert(bookName) {
         alert("جاري تجهيز رابط التحميل المباشر لـ (" + bookName + ") أونلاين على سيرفر المطورين.. يرجى المحاولة لاحقاً!");
     }
