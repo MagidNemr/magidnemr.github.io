@@ -239,13 +239,46 @@
             </div>
         </div>
         <script>
-        function searchInNimerBlog() {
+       async function searchInNimerBlog() {
             var query = document.getElementById('bookSearchInput').value.trim();
-            if (query) {
-                var blogUrl = "https://blogspot.com";
-                window.open(blogUrl + encodeURIComponent(query), '_blank');
-            } else {
+            var responseDiv = document.getElementById('bookAiResponse');
+            
+            if (!query) {
                 alert('برجاء كتابة اسم الكتاب أولاً يا هندسة!');
+                return;
+            }
+            
+            if (!responseDiv) {
+                // إذا لم تكن حاوية الرد موجودة، يتم إنشاؤها تلقائياً أسفل الخانة
+                responseDiv = document.createElement('div');
+                responseDiv.id = 'bookAiResponse';
+                responseDiv.style.cssText = "margin-top: 12px; padding: 12px; background: #0d161c; border: 1px solid #00ffcc; border-radius: 6px; color: #fff; font-size: 14px; text-align: right; line-height: 1.6;";
+                document.getElementById('bookSearchInput').parentElement.parentElement.appendChild(responseDiv);
+            }
+            
+            responseDiv.style.display = "block";
+            responseDiv.innerHTML = "🔄 جاري البحث واستخراج روابط الكتاب بالذكاء الاصطناعي...";
+
+            try {
+                // الاتصال المباشر ببوت مدونة النمر على شات بيس لعرض النتيجة التفاعلية فوراً
+                var res = await fetch("https://chatbase.co", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        messages: [{ role: "user", content: "ابحث في مراجع مدونة النمر عن روابط تحميل ومعلومات تخص: " + query }],
+                        chatbotId: "My4yAuZurG3j0QBX22rkp"
+                    })
+                });
+                var data = await res.json();
+                if (data && data.text) {
+                    responseDiv.innerHTML = data.text;
+                } else if (data && data.message) {
+                    responseDiv.innerHTML = data.message;
+                } else {
+                    responseDiv.innerHTML = "❌ نعتذر، لم نتمكن من جلب رد تفاعلي حالياً. يرجى مراجعة المدونة.";
+                }
+            } catch (e) {
+                responseDiv.innerHTML = "❌ حدث خطأ أثناء الاتصال بالمكتبة الذكية، يرجى المحاولة لاحقاً.";
             }
         }
         </script>
