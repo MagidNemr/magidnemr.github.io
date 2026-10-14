@@ -298,14 +298,27 @@
         document.getElementById('indCableRes').innerText = cable;
         document.getElementById('indResult').style.display = 'block';
     }
+// معرفات البوتات المستقلة من Chatbase (اكتبها هنا)
+const smartAdvisorId = "ضع_هنا_معرف_مستشار_الرد_الذكي"; 
+const bookSearchId = "ضع_هنا_معرف_بوت_البحث_عن_الكتب"; 
+
+// 1. دالة تشغيل واجهة المكتبة الفنية والبحث عن الكتب
 function searchInNimerBlog() {
     var query = document.getElementById('bookSearchInput').value.trim();
     if (query) {
-        var blogUrl = "https://blogspot.com";
-        window.open(blogUrl + encodeURIComponent(query), '_blank');
+        document.getElementById('chat-title').innerText = "📚 المكتبة الفنية - بحث عن: " + query;
+        document.getElementById('chat-frame').src = "https://www.chatbase.co/chatbot-iframe/" + bookSearchId;
+        document.getElementById('chat-section').style.display = "block";
     } else {
-        alert('برجاء كتابة اسم الكتاب أولاً يا هندسة!');
+        alert("🚨 برجاء كتابة اسم الكتاب أولاً يا هندسة!");
     }
+}
+
+// 2. دالة تشغيل المستشار الذكي الكهربائي بشكل منفصل
+function openSmartAdvisor() {
+    document.getElementById('chat-title').innerText = "🤖 المستشار الكهربائي الذكي";
+    document.getElementById('chat-frame').src = "https://www.chatbase.co/chatbot-iframe/" + smartAdvisorId;
+    document.getElementById('chat-section').style.display = "block";
 }
     function showBookAlert(bookName) {
         alert("جاري تجهيز رابط التحميل المباشر لـ (" + bookName + ") أونلاين على سيرفر المطورين.. يرجى المحاولة لاحقاً!");
@@ -317,4 +330,14 @@ function searchInNimerBlog() {
 <!-- استدعاء ملف الأزرار الخارجي الآمن الذي أنشأناه -->
 <script src="pi-payments.js"></script>
 </body>
+    <!-- حاوية الشات بوت الديناميكية المخصصة للعرض -->
+<div id="chat-section" style="width: 100%; max-width: 800px; margin: 20px auto; height: 75vh; display: none;">
+    <h3 id="chat-title" style="text-align: center; color: #333; font-family: sans-serif; margin-bottom: 10px;"></h3>
+    <iframe 
+        id="chat-frame"
+        src="" 
+        style="width: 100%; height: 100%; border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"
+        allow="clipboard-write">
+    </iframe>
+</div>
 </html>
