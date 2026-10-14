@@ -224,10 +224,15 @@
           <h2><span style="color: #00ffcc;">📚 دليل مهندسي القوى والصناعة</span></h2>
              <div class="form-group">
                             <span style="color: #00ffcc;"> كتاب التحكم الآلي الكلاسيكي </span>
-            <button onclick="window.location.href='https://magid-nemr.blogspot.com/2026/09/classic-control.html';" class="download-btn"> تحميل PDF <span style="color: #00ffcc;">➔</span></>     
-        </div>
+            <button onclick="handleAppAction('تحميل كتاب التحكم الآلي', 0.5)" class="btn">
+    تحميل كتاب التحكم الآلي
+            </button>
+                 
         <span style="color: #00ffcc;"> دليل الكود المصري للتركيبات الكهربائية </span>
-            <button onclick="window.location.href='https://magid-nemr.blogspot.com/2026/09/blog-post.html';" class="download-btn"> تحميل PDF  <span style="color: #00ffcc;">➔</span></>   
+           <button onclick="handleAppAction('حاسبة أحمال المحركات', 0.1)" class="btn">
+    تحليل المكونات الصناعية
+           </button>
+                 
         </div>
     
    
@@ -314,6 +319,70 @@ function searchInNimerBlog() {
 <script src="https://minepi.com"></script>
 
 <!-- استدعاء ملف الأزرار الخارجي الآمن الذي أنشأناه -->
-<script src="pi-payments.js"></script>
+    <script src="pi-payments.js"></script>
+    <script>
+// 1. تعريف المتغيرات الأساسية
+const MAX_FREE_ATTEMPTS = 3; // عدد المحاولات المجانية
+
+// 2. دالة لفحص ومعالجة محاولات المستخدم عند الضغط على أي زر
+function handleAppAction(actionName, price) {
+    // جلب عدد المحاولات الحالية للمستخدم من ذاكرة المتصفح
+    let attempts = parseInt(localStorage.getItem('free_attempts_count')) || 0;
+
+    // التحقق مما إذا كان المستخدم قد استنفد محاولاته المجانية
+    if (attempts >= MAX_FREE_ATTEMPTS) {
+        // إذا انتهت المحاولات، نتوجه فوراً لنظام الدفع بـ Pi
+        triggerPiPayment(actionName, price);
+    } else {
+        // إذا كان لا يزال يمتلك محاولات مجانية
+        attempts++;
+        localStorage.setItem('free_attempts_count', attempts);
+        
+        // حساب المحاولات المتبقية وعرضها للمستخدم لتشجيعه
+        let remaining = MAX_FREE_ATTEMPTS - attempts;
+        alert(`تمت العملية مجاناً بنجاح! متبقي لك ${remaining} محاولات مجانية لتجربة التطبيق.`);
+        
+        // تنفيذ الأداة المطلوبة (حساب الأحمال، تحميل، إلخ)
+        executeActualFeature(actionName);
+    }
+}
+
+// 3. دالة معالجة الدفع الرسمية عبر Pi Network SDK
+function triggerPiPayment(actionName, amount) {
+    // إشعار المستخدم بانتهاء الفترة المجانية وبدء الدفع
+    alert(`لقد استنفدت محاولاتك المجانية الـ 3. لاستخدام ميزة (${actionName})، يرجى دفع ${amount} Pi.`);
+    
+    Pi.createPayment({
+        amount: amount,
+        memo: `رسوم استخدام: ${actionName}`,
+        metadata: { action: actionName },
+    }, {
+        onReadyForServerApproval: function(paymentId) {
+            console.log("تم إنشاء الطلب، المعرف: ", paymentId);
+            // هنا يرسل التطبيق المعرف إلى السيرفر للموافقة
+        },
+        onReadyForServerCompletion: function(paymentId, txid) {
+            console.log("اكتملت المعاملة بنجاح، رقم التحويل: ", txid);
+            alert("تم الدفع بنجاح! تم فتح الميزة لك الآن.");
+            // تنفيذ الأداة للمستخدم بعد الدفع
+            executeActualFeature(actionName);
+        },
+        onCancel: function(paymentId) {
+            alert("تم إلغاء عملية الدفع، لن تتمكن من استخدام الميزة بدون دفع.");
+        },
+        onError: function(error, paymentId) {
+            console.error("خطأ في الدفع: ", error);
+            alert("حدث خطأ أثناء معالجة الدفع، يرجى المحاولة لاحقاً.");
+        }
+    });
+}
+
+// 4. الدالة المسؤولية عن تشغيل وظائف الموقع الفعلية
+function executeActualFeature(actionName) {
+    console.log("تشغيل الميزة الفنية: " + actionName);
+    // هنا تضع الأكواد الخاصة بك لفتح الـ PDF أو إظهار نتائج حاسبة الأحمال
+}
+                </script>
+    
 </body>
 </html>
