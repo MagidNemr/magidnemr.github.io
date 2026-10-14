@@ -208,11 +208,7 @@
                 <option value="kw">كيلوواط (kW)</option>
             </select>
         </div>
-        <!-- افترضنا أن دالة الحساب الأصلية لديك اسمها calculateMotors() -->
-<button onclick="handleAppAction('حاسبة أحمال المحركات', 0.1, calculateMotors)" class="btn">
-    تحليل المكونات الصناعية
-</button>
-        
+        <button onclick="calculateIndustrial()"><span style="color: #00ffcc;">تحليل المكونات الصناعية العمومية</span></button>  
         
         <div id="indResult" class="result-box">
             <p><strong>تيار الحمل الكامل (FLA):</strong> <span id="indCurrentRes" class="value-highlight">0</span> أمبير</p>
@@ -266,33 +262,18 @@
         <!-- زر حاسبة أقطار المواسير -->
         <a href="conduit.html" style="display: flex; align-items: center; justify-content: space-between; background: #1e293b; color: #00ffcc; padding: 12px 60px; margin-bottom: 20px; border-radius: 15px; text-decoration: none; font-size: 15px; border: 10px solid #334155;">
             <span>📐 حاسبة أقطار مواسير التمديد (Conduit Fill)</span>
-            <!-- افترضنا أن دالة الحساب الأصلية لديك اسمها calculateConduit() -->
-<button onclick="handleAppAction('حاسبة أقطار المواسير', 0.1, calculateConduit)" class="btn">
-    احسب أقطار المواسير
-</button>
-            
             <span style="color: #00ffcc;">➔</span>
         </a>
 
         <!-- زر حاسبة مكثفات معامل القدرة -->
         <a href="factor.html" style="display: flex; align-items: center; justify-content: space-between; background: #1e293b; color: #00ffcc; padding: 12px 60px; margin-bottom: 20px; border-radius: 15px; text-decoration: none; font-size: 15px; border: 10px solid #334155;">
             <span>⚡ حاسبة مكثفات معامل القدرة (KVAR)</span>
-            <!-- افترضنا أن دالة الحساب الأصلية لديك اسمها calculateKvar() -->
-<button onclick="handleAppAction('حاسبة معامل القدرة', 0.1, calculateKvar)" class="btn">
-    احسب المكثفات المطلوبة
-</button>
-            
             <span style="color: #00ffcc;">➔</span>
         </a>
 
         <!-- زر حاسبة أحمال المنازل -->
         <a href="home.html" style="display: flex; align-items: center; justify-content: space-between; background: #1e293b; color: #00ffcc; padding: 12px 60px; margin-bottom: 20px; border-radius: 15px; text-decoration: none; font-size: 15px; border: 10px solid #334155;">
             <span>🏠 حاسبة أحمال وتمديدات المنازل الفنية</span>
-            <!-- افترضنا أن دالة الحساب الأصلية لديك اسمها calculateHomeLoads() -->
-<button onclick="handleAppAction('حاسبة أحمال المنازل', 0.1, calculateHomeLoads)" class="btn">
-    احسب أحمال المنزل
-</button>
-            
             <span style="color: #00ffcc;">➔</span>
         </a>
     </div></div>
