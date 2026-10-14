@@ -246,10 +246,10 @@
 function searchBookDynamic() {
     var bookName = document.getElementById('bookSearchInput').value.trim();
     if (bookName) {
-        var finalUrl = "https://udify.app/chat/Bf4gbAr0xvbpsl6l" + encodeURIComponent(JSON.stringify({"query": bookName}));
+        var finalUrl = "https://udify.app" + encodeURIComponent(JSON.stringify({"query": bookName}));
         window.open(finalUrl, '_blank');
     } else {
-        alert("🚨 برجاء كتابة اسم الكتاب أولاً يا هندسة!");
+        ("🚨 برجاء كتابة اسم الكتاب أولاً يا هندسة!");alert
     }
 }
 </script>
