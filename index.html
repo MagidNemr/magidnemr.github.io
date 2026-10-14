@@ -240,7 +240,9 @@
     
     
                  <input type="text" id="bookSearchInput" placeholder="اكتب اسم الكتاب هنا..." style="display: flex; align-items: center; justify-content: space-between; background: #1e293b; color: #00ffcc; padding: 12px 60px; margin-bottom: 20px; border-radius: 15px; text-decoration: none; font-size: 15px; border: 10px solid #334155;">
-                <button onclick="searchInNimerBlog()" style="display: flex; align-items: center; padding: 8px 15px; background-color: #00ffcc; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; margin-right: 5px;">ابحث</button>
+                 <button onclick="window.location.
+                href='search-library.html'" style="display: flex; align-items: center; justify-content: space-between; background: #1e293b; color: #00ffcc; padding: 12px 60px; margin-bottom: 20px; border-radius: 15px; text-decoration: none; font-size: 15px; border: 10px solid #334155;"><span>ابحث</span><span style="color: #00ffcc;">➔</span>
+           </div>
                 
                 <!-- زر مدونة النمر الفيروزي المميز -->
                         <a href="https://magid-nemr.blogspot.com/" style="display: flex; align-items: center; justify-content: space-between; background: #1e293b; color: #00ffcc; padding: 12px 60px; margin-bottom: 20px; border-radius: 15px; text-decoration: none; font-size: 15px; border: 10px solid #334155;">
@@ -248,10 +250,10 @@
             <span style="color: #00ffcc;">➔</span>
 
             
-            <a href="javascript:void(0)" onclick="openSmartAdvisor()" style="display: flex; align-items: center; justify-content: space-between; text-decoration: none; width: 100%;">
-    <span style="color: #ffffff;">🤖 المستشار الكهربائي الذكي (AI)</span>
-    <span style="color: #00ffcc;">></span>
-</a>     
+            <a href="ai.html" style="display: flex; align-items: center; justify-content: space-between; background: #1e293b; color: #00ffcc; padding: 12px 60px; margin-bottom: 20px; border-radius: 15px; text-decoration: none; font-size: 15px; border: 10px solid #334155;">
+    <span>⚡ المستشار الكهربائي الذكي (AI)</span>
+                <span style="color: #00ffcc;">➔</span>
+         </a>     
 
         <!-- زر حاسبة أقطار المواسير -->
         <a href="conduit.html" style="display: flex; align-items: center; justify-content: space-between; background: #1e293b; color: #00ffcc; padding: 12px 60px; margin-bottom: 20px; border-radius: 15px; text-decoration: none; font-size: 15px; border: 10px solid #334155;">
@@ -296,27 +298,14 @@
         document.getElementById('indCableRes').innerText = cable;
         document.getElementById('indResult').style.display = 'block';
     }
-// معرفات البوتات المستقلة من Chatbase (اكتبها هنا)
-const smartAdvisorId = "My4yAsJ1zrG3j0O8G0ykg"; 
-const bookSearchId = "My4yAsJ1zrG3j0O8G0ykg"; 
-
-// 1. دالة تشغيل واجهة المكتبة الفنية والبحث عن الكتب
 function searchInNimerBlog() {
     var query = document.getElementById('bookSearchInput').value.trim();
     if (query) {
-        document.getElementById('chat-title').innerText = "📚 المكتبة الفنية - بحث عن: " + query;
-        document.getElementById('chat-frame').src = "https://www.chatbase.co/chatbot-iframe/" + bookSearchId;
-        document.getElementById('chat-section').style.display = "block";
+        var blogUrl = "https://blogspot.com";
+        window.open(blogUrl + encodeURIComponent(query), '_blank');
     } else {
-        alert("🚨 برجاء كتابة اسم الكتاب أولاً يا هندسة!");
+        alert('برجاء كتابة اسم الكتاب أولاً يا هندسة!');
     }
-}
-
-// 2. دالة تشغيل المستشار الذكي الكهربائي بشكل منفصل
-function openSmartAdvisor() {
-    document.getElementById('chat-title').innerText = "🤖 المستشار الكهربائي الذكي";
-    document.getElementById('chat-frame').src = "https://www.chatbase.co/chatbot-iframe/" + smartAdvisorId;
-    document.getElementById('chat-section').style.display = "block";
 }
     function showBookAlert(bookName) {
         alert("جاري تجهيز رابط التحميل المباشر لـ (" + bookName + ") أونلاين على سيرفر المطورين.. يرجى المحاولة لاحقاً!");
@@ -328,14 +317,4 @@ function openSmartAdvisor() {
 <!-- استدعاء ملف الأزرار الخارجي الآمن الذي أنشأناه -->
 <script src="pi-payments.js"></script>
 </body>
-    <!-- حاوية الشات بوت الديناميكية المخصصة للعرض -->
-<div id="chat-section" style="width: 100%; max-width: 800px; margin: 20px auto; height: 75vh; display: none;">
-    <h3 id="chat-title" style="text-align: center; color: #333; font-family: sans-serif; margin-bottom: 10px;"></h3>
-    <iframe 
-        id="chat-frame"
-        src="" 
-        style="width: 100%; height: 100%; border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"
-        allow="clipboard-write">
-    </iframe>
-</div>
 </html>
