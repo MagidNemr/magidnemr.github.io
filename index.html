@@ -240,8 +240,19 @@
     
     
                  <input type="text" id="bookSearchInput" placeholder="اكتب اسم الكتاب هنا..." style="display: flex; align-items: center; justify-content: space-between; background: #1e293b; color: #00ffcc; padding: 12px 60px; margin-bottom: 20px; border-radius: 15px; text-decoration: none; font-size: 15px; border: 10px solid #334155;">
-                 <button onclick="window.location.
-                href='https://udify.app/chat/Bf4gbAr0xvbpsl6l'" target="_blank" style="display: flex; align-items: center; justify-content: space-between; background: #1e293b; color: #00ffcc; padding: 12px 60px; margin-bottom: 20px; border-radius: 15px; text-decoration: none; font-size: 15px; border: 10px solid #334155;"><span>ابحث</span><span style="color: #00ffcc;">➔</span>
+                 <button onclick="searchBookDynamic()" style="display: flex; align-items: center; padding: 8px 15px; background-color: #00ffcc; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; color: #1e293b;">ابحث</button>
+
+<script>
+function searchBookDynamic() {
+    var bookName = document.getElementById('bookSearchInput').value.trim();
+    if (bookName) {
+        var finalUrl = "https://udify.app/chat/S5WZ2aBigAT3iy5e" + encodeURIComponent(JSON.stringify({"query": bookName}));
+        window.open(finalUrl, '_blank');
+    } else {
+        ("🚨 برجاء كتابة اسم الكتاب أولاً يا هندسة!");alert
+    }
+}
+</script>
            </div>
                 
                 <!-- زر مدونة النمر الفيروزي المميز -->
