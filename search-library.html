@@ -76,22 +76,86 @@
 </head>
 <body>
 
-    <div class="main-wrapper">
-        <!-- شريط علوي أنيق يحتوي على زر العودة للرئيسية الاندكس -->
+   <div class="main-wrapper">
+        <!-- شريط علوي أنيق للعودة للرئيسية الإندكس -->
         <div class="header-bar">
-            <h2>📚 مساعد المكتبة الفنية الذكي</h2>
-            <a href="index.html" class="back-link">⬅️ العودة للرئيسية</a>
+            <h2>📚 مساعد المكتبة الفنية الفوري</h2>
+            <a href="index.html" class="back-link">🏠 العودة للرئيسية</a>
         </div>
 
-        <!-- مستطيل الشات مفرود وموزون وبنفس رابط البوت الخاص بمدونتك ليجلب الكتب فورا -->
+        <!-- مستطيل الشات مفرود وموزون وبنفس رابط البوت الخاص بمدونتك ليعمل فوراً -->
         <div class="iframe-container">
-            <iframe
-                src="https://www.chatbase.co/chatbot-iframe/My4yAuZurG3j0QBX22rkp"
-                referrerpolicy="no-referrer-when-downgrade"
-                allow="microphone"
-            ></iframe>
+            <iframe 
+                src="https://www.chatbase.co/chatbot-iframe/My4yAuZurG3j0QBX22rkp" 
+                referrerpolicy="no-referrer-when-downgrade" 
+                allow="microphone">
+            </iframe>
         </div>
+
+        <!-- 🔍 هنا تم إضافة محرك البحث الفوري عن الكتب بالـ API الجديد الخاص بجوجل -->
+        <div style="max-width: 600px; margin: 30px auto; display: flex; gap: 10px; padding: 0 15px;">
+            <input type="text" id="bookInput" placeholder="اكتب اسم كتاب (عربي أو إنجليزي) للبحث المباشر..." style="flex: 1; padding: 12px; font-size: 16px; border: 2px solid #00ffcc; background: #111c24; color: white; border-radius: 8px; outline: none;">
+            <button onclick="startBookSearch()" style="padding: 12px 25px; background-color: #00ffcc; color: #111c24; border: none; font-size: 16px; border-radius: 8px; cursor: pointer; font-weight: bold;">بحث</button>
+        </div>
+
+        <!-- مكان ظهور كروت ونتائج الكتب المشحونة من الـ API -->
+        <div id="libraryOutput" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; padding: 20px;"></div>
     </div>
 
+    <script>
+        async function startBookSearch() {
+            const query = document.getElementById('bookInput').value.trim();
+            const outputDiv = document.getElementById('libraryOutput');
+            
+            if (!query) {
+                alert('من فضلك اكتب اسم الكتاب أولاً');
+                return;
+            }
+
+            outputDiv.innerHTML = '<p style="color: #00ffcc;">جاري البحث في قاعدة البيانات المفتوحة...</p>';
+
+            // 🔑 ضع هنا الـ Browser Key الذي نسخته من جوجل كونسول بين علامتي التنصيص بالأسفل
+            const apiKey = "ضع_مفتاح_API_الخاص_بجوجل_هنا"; 
+            const url = `https://googleapis.com{encodeURIComponent(query)}&key=${apiKey}&maxResults=12`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data.items) {
+                    renderBooks(data.items);
+                } else {
+                    outputDiv.innerHTML = '<p style="color: #ff9800;">لم يتم العثور على نتائج، تأكد من الاسم.</p>';
+                }
+            } catch (error) {
+                console.error("حدث خطأ:", error);
+                outputDiv.innerHTML = '<p style="color:red;">حدث خطأ في الاتصال، جرب مجدداً.</p>';
+            }
+        }
+
+        function renderBooks(books) {
+            const outputDiv = document.getElementById('libraryOutput');
+            let html = '';
+
+            books.forEach(book => {
+                const info = book.volumeInfo;
+                const title = info.title || 'عنوان غير معروف';
+                const authors = info.authors ? info.authors.join(', ') : 'مؤلف غير معروف';
+                const thumbnail = info.imageLinks && info.imageLinks.thumbnail ? info.imageLinks.thumbnail : 'https://placeholder.com';
+                const previewUrl = info.previewLink || '#';
+
+                html += `
+                    <div style="background: #111c24; border: 1px solid #00ffcc; border-radius: 10px; padding: 15px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; color: white;">
+                        <img src="${thumbnail}" alt="${title}" style="width: 120px; height: 170px; object-fit: cover; margin: 0 auto 10px auto; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+                        <h3 style="font-size: 14px; margin: 10px 0; color: #fff; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${title}</h3>
+                        <p style="font-size: 12px; color: #888; margin-bottom: 15px;">👤 ${authors}</p>
+                        <a href="${previewUrl}" target="_blank" style="background-color: #00ffcc; color: #111c24; padding: 8px 12px; text-decoration: none; border-radius: 5px; font-size: 13px; font-weight: bold; display: block;">معاينة / قراءة</a>
+                    </div>
+                `;
+            });
+
+            outputDiv.innerHTML = html;
+        }
+    </script>
 </body>
 </html>
