@@ -100,9 +100,22 @@
             outputDiv.innerHTML = '<p style="color: #00ffcc; text-align:center;">🧠 جاري فحص واستشارة مكتبة جوجل الذكية مجاناً على طول...</p>';
 
             // 🔐 تم تقسيم وتشفير المفتاح بدقة هندسية لحمايته من روبوتات الحظر التلقائي لجيت هاب
-            const apiKey = ""
-const url = `https://googleapis.com{apiKey}`;
-
+           const apiKey = "AQ.Ab8RN6KEWGnf4t2TY845409lUwvp1NGIwwCM7Tv82mQAGl_t1Q";
+curl "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent" \
+  -H "x-goog-api-key: $GEMINI_API_KEY" \
+  -H 'Content-Type: application/json' \
+  -X POST \
+  -d '{
+    "contents": [
+      {
+        "parts": [
+          {
+            "text": "How does AI work?"
+          }
+        ]
+      }
+    ]
+  }'
             const prompt = `أنت أمين مكتبة ومستشار ثقافي فائق الذكاء ومحترف. ابحث عن الكتاب أو التخصص أو المجلد التالي: "${query}".
             قم بصياغة إجابة احترافية للغاية باللغة العربية تحتوي على:
             1. نبذة ذكية عن التخصص أو الموضوع.
