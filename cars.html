@@ -232,22 +232,75 @@
 </div>
 
 <script>
-  function activateService(serviceName) {
-    const inputField = document.getElementById('userInput');
-    
-    // ضبط النص الدقيق لكل خدمة هندسية ومرورية بناءً على طلبك يا هندسة
-    if (serviceName === 'مواصفات المحركات') {
-        inputField.value = "مواصفات السياره ماركه ";
-    } else if (serviceName === 'الاستعلام عن المخالفات') {
-        inputField.value = "استعلام عن مخالفات السياره رقم ";
-    } else if (serviceName === 'رسوم التراخيص بمصر') {
-        inputField.value = "أريد حساب رسوم التراخيص لسيارة بقوة ";
-    } else {
-        inputField.value = "أريد خدمة: " + serviceName;
+  <script>
+    // دالة لتوجيه مدخلات الأزرار بشكل منفصل وصحيح هندسياً ومرورياً
+    function activateService(serviceName) {
+        const inputField = document.getElementById('userInput');
+        
+        if (serviceName === 'مواصفات المحركات') {
+            inputField.value = "مواصفات السياره ماركه ";
+            inputField.focus();
+        } 
+        else if (serviceName === 'الاستعلام عن المخالفات') {
+            // كود سحري: فتح نافذة منبثقة منظمة لطلب الأرقام والحروف منفصلة بالملي
+            let carNumbers = prompt("من فضلك أدخل أرقام اللوحة فقط (مثال: 1234):");
+            let carLetters = prompt("من فضلك أدخل حروف اللوحة فقط (مثال: أ ب ج):");
+            
+            if (carNumbers && carLetters) {
+                inputField.value = "أريد خدمة الاستعلام عن المخالفات للسيارة رقم " + carNumbers + " حروف " + carLetters;
+                // إرسال البيانات فوراً للبوت بعد تجميع الخانتين
+                sendToBotpress();
+            }
+        } 
+        else if (serviceName === 'رسوم التراخيص بمصر') {
+            inputField.value = "أريد حساب رسوم التراخيص لسيارة بقوة ";
+            inputField.focus();
+        }
     }
-    
-    inputField.focus();
-}
+
+    // دالة الإرسال والربط المباشر مع سيرفر Botpress Webhook
+    async function sendToBotpress() {
+        const inputField = document.getElementById('userInput');
+        const query = inputField.value.trim();
+        if (query === "") return;
+
+        const chatLogs = document.getElementById('chatLogs');
+        
+        // إضافة رسالة المستخدم في واجهة الشات
+        const userMsgDiv = document.createElement('div');
+        userMsgDiv.style = "background-color: #8e44ad; color: #fff; padding: 8px 12px; border-radius: 12px; margin-bottom: 10px; max-width: 80%; float: left; clear: both; font-size: 0.95rem; text-align: right;";
+        userMsgDiv.textContent = query;
+        chatLogs.appendChild(userMsgDiv);
+        
+        inputField.value = "";
+        chatLogs.scrollTop = chatLogs.scrollHeight;
+
+        // ⚠️ تأكد أن هذا هو رابط الـ Webhook الصحيح الذي يبدأ بـ webhook.botpress.cloud
+        const webhookUrl = "https://botpress.cloud"; 
+
+        try {
+            const response = await fetch(webhookUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text: query, userId: "user_" + Date.now() })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data && data.responses && data.responses[0]) {
+                    const botReply = data.responses[0].text;
+                    const botMsgDiv = document.createElement('div');
+                    botMsgDiv.className = "msg-bot";
+                    botMsgDiv.textContent = botReply;
+                    chatLogs.appendChild(botMsgDiv);
+                }
+            }
+        } catch (error) {
+            console.error("حدث خطأ أثناء الاتصال بالبوت:", error);
+        }
+        chatLogs.scrollTop = chatLogs.scrollHeight;
+    }
+</script>
 
     async function sendToBotpress() {
         const inputField = document.getElementById('userInput');
