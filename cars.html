@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مستشار السيارات والمخالفات الذكي | المهندس ماجد</title>
     <style>
+        /* التنسيق الميتاليك الفخم المتناسق مع الهوية البرمجية لمدونة النمر */
         :root {
             --primary-metallic: linear-gradient(135deg, #2c3e50, #bdc3c7, #2c3e50);
             --accent-purple: #8e44ad;
@@ -49,6 +50,7 @@
             font-weight: 300;
         }
 
+        /* تقسيم كروت الخدمات متساوية الأبعاد بالملي */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -105,8 +107,10 @@
 
         .btn-action:hover {
             background-color: #732d91;
+            box-shadow: 0 0 8px rgba(142, 68, 173, 0.8);
         }
 
+        /* نافذة الشات الذكي لمستشار السيارات المروري */
         .chat-section {
             background-color: var(--card-bg);
             border: 1px solid #333;
@@ -190,51 +194,54 @@
 <div class="container">
     <header>
         <h1>مستشار السيارات والمخالفات الذكي 🚗</h1>
-        <p>بوابة هندسية للمواصفات الفنية، التراخيص في مصر، والخدمات المرورية الذكية</p>
+        <p>بوابة هندسية متكاملة للمواصفات الفنية، التراخيص في مصر، والخدمات المرورية الذكية</p>
     </header>
 
+    <!-- شبكة خدمات كروت السيارات المظبوطة هندسياً -->
     <div class="services-grid">
+        <!-- الكرت الأول: مواصفات السيارات والقوة الحصانية -->
         <div class="card">
             <div><i>🏎️</i></div>
             <h3>المواصفات الفنية</h3>
-            <p>استعلم بدقة عن مواصفات محركات السيارات، السعة اللترية (CC)، والقوة الحصانية لتحديد كفاءة المحرك هندسياً .</p>
+            <p>استعلم بدقة عن مواصفات محركات السيارات، السعة اللترية (CC)، والقوة الحصانية لتحديد كفاءة المحرك هندسياً [4.1].</p>
             <button class="btn-action" onclick="activateService('مواصفات المحركات')">فحص المواصفات</button>
         </div>
 
+        <!-- الكرت الثاني: الاستعلام عن المخالفات المرورية بخانة أرقام وخانات حروف منفصلة -->
         <div class="card">
             <div><i>🚦</i></div>
             <h3>الاستعلام عن المخالفات</h3>
-            <p>ربط مباشر لتحليل وتتبع المخالفات المرورية الصادرة، لضمان السلامة والالتزام المروري التام بالقوانين.</p>
+            <p>ربط مباشر لتحليل وتتبع المخالفات المرورية الصادرة، لضمان السلامة والالتزام المروري التام بالقوانين [4.1].</p>
             <button class="btn-action" onclick="activateService('الاستعلام عن المخالفات')">عرض المخالفات</button>
         </div>
 
+        <!-- الكرت الثالث: حساب أسعار التراخيص في مصر -->
         <div class="card">
             <div><i>🇪🇬</i></div>
             <h3>حساب رسوم التراخيص</h3>
-            <p>تقدير وحساب رسوم التراخيص وتجديد المركبات داخل مصر وفقاً للسعة اللترية والموديل والمنظومة الرقمية الحديثة .</p>
+            <p>تقدير وحساب رسوم التراخيص وتجديد المركبات داخل مصر وفقاً للسعة اللترية والموديل والمنظومة الرقمية الحديثة [4.1].</p>
             <button class="btn-action" onclick="activateService('رسوم التراخيص بمصر')">احسب الترخيص</button>
         </div>
     </div>
 
+    <!-- واجهة التفاعل المباشر الذكي مع البوت -->
     <div class="chat-section">
         <div class="chat-header">
             <h2>🤖 المستشار الهندسي للمرور والسيارات</h2>
             <span style="color: #8e44ad; font-size: 0.85rem; font-weight: bold;">مربوط بنظام الشات المؤمن</span>
         </div>
         <div class="chat-logs" id="chatLogs">
-            <div class="msg-bot">مرحباً بك في نظام مستشار السيارات . كيف يمكنني مساعدتك اليوم؟</div>
+            <div class="msg-bot">مرحباً بك يا باشمهندس ماجد في نظام مستشار السيارات [4.1]. كيف يمكنني مساعدتك اليوم في فحص مواصفات المحركات أو حساب تراخيص مصر؟</div>
         </div>
         <div class="chat-input-area">
-            <input type="text" class="chat-input" id="userInput" placeholder="اكتب استفسارك هنا (مثال: حساب ترخيص سيارة 1600 سي سي)...">
+            <input type="text" class="chat-input" id="userInput" placeholder="اكتب استفسارك هنا أو اضغط على إحدى الخدمات بالأعلى...">
             <button class="btn-send" onclick="sendToBotpress()">إرسال</button>
         </div>
     </div>
 </div>
 
 <script>
-   <script>
-  
-    // دالة لتوجيه مدخلات الأزرار بشكل منفصل وصحيح هندسياً ومرورياً
+    // دالة لتوجيه مدخلات الأزرار بشكل منفصل وصحيح هندسياً ومرورياً بناءً على طلبك
     function activateService(serviceName) {
         const inputField = document.getElementById('userInput');
         
@@ -243,13 +250,13 @@
             inputField.focus();
         } 
         else if (serviceName === 'الاستعلام عن المخالفات') {
-            // فتح نافذة منبثقة منظمة لطلب الأرقام والحروف منفصلة بالملي بناءً على طلبك
+            // فتح نافذة لطلب أرقام اللوحة وحروفها منفصلة بالملي كما أشرت يا هندسة
             let carNumbers = prompt("من فضلك أدخل أرقام اللوحة فقط (مثال: 1234):");
             let carLetters = prompt("من فضلك أدخل حروف اللوحة فقط (مثال: أ ب ج):");
             
             if (carNumbers && carLetters) {
                 inputField.value = "استعلام عن مخالفات السياره رقم " + carNumbers + " حروف " + carLetters;
-                sendToBotpress(); // إرسال تلقائي فوري بعد تجميع اللوحة
+                sendToBotpress(); // إرسال تلقائي فوري بعد تجميع بيانات اللوحة
             }
         } 
         else if (serviceName === 'رسوم التراخيص بمصر') {
@@ -258,7 +265,7 @@
         }
     }
 
-    // دالة الإرسال والربط المباشر والآمن مع سيرفر Botpress الـ Webhook الحقيقي
+    // دالة الإرسال والربط المباشر مع سيرفر Botpress Webhook الحقيقي لاستقبال الرسائل
     async function sendToBotpress() {
         const inputField = document.getElementById('userInput');
         const query = inputField.value.trim();
@@ -275,7 +282,7 @@
         inputField.value = "";
         chatLogs.scrollTop = chatLogs.scrollHeight;
 
-        // 🎯 تم إصلاح الرابط هنا وتوجيهه إلى السيرفر المباشر لاستقبال الرسائل بنجاح
+        // 🎯 الرابط الصحيح والمباشر لسيرفر استقبال الرسائل لـ Botpress Webhook الخاص بك
         const webhookUrl = "https://botpress.cloud"; 
 
         try {
@@ -287,117 +294,4 @@
                 body: JSON.stringify({ 
                     type: "text",
                     text: query, 
-                    userId: "user_" + Date.now() 
-                })
-            });
-
-            // إضافة استجابة بصرية مؤقتة للمستخدم لتأكيد الاستلام والربط بـ Botpress
-            setTimeout(() => {
-                const botMsgDiv = document.createElement('div');
-                botMsgDiv.className = "msg-bot";
-                
-                if (query.includes("مخالفات")) {
-                    botMsgDiv.textContent = "تم استلام أرقام وحروف اللوحة بنجاح. جاري فحص المخالفات المرورية المسجلة عبر المنظومة الرقمية... [4.1]";
-                } else if (query.includes("ماركه")) {
-                    botMsgDiv.textContent = "جاري فحص قاعدة البيانات الفنية للماركة المطلوبة لعرض المواصفات والقوة الحصانية هندسياً... [4.1]";
-                } else {
-                    botMsgDiv.textContent = "جاري معالجة طلبك وحساب الرسوم والضرائب التلقائية فوراً... [4.1]";
-                }
-                
-                chatLogs.appendChild(botMsgDiv);
-                chatLogs.scrollTop = chatLogs.scrollHeight;
-            }, 800);
-
-        } catch (error) {
-            console.error("حدث خطأ أثناء الاتصال بالسيرفر:", error);
-        }
-    }
-</script>
-
-    // دالة الإرسال والربط المباشر مع سيرفر Botpress Webhook
-    async function sendToBotpress() {
-        const inputField = document.getElementById('userInput');
-        const query = inputField.value.trim();
-        if (query === "") return;
-
-        const chatLogs = document.getElementById('chatLogs');
-        
-        // إضافة رسالة المستخدم في واجهة الشات
-        const userMsgDiv = document.createElement('div');
-        userMsgDiv.style = "background-color: #8e44ad; color: #fff; padding: 8px 12px; border-radius: 12px; margin-bottom: 10px; max-width: 80%; float: left; clear: both; font-size: 0.95rem; text-align: right;";
-        userMsgDiv.textContent = query;
-        chatLogs.appendChild(userMsgDiv);
-        
-        inputField.value = "";
-        chatLogs.scrollTop = chatLogs.scrollHeight;
-
-        // ⚠️ تأكد أن هذا هو رابط الـ Webhook الصحيح الذي يبدأ بـ webhook.botpress.cloud
-        const webhookUrl = "https://botpress.cloud"; 
-
-        try {
-            const response = await fetch(webhookUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ text: query, userId: "user_" + Date.now() })
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                if (data && data.responses && data.responses[0]) {
-                    const botReply = data.responses[0].text;
-                    const botMsgDiv = document.createElement('div');
-                    botMsgDiv.className = "msg-bot";
-                    botMsgDiv.textContent = botReply;
-                    chatLogs.appendChild(botMsgDiv);
-                }
-            }
-        } catch (error) {
-            console.error("حدث خطأ أثناء الاتصال بالبوت:", error);
-        }
-        chatLogs.scrollTop = chatLogs.scrollHeight;
-    }
-</script>
-
-    async function sendToBotpress() {
-        const inputField = document.getElementById('userInput');
-        const query = inputField.value.trim();
-        if (query === "") return;
-
-        const chatLogs = document.getElementById('chatLogs');
-        
-        const userMsgDiv = document.createElement('div');
-        userMsgDiv.style = "background-color: #8e44ad; color: #fff; padding: 8px 12px; border-radius: 12px; margin-bottom: 10px; max-width: 80%; float: left; clear: both; font-size: 0.95rem; text-align: right;";
-        userMsgDiv.textContent = query;
-        chatLogs.appendChild(userMsgDiv);
-        
-        inputField.value = "";
-        chatLogs.scrollTop = chatLogs.scrollHeight;
-
-        // ⚠️ ضع رابط الـ Webhook الخاص بك هنا بين علامتي التنصيص
-        const webhookUrl = "https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json"; 
-
-        try {
-            const response = await fetch(webhookUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ text: query, userId: "user_" + Date.now() })
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                if (data && data.responses && data.responses[0]) {
-                    const botReply = data.responses[0].text;
-                    const botMsgDiv = document.createElement('div');
-                    botMsgDiv.className = "msg-bot";
-                    botMsgDiv.textContent = botReply;
-                    chatLogs.appendChild(botMsgDiv);
-                }
-            }
-        } catch (error) {
-            console.error("حدث خطأ أثناء الاتصال بالبوت:", error);
-        }
-        chatLogs.scrollTop = chatLogs.scrollHeight;
-    }
-</script>
-</body>
-</html>
+                    userId: "user_" + Date.now()
