@@ -232,9 +232,20 @@
 </div>
 
 <script>
-    function activateService(serviceName) {
+   function activateService(serviceName) {
     const inputField = document.getElementById('userInput');
-    inputField.value = "أريد خدمة: " + serviceName + " لسيارة بقوة ";
+    
+    // فصل منطق كل زر بناءً على الخدمة المطلوبة بدقة
+    if (serviceName === 'مواصفات المحركات') {
+        inputField.value = "أريد الاستعلام عن مواصفات المحركات والقوة الحصانية";
+    } else if (serviceName === 'الاستعلام عن المخالفات') {
+        inputField.value = "أريد خدمة الاستعلام عن المخالفات المرورية";
+    } else if (serviceName === 'رسوم التراخيص بمصر') {
+        inputField.value = "أريد حساب رسوم التراخيص لسيارة بقوة ";
+    } else {
+        inputField.value = "أريد خدمة: " + serviceName;
+    }
+    
     inputField.focus();
 }
 
