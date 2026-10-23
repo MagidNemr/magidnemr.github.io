@@ -233,10 +233,16 @@
 
 <script>
     function activateService(serviceName) {
-        const inputField = document.getElementById('userInput');
-        inputField.value = "أريد خدمة: " + serviceName;
-        inputField.focus();
+    const inputField = document.getElementById('userInput');
+    
+    if (serviceName === 'رسوم التراخيص بمصر') {
+        inputField.value = "1600"; 
+    } else {
+        inputField.value = "1600"; 
     }
+    
+    sendToBotpress();
+}
 
     async function sendToBotpress() {
         const inputField = document.getElementById('userInput');
