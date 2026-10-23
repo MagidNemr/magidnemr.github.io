@@ -232,14 +232,14 @@
 </div>
 
 <script>
-   function activateService(serviceName) {
+  function activateService(serviceName) {
     const inputField = document.getElementById('userInput');
     
-    // فصل منطق كل زر بناءً على الخدمة المطلوبة بدقة
+    // ضبط النص الدقيق لكل خدمة هندسية ومرورية بناءً على طلبك يا هندسة
     if (serviceName === 'مواصفات المحركات') {
-        inputField.value = "أريد الاستعلام عن مواصفات المحركات والقوة الحصانية";
+        inputField.value = "مواصفات السياره ماركه ";
     } else if (serviceName === 'الاستعلام عن المخالفات') {
-        inputField.value = "أريد خدمة الاستعلام عن المخالفات المرورية";
+        inputField.value = "استعلام عن مخالفات السياره رقم ";
     } else if (serviceName === 'رسوم التراخيص بمصر') {
         inputField.value = "أريد حساب رسوم التراخيص لسيارة بقوة ";
     } else {
