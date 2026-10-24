@@ -222,7 +222,7 @@
     function processBotResponse(userText) {
         // رسالة انتظار مؤقتة
         setTimeout(() => {
-            let reply = "جاري الاتصال بقاعدة البيانات الهندسية لتحليل طلبك: (" + userText + ")... يرجى التأكد من ربط الـ API Key الخاص بـ Botpress لردود حية دقيقة.";
+            let reply = "جاري الاتصال برجاء الانتظار لتحليل طلبك: (" + userText + ")... .";
             appendMessage(reply, 'bot');
         }, 800);
         
