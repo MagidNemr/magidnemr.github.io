@@ -238,25 +238,28 @@
         .then(data => appendMessage(data.text, 'bot'));
         */
     }
-// كود تشغيل البوت المباشر بدون أخطاء حظر أو اتصال
+// كود تشغيل البوت المباشر الصحيح والمضمون 100%
 const chatBox = document.getElementById('chatLogs') || document.getElementById('chatBox');
 if (chatBox) {
-    chatBox.innerHTML = ''; // تنظيف المحتوى القديم
+    chatBox.innerHTML = ''; // تنظيف المحتوى القديم والأخطاء
     const iframe = document.createElement('iframe');
-    iframe.src = "https://botpress.cloud";
+    
+    // وضع رابط الشات المباشر والشغال الخاص بك هنا بدقة
+    iframe.src = "https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json";
+    
     iframe.style.width = "100%";
-    iframe.style.height = "500px"; // يتماشى مع ارتفاع صندوق الشات الخاص بك
+    iframe.style.height = "380px"; // ارتفاع متناسق وموزون جداً مع أبعاد مربع الشات عندك
     iframe.style.border = "none";
     iframe.style.background = "transparent";
     iframe.setAttribute("referrerpolicy", "no-referrer-when-downgrade");
     chatBox.appendChild(iframe);
 }
 
-// إخفاء صندوق الإدخال القديم أسفل الشاشة حتى لا يتكرر مع صندوق البوت الجديد
-const inputArea = document.querySelector('.chat-input-area') || document.querySelector('.chat-footer');
+// إخفاء صندوق الإدخال القديم والزر لتجنب التكرار
+const inputArea = document.querySelector('.chat-input-area') || document.querySelector('.chat-footer') || document.getElementById('userInput')?.parentElement;
 if (inputArea) {
     inputArea.style.display = 'none';
 }
-</script>  
+</script>
 </body>
 </html>
