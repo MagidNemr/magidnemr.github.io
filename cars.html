@@ -233,76 +233,42 @@
 
 <script>
 function activateService(serviceName) {
+    // هذه الدالة ستظل تعمل لتسهيل الكتابة للمستخدم إذا أراد استخدام الاختصارات
     const inputField = document.getElementById('userInput');
-    inputField.value = "أريد خدمة " + serviceName;
-    sendToBotpress(); // تشغيل الإرسال تلقائياً عند الضغط على الكروت
-}
-
-async function sendToBotpress() {
-    const inputField = document.getElementById('userInput');
-    const query = inputField.value.trim();
-    if (query === "") return;
-
-    const chatLogs = document.getElementById('chatLogs');
-
-    // 1. عرض رسالة المستخدم في الشات بنفس ستايلك الأنيق
-    const userMsgDiv = document.createElement('div');
-    userMsgDiv.style = "background-color: #8e44ad; color: white; padding: 8px 12px; border-radius: 12px; margin-bottom: 10px; max-width: 80%; float: left; clear: both; font-size: 0.95rem;";
-    userMsgDiv.textContent = query;
-    chatLogs.appendChild(userMsgDiv);
-
-    inputField.value = "";
-    chatLogs.scrollTop = chatLogs.scrollHeight;
-
-    // 2. عرض رسالة انتظار مؤقتة من البوت
-    const loadingDiv = document.createElement('div');
-    loadingDiv.style = "color: #a0aec0; text-align: center; clear: both; margin: 10px 0; font-size: 0.85rem;";
-    loadingDiv.textContent = "جاري التحليل والرد الذكي... ⏳";
-    chatLogs.appendChild(loadingDiv);
-    chatLogs.scrollTop = chatLogs.scrollHeight;
-
-    // رابط الـ Webhook الخاص ببوت Botpress الخاص بك لتجنب مشاكل الحظر
-    const webhookUrl = "https://bpcontent.cloud";
-
-    try {
-        // الاتصال الآمن بالبوت بدون كشف مفاتيح
-        const response = await fetch(webhookUrl);
-        
-        loadingDiv.remove(); // حذف رسالة الانتظار
-
-        if (response.ok) {
-            // محاكاة استلام الرد وعرضه داخل الـ msg-bot الخاص بك
-            const botMsgDiv = document.createElement('div');
-            botMsgDiv.className = "msg-bot";
-            botMsgDiv.style.whiteSpace = "pre-line";
-            
-            // هنا نضع نصاً استرشادياً ذكياً يقوم بمحاكاة الرد الفوري المنسق بناءً على طلبك
-            botMsgDiv.innerHTML = `<b>🚗 تقرير مستشار السيارات الذكي الشامل:</b>\n\n` +
-                                  `• <b>المواصفات الفنية:</b> جاري جلب تفاصيل المحرك والسعة اللترية (CC) وقوة الحصان بدقة عبر النظام الهندي المطور.\n` +
-                                  `• <b>الرسوم والضرائب بمصر:</b> بناءً على طلبك، يتم احتساب رسوم التجديد والتأمين الإجباري تقريبياً حسب السعة اللترية للمحرك.\n` +
-                                  `• <b>الاستعلام الاسترشادي:</b> تم فحص حالة اللوحة المدخلة بنجاح، ولا توجد مخالفات خطيرة مسجلة حالياً.\n\n` +
-                                  `⚠️ <b>تنبيه مروري:</b> يرجى دائماً الالتزام بالسرعات المقررة وقواعد القيادة الآمنة لسلامتك وسلامة أسرتك.`;
-            
-            chatLogs.appendChild(botMsgDiv);
-        } else {
-            showError("عذراً، واجهت المنصة ضغطاً في المعالجة. يرجى إعادة المحاولة.");
-        }
-    } catch (error) {
-        console.error("Error:", error);
-        loadingDiv.remove();
-        showError("حدث خطأ أثناء الاتصال بالخادم الذكي.");
+    if(inputField) {
+        inputField.value = "أريد خدمة " + serviceName;
+        inputField.focus();
     }
-    
-    chatLogs.scrollTop = chatLogs.scrollHeight;
 }
 
-function showError(message) {
+// كود ذكي لحقن شات Botpress الرسمي المباشر داخل حاوية الشات الخاصة بك تلقائياً لمنع أي أخطاء
+document.addEventListener("DOMContentLoaded", function() {
     const chatLogs = document.getElementById('chatLogs');
-    const errorDiv = document.createElement('div');
-    errorDiv.style = "color: #ff4d4d; text-align: center; clear: both; margin: 10px 0; font-size: 0.9rem; font-weight: bold;";
-    errorDiv.textContent = message;
-    chatLogs.appendChild(errorDiv);
-}
+    
+    if (chatLogs) {
+        // تنظيف محتوى الشات القديم المسبب للمشاكل والأخطاء الحمراء
+        chatLogs.innerHTML = ''; 
+        
+        // إنشاء الـ iframe الخاص بالبوت ليعمل بشكل مستقل وآمن ومباشر
+        const iframe = document.createElement('iframe');
+        // استخدام رابط واجهة الشات المباشرة لـ Botpress الخاصة بك
+        iframe.src = "https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json";
+        iframe.style.width = "100%";
+        iframe.style.height = "100%";
+        iframe.style.border = "none";
+        iframe.style.background = "transparent";
+        iframe.setAttribute("referrerpolicy", "no-referrer-when-downgrade");
+        
+        // إخفاء صندوق الإدخال القديم في أسفل التصميم لتجنب التكرار لأن الـ Iframe يحتوي على صندوق إدخال خاص به ومتصل بالذكاء الاصطناعي
+        const inputArea = document.querySelector('.chat-input-area');
+        if (inputArea) {
+            inputArea.style.display = 'none';
+        }
+        
+        // وضع الشات المطور داخل المربع الأنيق الخاص بك
+        chatLogs.appendChild(iframe);
+    }
+});
 </script>
     </div>
 </body>
