@@ -3,95 +3,245 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المستشار الكهربائي الذكي - Smart Tech Aide</title>
+    <title>مستشار السيارات والمخالفات الذكي</title>
     <style>
-        /* تصميم متناسق وموزون تماماً مع أبعاد كروت صفحة index.html */
+        :root {
+            --main-bg: #0f2027;
+            --card-bg: #1d3557;
+            --text-color: #f8f9fa;
+            --accent-color: #e63946;
+            --btn-color: #d100d1;
+        }
         body {
-            background-color: #0b1116;
-            color: #ffffff;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
+            color: var(--text-color);
             margin: 0;
-            padding: 15px; /* نفس الهامش الخارجي لصفحتك الرئيسية */
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
-            box-sizing: border-box;
         }
-        .main-wrapper {
-            width: 100%;
-            max-width: 500px; /* نفس الحد الأقصى لعرض مستطيل مدونة النمر وباقي الأزرار */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header h1 { color: #4fc3f7; margin-bottom: 5px; }
+        .grid-container {
             display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        .header-bar {
-            background: #111c24;
-            border: 1px solid #00ffcc; /* نفس إطار كروت الأزرار الحسابية */
-            border-radius: 8px; /* نفس انحناء زوايا الأزرار عندك */
-            padding: 12px 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 15px rgba(0, 255, 204, 0.1);
-            box-sizing: border-box;
-        }
-        .header-bar h2 {
-            color: #00ffcc;
-            margin: 0;
-            font-size: 16px;
-            font-weight: bold;
-        }
-        .back-link {
-            color: #a0aec0;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: bold;
-            padding: 6px 12px;
-            border: 1px solid #1a2a35;
-            border-radius: 6px;
-            background: #0d161c;
-            transition: 0.2s;
-        }
-        .back-link:hover {
-            color: #00ffcc;
-            border-color: #00ffcc;
-        }
-        .iframe-container {
+            gap: 20px;
+            max-width: 1000px;
             width: 100%;
-            height: 75vh; /* ارتفاع ممتاز ومناسب جداً للشات داخل المستطيل */
-            background: #111c24;
-            border: 1px solid #00ffcc; /* جعل الإطار متطابق بالملي مع كروت الأزرار */
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 255, 204, 0.1);
-            box-sizing: border-box;
+            justify-content: center;
+            flex-wrap: wrap;
         }
-        iframe {
+        .card {
+            background-color: rgba(29, 53, 87, 0.6);
+            border: 2px solid #4fc3f7;
+            border-radius: 15px;
+            padding: 20px;
+            width: 280px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .card h3 { color: #ffeb3b; }
+        .card input {
+            width: 85%;
+            padding: 8px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #4fc3f7;
+            background: #0f2027;
+            color: #fff;
+            text-align: center;
+        }
+        .card button {
+            background-color: var(--btn-color);
+            color: white;
             border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 90%;
+        }
+        .card button:hover { opacity: 0.9; }
+        
+        /* صندوق الشات */
+        .chat-container {
+            max-width: 800px;
             width: 100%;
-            height: 100%;
+            background: rgba(15, 32, 39, 0.85);
+            border: 2px solid #28a745;
+            border-radius: 15px;
+            margin-top: 30px;
+            padding: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        .chat-header {
+            background: #28a745;
+            padding: 10px;
+            border-radius: 10px;
+            font-weight: bold;
+            text-align: right;
+        }
+        .chat-box {
+            height: 200px;
+            overflow-y: auto;
+            margin: 15px 0;
+            padding: 10px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            text-align: right;
+        }
+        .msg { margin: 8px 0; padding: 8px 12px; border-radius: 8px; display: inline-block; max-width: 80%; }
+        .bot { background: #1d3557; color: #fff; float: right; clear: both; }
+        .user { background: #28a745; color: #fff; float: left; clear: both; }
+        .chat-input-area { display: flex; gap: 10px; }
+        .chat-input-area input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 20px;
+            border: 1px solid #28a745;
+            background: #0f2027;
+            color: white;
+        }
+        .chat-input-area button {
+            background: #28a745;
+            border: none;
+            color: white;
+            padding: 0 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
-    <div class="main-wrapper">
-        <!-- شريط علوي بنفس مقاس المستطيل الموزون -->
-        <div class="header-bar">
-            <h2>⚡ المستشار الكهربائي الذكي (AI)</h2>
-            <a href="index.html" class="back-link">⬅️ العودة للرئيسية</a>
-        </div>
+<div class="header">
+    <h1>🚗 مستشار السيارات والمخالفات الذكي</h1>
+    <p>بوابة هندسية متكاملة لمواصفات المحركات والمخالفات في مصر والخدمات المرورية الذكية</p>
+</div>
 
-        <!-- تم وضع الرابط الكامل والمباشر للبوت الخاص بك هنا ليعمل فوراً دون أخطاء -->
-        <div class="iframe-container">
-            <iframe
-                src="https://www.chatbase.co/chatbot-iframe/My4yAuZurG3j0QBX22rkp"
-                referrerpolicy="no-referrer-when-downgrade"
-                allow="microphone"
-            ></iframe>
-        </div>
+<div class="grid-container">
+    <!-- كرت المواصفات الفنية -->
+    <div class="card">
+        <h3>🔧 المواصفات الفنية</h3>
+        <p>استعلم عن مواصفات السيارة.</p>
+        <input type="text" id="brandInput" placeholder="أدخل ماركة السيارة...">
+        <button onclick="triggerSpecs()">فحص المواصفات</button>
     </div>
 
+    <!-- كرت الاستعلام عن المخالفات -->
+    <div class="card">
+        <h3>🚦 الاستعلام عن المخالفات</h3>
+        <p> المخالفات المرورية الصادرة .</p>
+        <input type="text" id="plateInput" placeholder="أدخل رقم اللوحة...">
+        <button onclick="triggerViolations()">عرض المخالفات</button>
+    </div>
+
+    <!-- كرت حساب رسوم التراخيص -->
+    <div class="card">
+        <h3>💳 حساب رسوم التراخيص</h3>
+        <p> رسوم التراخيص وتجديد المركبات داخل مصر وفقاً للسعة والموديل.</p>
+        <input type="text" id="ccInput" placeholder="أدخل السعة اللترية (مثال: 1600)...">
+        <button onclick="triggerLicensing()">حسب الرسوم</button>
+    </div>
+</div>
+
+<!-- صندوق الشات (المستشار الهندسي) -->
+<div class="chat-container">
+    <div class="chat-header">📟 المستشار الهندسي للمرور والسيارات </div>
+    <div class="chat-box" id="chatBox">
+        <div class="msg bot">مرحباً بك في نظام مستشار السيارات. كيف يمكنني مساعدتك اليوم ؟</div>
+    </div>
+    <div class="chat-input-area">
+        <input type="text" id="userInput" placeholder="اكتب سؤالك هنا للهندسة المرورية..." onkeypress="handleKeyPress(event)">
+        <button onclick="sendMessage()">إرسال</button>
+    </div>
+</div>
+
+<script>
+    const chatBox = document.getElementById('chatBox');
+
+    // 1. تشغيل زر فحص المواصفات بالصيغة الخاصة بك
+    function triggerSpecs() {
+        let brand = document.getElementById('brandInput').value.trim();
+        if(!brand) return alert("يرجى كتابة الماركة أولاً");
+        let query = "مواصفات السياره ماركه " + brand;
+        sendAutomatedQuery(query);
+    }
+
+    // 2. تشغيل زر الاستعلام عن المخالفات بالصيغة الخاصة بك
+    function triggerViolations() {
+        let plate = document.getElementById('plateInput').value.trim();
+        if(!plate) return alert("يرجى كتابة رقم السيارة أولاً");
+        let query = "استعلام عن مخالفات السياره رقم " + plate;
+        sendAutomatedQuery(query);
+    }
+
+    // 3. تشغيل زر حساب التراخيص
+    function triggerLicensing() {
+        let cc = document.getElementById('ccInput').value.trim();
+        if(!cc) return alert("يرجى كتابة السعة اللترية");
+        let query = "حساب رسوم تجديد ترخيص سيارة سعة " + cc + " سي سي في مصر";
+        sendAutomatedQuery(query);
+    }
+
+    // دالة تمرير الأوامر التلقائية من الكروت إلى مربع الشات
+    function sendAutomatedQuery(text) {
+        appendMessage(text, 'user');
+        processBotResponse(text);
+    }
+
+    // إرسال النص المكتوب يدوياً في الشات
+    function sendMessage() {
+        let input = document.getElementById('userInput');
+        let text = input.value.trim();
+        if(!text) return;
+        appendMessage(text, 'user');
+        input.value = '';
+        processBotResponse(text);
+    }
+
+    function handleKeyPress(e) {
+        if(e.key === 'Enter') sendMessage();
+    }
+
+    // إضافة الرسائل لشاشة العرض
+    function appendMessage(text, sender) {
+        let msgDiv = document.createElement('div');
+        msgDiv.className = "msg " + sender;
+        msgDiv.innerText = text;
+        chatBox.appendChild(msgDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    // المعالجة وإرسال البيانات للـ API أو محاكاتها برمجياً لتعمل فوراً
+    function processBotResponse(userText) {
+        // رسالة انتظار مؤقتة
+        setTimeout(() => {
+            let reply = "جاري الاتصال برجاء الانتظار لتحليل طلبك: (" + userText + ")... .";
+            appendMessage(reply, 'bot');
+        }, 800);
+        
+        /* 
+        ملاحظة هندسية: عندما تجهز الـ API الخاص بـ Botpress، قم بإلغاء التعليق عن هذا الجزء ليرتبط بالبث المباشر:
+        
+        fetch('https://botpress.cloud', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ text: userText })
+        })
+        .then(res => res.json())
+        .then(data => appendMessage(data.text, 'bot'));
+        */
+    }
+</script>
+
+    <script src="https://cdn.botpress.cloud/webchat/v3.7/inject.js"></script>
+<script src="https://files.bpcontent.cloud/2026/10/23/12/20261023124213-84QD191N.js" defer></script>
+    
 </body>
 </html>
