@@ -231,6 +231,239 @@ async function sendToGemini() {
     chatLogs.scrollTop = chatLogs.scrollHeight;
 
     // هنا يتم وضع مفتاح الـ API الخاص بك برمجياً للاستدعاء المباشر
+   <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مستشار السيارات والمخالفات الذكي - Smart Tech Aide</title>
+    <style>
+        /* كود التصميم الأصلي القديم والفخم الخاص بك بالملي */
+        body {
+            background-color: #0b1116;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+        .main-wrapper {
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .header-bar {
+            background: #111c24;
+            border: 1px solid #00ffcc;
+            border-radius: 8px;
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 255, 204, 0.1);
+        }
+        .header-bar h2 {
+            color: #00ffcc;
+            margin: 0;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .back-link {
+            color: #a0aec0;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: bold;
+            padding: 6px 12px;
+            border: 1px solid #1a2a35;
+            border-radius: 6px;
+            background: #0d161c;
+            transition: 0.2s;
+        }
+        .back-link:hover {
+            color: #00ffcc;
+            border-color: #00ffcc;
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .card {
+            background: #111c24;
+            border: 1px solid #00ffcc;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 255, 204, 0.2);
+        }
+        .card h3 {
+            color: #00ffcc;
+            font-size: 14px;
+            margin: 0 0 6px 0;
+        }
+        .card p {
+            font-size: 11px;
+            color: #a0aec0;
+            margin: 0;
+        }
+        .full-card {
+            grid-column: span 2;
+        }
+        .chat-section {
+            background: #111c24;
+            border: 1px solid #00ffcc;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 4px 15px rgba(0, 255, 204, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-header {
+            color: #00ffcc;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #1a2a35;
+            padding-bottom: 6px;
+        }
+        .chat-logs {
+            height: 300px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 5px;
+        }
+        .msg-user {
+            background-color: #8e44ad;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 12px;
+            max-width: 80%;
+            align-self: flex-start;
+            font-size: 0.95rem;
+            word-wrap: break-word;
+        }
+        .msg-bot {
+            background-color: #1a2a35;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 12px;
+            max-width: 80%;
+            align-self: flex-end;
+            border: 1px solid #2d404e;
+            font-size: 0.95rem;
+            white-space: pre-line;
+            word-wrap: break-word;
+        }
+        .chat-input-area {
+            display: flex;
+            margin-top: 10px;
+            gap: 8px;
+        }
+        .chat-input-area input {
+            flex: 1;
+            background: #0d161c;
+            border: 1px solid #2d404e;
+            border-radius: 6px;
+            color: #ffffff;
+            padding: 10px;
+            font-size: 14px;
+            outline: none;
+        }
+        .chat-input-area input:focus {
+            border-color: #00ffcc;
+        }
+        .chat-input-area button {
+            background: #00ffcc;
+            color: #0b1116;
+            border: none;
+            padding: 0 15px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-wrapper">
+        <div class="header-bar">
+            <h2>🚗 مستشار السيارات والمخالفات الذكي</h2>
+            <a href="ai.html" class="back-link">⬅️ عودة لقسم AI</a>
+        </div>
+
+        <div class="services-grid">
+            <div class="card" onclick="activateService('المواصفات الفنية')">
+                <h3>🛠️ المواصفات الفنية</h3>
+                <p>استعلم عن مواصفات السيارة وقدرة المحرك</p>
+            </div>
+            
+            <div class="card" onclick="activateService('الاستعلام عن المخالفات')">
+                <h3>🚦 الاستعلام عن المخالفات</h3>
+                <p>عرض تفاصيل ومخالفات المرور الصادرة</p>
+            </div>
+            
+            <div class="card full-card" onclick="activateService('حساب رسوم التراخيص')">
+                <h3>💳 حساب رسوم التراخيص</h3>
+                <p>رسوم التراخيص وتجديد المركبات داخل مصر وفقاً للسعة والموديل</p>
+            </div>
+        </div>
+
+        <div class="chat-section">
+            <div class="chat-header">💬 المستشار الهندسي للمرور والسيارات</div>
+            <div class="chat-logs" id="chatLogs">
+                <div class="msg-bot">مرحباً بك! أنا مستشارك الذكي للسيارات. يمكنك كتابة اسم أي سيارة أو موديل، أو الضغط على الكروت بالعلوان للاستفسار الفوري.</div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="userInput" placeholder="اكتب استفسارك هنا..." onkeypress="if(event.key === 'Enter') sendToGemini()">
+                <button onclick="sendToGemini()">إرسال</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+function activateService(serviceName) {
+    const inputField = document.getElementById('userInput');
+    inputField.value = "أريد خدمة " + serviceName;
+    sendToGemini();
+}
+
+async function sendToGemini() {
+    const inputField = document.getElementById('userInput');
+    const query = inputField.value.trim();
+    if (query === "") return;
+
+    const chatLogs = document.getElementById('chatLogs');
+
+    // 1. عرض رسالة المستخدم
+    const userMsgDiv = document.createElement('div');
+    userMsgDiv.className = "msg-user";
+    userMsgDiv.textContent = query;
+    chatLogs.appendChild(userMsgDiv);
+
+    inputField.value = "";
+    chatLogs.scrollTop = chatLogs.scrollHeight;
+
+    // 2. عرض رسالة انتظار
+    const loadingDiv = document.createElement('div');
+    loadingDiv.style = "color: #a0aec0; text-align: center; margin: 10px 0; font-size: 0.85rem;";
+    loadingDiv.textContent = "جاري التحليل والبحث الذكي... ⏳";
+    chatLogs.appendChild(loadingDiv);
+    chatLogs.scrollTop = chatLogs.scrollHeight;
+
+    // هنا يتم وضع مفتاح الـ API الخاص بك برمجياً للاستدعاء المباشر
     const apiKey = "AQ.Ab8RN6IJRyjQPdoQYgpCwCTQmdFemueE06-4CDXl8Mag6vnosw";
     const apiUrl = `https://googleapis.com{apiKey}`;
 
