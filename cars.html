@@ -238,10 +238,25 @@
         .then(data => appendMessage(data.text, 'bot'));
         */
     }
-</script>
+// كود تشغيل البوت المباشر بدون أخطاء حظر أو اتصال
+const chatBox = document.getElementById('chatLogs') || document.getElementById('chatBox');
+if (chatBox) {
+    chatBox.innerHTML = ''; // تنظيف المحتوى القديم
+    const iframe = document.createElement('iframe');
+    iframe.src = "https://botpress.cloud";
+    iframe.style.width = "100%";
+    iframe.style.height = "500px"; // يتماشى مع ارتفاع صندوق الشات الخاص بك
+    iframe.style.border = "none";
+    iframe.style.background = "transparent";
+    iframe.setAttribute("referrerpolicy", "no-referrer-when-downgrade");
+    chatBox.appendChild(iframe);
+}
 
-    <script src="https://cdn.botpress.cloud/webchat/v3.7/inject.js"></script>
-<script src="https://files.bpcontent.cloud/2026/10/23/12/20261023124213-84QD191N.js" defer></script>
-    
+// إخفاء صندوق الإدخال القديم أسفل الشاشة حتى لا يتكرر مع صندوق البوت الجديد
+const inputArea = document.querySelector('.chat-input-area') || document.querySelector('.chat-footer');
+if (inputArea) {
+    inputArea.style.display = 'none';
+}
+</script>  
 </body>
 </html>
