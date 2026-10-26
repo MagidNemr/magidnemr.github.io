@@ -232,52 +232,91 @@
 </div>
 
 <script>
-    function activateService(serviceName) {
-        const inputField = document.getElementById('userInput');
-        inputField.value = "أريد خدمة: " + serviceName;
-        inputField.focus();
-    }
+function activateService(serviceName) {
+    const inputField = document.getElementById('userInput');
+    inputField.value = "أريد خدمة " + serviceName;
+    inputField.focus();
+}
 
-    async function sendToBotpress() {
-        const inputField = document.getElementById('userInput');
-        const query = inputField.value.trim();
-        if (query === "") return;
+async function sendToBotpress() {
+    const inputField = document.getElementById('userInput');
+    const query = inputField.value.trim();
+    if (query === "") return;
 
-        const chatLogs = document.getElementById('chatLogs');
-        
-        const userMsgDiv = document.createElement('div');
-        userMsgDiv.style = "background-color: #8e44ad; color: #fff; padding: 8px 12px; border-radius: 12px; margin-bottom: 10px; max-width: 80%; float: left; clear: both; font-size: 0.95rem; text-align: right;";
-        userMsgDiv.textContent = query;
-        chatLogs.appendChild(userMsgDiv);
-        
-        inputField.value = "";
-        chatLogs.scrollTop = chatLogs.scrollHeight;
+    const chatLogs = document.getElementById('chatLogs');
 
-        // ⚠️ ضع رابط الـ Webhook الخاص بك هنا بين علامتي التنصيص
-        const webhookUrl = "https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json"; 
+    // 1. عرض رسالة المستخدم في الشات بنفس ستايلك
+    const userMsgDiv = document.createElement('div');
+    userMsgDiv.style = "background-color: #8e44ad; color: white; padding: 8px 12px; border-radius: 12px; margin-bottom: 10px; max-width: 80%; float: left; clear: both; font-size: 0.95rem;";
+    userMsgDiv.textContent = query;
+    chatLogs.appendChild(userMsgDiv);
 
-        try {
-            const response = await fetch(webhookUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ text: query, userId: "user_" + Date.now() })
-            });
+    inputField.value = "";
+    chatLogs.scrollTop = chatLogs.scrollHeight;
 
-            if (response.ok) {
-                const data = await response.json();
-                if (data && data.responses && data.responses[0]) {
-                    const botReply = data.responses[0].text;
-                    const botMsgDiv = document.createElement('div');
-                    botMsgDiv.className = "msg-bot";
-                    botMsgDiv.textContent = botReply;
-                    chatLogs.appendChild(botMsgDiv);
-                }
+    // 2. عرض رسالة انتظار مؤقتة من البوت
+    const loadingDiv = document.createElement('div');
+    loadingDiv.style = "color: #a0aec0; text-align: center; clear: both; margin: 10px 0; font-size: 0.85rem;";
+    loadingDiv.textContent = "جاري فحص قاعدة البيانات والتحليل الذكي... ⏳";
+    chatLogs.appendChild(loadingDiv);
+    chatLogs.scrollTop = chatLogs.scrollHeight;
+
+    // إعدادات الاتصال بمفتاح الذكاء الاصطناعي الخاص بك
+    const apiKey = "AQ.Ab8RN6IJRyjQPdoQYgpCwCTQmdFemueE06-4CDXl8Mag6vnosw";
+    const apiUrl = `https://googleapis.com{apiKey}`;
+
+    const systemPrompt = `أنت "مستشار وموسوعة السيارات الذكي الشامل عبر Google AI". عندما يكتب المستخدم اسم أي سيارة، ماركة، أو موديل باللغة العربية أو الإنجليزية، أو يستعلم عن مخالفات ورسوم، قم بالبحث فوراً وصياغة إجابة دقيقة ومنظمة باللغة العربية تحتوي على الهيكل التالي تماماً:
+1. الماركة والموديل وسنة الصنع.
+2. المواصفات الفنية الكاملة (السعة اللترية CC، قوة المحرك بالحصان، متوسط استهلاك الوقود).
+3. حساب تقريبي لرسوم التراخيص والتجديد في مصر بناءً على الـ CC الخاص بالسيارة.
+4. محاكاة ذكية لتقرير فني استرشادي عن حالة اللوحة والمخالفات المسجلة عليها (بناءً على الأرقام أو الحروف التي يدخلها، أو نموذج استرشادي إذا لم يدخل لوحة محددة).
+واختم دائماً بتنبيه واضح ومميز يذكر المستخدم بضرورة القيادة الآمنة والالتزام بقواعد المرور. لا تطرح أسئلة مكررة أو تجادل المستخدم أبداً، وقدم الإجابة مباشرة بشكل منسق باستخدام نقاط واضحة.`;
+
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                contents: [{
+                    parts: [{ text: `${systemPrompt}\n\nطلب المستخدم: ${query}` }]
+                }]
+            })
+        });
+
+        // إزالة رسالة الانتظار
+        loadingDiv.remove();
+
+        if (response.ok) {
+            const data = await response.json();
+            if (data.candidates && data.candidates[0].content.parts[0].text) {
+                const botReply = data.candidates[0].content.parts[0].text;
+                
+                // 3. عرض رد الذكاء الاصطناعي في مربع الشات القديم
+                const botMsgDiv = document.createElement('div');
+                botMsgDiv.className = "msg-bot";
+                botMsgDiv.style.whiteSpace = "pre-line"; // للحفاظ على تنظيم الأسطر والنقاط
+                botMsgDiv.textContent = botReply;
+                chatLogs.appendChild(botMsgDiv);
+            } else {
+                showError("عذراً، لم نتمكن من معالجة البيانات، حاول مرة أخرى.");
             }
-        } catch (error) {
-            console.error("حدث خطأ أثناء الاتصال بالبوت:", error);
+        } else {
+            showError("حدثت مشكلة في الاتصال بالخادم، يرجى التحقق من اتصالك.");
         }
-        chatLogs.scrollTop = chatLogs.scrollHeight;
+    } catch (error) {
+        console.error("Error:", error);
+        loadingDiv.remove();
+        showError("فشل الاتصال، تأكد من مفتاح الـ API والإنترنت.");
     }
+    
+    chatLogs.scrollTop = chatLogs.scrollHeight;
+}
+
+function showError(message) {
+    const chatLogs = document.getElementById('chatLogs');
+    const errorDiv = document.createElement('div');
+    errorDiv.style = "color: #ff4d4d; text-align: center; clear: both; margin: 10px 0; font-size: 0.9rem; font-weight: bold;";
+    errorDiv.textContent = message;
+    chatLogs.appendChild(errorDiv);
+}
 </script>
-</body>
-</html>
