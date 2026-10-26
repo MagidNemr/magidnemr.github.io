@@ -239,7 +239,7 @@
         */
     }
 // كود تشغيل البوت المباشر الصحيح والمضمون 100%
-const chatBox = document.getElementById('chatLogs') || document.getElementById('chatBox');
+const chatBox = document.querySelector('.chat-logs') || document.querySelector('.chat-section');
 if (chatBox) {
     chatBox.innerHTML = ''; // تنظيف المحتوى القديم والأخطاء
     const iframe = document.createElement('iframe');
@@ -256,7 +256,7 @@ if (chatBox) {
 }
 
 // إخفاء صندوق الإدخال القديم والزر لتجنب التكرار
-const inputArea = document.querySelector('.chat-input-area') || document.querySelector('.chat-footer') || document.getElementById('userInput')?.parentElement;
+const inputArea = document.querySelector('.chat-input-area') || document.querySelector('.chat-footer');
 if (inputArea) {
     inputArea.style.display = 'none';
 }
