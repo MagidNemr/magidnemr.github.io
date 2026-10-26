@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مستشار السيارات والمخالفات الذكي - Smart Tech Aide</title>
     <style>
+        /* نفس التصميم الموزون والمتناسق لصفحتك الحالية بالملي */
         body {
             background-color: #0b1116;
             color: #ffffff;
@@ -56,170 +57,41 @@
             color: #00ffcc;
             border-color: #00ffcc;
         }
-        .chat-container {
+        .iframe-container {
             width: 100%;
             height: 75vh;
             background: #111c24;
             border: 1px solid #00ffcc;
             border-radius: 8px;
-            display: flex;
-            flex-direction: column;
             overflow: hidden;
             box-shadow: 0 4px 15px rgba(0, 255, 204, 0.1);
             box-sizing: border-box;
         }
-        .chat-messages {
-            flex: 1;
-            padding: 15px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .message {
-            max-width: 85%;
-            padding: 10px 12px;
-            border-radius: 8px;
-            font-size: 14px;
-            line-height: 1.5;
-            word-wrap: break-word;
-        }
-        .user-message {
-            background: #00ffcc;
-            color: #0b1116;
-            align-self: flex-start;
-            border-bottom-right-radius: 2px;
-        }
-        .ai-message {
-            background: #1a2a35;
-            color: #ffffff;
-            align-self: flex-end;
-            border-bottom-left-radius: 2px;
-            border: 1px solid #2d404e;
-            white-space: pre-line;
-        }
-        .chat-input-area {
-            display: flex;
-            padding: 10px;
-            background: #0d161c;
-            border-top: 1px solid #1a2a35;
-            gap: 8px;
-        }
-        .chat-input {
-            flex: 1;
-            background: #111c24;
-            border: 1px solid #2d404e;
-            border-radius: 6px;
-            color: #ffffff;
-            padding: 10px;
-            font-size: 14px;
-            outline: none;
-        }
-        .chat-input:focus {
-            border-color: #00ffcc;
-        }
-        .send-btn {
-            background: #00ffcc;
-            color: #0b1116;
+        iframe {
             border: none;
-            padding: 0 15px;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .send-btn:hover {
-            background: #00e6b8;
-            box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
 <body>
 
     <div class="main-wrapper">
+        <!-- شريط علوي متناسق والعودة لصفحة الـ AI -->
         <div class="header-bar">
             <h2>🚗 مستشار السيارات والمخالفات الذكي</h2>
             <a href="ai.html" class="back-link">⬅️ عودة لقسم AI</a>
         </div>
 
-        <div class="chat-container">
-            <div class="chat-messages" id="chatMessages">
-                <div class="message ai-message">مرحباً بك في مستشار السيارات والمخالفات الذكي! 🚗 يمكنني مساعدتك في معرفة المواصفات الفنية الكاملة، وحساب رسوم التجديد التقريبية بمصر، وعمل فحص استرشادي للوحات. تفضل بكتابة ما تريد.</div>
-            </div>
-            <div class="chat-input-area">
-                <input type="text" id="carInput" class="chat-input" placeholder="اكتب اسم السيارة أو رقم اللوحة هنا..." onkeypress="handleKeyPress(event)">
-                <button id="sendBtn" class="send-btn" onclick="askCarAdvisor()">إرسال</button>
-            </div>
+        <!-- حاوية الشات المباشر المضمون ليعمل فوراً دون أخطاء برمجية -->
+        <div class="iframe-container">
+            <iframe
+                src="https://chatbase.co"
+                referrerpolicy="no-referrer-when-downgrade"
+                allow="microphone"
+            ></iframe>
         </div>
     </div>
 
-    <script>
-        function handleKeyPress(event) {
-            if (event.key === 'Enter') {
-                askCarAdvisor();
-            }
-        }
-
-        async function askCarAdvisor() {
-            const inputField = document.getElementById('carInput');
-            const userInput = inputField.value.trim();
-            if (!userInput) return;
-
-            // عرض رسالة المستخدم
-            appendMessage(userInput, 'user-message');
-            inputField.value = '';
-
-            // رسالة الانتظار
-            const loadingId = appendMessage('جاري التحليل والبحث الآن... ⏳', 'ai-message');
-
-            const apiKey = "AQ.Ab8RN6IJRyjQPdoQYgpCwCTQmdFemueE06-4CDXl8Mag6vnosw";
-            const apiUrl = `https://googleapis.com{apiKey}`;
-
-            const systemPrompt = `أنت "مستشار وموسوعة السيارات الذكي الشامل عبر Google AI". عندما يكتب المستخدم اسم أي سيارة، ماركة، أو موديل باللغة العربية أو الإنجليزية، أو يستعلم عن مخالفات ورسوم، قم بالبحث فوراً وصياغة إجابة دقيقة ومنظمة باللغة العربية تحتوي على الهيكل التالي تماماً:
-1. الماركة والموديل وسنة الصنع.
-2. المواصفات الفنية الكاملة (السعة اللترية CC، قوة المحرك بالحصان، متوسط استهلاك الوقود).
-3. حساب تقريبي لرسوم التراخيص والتجديد في مصر بناءً على الـ CC الخاص بالسيارة.
-4. محاكاة ذكية لتقرير فني استرشادي عن حالة اللوحة والمخالفات المسجلة عليها (بناءً على الأرقام أو الحروف التي يدخلها، أو نموذج استرشادي إذا لم يدخل لوحة محددة).
-واختم دائماً بتنبيه واضح ومميز يذكر المستخدم بضرورة القيادة الآمنة والالتزام بقواعد المرور. لا تطرح أسئلة مكررة أو تجادل المستخدم أبداً، وقدم الإجابة مباشرة بشكل منسق باستخدام نقاط واضحة.`;
-
-            try {
-                const response = await fetch(apiUrl, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        contents: [{
-                            parts: [{ text: `${systemPrompt}\n\nطلب المستخدم: ${userInput}` }]
-                        }]
-                    })
-                });
-
-                const data = await response.json();
-                document.getElementById(loadingId).remove();
-
-                if (data.candidates && data.candidates[0].content.parts[0].text) {
-                    let aiResponse = data.candidates[0].content.parts[0].text;
-                    appendMessage(aiResponse, 'ai-message');
-                } else {
-                    appendMessage('عذراً، واجهت مشكلة في معالجة طلبك حالياً. يرجى المحاولة مرة أخرى.', 'ai-message');
-                }
-            } catch (error) {
-                console.error("Error:", error);
-                document.getElementById(loadingId).remove();
-                appendMessage('فشل الاتصال بالخادم. تأكد من اتصالك بالإنترنت أو صلاحية المفتاح.', 'ai-message');
-            }
-        }
-
-        function appendMessage(text, className) {
-            const chatMessages = document.getElementById('chatMessages');
-            const messageDiv = document.createElement('div');
-            const id = 'msg_' + Math.random().toString(36).substr(2, 9);
-            messageDiv.id = id;
-            messageDiv.className = `message ${className}`;
-            messageDiv.innerText = text;
-            chatMessages.appendChild(messageDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-            return id;
-        }
-    </script>
 </body>
 </html>
