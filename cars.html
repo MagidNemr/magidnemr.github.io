@@ -3,251 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مستشار وموسوعة السيارات الذكي</title>
+    <title>مستشار السيارات وموسوعة المخالفات الذكية</title>
     <style>
-        :root {
-            --bg-color: #0b1116; 
-            --primary-color: #00ffcc; 
-            --btn-color: #ff2a74; 
-            --card-bg: rgba(17, 24, 39, 0.95);
-            --text-color: #ffffff;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+        body, html {
             margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            box-sizing: border-box;
-            direction: rtl;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1000px;
-        }
-
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-bottom: 25px;
-            margin-top: 20px;
-        }
-
-        .card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--primary-color);
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 255, 204, 0.1);
-        }
-
-        .card h3 {
-            margin-top: 0;
-            font-size: 1.3rem;
-            color: var(--primary-color);
-        }
-
-        .card p {
-            color: #9ca3af;
-            font-size: 0.95rem;
-            margin-bottom: 15px;
-        }
-
-        .card input {
-            width: 90%;
-            padding: 10px;
-            background-color: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 6px;
-            color: #fff;
-            text-align: center;
-            margin-bottom: 12px;
-            outline: none;
-        }
-
-        .card input:focus {
-            border-color: var(--primary-color);
-        }
-
-        .card button {
-            background-color: var(--btn-color);
-            color: white;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 80%;
-            transition: transform 0.2s;
-        }
-
-        .card button:hover {
-            transform: scale(1.03);
-        }
-
-        .chat-section {
-            border: 1px solid var(--primary-color);
-            border-radius: 8px;
-            background-color: var(--card-bg);
+            padding: 0;
+            height: 100%;
             overflow: hidden;
-            margin-top: 10px;
-            box-shadow: 0 4px 15px rgba(0, 255, 204, 0.1);
+            background-color: #0b131a; /* نفس لون خلفية الأدوية عندك */
         }
-
-        .chat-header {
-            background-color: #111c24;
-            color: var(--primary-color);
-            padding: 12px;
-            font-weight: bold;
-            border-bottom: 1px solid var(--primary-color);
-            text-align: right;
-        }
-
-        .chat-body {
-            height: 270px;
-            padding: 15px;
-            overflow-y: auto;
-            background-color: #0a0a0a;
-            text-align: right;
-        }
-
-        .bot-message {
-            background-color: #161f26;
-            border-right: 4px solid var(--primary-color);
-            padding: 15px;
-            border-radius: 4px;
-            line-height: 1.8;
-            font-size: 1.1rem;
-            white-space: pre-line;
-            direction: rtl;
-        }
-
-        .loading {
-            color: var(--primary-color);
-            font-weight: bold;
-            text-align: center;
-            margin: 10px 0;
-            display: none;
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        
-        <div class="cards-grid">
-            <div class="card">
-                <h3>🔧 المواصفات الفنية</h3>
-                <p>استعلم عن مواصفات السيارة.</p>
-                <input type="text" id="brandInput" placeholder="أدخل ماركة السيارة...">
-                <button onclick="activateLiveService('specs')">فحص المواصفات</button>
-            </div>
-
-            <div class="card">
-                <h3>🚦 الاستعلام عن المخالفات</h3>
-                <p>المخالفات المرورية الصادرة.</p>
-                <input type="text" id="plateInput" placeholder="أدخل رقم اللوحة...">
-                <button onclick="activateServiceWithPlate()">عرض المخالفات</button>
-            </div>
-
-            <div class="card">
-                <h3>💳 حساب رسوم التراخيص</h3>
-                <p>رسوم التراخيص وتجديد المركبات داخل مصر وفقاً للسعة والموديل.</p>
-                <input type="text" id="ccInput" placeholder="أدخل السعة اللترية (مثال: 1600)...">
-                <button onclick="activateLiveService('fees')">حساب الرسوم</button>
-            </div>
-        </div>
-
-        <div class="chat-section">
-            <div class="chat-header">
-                🟢 موسوعة ومستشار السيارات والمخالفات
-            </div>
-            <div class="chat-header" style="background: #161f26; color: #fff; font-weight: normal; font-size: 0.95rem; border-bottom: none;" id="displayQuery">
-                الاستعلام الحالي يظهر هنا...
-            </div>
-            <div class="chat-body" id="chatBody">
-                <div class="bot-message" id="responseArea">نظام الفحص الفعلي الحي جاهز الآن. اكتب البيانات في أي حقل بالأعلى واضغط على الزر الوردي لبدء استدعاء التقرير...</div>
-            </div>
-            <div id="loadingText" class="loading">⏳ جاري الاتصال المباشر بجوجل وجلب التقرير الحي...</div>
-        </div>
-
-    </div>
-
-    <script>
-        // دالة مخصصة لكارت المخالفات لكتابة الجملة المطلوبة وعرضها في شريط العنوان الفرعي
-        function activateServiceWithPlate() {
-            const plate = document.getElementById('plateInput').value.trim();
-            if(!plate) return alert("من فضلك أدخل رقم اللوحة أولاً!");
-            
-            const customQuery = `استعلام عن مخالفات السياره رقم ${plate}`;
-            document.getElementById('displayQuery').innerText = customQuery;
-            
-            executeGeminiCall(customQuery);
-        }
-
-        // الدالة العامة لباقي الكروت لتحديث شريط العنوان والاستدعاء
-        function activateLiveService(type) {
-            let customQuery = "";
-            if (type === 'specs') {
-                const brand = document.getElementById('brandInput').value.trim();
-                if(!brand) return alert("من فضلك أدخل ماركة السيارة أولاً!");
-                customQuery = `مواصفات السياره ماركه ${brand}`;
-            } else if (type === 'fees') {
-                const cc = document.getElementById('ccInput').value.trim();
-                if(!cc) return alert("من فضلك أدخل السعة اللترية أولاً!");
-                customQuery = `حساب رسوم التراخيص لسيارة سعة ${cc} سي سي في مصر`;
-            }
-            
-            document.getElementById('displayQuery').innerText = customQuery;
-            executeGeminiCall(customQuery);
-        }
-
-        // دالة الاتصال المباشر بجوجل مع إصلاح مصفوفة قراءة النص المتطابقة مع المكتبة والأدوية [0]
-        async function executeGeminiCall(promptText) {
-            const responseArea = document.getElementById('responseArea');
-            const loadingText = document.getElementById('loadingText');
-
-            loadingText.style.display = "block";
-            responseArea.innerText = "جاري استدعاء البيانات الحية الفورية...";
-
-            const apiKey = "AQ.Ab8RN6IJRyjQPdoQYgpCwCTQmdFemueE06-4CDXl8Mag6vnosw";
-            const url = `https://googleapis.com{apiKey}`;
-
-            try {
-                const response = await fetch(url, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: `أنت مستشار سيارات خبير وموسوعة مرورية في مصر. أجب بشكل دقيق ومفصل ومنظم في نقاط واضحة تحت بعضها باللغة العربية على الطلب التالي:\n\n${promptText}` }] }]
-                    })
-                });
-
-                const data = await response.json();
-                
-                // التعديل البرمجي الحاسم بإضافة المؤشرات المصفوفية [0] لتقرأ النص مباشرة بدون أي أخطاء
-                if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0]) {
-                    responseArea.innerText = data.candidates[0].content.parts[0].text;
-                } else {
-                    responseArea.innerText = "التقرير الاسترشادي: البيانات المدخلة سليمة وتطابق السجلات الفنية المعتمدة.";
-                }
-            } catch (error) {
-                console.error(error);
-                responseArea.innerText = "حدث خطأ أثناء جلب البيانات الحية الحقيقية من السيرفر. يرجى مراجعة إعدادات الحماية وإعادة المحاولة.";
-            } finally {
-                loadingText.style.display = "none";
-            }
-        }
-    </script>
-
-    <script src="https://botpress.cloud"></script>
-    <script src="https://bpcontent.cloud" defer></script>
+    <!-- تم دمج رابط بوتبرس المخصص لخدمات السيارات والمخالفات المعتمد الخاص بك بملء الشاشة -->
+    <iframe src="https://botpress.cloud"></iframe>
 
 </body>
 </html>
