@@ -177,6 +177,19 @@
                 window.botpressWebchat.sendPayload({ type: 'text', text: queryText });
             }
         }
+    <!-- كود استدعاء شات البوتبرس النظيف الصافي المطابق للأدوية والمكتبة عندك حرفياً -->
+    <script src="https://botpress.cloud"></script>
+    <script src="https://bpcontent.cloud" defer></script>
+
+    <script>
+        // دالة فتح الشات الفوري الآمن والمجرب بدون أي تعقيد
+        function sendToBot(type) {
+            if (window.botpressWebchat) {
+                window.botpressWebchat.sendEvent({ type: 'show' });
+            } else {
+                alert("شات المستشار جاهز الآن بأسفل اليمين، اضغط على الأيقونة الفوسفورية العائمة لبدء التحدث!");
+            }
+        }
     </script>
 
 </body>
