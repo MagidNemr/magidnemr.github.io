@@ -111,7 +111,7 @@
         }
 
         .chat-body {
-            height: 250px;
+            height: 270px;
             padding: 15px;
             overflow-y: auto;
             background-color: #0a0a0a;
@@ -167,12 +167,12 @@
 
         <div class="chat-section">
             <div class="chat-header">
-                🟢 المستشار المهندس للمرور والسيارات الحية
+                🟢 الموسوعة والمستشار الذكي الفعلي (مطابق للمكتبة والأدوية)
             </div>
             <div class="chat-body" id="chatBody">
                 <div class="bot-message" id="responseArea">نظام الفحص الفعلي الحي شغال تماماً الآن ومحدث لعام 2026. اكتب أو اضغط على أي كارت بالأعلى واستقبل ردوداً فورية حقيقية...</div>
             </div>
-            <div id="loadingText" class="loading">⏳ جاري مراجعة الموسوعة وجلب التقرير الحي الفعلي...</div>
+            <div id="loadingText" class="loading">⏳ جاري الاتصال المباشر بجوجل وجلب التقرير الحي الفعلي...</div>
         </div>
 
     </div>
@@ -197,7 +197,7 @@
             loadingText.style.display = "block";
             responseArea.innerText = "جاري استدعاء البيانات الفعلية الحية الحالية...";
 
-            // مفتاح البنية المفتوح والمستقر المطابق للمكتبة والأدوية الفعلي
+            // نفس كود الاستدعاء ونفس مفتاح الـ API المستخدم في كود المكتبة والأدوية بالملي
             const apiKey = "AIzaSyBvCbwq5kPa4M4M7SzqtjmgdJMMeBGdZwk";
             const url = `https://googleapis.com{apiKey}`;
 
@@ -220,19 +220,25 @@
                 });
 
                 const data = await response.json();
-                if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0].text) {
-                    responseArea.innerText = data.candidates[0].content.parts[0].text;
-                } else if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts) {
+                
+                // استخراج النص الفعلي بنفس طريقة الاستخراج المعتمدة والناجحة في المكتبة والأدوية حرفياً
+                if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0]) {
                     responseArea.innerText = data.candidates[0].content.parts[0].text;
                 } else {
-                    // سحب وقراءة النص المباشر من الحقول المستلمة لضمان جلب الرد الفعلي الحقيقي
-                    responseArea.innerText = data.candidates[0].content.parts[0].text;
+                    responseArea.innerText = "عذراً، لم نتمكن من جلب الإجابة الحية، يرجى إعادة المحاولة.";
                 }
             } catch (error) {
                 console.error(error);
-                // التوليد الذكي الداخلي المحدث كخط دفاع أمان لمنع تجمد الشاشة وعرض النتيجة فوراً
-                if (type === 'specs') {
-                    responseArea.innerText = `التقرير الفني الحي المحدث لعام 2026 للسيارة الماركة (${userInput}):\n\n1. سعة المحرك: مجهزة بمنظومة محركات متطورة بسعة لترية مطابقة للفئة المذكورة.\n2. القدرة الحصانية وعزم الدوران: عزم تسارع ممتاز يعطي كفاءة عالية على الطرق السريعة.\n3. معدل الاستهلاك: منظومة حقن وقود ذكية وموفرة جداً في الرحلات الطويلة والداخلية.\n4. أنظمة الثبات: فرامل ABS متطورة مع نظام ثبات إلكتروني معتمد بالكامل لتأمين المركبة.`;
-                } else if (type === 'violations') {
-                    responseArea.innerText = `نتائج استعلام الفحص المروري الحي الفعلي للوحة رقم (${userInput}):\n\n1. حالة اللوحة بالسجلات: مسجلة ونشطة تماماً ومقيدة بوحدة المرور الفني.\n2. إجمالي الغرامات المستحقة: 0 جنيه مصري (لا توجد أي مخالفات رادار مسجلة حالياً حتى اليوم).\n3. نصيحة أمان لعام 2026: نوصيك بالالتزام التام بحدود السرعة الرسمية على المحاور الجديدة لتفادي التقاط الرادارات الذكية الحديثة!`;
-                } else if (type === 'fees') {
+                responseArea.innerText = "حدث خطأ في جلب البيانات الحية، يرجى التأكد من تحديث صفحة المتصفح والمحاولة.";
+            } finally {
+                loadingText.style.display = "none";
+            }
+        }
+    </script>
+
+    <!-- كود البوتبرس المعتمد بأسفل الصفحة -->
+    <script src="https://botpress.cloud"></script>
+    <script src="https://bpcontent.cloud" defer></script>
+
+</body>
+</html>
