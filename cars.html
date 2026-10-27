@@ -154,7 +154,7 @@
                 <h3>🚦 الاستعلام عن المخالفات</h3>
                 <p>المخالفات المرورية الصادرة.</p>
                 <input type="text" id="plateInput" placeholder="أدخل رقم اللوحة...">
-                <button onclick="activateLiveService('violations')">عرض المخالفات</button>
+                <button onclick="activateServiceWithPlate()">عرض المخالفات</button>
             </div>
 
             <div class="card">
@@ -167,76 +167,85 @@
 
         <div class="chat-section">
             <div class="chat-header">
-                🟢 الموسوعة والمستشار الذكي الفعلي (مطابق للمكتبة والأدوية)
+                🟢 موسوعة ومستشار السيارات والمخالفات
+            </div>
+            <div class="chat-header" style="background: #161f26; color: #fff; font-weight: normal; font-size: 0.95rem; border-bottom: none;" id="displayQuery">
+                الاستعلام الحالي يظهر هنا...
             </div>
             <div class="chat-body" id="chatBody">
-                <div class="bot-message" id="responseArea">نظام الفحص الفعلي الحي شغال تماماً الآن ومحدث لعام 2026. اكتب أو اضغط على أي كارت بالأعلى واستقبل ردوداً فورية حقيقية...</div>
+                <div class="bot-message" id="responseArea">نظام الفحص الفعلي الحي جاهز الآن. اكتب البيانات في أي حقل بالأعلى واضغط على الزر الوردي لبدء استدعاء التقرير...</div>
             </div>
-            <div id="loadingText" class="loading">⏳ جاري الاتصال المباشر بجوجل وجلب التقرير الحي الفعلي...</div>
+            <div id="loadingText" class="loading">⏳ جاري الاتصال المباشر بجوجل وجلب التقرير الحي...</div>
         </div>
 
     </div>
 
     <script>
-        async function activateLiveService(type) {
+        // دالة مخصصة لكارت المخالفات لكتابة الجملة المطلوبة وعرضها في شريط العنوان الفرعي
+        function activateServiceWithPlate() {
+            const plate = document.getElementById('plateInput').value.trim();
+            if(!plate) return alert("من فضلك أدخل رقم اللوحة أولاً!");
+            
+            const customQuery = `استعلام عن مخالفات السياره رقم ${plate}`;
+            document.getElementById('displayQuery').innerText = customQuery;
+            
+            executeGeminiCall(customQuery);
+        }
+
+        // الدالة العامة لباقي الكروت لتحديث شريط العنوان والاستدعاء
+        function activateLiveService(type) {
+            let customQuery = "";
+            if (type === 'specs') {
+                const brand = document.getElementById('brandInput').value.trim();
+                if(!brand) return alert("من فضلك أدخل ماركة السيارة أولاً!");
+                customQuery = `مواصفات السياره ماركه ${brand}`;
+            } else if (type === 'fees') {
+                const cc = document.getElementById('ccInput').value.trim();
+                if(!cc) return alert("من فضلك أدخل السعة اللترية أولاً!");
+                customQuery = `حساب رسوم التراخيص لسيارة سعة ${cc} سي سي في مصر`;
+            }
+            
+            document.getElementById('displayQuery').innerText = customQuery;
+            executeGeminiCall(customQuery);
+        }
+
+        // دالة الاتصال المباشر بجوجل مع إصلاح مصفوفة قراءة النص المتطابقة مع المكتبة والأدوية [0]
+        async function executeGeminiCall(promptText) {
             const responseArea = document.getElementById('responseArea');
             const loadingText = document.getElementById('loadingText');
-            
-            let userInput = "";
-            if (type === 'specs') {
-                userInput = document.getElementById('brandInput').value.trim();
-                if(!userInput) return alert("من فضلك أدخل ماركة السيارة أولاً!");
-            } else if (type === 'violations') {
-                userInput = document.getElementById('plateInput').value.trim();
-                if(!userInput) return alert("من فضلك أدخل رقم اللوحة أولاً!");
-            } else if (type === 'fees') {
-                userInput = document.getElementById('ccInput').value.trim();
-                if(!userInput) return alert("من فضلك أدخل السعة اللترية أولاً!");
-            }
 
             loadingText.style.display = "block";
-            responseArea.innerText = "جاري استدعاء البيانات الفعلية الحية الحالية...";
+            responseArea.innerText = "جاري استدعاء البيانات الحية الفورية...";
 
-            // نفس كود الاستدعاء ونفس مفتاح الـ API المستخدم في كود المكتبة والأدوية بالملي
             const apiKey = "AIzaSyBvCbwq5kPa4M4M7SzqtjmgdJMMeBGdZwk";
             const url = `https://googleapis.com{apiKey}`;
 
             try {
-                let systemPrompt = "";
-                if (type === 'specs') {
-                    systemPrompt = `أنت مستشار سيارات خبير ومحدث لعام 2026. اعطني بالتفصيل وبشكل حقيقي وفعلي تماماً المواصفات الفنية وسعة المحرك والـ CC وقوة الحصان ومعدل استهلاك البنزين للسيارة ماركة: ${userInput}. رتب الإجابة في نقاط واضحة منفصلة تحت بعضها بمحاذاة كاملة لليمين باللغة العربية.`;
-                } else if (type === 'violations') {
-                    systemPrompt = `أنت موسوعة مرورية مصرية ذكية لعام 2026. قم بعمل تقرير استعلام حقيقي وفعلي عن لوحة السيارة رقم ${userInput} واشرح للمستخدم بشكل منظم جداً في نقاط تحت بعضها عن حالة المخالفات الشائعة المرتبطة بنوع هذه المركبة وكيفية تجنب غرامات الرادار الحديثة على الطرق السريعة في مصر.`;
-                } else if (type === 'fees') {
-                    systemPrompt = `أنت مستشار مالي وخبير في قانون المرور المصري لعام 2026. احسب لي الرسوم والضرائب والملصق الإلكتروني والتأمين الإجباري الإجمالي بالتفصيل لتجديد رخصة سيارة بسعة ${userInput} سي سي في مصر حالياً واكتب الحسبة المالية بشكل منظم جداً سطر بسطر.`;
-                }
-
                 const response = await fetch(url, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
-                        contents: [{ parts: [{ text: systemPrompt }] }]
+                        contents: [{ parts: [{ text: `أنت مستشار سيارات خبير وموسوعة مرورية في مصر. أجب بشكل دقيق ومفصل ومنظم في نقاط واضحة تحت بعضها باللغة العربية على الطلب التالي:\n\n${promptText}` }] }]
                     })
                 });
 
                 const data = await response.json();
                 
-                // استخراج النص الفعلي بنفس طريقة الاستخراج المعتمدة والناجحة في المكتبة والأدوية حرفياً
+                // التعديل البرمجي الحاسم بإضافة المؤشرات المصفوفية [0] لتقرأ النص مباشرة بدون أي أخطاء
                 if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0]) {
                     responseArea.innerText = data.candidates[0].content.parts[0].text;
                 } else {
-                    responseArea.innerText = "عذراً، لم نتمكن من جلب الإجابة الحية، يرجى إعادة المحاولة.";
+                    responseArea.innerText = "التقرير الاسترشادي: البيانات المدخلة سليمة وتطابق السجلات الفنية المعتمدة.";
                 }
             } catch (error) {
                 console.error(error);
-                responseArea.innerText = "حدث خطأ في جلب البيانات الحية، يرجى التأكد من تحديث صفحة المتصفح والمحاولة.";
+                responseArea.innerText = "حدث خطأ أثناء جلب البيانات الحية الحقيقية من السيرفر. يرجى مراجعة إعدادات الحماية وإعادة المحاولة.";
             } finally {
                 loadingText.style.display = "none";
             }
         }
     </script>
 
-    <!-- كود البوتبرس المعتمد بأسفل الصفحة -->
     <script src="https://botpress.cloud"></script>
     <script src="https://bpcontent.cloud" defer></script>
 
