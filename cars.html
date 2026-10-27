@@ -31,7 +31,6 @@
             max-width: 1000px;
         }
 
-        /* شبكة الكروت الثلاثية الفخمة */
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -94,7 +93,6 @@
             transform: scale(1.03);
         }
 
-        /* رابط النيابة العامة أسفل زر المخالفات */
         .gov-link {
             display: inline-block;
             color: var(--primary-color);
@@ -109,7 +107,6 @@
             color: #fff;
         }
 
-        /* قسم مستشار السيارات السفلي المدمج به شات أورنچ كاش الفعلي بملء الصندوق */
         .chat-section {
             border: 1px solid var(--primary-color);
             border-radius: 8px;
@@ -129,7 +126,7 @@
         }
 
         .chat-body {
-            height: 480px; /* طول مناسب لعرض المحادثة بالكامل */
+            height: 480px; 
             background-color: #0a0a0a;
         }
 
@@ -148,38 +145,36 @@
             <!-- 1. كارت المواصفات الفنية -->
             <div class="card">
                 <h3>🔧 المواصفات الفنية</h3>
-                <p>استعلم عن مواصفات السيارة الفنية الحية.</p>
+                <p>استعلم عن مواصفات السيارة.</p>
                 <input type="text" id="brandInput" placeholder="أدخل ماركة السيارة...">
-                <button onclick="sendToChat('specs')">فحص المواصفات</button>
+                <button onclick="sendToBot('specs')">فحص المواصفات</button>
             </div>
 
-            <!-- 2. كارت الاستعلام عن المخالفات + رابط البوابة الرسمية للمرور -->
+            <!-- 2. كارت الاستعلام عن المخالفات ورابط البوابة الرسمية -->
             <div class="card">
                 <h3>🚦 الاستعلام عن المخالفات</h3>
                 <p>المخالفات المرورية الصادرة الاسترشادية.</p>
                 <input type="text" id="plateInput" placeholder="أدخل رقم اللوحة...">
-                <button onclick="sendToChat('violations')">عرض المخالفات</button>
+                <button onclick="sendToBot('violations')">عرض المخالفات</button>
                 <br>
-                <!-- رابط بوابات مرور النيابة العامة الرسمية في مصر للاستعلام الفعلي المباشر -->
                 <a href="https://ppo.gov.eg" target="_blank" class="gov-link">🌐 رابط بوابة النيابة العامة للمرور الرسمية</a>
             </div>
 
             <!-- 3. كارت حساب رسوم التراخيص -->
             <div class="card">
                 <h3>💳 حساب رسوم التراخيص</h3>
-                <p>رسوم التراخيص وتجديد المركبات وفقاً للسعة.</p>
+                <p>رسوم التراخيص وتجديد المركبات داخل مصر وفقاً للسعة والموديل.</p>
                 <input type="text" id="ccInput" placeholder="أدخل السعة اللترية (مثال: 1600)...">
-                <button onclick="sendToChat('fees')">حساب الرسوم</button>
+                <button onclick="sendToBot('fees')">حساب الرسوم</button>
             </div>
         </div>
 
-        <!-- الصندوق الرئيسي المدمج داخله واجهة الشات الحية الفعالة مباشرة -->
         <div class="chat-section">
             <div class="chat-header">
                 🟢 مستشار السيارات وموسوعة المخالفات الذكي (محدث لايف 2026)
             </div>
             <div class="chat-body">
-                <!-- الـ iframe الشغال والناجح تماماً بملء الصندوق السفلي للتصميم -->
+                <!-- الإطار مربوط برابط الشات الشغال المعتمد لديك بالملي -->
                 <iframe id="carBotFrame" src="https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json"></iframe>
             </div>
         </div>
@@ -187,9 +182,8 @@
     </div>
 
     <script>
-      <script>
-        // دالة الربط السحرية لتمرير الأسئلة وعرض رابط المرور التلقائي
-        function sendToChat(type) {
+        // دالة الربط المصلحة والمطابقة تماماً لاسم أزرارك الوردية بالأعلى لشحن البيانات فوراً
+        function sendToBot(type) {
             let textQuery = "";
             let isViolations = false;
             
@@ -197,14 +191,12 @@
                 const brand = document.getElementById('brandInput').value.trim();
                 if(!brand) return alert("من فضلك أدخل ماركة السيارة أولاً!");
                 textQuery = `مواصفات سيارة ماركة ${brand}`;
-            } 
-            else if (type === 'violations') {
+            } else if (type === 'violations') {
                 const plate = document.getElementById('plateInput').value.trim();
                 if(!plate) return alert("من فضلك أدخل رقم اللوحة أولاً!");
                 textQuery = `مخالفات سيارة رقم لوحة ${plate}`;
-                isViolations = true; // علامة لتبليغ البوت بعرض رابط المرور
-            } 
-            else if (type === 'fees') {
+                isViolations = true;
+            } else if (type === 'fees') {
                 const cc = document.getElementById('ccInput').value.trim();
                 if(!cc) return alert("من فضلك أدخل السعة اللترية أولاً!");
                 textQuery = `حساب رسوم ترخيص سيارة سعة ${cc} سي سي`;
@@ -213,16 +205,17 @@
             const iframe = document.getElementById('carBotFrame');
             const shareableUrl = "https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json";
             
-            // 1. نقل نص السؤال الفعلي تلقائياً لداخل محادثة الشات بالأسفل
+            // تمرير وإدخال نص السؤال تلقائياً لداخل محادثة الشات بالأسفل ليقوم بالرد المحدث فورا
             iframe.src = shareableUrl + "&query=" + encodeURIComponent(textQuery);
 
-            // 2. إذا كان الطلب استعلام عن مخالفات، نعرض رسالة توجيهية فورية برابط بوابة النيابة العامة
+            // توجيه تلقائي برابط المرور الرسمي للنيابة في حال استعلام المخالفات
             if (isViolations) {
                 setTimeout(() => {
                     alert("🔗 للاستعلام الفعلي والحقيقي عن المخالفات الرسمية، يرجى الضغط أيضاً على رابط بوابة النيابة العامة للمرور المتاح تحت خانة البحث!");
-                }, 1500);
+                }, 1200);
             }
         }
     </script>
+
 </body>
-</html> 
+</html>
