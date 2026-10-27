@@ -169,18 +169,14 @@
             </div>
         </div>
 
-        <div class="chat-section">
-            <div class="chat-header">
-                🟢 مستشار السيارات وموسوعة المخالفات الذكي 
-            </div>
-            <div class="chat-body">
-                <iframe id="carBotFrame" src="https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json"></iframe>
-            </div>
-        </div>
+       
 
-    </div>
+   <!-- كود استدعاء شات البوتبرس النظيف الصافي المعتمد الخاص بمشروعك -->
+    <script src="https://botpress.cloud"></script>
+    <script src="https://bpcontent.cloud" defer></script>
 
     <script>
+        // دالة الربط لتشغيل البوت العائم وإرسال النص تلقائياً فوراً
         function sendToBot(type) {
             let textQuery = "";
             let isViolations = false;
@@ -200,25 +196,18 @@
                 textQuery = `حساب رسوم ترخيص سيارة سعة ${cc} سي سي`;
             }
             
-            // الحل الهندسي: إرسال الرسالة مباشرة بدون تحديث أو عمل Refresh للإطار
-            const iframe = document.getElementById('carBotFrame');
-            if (iframe && iframe.contentWindow) {
-                iframe.contentWindow.postMessage({
-                    action: 'sendPayload',
-                    payload: {
-                        type: 'text',
-                        text: textQuery
-                    }
-                }, '*');
+            // فتح نافذة الشات العائمة الفوسفورية بالأسفل وإرسال الكلمة بداخلها
+            if (window.botpressWebchat) {
+                window.botpressWebchat.sendEvent({ type: 'show' });
+                window.botpressWebchat.sendPayload({ type: 'text', text: textQuery });
             }
 
             if (isViolations) {
                 setTimeout(() => {
                     alert("🔗 للاستعلام الفعلي والحقيقي عن المخالفات الرسمية، يرجى الضغط أيضاً على رابط بوابة النيابة العامة للمرور المتاح تحت خانة البحث!");
-                }, 500);
+                }, 800);
             }
         }
     </script>
-
 </body>
 </html>
