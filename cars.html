@@ -187,31 +187,42 @@
     </div>
 
     <script>
-        // دالة الربط لتمرير الكلمات تلقائياً من الخانات وتحديث الشات بداخل الإطار
+      <script>
+        // دالة الربط السحرية لتمرير الأسئلة وعرض رابط المرور التلقائي
         function sendToChat(type) {
             let textQuery = "";
+            let isViolations = false;
             
             if (type === 'specs') {
                 const brand = document.getElementById('brandInput').value.trim();
                 if(!brand) return alert("من فضلك أدخل ماركة السيارة أولاً!");
                 textQuery = `مواصفات سيارة ماركة ${brand}`;
-            } else if (type === 'violations') {
+            } 
+            else if (type === 'violations') {
                 const plate = document.getElementById('plateInput').value.trim();
                 if(!plate) return alert("من فضلك أدخل رقم اللوحة أولاً!");
                 textQuery = `مخالفات سيارة رقم لوحة ${plate}`;
-            } else if (type === 'fees') {
+                isViolations = true; // علامة لتبليغ البوت بعرض رابط المرور
+            } 
+            else if (type === 'fees') {
                 const cc = document.getElementById('ccInput').value.trim();
                 if(!cc) return alert("من فضلك أدخل السعة اللترية أولاً!");
                 textQuery = `حساب رسوم ترخيص سيارة سعة ${cc} سي سي`;
             }
             
             const iframe = document.getElementById('carBotFrame');
-            const shareableUrl = "https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json";
+            const shareableUrl = "https://botpress.cloud";
             
-            // إعادة توجيه الـ iframe ليرسل السؤال المكتوب مباشرة للبوت ويجيب عليه تلقائياً
+            // 1. نقل نص السؤال الفعلي تلقائياً لداخل محادثة الشات بالأسفل
             iframe.src = shareableUrl + "&query=" + encodeURIComponent(textQuery);
+
+            // 2. إذا كان الطلب استعلام عن مخالفات، نعرض رسالة توجيهية فورية برابط بوابة النيابة العامة
+            if (isViolations) {
+                setTimeout(() => {
+                    alert("🔗 للاستعلام الفعلي والحقيقي عن المخالفات الرسمية، يرجى الضغط أيضاً على رابط بوابة النيابة العامة للمرور المتاح تحت خانة البحث!");
+                }, 1500);
+            }
         }
     </script>
-
 </body>
-</html>
+</html> 
