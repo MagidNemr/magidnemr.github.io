@@ -174,15 +174,13 @@
                 🟢 مستشار السيارات وموسوعة المخالفات الذكي (محدث لايف 2026)
             </div>
             <div class="chat-body">
-                <!-- الإطار مربوط برابط الشات الشغال المعتمد لديك بالملي -->
-                <iframe id="carBotFrame" src="https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json"></iframe>
+                <iframe id="carBotFrame" src="https://botpress.cloud"></iframe>
             </div>
         </div>
 
     </div>
 
     <script>
-        // دالة الربط المصلحة والمطابقة تماماً لاسم أزرارك الوردية بالأعلى لشحن البيانات فوراً
         function sendToBot(type) {
             let textQuery = "";
             let isViolations = false;
@@ -202,17 +200,22 @@
                 textQuery = `حساب رسوم ترخيص سيارة سعة ${cc} سي سي`;
             }
             
+            // الحل الهندسي: إرسال الرسالة مباشرة بدون تحديث أو عمل Refresh للإطار
             const iframe = document.getElementById('carBotFrame');
-            const shareableUrl = "https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json";
-            
-            // تمرير وإدخال نص السؤال تلقائياً لداخل محادثة الشات بالأسفل ليقوم بالرد المحدث فورا
-            iframe.src = shareableUrl + "&query=" + encodeURIComponent(textQuery);
+            if (iframe && iframe.contentWindow) {
+                iframe.contentWindow.postMessage({
+                    action: 'sendPayload',
+                    payload: {
+                        type: 'text',
+                        text: textQuery
+                    }
+                }, '*');
+            }
 
-            // توجيه تلقائي برابط المرور الرسمي للنيابة في حال استعلام المخالفات
             if (isViolations) {
                 setTimeout(() => {
                     alert("🔗 للاستعلام الفعلي والحقيقي عن المخالفات الرسمية، يرجى الضغط أيضاً على رابط بوابة النيابة العامة للمرور المتاح تحت خانة البحث!");
-                }, 1200);
+                }, 500);
             }
         }
     </script>
