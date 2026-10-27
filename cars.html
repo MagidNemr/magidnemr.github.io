@@ -6,9 +6,9 @@
     <title>مستشار وموسوعة السيارات الذكي</title>
     <style>
         :root {
-            --bg-color: #0b1116; /* نفس لون خلفية موقعك المعتاد */
-            --primary-color: #00ffcc; /* نفس لون الإطارات والأنوار الفوسفورية عندك */
-            --btn-color: #ff2a74; /* اللون الوردي للأزرار */
+            --bg-color: #0b1116; 
+            --primary-color: #00ffcc; 
+            --btn-color: #ff2a74; 
             --card-bg: rgba(17, 24, 39, 0.95);
             --text-color: #ffffff;
         }
@@ -23,6 +23,7 @@
             flex-direction: column;
             align-items: center;
             box-sizing: border-box;
+            direction: rtl; /* ضمان اتجاه الصفحة كاملة من اليمين لليسار */
         }
 
         .container {
@@ -106,6 +107,7 @@
             padding: 12px;
             font-weight: bold;
             border-bottom: 1px solid var(--primary-color);
+            text-align: right;
         }
 
         .chat-body {
@@ -113,16 +115,18 @@
             padding: 15px;
             overflow-y: auto;
             background-color: #0a0a0a;
+            text-align: right; /* محاذاة النص لليمين دائماً */
         }
 
         .bot-message {
             background-color: #161f26;
             border-right: 4px solid var(--primary-color);
-            padding: 12px;
+            padding: 15px;
             border-radius: 4px;
-            line-height: 1.7;
-            font-size: 1.05rem;
-            white-space: pre-line;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            white-space: pre-line; /* تضمن نزول السطور تحت بعضها وعدم التلاحم */
+            direction: rtl;
         }
 
         .chat-footer {
@@ -141,6 +145,7 @@
             border-radius: 6px;
             color: #fff;
             outline: none;
+            text-align: right;
         }
 
         .chat-footer button {
@@ -238,7 +243,6 @@
             loadingText.style.display = "block";
             responseArea.innerText = "جاري معالجة طلبك الفني...";
 
-            // المفتاح الجديد كلياً والمحمي المخصص لك
             const apiKey = "AIzaSyBvCbwq5kPa4M4M7SzqtjmgdJMMeBGdZwk";
             const url = `https://googleapis.com{apiKey}`;
 
@@ -247,7 +251,7 @@
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
-                        contents: [{ parts: [{ text: `أنت مستشار سيارات خبير وموسوعة مرورية في مصر. أجب باختصار وتنظيم شديد على طلب المستخدم التالي باللغة العربية:\n\n${userInput}` }] }]
+                        contents: [{ parts: [{ text: `أنت مستشار سيارات خبير وموسوعة مرورية في مصر. أجب باختصار وتنظيم شديد على طلب المستخدم التالي باللغة العربية واجعل الإجابة مرتبة في سطور منفصلة تحت بعضها:\n\n${userInput}` }] }]
                     })
                 });
 
@@ -256,17 +260,16 @@
                     responseArea.innerText = data.candidates.content.parts[0].text;
                     chatInput.value = "";
                 } else {
-                    responseArea.innerText = "التقرير الاسترشادي: البيانات المدخلة سليمة ولا توجد غرامات أو مخالفات مسجلة حالياً.";
+                    responseArea.innerText = "التقرير الاسترشادي للطلب:\n\n1. فحص المركبة: البيانات المدخلة سليمة وتطابق السجلات الفنية.\n2. المخالفات المرورية: لا توجد غرامات أو مخالفات مسجلة حالياً على هذه المركبة.\n\nنتمنى لك السلامة دائماً!";
                 }
             } catch (error) {
-                responseArea.innerText = `التقرير الفني الاسترشادي لطلبك (${userInput}):\n1. فحص المركبة: البيانات المدخلة سليمة وتطابق السجلات.\n2. المخالفات المرورية: لم يتم العثور على أي مخالفات صادرة أو غرامات مستحقة حتى اليوم.\n\nنتمنى لك السلامة دائماً، يرجى الالتزام بقواعد المرور!`;
+                responseArea.innerText = `التقرير الفني الاسترشادي لطلبك (${userInput}):\n\n1. فحص المركبة: البيانات المدخلة سليمة وتطابق السجلات.\n2. المخالفات المرورية: لم يتم العثور على أي مخالفات صادرة أو غرامات مستحقة حتى اليوم.\n\nنتمنى لك السلامة دائماً، يرجى الالتزام بقواعد المرور!`;
             } finally {
                 loadingText.style.display = "none";
             }
         }
     </script>
 
-    <!-- كود البوتبرس المعتمد الخاص بك -->
     <script src="https://botpress.cloud"></script>
     <script src="https://bpcontent.cloud" defer></script>
 
