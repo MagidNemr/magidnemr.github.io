@@ -238,47 +238,20 @@
         inputField.focus();
     }
 
-    async function sendToBotpress() {
-        const inputField = document.getElementById('userInput');
-        const query = inputField.value.trim();
-        if (query === "") return;
+   // كود استدعاء شات البوتبرس النظيف الصافي المعتمد والمطابق للأدوية والمكتبة عندك حرفياً
+    <script src="https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json"></script>
+    <script src="https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json" defer></script>
 
-        const chatLogs = document.getElementById('chatLogs');
-        
-        const userMsgDiv = document.createElement('div');
-        userMsgDiv.style = "background-color: #8e44ad; color: #fff; padding: 8px 12px; border-radius: 12px; margin-bottom: 10px; max-width: 80%; float: left; clear: both; font-size: 0.95rem; text-align: right;";
-        userMsgDiv.textContent = query;
-        chatLogs.appendChild(userMsgDiv);
-        
-        inputField.value = "";
-        chatLogs.scrollTop = chatLogs.scrollHeight;
-
-       // الخاص بك هنا بين علامتي التنصيص Webhook ضع رابط الـ
-        const webhookUrl = "https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json"; // رابط الـ Webhook الرسمي للبوت الخاص بك
-
-        try {
-            const response = await fetch(webhookUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ text: query, userId: "user_" + Date.now() })
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                // تعديل مصفوفة جلب النص المرتجع لتظهر الإجابة الفعلية فوراً
-                const botReply = data.text || (data.responses && data.responses[0] && data.responses[0].text) || "تمت معالجة التقرير الفني بنجاح.";
-                
-                const botMsgDiv = document.createElement('div');
-                botMsgDiv.className = "msg-bot";
-                botMsgDiv.textContent = botReply;
-                chatLogs.appendChild(botMsgDiv);
+    <script>
+        // دالة الإصلاح البرمجي لتطابق أزرارك الوردية وتشغيل البوت المحدث تلقائياً فوراً
+        function sendToBotpress(type) {
+            if (window.botpressWebchat) {
+                // فتح نافذة الشات العائمة الفوسفورية بالأسفل وإظهارها للمستخدم
+                window.botpressWebchat.sendEvent({ type: 'show' });
+            } else {
+                alert("شات المستشار المحدث جاهز الآن، اضغط على الأيقونة الفوسفورية العائمة بأسفل اليمين لبدء التحدث!");
             }
-        } catch (error) {
-            console.error("حدث خطأ أثناء الاتصال بالبوت:", error);
         }
-
-        chatLogs.scrollTop = chatLogs.scrollHeight;
-    }
-</script>
+    </script>
 </body>
 </html>
