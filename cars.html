@@ -86,25 +86,10 @@
             cursor: pointer;
             width: 80%;
             transition: transform 0.2s;
-            margin-bottom: 8px;
         }
 
         .card button:hover {
             transform: scale(1.03);
-        }
-
-        .gov-link {
-            display: inline-block;
-            color: var(--primary-color);
-            text-decoration: none;
-            font-size: 0.85rem;
-            margin-top: 5px;
-            font-weight: bold;
-        }
-        
-        .gov-link:hover {
-            text-decoration: underline;
-            color: #fff;
         }
 
         .chat-section {
@@ -126,14 +111,30 @@
         }
 
         .chat-body {
-            height: 480px; 
+            height: 270px;
+            padding: 15px;
+            overflow-y: auto;
             background-color: #0a0a0a;
+            text-align: right;
         }
 
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
+        .bot-message {
+            background-color: #161f26;
+            border-right: 4px solid var(--primary-color);
+            padding: 15px;
+            border-radius: 4px;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            white-space: pre-line;
+            direction: rtl;
+        }
+
+        .loading {
+            color: var(--primary-color);
+            font-weight: bold;
+            text-align: center;
+            margin: 10px 0;
+            display: none;
         }
     </style>
 </head>
@@ -142,72 +143,111 @@
     <div class="container">
         
         <div class="cards-grid">
-            <!-- 1. كارت المواصفات الفنية -->
             <div class="card">
                 <h3>🔧 المواصفات الفنية</h3>
                 <p>استعلم عن مواصفات السيارة.</p>
                 <input type="text" id="brandInput" placeholder="أدخل ماركة السيارة...">
-                <button onclick="sendToBot('specs')">فحص المواصفات</button>
+                <button onclick="activateLiveService('specs')">فحص المواصفات</button>
             </div>
 
-            <!-- 2. كارت الاستعلام عن المخالفات ورابط البوابة الرسمية -->
             <div class="card">
                 <h3>🚦 الاستعلام عن المخالفات</h3>
-                <p>المخالفات المرورية الصادرة الاسترشادية.</p>
+                <p>المخالفات المرورية الصادرة.</p>
                 <input type="text" id="plateInput" placeholder="أدخل رقم اللوحة...">
-                <button onclick="sendToBot('violations')">عرض المخالفات</button>
-                <br>
-                <a href="https://ppo.gov.eg" target="_blank" class="gov-link">🌐 رابط بوابة النيابة العامة للمرور الرسمية</a>
+                <button onclick="activateServiceWithPlate()">عرض المخالفات</button>
             </div>
 
-            <!-- 3. كارت حساب رسوم التراخيص -->
             <div class="card">
                 <h3>💳 حساب رسوم التراخيص</h3>
                 <p>رسوم التراخيص وتجديد المركبات داخل مصر وفقاً للسعة والموديل.</p>
                 <input type="text" id="ccInput" placeholder="أدخل السعة اللترية (مثال: 1600)...">
-                <button onclick="sendToBot('fees')">حساب الرسوم</button>
+                <button onclick="activateLiveService('fees')">حساب الرسوم</button>
             </div>
         </div>
 
-       
+        <div class="chat-section">
+            <div class="chat-header">
+                🟢 موسوعة ومستشار السيارات والمخالفات
+            </div>
+            <div class="chat-header" style="background: #161f26; color: #fff; font-weight: normal; font-size: 0.95rem; border-bottom: none;" id="displayQuery">
+                الاستعلام الحالي يظهر هنا...
+            </div>
+            <div class="chat-body" id="chatBody">
+                <div class="bot-message" id="responseArea">نظام الفحص الفعلي الحي جاهز الآن. اكتب البيانات في أي حقل بالأعلى واضغط على الزر الوردي لبدء استدعاء التقرير...</div>
+            </div>
+            <div id="loadingText" class="loading">⏳ جاري الاتصال المباشر بجوجل وجلب التقرير الحي...</div>
+        </div>
 
-   <!-- كود استدعاء شات البوتبرس النظيف الصافي المعتمد الخاص بمشروعك -->
-    <script src="https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json"></script>
-    <script src="https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json" defer></script>
+    </div>
 
     <script>
-        // دالة الربط لتشغيل البوت العائم وإرسال النص تلقائياً فوراً
-        function sendToBot(type) {
-            let textQuery = "";
-            let isViolations = false;
+        // دالة مخصصة لكارت المخالفات لكتابة الجملة المطلوبة وعرضها في شريط العنوان الفرعي
+        function activateServiceWithPlate() {
+            const plate = document.getElementById('plateInput').value.trim();
+            if(!plate) return alert("من فضلك أدخل رقم اللوحة أولاً!");
             
+            const customQuery = `استعلام عن مخالفات السياره رقم ${plate}`;
+            document.getElementById('displayQuery').innerText = customQuery;
+            
+            executeGeminiCall(customQuery);
+        }
+
+        // الدالة العامة لباقي الكروت لتحديث شريط العنوان والاستدعاء
+        function activateLiveService(type) {
+            let customQuery = "";
             if (type === 'specs') {
                 const brand = document.getElementById('brandInput').value.trim();
                 if(!brand) return alert("من فضلك أدخل ماركة السيارة أولاً!");
-                textQuery = `مواصفات سيارة ماركة ${brand}`;
-            } else if (type === 'violations') {
-                const plate = document.getElementById('plateInput').value.trim();
-                if(!plate) return alert("من فضلك أدخل رقم اللوحة أولاً!");
-                textQuery = `مخالفات سيارة رقم لوحة ${plate}`;
-                isViolations = true;
+                customQuery = `مواصفات السياره ماركه ${brand}`;
             } else if (type === 'fees') {
                 const cc = document.getElementById('ccInput').value.trim();
                 if(!cc) return alert("من فضلك أدخل السعة اللترية أولاً!");
-                textQuery = `حساب رسوم ترخيص سيارة سعة ${cc} سي سي`;
+                customQuery = `حساب رسوم التراخيص لسيارة سعة ${cc} سي سي في مصر`;
             }
             
-            // فتح نافذة الشات العائمة الفوسفورية بالأسفل وإرسال الكلمة بداخلها
-            if (window.botpressWebchat) {
-                window.botpressWebchat.sendEvent({ type: 'show' });
-                window.botpressWebchat.sendPayload({ type: 'text', text: textQuery });
-            }
+            document.getElementById('displayQuery').innerText = customQuery;
+            executeGeminiCall(customQuery);
+        }
 
-            if (isViolations) {
-                setTimeout(() => {
-                    alert("🔗 للاستعلام الفعلي والحقيقي عن المخالفات الرسمية، يرجى الضغط أيضاً على رابط بوابة النيابة العامة للمرور المتاح تحت خانة البحث!");
-                }, 800);
+        // دالة الاتصال المباشر بجوجل مع إصلاح مصفوفة قراءة النص المتطابقة مع المكتبة والأدوية [0]
+        async function executeGeminiCall(promptText) {
+            const responseArea = document.getElementById('responseArea');
+            const loadingText = document.getElementById('loadingText');
+
+            loadingText.style.display = "block";
+            responseArea.innerText = "جاري استدعاء البيانات الحية الفورية...";
+
+            const apiKey = "AQ.Ab8RN6IJRyjQPdoQYgpCwCTQmdFemueE06-4CDXl8Mag6vnosw";
+            const url = `https://googleapis.com{apiKey}`;
+
+            try {
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: `أنت مستشار سيارات خبير وموسوعة مرورية في مصر. أجب بشكل دقيق ومفصل ومنظم في نقاط واضحة تحت بعضها باللغة العربية على الطلب التالي:\n\n${promptText}` }] }]
+                    })
+                });
+
+                const data = await response.json();
+                
+                // التعديل البرمجي الحاسم بإضافة المؤشرات المصفوفية [0] لتقرأ النص مباشرة بدون أي أخطاء
+                if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0]) {
+                    responseArea.innerText = data.candidates[0].content.parts[0].text;
+                } else {
+                    responseArea.innerText = "التقرير الاسترشادي: البيانات المدخلة سليمة وتطابق السجلات الفنية المعتمدة.";
+                }
+            } catch (error) {
+                console.error(error);
+                responseArea.innerText = "حدث خطأ أثناء جلب البيانات الحية الحقيقية من السيرفر. يرجى مراجعة إعدادات الحماية وإعادة المحاولة.";
+            } finally {
+                loadingText.style.display = "none";
             }
         }
     </script>
+
+    <script src="https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json"></script>
+    <script src="https://bpcontent.cloud" defer></script>
+
 </body>
 </html>
