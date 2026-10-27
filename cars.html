@@ -92,34 +92,23 @@
             transform: scale(1.03);
         }
 
-        .chat-section {
+        /* صندوق توجيهي أنيق للمستخدمين بدلاً من الـ iframe التالف */
+        .info-section {
             border: 1px solid var(--primary-color);
             border-radius: 8px;
             background-color: var(--card-bg);
-            overflow: hidden;
+            padding: 20px;
             margin-top: 10px;
+            text-align: center;
             box-shadow: 0 4px 15px rgba(0, 255, 204, 0.1);
-        }
-
-        .chat-header {
-            background-color: #111c24;
-            color: var(--primary-color);
-            padding: 12px;
-            font-weight: bold;
-            border-bottom: 1px solid var(--primary-color);
-            text-align: right;
-        }
-
-        .chat-body {
-            height: 350px;
-            background-color: #0a0a0a;
-            position: relative;
-        }
-
-        iframe {
             width: 100%;
-            height: 100%;
-            border: none;
+        }
+
+        .info-header {
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -127,46 +116,45 @@
 
     <div class="container">
         
-        <!-- استعادة شبكة الكروت والتصميم الأصلي الفخم بالكامل -->
+        <!-- شبكة الكروت الأصلية الفخمة كاملة -->
         <div class="cards-grid">
             <div class="card">
                 <h3>🔧 المواصفات الفنية</h3>
                 <p>استعلم عن مواصفات السيارة.</p>
                 <input type="text" id="brandInput" placeholder="أدخل ماركة السيارة...">
-                <button onclick="sendToBot('specs')">فحص المواصفات</button>
+                <button onclick="sendToLiveBot('specs')">فحص المواصفات</button>
             </div>
 
             <div class="card">
                 <h3>🚦 الاستعلام عن المخالفات</h3>
                 <p>المخالفات المرورية الصادرة.</p>
                 <input type="text" id="plateInput" placeholder="أدخل رقم اللوحة...">
-                <button onclick="sendToBot('violations')">عرض المخالفات</button>
+                <button onclick="sendToLiveBot('violations')">عرض المخالفات</button>
             </div>
 
             <div class="card">
                 <h3>💳 حساب رسوم التراخيص</h3>
                 <p>رسوم التراخيص وتجديد المركبات داخل مصر وفقاً للسعة والموديل.</p>
                 <input type="text" id="ccInput" placeholder="أدخل السعة اللترية (مثال: 1600)...">
-                <button onclick="sendToBot('fees')">حساب الرسوم</button>
+                <button onclick="sendToLiveBot('fees')">حساب الرسوم</button>
             </div>
         </div>
 
-        <!-- صندوق المستشار وبداخلة شات البوت المحدث تلقائياً -->
-        <div class="chat-section">
-            <div class="chat-header">
-                🟢 مستشار السيارات والمخالفات المحدث تلقائياً
-            </div>
-            <div class="chat-body">
-                <!-- دمج البوت الذكي ليعمل مباشرة وبثبات داخل صندوق التصميم -->
-                <iframe id="botIframe" src="https://botpress.cloud"></iframe>
-            </div>
+        <!-- لوحة التوجيه الرقمية بمنتصف الصفحة -->
+        <div class="info-section">
+            <div class="info-header">🟢 مستشار السيارات والمخالفات المحدث تلقائياً</div>
+            <p>أدخل البيانات في أي كارت بالأعلى واضغط على الزر الوردي، سيقوم المستشار الذكي بفتح نافذة المحادثة فوراً بالأسفل وعرض تقريرك الفني الحي الحقيقي بالكامل.</p>
         </div>
 
     </div>
 
+    <!-- كود استدعاء شات البوتبرس الرسمي والمفتوح المطابق للأدوية والمكتبة عندك بالملي -->
+    <script src="https://botpress.cloud"></script>
+    <script src="https://bpcontent.cloud" defer></script>
+
     <script>
-        // دالة الربط السحرية لإرسال الكلمات المكتوبة من خاناتك مباشرة لشات البوت المحدث
-        function sendToBot(type) {
+        // دالة الربط لتمرير الأسئلة الحية من الخانات إلى نافذة الشات الرسمية بالأسفل مباشرة
+        function sendToLiveBot(type) {
             let queryText = "";
             
             if (type === 'specs') {
@@ -183,12 +171,11 @@
                 queryText = `حساب رسوم التراخيص لسيارة سعة ${cc} سي سي في مصر`;
             }
             
-            // تحديث رابط الشات وتمرير السؤال له تلقائياً ليجيب فوراً بكل ذكاء
-            const iframe = document.getElementById('botIframe');
-            const baseUrl = "https://botpress.cloud";
-            
-            // إعادة تحميل الشات بالسؤال الجديد ليقوم بالرد المحدث فوراً
-            iframe.src = baseUrl + "&query=" + encodeURIComponent(queryText);
+            // فتح نافذة الشات وإرسال نص السؤال الفعلي تلقائياً للرد عليه فوراً
+            if (window.botpressWebchat) {
+                window.botpressWebchat.sendEvent({ type: 'show' });
+                window.botpressWebchat.sendPayload({ type: 'text', text: queryText });
+            }
         }
     </script>
 
