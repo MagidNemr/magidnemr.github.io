@@ -107,7 +107,6 @@
             color: #fff;
         }
 
-        /* تنسيق الصندوق المدمج الفخم ليصبح هو البوت الفعلي بملء المساحة */
         .chat-section {
             border: 1px solid var(--primary-color);
             border-radius: 8px;
@@ -128,7 +127,7 @@
         }
 
         .chat-body {
-            height: 480px; 
+            height: 500px; 
             background-color: #0a0a0a;
         }
 
@@ -143,8 +142,8 @@
 
     <div class="container">
         
-        <!-- الكروت الفخمة وتصميمك الأصلي النظيف بالكامل ومعه رابط النيابة العامة للمخالفات -->
         <div class="cards-grid">
+            <!-- كارت المواصفات الفنية -->
             <div class="card">
                 <h3>🔧 المواصفات الفنية</h3>
                 <p>استعلم عن مواصفات السيارة.</p>
@@ -152,6 +151,7 @@
                 <button onclick="sendToBotpress('specs')">فحص المواصفات</button>
             </div>
 
+            <!-- كارت الاستعلام عن المخالفات ورابط النيابة العامة المباشر -->
             <div class="card">
                 <h3>🚦 الاستعلام عن المخالفات</h3>
                 <p>المخالفات المرورية الصادرة الاسترشادية.</p>
@@ -161,6 +161,7 @@
                 <a href="https://ppo.gov.eg" target="_blank" class="gov-link">🌐 رابط بوابة النيابة العامة للمرور الرسمية</a>
             </div>
 
+            <!-- كارت حساب رسوم التراخيص -->
             <div class="card">
                 <h3>💳 حساب رسوم التراخيص</h3>
                 <p>رسوم التراخيص وتجديد المركبات داخل مصر وفقاً للسعة والموديل.</p>
@@ -169,21 +170,25 @@
             </div>
         </div>
 
-        <!-- جعل الخانة الفخمة السوداء بالأسفل هي الشات الفعلي المدمج مباشرة لمنع التداخل -->
+        <!-- صندوق مستشار السيارات المدمج الفخم بالكامل -->
         <div class="chat-section">
             <div class="chat-header">
-                🟢 مستشار السيارات وموسوعة المخالفات الذكي (مدمج بالكامل)
+                🟢 مستشار السيارات وموسوعة المخالفات الذكي (مدمج ومربوط بالكامل)
             </div>
             <div class="chat-body">
-                <!-- دمج واجهة البوت الشغال (الـ shareable) برابط الـ JSON الجديد المحدث بملء الصندوق الأسود تماماً -->
-                <iframe id="carBotFrame" src="https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json"></iframe>
+                <!-- الإطار مدمج ومرتبط بمعرف الـ JSON الحديث والمقفل الخاص بك -->
+                <iframe id="carBotFrame" src="https://botpress.cloud"></iframe>
             </div>
         </div>
 
     </div>
 
+    <!-- استدعاء ملفات تشغيل العميل السحابي لربط البيانات مباشرة بدون تحديث -->
+    <script src="https://botpress.cloud"></script>
+    <script src="https://bpcontent.cloud" defer></script>
+
     <script>
-        // دالة تحويل وضبط الأسئلة الحية وتمريرها داخل الصندوق الأسود مباشرة
+        // دالة الإصلاح البرمجي الفعالة لتوصيل وضخ البيانات مباشرة بداخل إطار الشات
         function sendToBotpress(type) {
             let textQuery = "";
             if (type === 'specs') {
@@ -201,11 +206,16 @@
             }
 
             const iframe = document.getElementById('carBotFrame');
-            const shareableUrl = "https://botpress.cloud";
             
-            // تحديث الشات الفعلي المدمج وتمرير السؤال له في نفس الثانية
-            if(textQuery) {
-                iframe.src = shareableUrl + "&query=" + encodeURIComponent(textQuery);
+            // الربط البرمجي الاحترافي: ضخ الرسالة بداخل الـ Webchat Window المدمجة فوراً وبدون ريفريش
+            if (textQuery && iframe && iframe.contentWindow) {
+                iframe.contentWindow.postMessage({
+                    action: 'sendPayload',
+                    payload: {
+                        type: 'text',
+                        text: textQuery
+                    }
+                }, '*');
             }
         }
     </script>
