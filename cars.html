@@ -3,191 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مستشار وموسوعة السيارات الذكي</title>
+    <title>مستشار السيارات وموسوعة المخالفات الذكية</title>
     <style>
-        :root {
-            --bg-color: #0b1116; 
-            --primary-color: #00ffcc; 
-            --btn-color: #ff2a74; 
-            --card-bg: rgba(17, 24, 39, 0.95);
-            --text-color: #ffffff;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+        body, html {
             margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            box-sizing: border-box;
-            direction: rtl;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            background-color: #0b131a; 
         }
-
-        .container {
+        iframe {
             width: 100%;
-            max-width: 1000px;
-        }
-
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-bottom: 25px;
-            margin-top: 20px;
-        }
-
-        .card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--primary-color);
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 255, 204, 0.1);
-        }
-
-        .card h3 {
-            margin-top: 0;
-            font-size: 1.3rem;
-            color: var(--primary-color);
-        }
-
-        .card p {
-            color: #9ca3af;
-            font-size: 0.95rem;
-            margin-bottom: 15px;
-        }
-
-        .card input {
-            width: 90%;
-            padding: 10px;
-            background-color: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 6px;
-            color: #fff;
-            text-align: center;
-            margin-bottom: 12px;
-            outline: none;
-        }
-
-        .card input:focus {
-            border-color: var(--primary-color);
-        }
-
-        .card button {
-            background-color: var(--btn-color);
-            color: white;
+            height: 100%;
             border: none;
-            padding: 10px 25px;
-            border-radius: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 80%;
-            transition: transform 0.2s;
-        }
-
-        .card button:hover {
-            transform: scale(1.03);
-        }
-
-        /* صندوق توجيهي أنيق للمستخدمين بدلاً من الـ iframe التالف */
-        .info-section {
-            border: 1px solid var(--primary-color);
-            border-radius: 8px;
-            background-color: var(--card-bg);
-            padding: 20px;
-            margin-top: 10px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 255, 204, 0.1);
-            width: 100%;
-        }
-
-        .info-header {
-            color: var(--primary-color);
-            font-weight: bold;
-            font-size: 1.2rem;
-            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        
-        <!-- شبكة الكروت الأصلية الفخمة كاملة -->
-        <div class="cards-grid">
-            <div class="card">
-                <h3>🔧 المواصفات الفنية</h3>
-                <p>استعلم عن مواصفات السيارة.</p>
-                <input type="text" id="brandInput" placeholder="أدخل ماركة السيارة...">
-                <button onclick="sendToLiveBot('specs')">فحص المواصفات</button>
-            </div>
-
-            <div class="card">
-                <h3>🚦 الاستعلام عن المخالفات</h3>
-                <p>المخالفات المرورية الصادرة.</p>
-                <input type="text" id="plateInput" placeholder="أدخل رقم اللوحة...">
-                <button onclick="sendToLiveBot('violations')">عرض المخالفات</button>
-            </div>
-
-            <div class="card">
-                <h3>💳 حساب رسوم التراخيص</h3>
-                <p>رسوم التراخيص وتجديد المركبات داخل مصر وفقاً للسعة والموديل.</p>
-                <input type="text" id="ccInput" placeholder="أدخل السعة اللترية (مثال: 1600)...">
-                <button onclick="sendToLiveBot('fees')">حساب الرسوم</button>
-            </div>
-        </div>
-
-        <!-- لوحة التوجيه الرقمية بمنتصف الصفحة -->
-        <div class="info-section">
-            <div class="info-header">🟢 مستشار السيارات والمخالفات المحدث تلقائياً</div>
-            <p>أدخل البيانات في أي كارت بالأعلى واضغط على الزر الوردي، سيقوم المستشار الذكي بفتح نافذة المحادثة فوراً بالأسفل وعرض تقريرك الفني الحي الحقيقي بالكامل.</p>
-        </div>
-
-    </div>
-
-    <!-- كود استدعاء شات البوتبرس الرسمي والمفتوح المطابق للأدوية والمكتبة عندك بالملي -->
-    <script src="https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json"></script>
-    <script src="https://bpcontent.cloud" defer></script>
-
-    <script>
-        // دالة الربط لتمرير الأسئلة الحية من الخانات إلى نافذة الشات الرسمية بالأسفل مباشرة
-        function sendToLiveBot(type) {
-            let queryText = "";
-            
-            if (type === 'specs') {
-                const brand = document.getElementById('brandInput').value.trim();
-                if(!brand) return alert("من فضلك أدخل ماركة السيارة أولاً!");
-                queryText = `مواصفات السياره ماركه ${brand}`;
-            } else if (type === 'violations') {
-                const plate = document.getElementById('plateInput').value.trim();
-                if(!plate) return alert("من فضلك أدخل رقم اللوحة أولاً!");
-                queryText = `استعلام عن مخالفات السياره رقم ${plate}`;
-            } else if (type === 'fees') {
-                const cc = document.getElementById('ccInput').value.trim();
-                if(!cc) return alert("من فضلك أدخل السعة اللترية أولاً!");
-                queryText = `حساب رسوم التراخيص لسيارة سعة ${cc} سي سي في مصر`;
-            }
-            
-            // فتح نافذة الشات وإرسال نص السؤال الفعلي تلقائياً للرد عليه فوراً
-            if (window.botpressWebchat) {
-                window.botpressWebchat.sendEvent({ type: 'show' });
-                window.botpressWebchat.sendPayload({ type: 'text', text: queryText });
-            }
-        }
-    
-    <script>
-        // دالة فتح الشات الفوري الآمن والمجرب بدون أي تعقيد
-        function sendToBot(type) {
-            if (window.botpressWebchat) {
-                window.botpressWebchat.sendEvent({ type: 'show' });
-            } else {
-                alert("شات المستشار جاهز الآن بأسفل اليمين، اضغط على الأيقونة الفوسفورية العائمة لبدء التحدث!");
-            }
-        }
-    </script>
+    <!-- كود البوتبرس الصافي المعتمد الخاص بك ليعمل بملء الشاشة تماماً مثل الأدوية والمكتبة -->
+    <iframe src="https://botpress.cloud"></iframe>
 
 </body>
 </html>
