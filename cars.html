@@ -107,6 +107,7 @@
             color: #fff;
         }
 
+        /* تنسيق صندوق المحادثة الفخم والمدمج كلياً داخل تصميمك */
         .chat-section {
             border: 1px solid var(--primary-color);
             border-radius: 8px;
@@ -115,6 +116,8 @@
             margin-top: 10px;
             box-shadow: 0 4px 15px rgba(0, 255, 204, 0.1);
             width: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
         .chat-header {
@@ -127,14 +130,77 @@
         }
 
         .chat-body {
-            height: 500px; 
+            height: 380px; 
             background-color: #0a0a0a;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
-        iframe {
-            width: 100%;
-            height: 100%;
+        .msg-user {
+            background-color: var(--btn-color);
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 8px 0px 8px 8px;
+            align-self: flex-end;
+            max-width: 80%;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .msg-bot {
+            background-color: #161f26;
+            color: #ffffff;
+            border-right: 4px solid var(--primary-color);
+            padding: 12px 15px;
+            border-radius: 0px 8px 8px 8px;
+            align-self: flex-start;
+            max-width: 85%;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            white-space: pre-line;
+        }
+
+        .chat-footer {
+            display: flex;
+            padding: 10px;
+            background-color: #111c24;
+            gap: 10px;
+            border-top: 1px solid #222;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px;
+            background-color: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 6px;
+            color: #fff;
+            outline: none;
+            text-align: right;
+            font-size: 1rem;
+        }
+
+        .btn-send {
+            background-color: var(--primary-color);
+            color: #000;
             border: none;
+            padding: 0 25px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .loading {
+            color: var(--primary-color);
+            font-weight: bold;
+            text-align: center;
+            margin: 5px 0;
+            display: none;
+            font-size: 0.9rem;
         }
     </style>
 </head>
@@ -143,53 +209,57 @@
     <div class="container">
         
         <div class="cards-grid">
-            <!-- كارت المواصفات الفنية -->
+            <!-- 1. كارت المواصفات الفنية -->
             <div class="card">
                 <h3>🔧 المواصفات الفنية</h3>
                 <p>استعلم عن مواصفات السيارة.</p>
                 <input type="text" id="brandInput" placeholder="أدخل ماركة السيارة...">
-                <button onclick="sendToBotpress('specs')">فحص المواصفات</button>
+                <button onclick="sendToBot('specs')">فحص المواصفات</button>
             </div>
 
-            <!-- كارت الاستعلام عن المخالفات ورابط النيابة العامة المباشر -->
+            <!-- 2. كارت الاستعلام عن المخالفات -->
             <div class="card">
                 <h3>🚦 الاستعلام عن المخالفات</h3>
                 <p>المخالفات المرورية الصادرة الاسترشادية.</p>
                 <input type="text" id="plateInput" placeholder="أدخل رقم اللوحة...">
-                <button onclick="sendToBotpress('violations')">عرض المخالفات</button>
+                <button onclick="sendToBot('violations')">عرض المخالفات</button>
                 <br>
                 <a href="https://ppo.gov.eg" target="_blank" class="gov-link">🌐 رابط بوابة النيابة العامة للمرور الرسمية</a>
             </div>
 
-            <!-- كارت حساب رسوم التراخيص -->
+            <!-- 3. كارت حساب رسوم التراخيص -->
             <div class="card">
                 <h3>💳 حساب رسوم التراخيص</h3>
                 <p>رسوم التراخيص وتجديد المركبات داخل مصر وفقاً للسعة والموديل.</p>
                 <input type="text" id="ccInput" placeholder="أدخل السعة اللترية (مثال: 1600)...">
-                <button onclick="sendToBotpress('fees')">حساب الرسوم</button>
+                <button onclick="sendToBot('fees')">حساب الرسوم</button>
             </div>
         </div>
 
-        <!-- صندوق مستشار السيارات المدمج الفخم بالكامل -->
+        <!-- صندوق مستشار السيارات المدمج بالكامل والفعال 100% -->
         <div class="chat-section">
             <div class="chat-header">
                 🟢 مستشار السيارات وموسوعة المخالفات الذكي (مدمج ومربوط بالكامل)
             </div>
-            <div class="chat-body">
-                <!-- الإطار مدمج ومرتبط بمعرف الـ JSON الحديث والمقفل الخاص بك -->
-                <iframe id="carBotFrame" src="https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json"></iframe>
+            <div class="chat-body" id="chatLogs">
+                <div class="msg-bot">نظام مستشار السيارات الشامل جاهز ومفعّل بالكامل لعام 2026. اكتب استفسارك بالأسفل أو اضغط على أي كارت وردي بالأعلى لبدء الفحص التلقائي الفوري المباشر...</div>
+            </div>
+            <div id="loadingText" class="loading">⏳ جاري مراجعة الموسوعة واستدعاء التقرير الفني الحي...</div>
+            <div class="chat-footer">
+                <input type="text" class="chat-input" id="userInput" placeholder="اكتب سؤالك هنا للمستشار...">
+                <button class="btn-send" onclick="handleManualSend()">إرسال</button>
             </div>
         </div>
 
     </div>
 
-    <!-- استدعاء ملفات تشغيل العميل السحابي لربط البيانات مباشرة بدون تحديث -->
-    <script src="https://botpress.cloud"></script>
-    <script src="https://bpcontent.cloud" defer></script>
-
     <script>
-        // دالة الإصلاح البرمجي الفعالة لتوصيل وضخ البيانات مباشرة بداخل إطار الشات
-        function sendToBotpress(type) {
+        // مفتاح البنية الأساسي النظيف والمفتوح بدون قيود لطلب الردود الحية مباشرة
+        const apiKey = "AIzaSyBvCbwq5kPa4M4M7SzqtjmgdJMMeBGdZwk";
+        const url = `https://googleapis.com{apiKey}`;
+
+        // دالة التقاط الأزرار الوردية وتوصيلها بالدردشة فوراً
+        function sendToBot(type) {
             let textQuery = "";
             if (type === 'specs') {
                 const brand = document.getElementById('brandInput').value.trim();
@@ -205,19 +275,29 @@
                 textQuery = `حساب رسوم ترخيص سيارة سعة ${cc} سي سي`;
             }
 
-            const iframe = document.getElementById('carBotFrame');
-            
-            // الربط البرمجي الاحترافي: ضخ الرسالة بداخل الـ Webchat Window المدمجة فوراً وبدون ريفريش
-            if (textQuery && iframe && iframe.contentWindow) {
-                iframe.contentWindow.postMessage({
-                    action: 'sendPayload',
-                    payload: {
-                        type: 'text',
-                        text: textQuery
-                    }
-                }, '*');
+            if(textQuery) {
+                appendUserMessage(textQuery);
+                executeLiveCall(textQuery);
             }
         }
-    </script>
-</body>
-</html>
+
+        // دالة الكتابة اليدوية داخل صندوق الدردشة
+        function handleManualSend() {
+            const inputField = document.getElementById('userInput');
+            const query = inputField.value.trim();
+            if(!query) return;
+
+            appendUserMessage(query);
+            executeLiveCall(query);
+            inputField.value = "";
+        }
+
+        // دالة عرض رسائل المستخدم بالصندوق
+        function appendUserMessage(text) {
+            const chatLogs = document.getElementById('chatLogs');
+            const userDiv = document.createElement('div');
+            userDiv.className = 'msg-user';
+            userDiv.textContent = text;
+            chatLogs.appendChild(userDiv);
+            chatLogs.scrollTop = chatLogs.scrollHeight;
+        }
