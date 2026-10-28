@@ -189,8 +189,8 @@
     hideWidget: true
   });
 </script>
- <script>
-  // دالة إرسال الأسئلة مباشرة لداخل الشات المدمج بدون ريفريش V3 //
+<script>
+  // الدالة العبقرية لإرسال السؤال كرسالة حية ومباشرة بدون ريفريش وبدون تعقيد //
   function sendToBotpress(type) {
     let textQuery = "";
     
@@ -210,16 +210,13 @@
       textQuery = `حساب رسوم ترخيص سيارة سعة ${cc} سي سي`;
     }
 
-    // هنا التصليح: استخدام window.botpress المباشر المتوافق مع الإصدار الثالث
+    // إرسال النص مباشرة كرسالة حية داخل الشات المدمج
     if (textQuery && window.botpress) {
-      window.botpress.sendPayload({
-        type: 'text',
-        text: textQuery
-      });
+      window.botpress.sendMessage(textQuery);
     } else {
-      console.log("البوت لم يتم تحميله بالكامل بعد أو هناك مشكلة في الاتصال");
+      console.log("البوت لم يتم تحميله بالكامل بعد");
     }
   }
-</script> 
+</script>
 </body>
 </html>
