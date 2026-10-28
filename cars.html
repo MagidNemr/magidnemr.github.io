@@ -169,23 +169,17 @@
             </div>
         </div>
 
-<!-- الصندوق الأسود المدمج اللي هيظهر جواه البوت تلقائياً -->
+
+<!-- الصندوق المدمج اللي هيظهر جواه البوت تلقائياً -->
     <div id="myCarBot" style="width: 100%; height: 500px; border: none; margin-top: 20px;"></div>
 </div>
 
-<!-- استدعاء سكريبت تشغيل البوت الرسمي بالإصدار المباشر v3 -->
+<!-- استدعاء ملفات تشغيل البوت الرسمية المستقرة -->
 <script src="https://botpress.cloud"></script>
-<script>
-  // تهيئة وتشغيل البوت جوه الصندوق المخصص
-  window.botpress.init({
-    configUrl: "https://bpcontent.cloud",
-    containerId: "myCarBot",
-    layoutWidth: "100%",
-    layoutHeight: "100%",
-    hideWidget: true 
-  });
+<script src="https://bpcontent.cloud"></script>
 
-  // الدالة السلسة لإرسال الأسئلة فوراً كرسالة عادية جوه الشات وبدون أي ريفريش
+<script>
+  // دالة إرسال الأسئلة مباشرة لداخل الشات المدمج بدون ريفريش //
   function sendToBotpress(type) {
     let textQuery = "";
     
@@ -205,12 +199,11 @@
       textQuery = `حساب رسوم ترخيص سيارة سعة ${cc} سي سي`;
     }
 
-    // إرسال النص مباشرة كرسالة عادية جوه الشات وبدون أي ريفريش
+    // إرسال النص الفوري للبوت المدمج في الصفحة كرسالة حية
     if (textQuery && window.botpress) {
       window.botpress.sendMessage(textQuery);
     }
   }
-</script>
-        
+</script>        
 </body>
 </html>
