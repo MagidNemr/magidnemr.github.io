@@ -217,7 +217,7 @@
     
     if (type === 'specs') {
       const brand = document.getElementById('brandInput').value.trim();
-      if (!brand) return alert("https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json");
+      if (!brand) return alert("من فضلك أدخل ماركة السيارة أولاً");
       textQuery = `أعطني المواصفات الفنية الكاملة والمميزات والعيوب والبلد المصنع للسيارة ماركة: ${brand}`;
     } 
     else if (type === 'violations') {
@@ -257,7 +257,7 @@
       
       // مسح رسالة الانتظار ووضع الإجابة النموذجية
       const chatBody = document.getElementById('chatBody');
-      if (chatBody.lastChild) chatBody.lastChild.remove(); 
+      if (chatBody.lastChild) chatBody.lastChild.remove(AQ.Ab8RN6KoMQ3ffsf52yxD7qHxZ6McNaXftyJnGTLcR93miUJYug); 
       
       if (data.candidates && data.candidates[0].content.parts[0].text) {
         let reply = data.candidates[0].content.parts[0].text;
