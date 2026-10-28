@@ -182,8 +182,9 @@
 </div>
 
 <script>
-  // مفتاح الـ API الجديد والآمن الخاص بك المربوط بـ Gemini AI مباشرة
-  const AI_API_KEY = "https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json";
+ <script>
+  // مفتاح الـ API الأول الشغال والجاهز
+  const AI_API_KEY = "AIzaSyBvCbwq5kPA4M4M75zqtjmgdJMWeBGdZwk";
 
   // دالة لإضافة الرسائل داخل الصندوق الأسود مباشرة
   function appendMessage(sender, text) {
@@ -239,46 +240,49 @@
     appendMessage('bot', "جاري التفكير وتجهيز الإجابة النموذجية الحية...");
 
     try {
-      // 3. الاتصال المباشر والآمن بسيرفرات Google Gemini الرسمية باستخدام المفتاح الجديد
-      const response = await fetch(`https://googleapis.com{AI_API_KEY}`, {
+      // التعديل السحري: الرابط المباشر والمصلح المتوافق مع المتصفحات لـ Gemini
+      const url = `https://googleapis.com{AI_API_KEY}`;
+      
+      const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
           contents: [{
-            parts: [{ text: `أنت مستشار وموسوعة السيارات والمخالفات المرورية الذكي المحدث في مصر لعام 2026. تجيب باللغة العربية بدقة وإيجاز وبإجابات نموذجية ومنظمة واضحة، وتوفر الروابط الرسمية عند الحاجة وتفاصيل السعة اللترية والرسوم بوضوح. أجب عن السؤال التالي مباشرة: ${textQuery}` }]
+            parts: [{ text: `أنت مستشار وموسوعة السيارات والمخالفات المرورية الذكي في مصر. تجيب باللغة العربية بدقة وإيجاز وبإجابات نموذجية ومنظمة واضحة، وتوفر الروابط الرسمية عند الحاجة. أجب عن السؤال التالي مباشرة وبسرعة: ${textQuery}` }]
           }]
         })
       });
 
       const data = await response.json();
       
-      // مسح رسالة الانتظار ووضع الإجابة النموذجية
+      // مسح رسالة الانتظار
       const chatBody = document.getElementById('chatBody');
       if (chatBody.lastChild) chatBody.lastChild.remove(); 
       
+      // قراءة الرد بالطريقة الهيكلية الصحيحة لـ Gemini API
       if (data.candidates && data.candidates[0].content.parts[0].text) {
         let reply = data.candidates[0].content.parts[0].text;
         
-        // تحويل تنسيقات النصوص البرمجية لتبدو منسقة وجميلة في المتصفح
+        // تنسيق النصوص البرمجية لتبدو جميلة
         reply = reply.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
         reply = reply.replace(/\*(.*?)\*/g, '<em>$1</em>');
         reply = reply.replace(/\n/g, '<br>');
         
         appendMessage('bot', reply);
       } else {
-        appendMessage('bot', "عذراً، حدث خطأ أثناء معالجة الإجابة من سيرفر جوجل. تأكد من إعدادات الفاتورة أو الصلاحية للمفتاح.");
+        appendMessage('bot', "عذراً، لم يتمكن المفتاح من معالجة البيانات، يرجى التحقق من تفعيل الـ API في حساب Google AI Studio الخاص بك.");
       }
 
     } catch (error) {
       console.error(error);
       const chatBody = document.getElementById('chatBody');
       if (chatBody.lastChild) chatBody.lastChild.remove();
-      appendMessage('bot', "فشل الاتصال المباشر بالذكاء الاصطناعي، يرجى إعادة المحاولة.");
+      appendMessage('bot', "حدث خطأ في الاتصال، تأكد من اتصالك بالإنترنت وحالة الـ API الكودية.");
     }
   }
-</script> 
+</script>
         
 </body>
 </html>
