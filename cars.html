@@ -190,7 +190,7 @@
   function appendMessage(sender, text) {
     const chatBody = document.getElementById('chatBody');
     const welcomeText = document.getElementById('welcomeText');
-    if (welcomeText) welcomeText.remove();
+    if (welcomeText) welcomeText.style.display = 'none'; // إخفاء نص الترحيب بسلاسة
 
     const msgDiv = document.createElement('div');
     msgDiv.style.marginBottom = "15px";
@@ -236,11 +236,10 @@
     // 1. إظهار سؤال المستخدم في الصندوق
     appendMessage('user', textQuery);
     
-    // 2. إظهار كلمة جاري التفكير...
+    // 2. إظهار رسالة الانتظار
     appendMessage('bot', "جاري التفكير وتجهيز الإجابة النموذجية الحية...");
 
     try {
-      // التعديل السحري: الرابط المباشر والمصلح المتوافق مع المتصفحات لـ Gemini
       const url = `https://googleapis.com{AI_API_KEY}`;
       
       const response = await fetch(url, {
@@ -261,25 +260,25 @@
       const chatBody = document.getElementById('chatBody');
       if (chatBody.lastChild) chatBody.lastChild.remove(); 
       
-      // قراءة الرد بالطريقة الهيكلية الصحيحة لـ Gemini API
-      if (data.candidates && data.candidates[0].content.parts[0].text) {
+      // هنا تم إصلاح مسار قراءة النص بدقة تامة لتفادي الاختفاء أو التهنيج
+      if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0]) {
         let reply = data.candidates[0].content.parts[0].text;
         
-        // تنسيق النصوص البرمجية لتبدو جميلة
+        // تنسيق النصوص البرمجية لتبدو جميلة ومقروءة للمستخدم
         reply = reply.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
         reply = reply.replace(/\*(.*?)\*/g, '<em>$1</em>');
         reply = reply.replace(/\n/g, '<br>');
         
         appendMessage('bot', reply);
       } else {
-        appendMessage('bot', "عذراً، لم يتمكن المفتاح من معالجة البيانات، يرجى التحقق من تفعيل الـ API في حساب Google AI Studio الخاص بك.");
+        appendMessage('bot', "عذراً، لم يتمكن المفتاح من إرجاع رد، تأكد من أن الحساب مفعّل ونشط.");
       }
 
     } catch (error) {
       console.error(error);
       const chatBody = document.getElementById('chatBody');
       if (chatBody.lastChild) chatBody.lastChild.remove();
-      appendMessage('bot', "حدث خطأ في الاتصال، تأكد من اتصالك بالإنترنت وحالة الـ API الكودية.");
+      appendMessage('bot', "حدث خطأ في الاتصال، يرجى المحاولة مرة أخرى.");
     }
   }
 </script>
