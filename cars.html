@@ -176,14 +176,14 @@
             </div>
             <div class="chat-body">
                 <!-- دمج واجهة البوت الشغال (الـ shareable) برابط الـ JSON الجديد المحدث بملء الصندوق الأسود تماماً -->
-                <iframe id="carBotFrame" src="https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json"></iframe>
-            </div>
-        </div>
+                <!-- كود تضمين البوت الذكي بدلاً من الـ iframe القديم -->
+<script src="https://botpress.cloud"></script>
+<script src="https://bpcontent.cloud"></script>
 
     </div>
 
  <script>
-  // دالة تحويل وضبط الأسئلة الحية وتمريرها داخل الصندوق الأسود مباشرة //
+  // دالة إرسال الأسئلة مباشرة لداخل الشات بدون تحديث الصفحة //
   function sendToBotpress(type) {
     let textQuery = "";
     
@@ -203,14 +203,15 @@
       textQuery = `حساب رسوم ترخيص سيارة سعة ${cc} سي سي`;
     }
 
-    const iframe = document.getElementById('carBotFrame');
-    
-    // الرابط المباشر لبوتك المأخوذ من رسالتك لمنع أي تعارض
-    const baseShareableUrl = "https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json";
-
-    if (textQuery) {
-      // تحديث الشات الفعلي وتمرير السؤال له مباشرة عبر الرابط
-      iframe.src = baseShareableUrl + "&query=" + encodeURIComponent(textQuery);
+    // هنا يتم إرسال النص مباشرة للبوت المدمج بدون روابط وبدون إعادة تحميل
+    if (textQuery && window.botpressWebchat) {
+      window.botpressWebchat.sendPayload({
+        type: 'text',
+        text: textQuery
+      });
+      
+      // فتح نافذة الشات تلقائياً للمستخدم ليراها فوراً
+      window.botpressWebchat.sendEvent({ type: 'show' });
     }
   }
 </script>
