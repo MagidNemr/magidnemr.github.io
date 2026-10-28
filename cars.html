@@ -182,32 +182,37 @@
 
     </div>
 
-    <script>
-        // دالة تحويل وضبط الأسئلة الحية وتمريرها داخل الصندوق الأسود مباشرة
-        function sendToBotpress(type) {
-            let textQuery = "";
-            if (type === 'specs') {
-                const brand = document.getElementById('brandInput').value.trim();
-                if(!brand) return alert("من فضلك أدخل ماركة السيارة أولاً!");
-                textQuery = `مواصفات سيارة ماركة ${brand}`;
-            } else if (type === 'violations') {
-                const plate = document.getElementById('plateInput').value.trim();
-                if(!plate) return alert("من فضلك أدخل رقم اللوحة أولاً!");
-                textQuery = `مخالفات سيارة رقم لوحة ${plate}`;
-            } else if (type === 'fees') {
-                const cc = document.getElementById('ccInput').value.trim();
-                if(!cc) return alert("من فضلك أدخل السعة اللترية أولاً!");
-                textQuery = `حساب رسوم ترخيص سيارة سعة ${cc} سي سي`;
-            }
+  <script>
+  // دالة تحويل وضبط الأسئلة الحية وتمريرها داخل الصندوق الأسود مباشرة //
+  function sendToBotpress(type) {
+    let textQuery = "";
+    
+    if (type === 'specs') {
+      const brand = document.getElementById('brandInput').value.trim();
+      if (!brand) return alert("من فضلك أدخل ماركة السيارة أولاً");
+      textQuery = `مواصفات السياره ماركه ${brand}`;
+    } 
+    else if (type === 'violations') {
+      const plate = document.getElementById('plateInput').value.trim();
+      if (!plate) return alert("من فضلك أدخل رقم اللوحة أولاً");
+      textQuery = `استعلام عن مخالفات السياره رقم ${plate}`;
+    } 
+    else if (type === 'fees') {
+      const cc = document.getElementById('ccInput').value.trim();
+      if (!cc) return alert("من فضلك أدخل السعة اللترية أولاً");
+      textQuery = `حساب رسوم ترخيص سيارة سعة ${cc} سي سي`;
+    }
 
-            const iframe = document.getElementById('carBotFrame');
-            const shareableUrl = "https://botpress.cloud";
-            
-            // تحديث الشات الفعلي المدمج وتمرير السؤال له في نفس الثانية
-            if(textQuery) {
-                iframe.src = shareableUrl + "&query=" + encodeURIComponent(textQuery);
-            }
-        }
-    </script>
+    const iframe = document.getElementById('carBotFrame');
+    
+    // هنا الرابط الصحيح لبوتك المأخوذ من السطر 180 لكي لا يتغير تصميم البوت
+    const baseShareableUrl = "https://botpress.cloud";
+
+    if (textQuery) {
+      // تحديث الشات الفعلي المدمج وتمرير السؤال له مباشرة عبر الرابط وبدون أي مشاكل
+      iframe.src = baseShareableUrl + "&query=" + encodeURIComponent(textQuery);
+    }
+  }
+</script>
 </body>
 </html>
