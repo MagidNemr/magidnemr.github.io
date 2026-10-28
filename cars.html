@@ -179,7 +179,7 @@
 <div id="myCarBot" style="width: 100%; height: 500px; border: none;"></div>
 
 <!-- استدعاء ملف تشغيل بوتبريس الرسمي -->
-<script src="https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json"></script>
+<script src="https://botpress.cloud"></script>
 <script>
   window.botpress.init({
     configUrl: "https://bpcontent.cloud",
@@ -189,9 +189,8 @@
     hideWidget: true
   });
 </script>
-  // دالة إرسال الأسئلة مباشرة لداخل الشات بدون تحديث الصفحة //
-  <script>
-  // دالة إرسال الأسئلة مباشرة لداخل الشات المدمج بدون ريفريش //
+ <script>
+  // دالة إرسال الأسئلة مباشرة لداخل الشات المدمج بدون ريفريش V3 //
   function sendToBotpress(type) {
     let textQuery = "";
     
@@ -211,14 +210,16 @@
       textQuery = `حساب رسوم ترخيص سيارة سعة ${cc} سي سي`;
     }
 
-    // إرسال النص الفوري للبوت المدمج في الصفحة
-    if (textQuery && window.botpressWebchat) {
-      window.botpressWebchat.sendPayload({
+    // هنا التصليح: استخدام window.botpress المباشر المتوافق مع الإصدار الثالث
+    if (textQuery && window.botpress) {
+      window.botpress.sendPayload({
         type: 'text',
         text: textQuery
       });
+    } else {
+      console.log("البوت لم يتم تحميله بالكامل بعد أو هناك مشكلة في الاتصال");
     }
   }
-</script>
+</script> 
 </body>
 </html>
