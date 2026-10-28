@@ -148,7 +148,7 @@
             <div class="card">
                 <h3>🔧 المواصفات الفنية</h3>
                 <p>استعلم عن مواصفات السيارة.</p>
-                <input type="text" id="brandInput" placeholder="أدخل ماركة السيارة...">
+                <input type="text" id="brandInput" placeholder="AQ.Ab8RN6KoMQ3ffsf52yxD7qHxZ6McNaXftyJnGTLcR93miUJYug...">
                 <button onclick="sendToBotpress('specs')">  <h3>🔧 المواصفات </h3></button>
             </div>
 
@@ -257,7 +257,7 @@
       
       // مسح رسالة الانتظار ووضع الإجابة النموذجية
       const chatBody = document.getElementById('chatBody');
-      if (chatBody.lastChild) chatBody.lastChild.remove(AQ.Ab8RN6KoMQ3ffsf52yxD7qHxZ6McNaXftyJnGTLcR93miUJYug); 
+      if (chatBody.lastChild) chatBody.lastChild.remove(); 
       
       if (data.candidates && data.candidates[0].content.parts[0].text) {
         let reply = data.candidates[0].content.parts[0].text;
