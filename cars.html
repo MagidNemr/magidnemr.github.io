@@ -148,7 +148,7 @@
             <div class="card">
                 <h3>🔧 المواصفات الفنية</h3>
                 <p>استعلم عن مواصفات السيارة.</p>
-                <input type="AQ.Ab8RN6KoMQ3ffsf52yxD7qHxZ6McNaXftyJnGTLcR93miUJYug" id="brandInput" placeholder="أدخل ماركة السيارة...">
+                <input type="text" id="brandInput" placeholder="أدخل ماركة السيارة...">
                 <button onclick="sendToBotpress('specs')">  <h3>🔧 المواصفات </h3></button>
             </div>
 
@@ -170,116 +170,42 @@
             </div>
         </div>
 
-       <!-- جعل خانة الخدمة السوداء بالأسفل هي الشات الفعلي المدمج مباشرة لمنع التداخل -->
-    <div class="chat-section">
-        <div class="chat-header">
-            <span class="status-dot"></span> مستشار السيارات وموسوعة المخالفات الذكي (مدعوم بـ Gemini AI الآمن)
-        </div>
-        <div class="chat-body" id="chatBody" style="height: 400px; overflow-y: auto; padding: 15px; background: #111; color: #fff; font-family: sans-serif; line-height: 1.6; text-align: right; direction: rtl;">
-            <!-- الرسائل ستظهر هنا تلقائياً -->
-            <div style="color: #aaa; text-align: center; margin-top: 150px;" id="welcomeText">مرحباً بك! أدخل البيانات بالأعلى واضغط على أي زر للبدء الفوري...</div>
-        </div>
+     <!-- الصندوق المدمج الذي سيظهر جواه مستطيل البوت بالكامل -->
+    <div class="chat-section" style="margin-top: 20px;">
+        <iframe id="carBotFrame" src="https://botpress.cloud" style="width: 100%; height: 500px; border: none; border-radius: 8px;"></iframe>
     </div>
 </div>
 
 <script>
-  // مفتاح الـ API الجديد والآمن الخاص بك المربوط بـ Gemini AI مباشرة
-  const AI_API_KEY = "AQ.Ab8RN6KoMQ3ffsf52yxD7qHxZ6McNaXftyJnGTLcR93miUJYug";
-
-  // دالة لإضافة الرسائل داخل الصندوق الأسود مباشرة
-  function appendMessage(sender, text) {
-    const chatBody = document.getElementById('chatBody');
-    const welcomeText = document.getElementById('welcomeText');
-    if (welcomeText) welcomeText.remove();
-
-    const msgDiv = document.createElement('div');
-    msgDiv.style.marginBottom = "15px";
-    msgDiv.style.padding = "10px";
-    msgDiv.style.borderRadius = "5px";
-    
-    if (sender === 'user') {
-      msgDiv.style.background = "#222";
-      msgDiv.style.borderLeft = "4px solid #ff4a5a";
-      msgDiv.innerHTML = `<strong>أنت:</strong> ${text}`;
-    } else {
-      msgDiv.style.background = "#1a1a1a";
-      msgDiv.style.borderLeft = "4px solid #4caf50";
-      msgDiv.innerHTML = `<strong>الذكاء الاصطناعي:</strong> ${text}`;
-    }
-    
-    chatBody.appendChild(msgDiv);
-    chatBody.scrollTop = chatBody.scrollHeight;
-  }
-
-  // الدالة الرئيسية المربوطة بالأزرار الثلاثة
-  async function sendToBotpress(type) {
+  // دالة تحويل وضبط الأسئلة وتمريرها داخل مستطيل البوت مباشرة بدون ريفريش للصفحة
+  function sendToBotpress(type) {
     let textQuery = "";
     
     if (type === 'specs') {
       const brand = document.getElementById('brandInput').value.trim();
       if (!brand) return alert("من فضلك أدخل ماركة السيارة أولاً");
-      textQuery = `أعطني المواصفات الفنية الكاملة والمميزات والعيوب والبلد المصنع للسيارة ماركة: ${brand}`;
+      textQuery = `مواصفات السياره ماركه ${brand}`;
     } 
     else if (type === 'violations') {
       const plate = document.getElementById('plateInput').value.trim();
       if (!plate) return alert("من فضلك أدخل رقم اللوحة أولاً");
-      textQuery = `كيف يمكنني الاستعلام عن مخالفات السيارة التي تحمل لوحة رقم: ${plate} في مصر؟ وما هو الرابط الرسمي للنيابة العامة للمرور؟`;
+      textQuery = `استعلام عن مخالفات السياره رقم ${plate}`;
     } 
     else if (type === 'fees') {
       const cc = document.getElementById('ccInput').value.trim();
       if (!cc) return alert("من فضلك أدخل السعة اللترية أولاً");
-      textQuery = `احسب لي بالتفصيل الرسوم التقريبية لتجديد ترخيص سيارة سعة ${cc} سي سي في مصر وفقاً للقانون الحالي.`;
+      textQuery = `حساب رسوم ترخيص سيارة سعة ${cc} سي سي`;
     }
 
-    if (!textQuery) return;
+    const iframe = document.getElementById('carBotFrame');
+    const baseShareableUrl = "https://botpress.cloud";
 
-    // 1. إظهار سؤال المستخدم في الصندوق
-    appendMessage('user', textQuery);
-    
-    // 2. إظهار كلمة جاري التفكير...
-    appendMessage('bot', "جاري التفكير وتجهيز الإجابة النموذجية الحية...");
-
-    try {
-      // 3. الاتصال المباشر والآمن بسيرفرات Google Gemini الرسمية باستخدام المفتاح الجديد
-      const response = await fetch(`https://googleapis.com{AI_API_KEY}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          contents: [{
-            parts: [{ text: `أنت مستشار وموسوعة السيارات والمخالفات المرورية الذكي المحدث في مصر لعام 2026. تجيب باللغة العربية بدقة وإيجاز وبإجابات نموذجية ومنظمة واضحة، وتوفر الروابط الرسمية عند الحاجة وتفاصيل السعة اللترية والرسوم بوضوح. أجب عن السؤال التالي مباشرة: ${textQuery}` }]
-          }]
-        })
-      });
-
-      const data = await response.json();
-      
-      // مسح رسالة الانتظار ووضع الإجابة النموذجية
-      const chatBody = document.getElementById('chatBody');
-      if (chatBody.lastChild) chatBody.lastChild.remove(); 
-      
-      if (data.candidates && data.candidates[0].content.parts[0].text) {
-        let reply = data.candidates[0].content.parts[0].text;
-        
-        // تحويل تنسيقات النصوص البرمجية لتبدو منسقة وجميلة في المتصفح
-        reply = reply.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-        reply = reply.replace(/\*(.*?)\*/g, '<em>$1</em>');
-        reply = reply.replace(/\n/g, '<br>');
-        
-        appendMessage('bot', reply);
-      } else {
-        appendMessage('bot', "عذراً، حدث خطأ أثناء معالجة الإجابة من سيرفر جوجل. تأكد من إعدادات الفاتورة أو الصلاحية للمفتاح.");
-      }
-
-    } catch (error) {
-      console.error(error);
-      const chatBody = document.getElementById('chatBody');
-      if (chatBody.lastChild) chatBody.lastChild.remove();
-      appendMessage('bot', "فشل الاتصال المباشر بالذكاء الاصطناعي، يرجى إعادة المحاولة.");
+    if (textQuery) {
+      // تمرير السؤال فوراً لمستطيل البوت ليرد بالإجابة النموذجية
+      iframe.src = baseShareableUrl + "&query=" + encodeURIComponent(textQuery);
     }
   }
-</script> 
+</script>
         
 </body>
 </html>
