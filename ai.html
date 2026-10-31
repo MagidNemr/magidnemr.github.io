@@ -83,7 +83,7 @@
             <a href="index.html" class="back-link">⬅️ العودة للرئيسية</a>
         </div>
 
-        <!-- تم وضع الرابط الكامل والمباشر للبوت الخاص بك هنا ليعمل فوراً دون أخطاء -->
+        <!-- مستطيل الشات الذكي برابط البوت الفعلي المخصص لموقعك -->
         <div class="iframe-container">
             <iframe
                 src="https://www.chatbase.co/chatbot-iframe/My4yAuZurG3j0QBX22rkp"
@@ -92,36 +92,6 @@
             ></iframe>
         </div>
     </div>
-<script src="https://sdk.minepi.com/pi-sdk.js"></script>
 
-<button onclick="loginWithPi()">تسجيل الدخول عبر Pi</button>
-
-<script>
-        // دالة تصفية وفرز الكتب فورياً أثناء الكتابة
-        function filterBooks() {
-            let input = document.getElementById('librarySearch').value.toLowerCase();
-            let bookItems = document.getElementsByClassName('book-item');
-            let hasResults = false;
-
-            for (let i = 0; i < bookItems.length; i++) {
-                let searchTags = bookItems[i].getAttribute('data-title').toLowerCase();
-                
-                if (searchTags.includes(input)) {
-                    bookItems[i].style.display = "flex";
-                    hasResults = true;
-                } else {
-                    bookItems[i].style.display = "none";
-                }
-            }
-
-            // إظهار رسالة عدم وجود نتائج في حال لم يطابق البحث أي كتاب
-            let noResults = document.getElementById('noResultsMessage');
-            if (hasResults) {
-                noResults.style.display = "none";
-            } else {
-                noResults.style.display = "block";
-            }
-        }
-    </script>
 </body>
 </html>
