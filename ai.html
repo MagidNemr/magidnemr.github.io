@@ -92,6 +92,20 @@
             ></iframe>
         </div>
     </div>
+<script src="https://minepi.com"></script>
+<script src="pi-payments.js"></script>
+<script>
+  // تهيئة الشبكة التجريبية داخل صفحة المستشار
+  Pi.init({ version: "2.0", sandbox: true });
 
+  // التحقق من تسجيل دخول الرواد فور فتح هذه الصفحة
+  Pi.authenticate(['username'], function(payment) {
+    console.log("مدفوعات معلقة:", payment);
+  }).then(function(auth) {
+    console.log("مرحباً بك في المستشار الذكي: " + auth.user.username);
+  }).catch(function(error) {
+    console.error("خطأ في المصادقة:", error);
+  });
+</script>
 </body>
 </html>
