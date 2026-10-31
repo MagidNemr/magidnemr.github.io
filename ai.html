@@ -93,25 +93,24 @@
         </div>
     </div>
 <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+
+<button onclick="loginWithPi()">تسجيل الدخول عبر Pi</button>
+
 <script>
-  // 1. تهيئة الـ SDK للشبكة التجريبية
-  Pi.init({ version: "2.0", sandbox: true });
+  Pi.init({ version: "2.0", sandbox: true }); // للاختبار فقط
 
-  // 2. تحديد الصلاحيات المطلوبة (المدفوعات واسم المستخدم)
-  const scopes = ['payments', 'username'];
+  async function loginWithPi() {
+    try {
+      const auth = await Pi.authenticate(
+        ["username"],
+        () => console.log("يوجد دفع غير مكتمل")
+      );
 
-  // 3. تفعيل المصادقة الفورية لتشغيل البوت بـ Pi
-  Pi.authenticate(scopes, onIncompletePaymentFound)
-    .then(function(auth) {
-      console.log("تم تسجيل الدخول بنجاح للمستخدم: " + auth.user.username);
-    })
-    .catch(function(error) {
-      console.error("خطأ في المصادقة:", error);
-    });
-
-  // 4. الدالة الإلزامية للتعامل مع المدفوعات غير المكتملة كما بالتوثيق
-  function onIncompletePaymentFound(payment) {
-    console.log("تم العثور على عملية دفع معلقة ورقمها:", payment.identifier);
+      alert("مرحبًا " + auth.user.username);
+    } catch (error) {
+      console.error("تعذر تسجيل الدخول:", error);
+      alert("حدث خطأ أثناء تسجيل الدخول");
+    }
   }
 </script>
 </body>
