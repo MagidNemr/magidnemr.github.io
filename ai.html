@@ -92,20 +92,28 @@
             ></iframe>
         </div>
     </div>
-<script src="https://minepi.com"></script>
+<script src="https://sdk.minepi.com/pi-sdk.js"></script>
 <script src="pi-payments.js"></script>
 <script>
-  // تهيئة الشبكة التجريبية داخل صفحة المستشار
+  // 1. تهيئة الـ SDK للشبكة التجريبية
   Pi.init({ version: "2.0", sandbox: true });
 
-  // التحقق من تسجيل دخول الرواد فور فتح هذه الصفحة
-  Pi.authenticate(['username'], function(payment) {
-    console.log("مدفوعات معلقة:", payment);
-  }).then(function(auth) {
-    console.log("مرحباً بك في المستشار الذكي: " + auth.user.username);
-  }).catch(function(error) {
-    console.error("خطأ في المصادقة:", error);
-  });
+  // 2. تحديد الصلاحيات المطلوبة (المدفوعات واسم المستخدم) كما بالصورة
+  const scopes = ['payments', 'username'];
+
+  // 3. تفعيل المصادقة الفورية لتشغيل البوت بـ Pi
+  Pi.authenticate(scopes, onIncompletePaymentFound)
+    .then(function(auth) {
+      console.log("تم تسجيل الدخول بنجاح للمستخدم: " + auth.user.username);
+    })
+    .catch(function(error) {
+      console.error("خطأ في المصادقة:", error);
+    });
+
+  // 4. الدالة الإلزامية للتعامل مع المدفوعات غير المكتملة كما بالتوثيق
+  function onIncompletePaymentFound(payment) {
+    console.log("تم العثور على عملية دفع معلقة ورقمها:", payment.identifier);
+  }
 </script>
 </body>
 </html>
