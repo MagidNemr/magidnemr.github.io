@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+   
 <head>
+     <script src="https://minepi.com"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Tech Aide | اللوحة الهندسية</title>
@@ -372,6 +374,22 @@ function executeActualFeature(actionName) {
     // هنا تضع الأكواد الخاصة بك لفتح الـ PDF أو إظهار نتائج حاسبة الأحمال
 }
                 </script>
-    
+    <script>
+  // تهيئة تطبيق Pi
+  const Pi = window.Pi;
+  Pi.init({ version: "2.0", sandbox: true });
+
+  // طلب تسجيل دخول المستخدم تلقائياً عند فتح التطبيق
+  Pi.authenticate(['username'], onIncompletePaymentFound)
+    .then(function(auth) {
+      console.log("مرحباً بك في تطبيقنا: " + auth.user.username);
+    }).catch(function(error) {
+      console.error("خطأ في تسجيل الدخول:", error);
+    });
+
+  function onIncompletePaymentFound(payment) {
+    // دالة التعامل مع المدفوعات المعلقة (اتركها فارغة حالياً)
+  }
+</script>
 </body>
 </html>
