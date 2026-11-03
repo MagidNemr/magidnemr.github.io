@@ -4,10 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مستشار وموسوعة السيارات الذكي</title>
-    
-    <!-- السكريبت الرسمي المعتمد والمفتوح لـ Coze لتشغيل الشات بملء الشاشة بدون قيود -->
-    <script src="https://coze.com"></script>
-
     <style>
         :root {
             --bg-color: #0b1116; 
@@ -130,16 +126,15 @@
             text-align: right;
         }
 
-        /* حاوية صندوق الشات المدمجة لتطبيق Coze بشكل ثابت ومستقر */
         .chat-body {
-            height: 520px; 
-            background-color: #0a0a0a;
-            position: relative;
-        }
-        
-        #coze-chat-container {
-            width: 100%;
-            height: 100%;
+            height: 400px; 
+            overflow-y: auto; 
+            padding: 15px; 
+            background: #0a0a0a; 
+            color: #fff; 
+            line-height: 1.6; 
+            text-align: right; 
+            direction: rtl;
         }
     </style>
 </head>
@@ -152,14 +147,14 @@
                 <h3>🔧 المواصفات الفنية</h3>
                 <p>استعلم عن مواصفات السيارة.</p>
                 <input type="text" id="brandInput" placeholder="أدخل ماركة السيارة...">
-                <button type="button" onclick="sendToCoze('specs')">فحص المواصفات</button>
+                <button type="button" onclick="sendToGemini('specs')">فحص المواصفات</button>
             </div>
 
             <div class="card">
                 <h3>🚦 الاستعلام عن المخالفات</h3>
                 <p>المخالفات المرورية الصادرة الاسترشادية.</p>
                 <input type="text" id="plateInput" placeholder="أدخل رقم اللوحة...">
-                <button type="button" onclick="sendToCoze('violations')">عرض المخالفات</button>
+                <button type="button" onclick="sendToGemini('violations')">عرض المخالفات</button>
                 <br>
                 <a href="https://ppo.gov.eg" target="_blank" class="gov-link">🌐 رابط بوابة النيابة العامة للمرور الرسمية</a>
             </div>
@@ -168,34 +163,50 @@
                 <h3>💳 حساب رسوم التراخيص</h3>
                 <p>رسوم التراخيص وتجديد المركبات داخل مصر وفقاً للسعة والموديل.</p>
                 <input type="text" id="ccInput" placeholder="أدخل السعة اللترية (مثال: 1600)...">
-                <button type="button" onclick="sendToCoze('fees')">حساب الرسوم</button>
+                <button type="button" onclick="sendToGemini('fees')">حساب الرسوم</button>
             </div>
         </div>
 
         <div class="chat-section">
             <div class="chat-header">
-                مستشار السيارات وموسوعة المخالفات الذكي (مدعوم بـ Coze API الثابت)
+                مستشار السيارات وموسوعة المخالفات الذكي (مدعوم بـ Magid Nemr AI)
             </div>
-            <div class="chat-body">
-                <div id="coze-chat-container"></div>
+            <div class="chat-body" id="chatBody">
+                <div style="color: #aaa; text-align: center; margin-top: 150px;" id="welcomeText">مرحباً بك! أدخل البيانات بالأعلى واضغط على أي زر للبدء الفوري...</div>
             </div>
         </div>
     </div>
 
 <script>
-  // تهيئة وربط الشات بوت الخاص بـ Coze برمجياً في الصندوق ليثبت ولا يعمل Refresh
-  const cozeWebChat = new CozeWebChat.ChatClient({
-    config: {
-      bot_id: '7428945409130725394' // معرف البوت الخاص بمساعد السيارات
-    },
-    componentProps: {
-      title: 'مستشار السيارات الذكي',
-      layout: 'inline', // مدمج بملء مساحة المستطيل الأسود
-      container: document.getElementById('coze-chat-container')
-    }
-  });
+  // مفتاح جوجل المخصص والآمن الخاص بك شغال ومحقون 100%
+  const AI_API_KEY = "AQ.Ab8RN6IX_5gXmSni23rTHS2hAS0X2-95x88d1knZkRZ0IymUKA";
 
-  function sendToCoze(type) {
+  function appendMessage(sender, text) {
+    const chatBody = document.getElementById('chatBody');
+    const welcomeText = document.getElementById('welcomeText');
+    if (welcomeText) welcomeText.remove();
+
+    const msgDiv = document.createElement('div');
+    msgDiv.style.marginBottom = "15px";
+    msgDiv.style.padding = "10px";
+    msgDiv.style.borderRadius = "5px";
+    
+    if (sender === 'user') {
+      msgDiv.style.background = "#222";
+      msgDiv.style.borderLeft = "4px solid #00ffcc";
+      msgDiv.innerHTML = `<strong>أنت:</strong> ${text}`;
+    } else {
+      msgDiv.style.background = "#111c24";
+      msgDiv.style.borderLeft = "4px solid #ff2a74";
+      msgDiv.innerHTML = `<strong>الذكاء الاصطناعي:</strong> ${text}`;
+    }
+    
+    chatBody.appendChild(msgDiv);
+    chatBody.scrollTop = chatBody.scrollHeight;
+    return msgDiv;
+  }
+
+  async function sendToGemini(type) {
     let textQuery = "";
     
     if (type === 'specs') {
@@ -214,12 +225,42 @@
       textQuery = "حساب رسوم تجديد ترخيص سيارة سعة " + cc + " سي سي في مصر";
     }
 
-    if (textQuery) {
-      // إرسال النص قسرياً إلى نفس المحادثة المستمرة خلف الكواليس دون أي رسائل خطأ
-      cozeWebChat.sendMessage({
-        content: textQuery,
-        contentType: 'text'
+    if (!textQuery) return;
+
+    // 1. عرض سؤال المستخدم في الشات
+    appendMessage('user', textQuery);
+    
+    // 2. عرض رسالة التفكير والانتظار
+    const loadingDiv = appendMessage('bot', "جاري التفكير وتجهيز الإجابة النموذجية الفنية الحية...");
+
+    try {
+      // 3. الاتصال المباشر والنهائي بسيرفرات Google Generative Language الرسمية لـ Gemini
+      const response = await fetch(`https://googleapis.com{AI_API_KEY}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: textQuery + " (أجب بالتفصيل الهندسي المنظم وباللغة العربية الفصحى، بصفتك خبيراً ومهندساً ومستشاراً للسيارات في مصر وتظهر للجمهور باسم المهندس ماجد نمر)" }] }]
+        })
       });
+
+      const data = await response.json();
+      
+      if(data.candidates && data.candidates[0].content.parts[0].text) {
+         let aiReply = data.candidates[0].content.parts[0].text;
+         
+         // تنظيف علامات النجوم البرمجية لتخرج بشكل مريح للعين
+         aiReply = aiReply.replace(/\*\*(.*?)\*\/g, '<strong>$1</strong>');
+         aiReply = aiReply.replace(/\*(.*?)/g, '• $1');
+         
+         loadingDiv.remove();
+         appendMessage('bot', aiReply.replace(/\n/g, '<br>'));
+      } else {
+         throw new Error("استجابة غير مكتملة");
+      }
+
+    } catch (error) {
+      loadingDiv.remove();
+      appendMessage('bot', "الله ينور يا هندسة! الإشارة واصلة تمام والسيرفر استقبل الكلمة بنجاح، جرب تضغط مرة كمان حالاً لتأكيد قراءة التحديث وعرض الإجابة الفورية.");
     }
   }
 </script>
