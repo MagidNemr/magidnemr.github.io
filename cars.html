@@ -170,16 +170,7 @@
         </div>
 
        <!-- جعل خانة الخدمة السوداء بالأسفل هي الشات الفعلي المدمج مباشرة لمنع التداخل -->
-    <div class="chat-section">
-        <div class="chat-header">
-            <span class="status-dot"></span> مستشار السيارات وموسوعة المخالفات الذكي (مدعوم بـ Gemini AI الآمن)
-        </div>
-        <div class="chat-body" id="chatBody" style="height: 400px; overflow-y: auto; padding: 15px; background: #111; color: #fff; font-family: sans-serif; line-height: 1.6; text-align: right; direction: rtl;">
-            <!-- الرسائل ستظهر هنا تلقائياً -->
-            <div style="color: #aaa; text-align: center; margin-top: 150px;" id="welcomeText">مرحباً بك! أدخل البيانات بالأعلى واضغط على أي زر للبدء الفوري...</div>
-        </div>
-    </div>
-</div>
+   parts: [{ text: "أنت مستشار السيارات والمخالفات، أجب بدقة وإيجاز نموذجية باللغة العربية عن: " + textQuery }]
 
 <script>
   // مفتاح الـ API الجديد والآمن الخاص بك المربوط بـ Gemini AI مباشرة
