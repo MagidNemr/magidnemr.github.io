@@ -167,14 +167,14 @@
             </div>
         </div>
 
-        <!-- حاوية الـ بوت الموحدة لعرض ردود الذكاء الاصطناعي الفورية -->
+        <!-- حاوية الـ بوت الموحدة والرابط الفعلي الشغال للبوت الأسود -->
         <div class="chat-container">
-            <iframe id="carBotFrame" src="https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json"></iframe>
+            <iframe id="carBotFrame" src="https://botpress.cloud"></iframe>
         </div>
     </div>
 
     <script>
-        // دالة إرسال النص إلى الـ iframe الخاص بالبوت
+        // الدالة السحرية لإرسال النص وتأكيد نزوله داخل شات بوتبرس v3.7 فوراً
         function sendToBot(text) {
             const iframe = document.getElementById('carBotFrame');
             iframe.contentWindow.postMessage({
@@ -214,15 +214,27 @@
                 alert('الرجاء إدخال بيانات السيارة أو المحرك.');
             }
         }
-        // تفعيل الإرسال بالضغط على زر Enter في الكيبورد
-        document.getElementById('specInput').addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') { searchSpecs(); }
+
+        // --- تشغيل كبسة Enter في الكيبورد لكل الخانات تلقائياً ---
+        document.getElementById('specInput').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                searchSpecs();
+            }
         });
-        document.getElementById('violationInput').addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') { searchViolations(); }
+
+        document.getElementById('violationInput').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                searchViolations();
+            }
         });
-        document.getElementById('feesInput').addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') { searchFees(); }
+
+        document.getElementById('feesInput').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                searchFees();
+            }
         });
     </script>
 </body>
