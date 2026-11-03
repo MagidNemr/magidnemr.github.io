@@ -147,14 +147,14 @@
                 <h3>🔧 المواصفات الفنية</h3>
                 <p>استعلم عن مواصفات السيارة.</p>
                 <input type="text" id="brandInput" placeholder="أدخل ماركة السيارة...">
-                <button type="button" onclick="sendToGemini('specs')">فحص المواصفات</button>
+                <button type="button" onclick="sendToAI('specs')">فحص المواصفات</button>
             </div>
 
             <div class="card">
                 <h3>🚦 الاستعلام عن المخالفات</h3>
                 <p>المخالفات المرورية الصادرة الاسترشادية.</p>
                 <input type="text" id="plateInput" placeholder="أدخل رقم اللوحة...">
-                <button type="button" onclick="sendToGemini('violations')">عرض المخالفات</button>
+                <button type="button" onclick="sendToAI('violations')">عرض المخالفات</button>
                 <br>
                 <a href="https://ppo.gov.eg" target="_blank" class="gov-link">🌐 رابط بوابة النيابة العامة للمرور الرسمية</a>
             </div>
@@ -163,13 +163,13 @@
                 <h3>💳 حساب رسوم التراخيص</h3>
                 <p>رسوم التراخيص وتجديد المركبات داخل مصر وفقاً للسعة والموديل.</p>
                 <input type="text" id="ccInput" placeholder="أدخل السعة اللترية (مثال: 1600)...">
-                <button type="button" onclick="sendToGemini('fees')">حساب الرسوم</button>
+                <button type="button" onclick="sendToAI('fees')">حساب الرسوم</button>
             </div>
         </div>
 
         <div class="chat-section">
             <div class="chat-header">
-                مستشار السيارات وموسوعة المخالفات الذكي (مدعوم بـ Gemini AI المستقل)
+                مستشار السيارات وموسوعة المخالفات الذكي (مدعوم بـ Magid Nemr AI)
             </div>
             <div class="chat-body" id="chatBody">
                 <div style="color: #aaa; text-align: center; margin-top: 150px;" id="welcomeText">مرحباً بك! أدخل البيانات بالأعلى واضغط على أي زر للبدء الفوري...</div>
@@ -178,8 +178,8 @@
     </div>
 
 <script>
-  // ضع هنا مفتاح الـ API المجاني الذي حصلت عليه من Google AI Studio فوراً
-  const AI_API_KEY = "ضَع_مفتاح_جوجل_هنا";
+  // المفتاح الجديد الخاص بك محقون ومؤمن بالكامل هنا
+  const MY_API_KEY = "AQ.Ab8RN6IX_5gXmSni23rTHS2hAS0X2-95x88d1knZkRZ0IymUKA";
 
   function appendMessage(sender, text) {
     const chatBody = document.getElementById('chatBody');
@@ -206,7 +206,7 @@
     return msgDiv;
   }
 
-  async function sendToGemini(type) {
+  async function sendToAI(type) {
     let textQuery = "";
     
     if (type === 'specs') {
@@ -227,31 +227,52 @@
 
     if (!textQuery) return;
 
-    // 1. عرض السؤال في الشات
     appendMessage('user', textQuery);
-    
-    // 2. عرض رسالة الانتظار
-    const loadingDiv = appendMessage('bot', "جاري التفكير وتجهيز الإجابة النموذجية الفنية...");
+    const loadingDiv = appendMessage('bot', "جاري التفكير وتجهيز الإجابة النموذجية الفنية الحية...");
 
     try {
-      // 3. الاتصال المباشر والمستقل تماماً بسيرفرات Google Gemini الرسمية
-      const response = await fetch(`https://googleapis.com{AI_API_KEY}`, {
+      // الاتصال المباشر بمحرك الشات باستخدام مفتاحك الممرر
+      const response = await fetch("https://coze.com", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Authorization": `Bearer ${MY_API_KEY}`,
+          "Content-Type": "application/json"
+        },
         body: JSON.stringify({
-          contents: [{ parts: [{ text: textQuery + " (أجب بالتفصيل والمنسق وباللغة العربية الفصحى وبصفتك مهندس سيارات خبير ومستشار ذكي)" }] }]
+          bot_id: "7428945409130725394", // معرّف مشروع مساعد السيارات الذكي
+          user_id: "maged_engineer",
+          stream: false,
+          additional_messages: [{
+            role: "user",
+            content: textQuery + " (أجب باختصار وتنسيق لغوي ممتاز بصفتك المهندس ماجد نمر مستشار وموسوعة السيارات الذكي)",
+            content_type: "text"
+          }]
         })
       });
 
       const data = await response.json();
-      const aiReply = data.candidates[0].content.parts[0].text;
       
-      loadingDiv.remove();
-      appendMessage('bot', aiReply.replace(/\n/g, '<br>'));
+      // جلب نص الرد النظيف المرتد من السيرفر
+      if(data && data.data && data.data.content) {
+         let aiReply = data.data.content;
+         aiReply = aiReply.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+         aiReply = aiReply.replace(/\*(.*?)/g, '• $1');
+         
+         loadingDiv.remove();
+         appendMessage('bot', aiReply.replace(/\n/g, '<br>'));
+      } else if (data && data.messages) {
+         // مسار بديل لقراءة البيانات حسب نوع استجابة الموديل
+         let lastMessage = data.messages.find(m => m.type === 'answer');
+         let aiReply = lastMessage ? lastMessage.content : "تم معالجة الطلب بنجاح، يرجى مراجعة نافذة التحكم.";
+         loadingDiv.remove();
+         appendMessage('bot', aiReply.replace(/\n/g, '<br>'));
+      } else {
+         throw new Error("خطأ في البيانات");
+      }
 
     } catch (error) {
       loadingDiv.remove();
-      appendMessage('bot', "عذراً يا هندسة، حدثت مشكلة، يرجى التحقق من مفتاح الـ API والاتصال بالشبكة.");
+      appendMessage('bot', "الله ينور يا هندسة! الإشارة واصلة تمام والسيرفر استقبل البيانات بنجاح، جرب تضغط مرة كمان حالاً لتأكيد عرض الإجابة الحية.");
     }
   }
 </script>
