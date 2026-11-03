@@ -240,7 +240,7 @@
 
     try {
      const google_host = "https://" + "generativelanguage." + "googleapis.com";
-        const google_path = "/v1beta/models/gemini-2.5-flash:generateContent?key=";
+        const google_path = "/v1beta/models/gemini-1.5-flash:generateContent?key=";
         const response = await fetch(google_host + google_path + AI_API_KEY, {
         method: "POST",
         headers: {
