@@ -174,13 +174,15 @@
     </div>
 
     <script>
-        // دالة إرسال النص إلى الـ iframe الخاص بالبوت
-        function sendToBot(text) {
+     function sendToBot(text) {
             const iframe = document.getElementById('carBotFrame');
-            // تأمين إرسال البيانات وربطها بالـ iframe بشكل صحيح لتوليد استجابة جينوم حقيقية
-            iframe.contentWindow.postMessage({ type: 'SEND_MESSAGE', text: text }, '*');
+            iframe.contentWindow.postMessage({
+                action: 'send_message',
+                payload: {
+                    text: text
+                }
+            }, '*');
         }
-
         // تنفيذ طلب البحث عن المواصفات بالصيغة المطلوبة
         function searchSpecs() {
             const value = document.getElementById('specInput').value.trim();
