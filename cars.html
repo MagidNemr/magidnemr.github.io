@@ -240,7 +240,7 @@
 
     try {
       // 3. الاتصال المباشر والآمن بسيرفرات Google Gemini الرسمية باستخدام المفتاح الجديد
-      const response = await fetch(`https://googleapis.com{AI_API_KEY}`, {
+     const response = await fetch("https://googleapis.com" + AI_API_KEY, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -278,71 +278,6 @@
       appendMessage('bot', "فشل الاتصال المباشر بالذكاء الاصطناعي، يرجى إعادة المحاولة.");
     }
   }
-    // دالة إرسال النص الرسمية المتوافقة تماماً مع جدار حماية المتصفحات والبوت المدمج
-        function sendToBot(text) {
-            if (window.botpress && typeof window.botpress.sendMessage === 'function') {
-                window.botpress.sendMessage(text);
-            } else {
-                window.botpress = window.botpress || {};
-                window.botpress.on = window.botpress.on || function() {};
-                window.botpress.on('webchat:ready', function() {
-                    window.botpress.sendMessage(text);
-                });
-            }
-        }
-
-        // تنفيذ طلب البحث عن المواصفات بالصيغة المطلوبة
-        function searchSpecs() {
-            const value = document.getElementById('specInput').value.trim();
-            if (value) {
-                sendToBot('مواصفات السياره ماركه ' + value);
-            } else {
-                alert('الرجاء إدخال ماركة السيارة أولاً.');
-            }
-        }
-
-        // تنفيذ طلب الاستعلام عن المخالفات بالصيغة المطلوبة
-        function searchViolations() {
-            const value = document.getElementById('violationInput').value.trim();
-            if (value) {
-                sendToBot('استعلام عن مخالفات السياره رقم ' + value);
-            } else {
-                alert('الرجاء إدخال رقم السيارة أولاً.');
-            }
-        }
-
-        // تنفيذ طلب احتساب الرسوم
-        function searchFees() {
-            const value = document.getElementById('feesInput').value.trim();
-            if (value) {
-                sendToBot('احسب رسوم وتكلفة ترخيص وفحص سيارة بمواصفات: ' + value);
-            } else {
-                alert('الرجاء إدخال بيانات السيارة أو المحرك.');
-            }
-        }
-
-        // تفعيل ميزة الإرسال الفوري بالضغط على زر Enter في لوحة المفاتيح
-        document.getElementById('specInput').addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                searchSpecs();
-            }
-        });
-
-        document.getElementById('violationInput').addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                searchViolations();
-            }
-        });
-
-        document.getElementById('feesInput').addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                searchFees();
-            }
-        });
-  
 </script> 
         
 </body>
