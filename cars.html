@@ -205,8 +205,37 @@
   }
 
   // الدالة الرئيسية المربوطة بالأزرار الثلاثة
-  async function sendToBotpress(type) {
-    let textQuery = "";
+  // دالة إرسال النص إلى البوت الأسود وتفعيل كبسة Enter تلقائياً
+        function sendToBotpress(type) {
+            let inputId = type === 'specs' ? 'brandInput' : type === 'violations' ? 'plateInput' : 'ccInput';
+            let prefix = type === 'specs' ? 'مواصفات السياره ماركه ' : type === 'violations' ? 'استعلام عن مخالفات السياره رقم ' : 'احسب رسوم سيارة بمواصفات: ';
+            let value = document.getElementById(inputId).value.trim();
+            
+            if (value) {
+                const iframe = document.getElementById('carBotFrame');
+                // الطريقة البرمجية الرسمية لإرسال النص مباشرة إلى الـ iframe
+                iframe.contentWindow.postMessage({
+                    action: 'send_message',
+                    payload: {
+                        text: prefix + value
+                    }
+                }, '*');
+            } else {
+                alert('الرجاء ملء الخانة أولاً.');
+            }
+        }
+
+        // تفعيل الإرسال الفوري بالضغط على زر Enter من لوحة المفاتيح
+        document.getElementById('brandInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') { e.preventDefault(); sendToBotpress('specs'); }
+        });
+        document.getElementById('plateInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') { e.preventDefault(); sendToBotpress('violations'); }
+        });
+        document.getElementById('ccInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') { e.preventDefault(); sendToBotpress('fees'); }
+        });
+    let textQuery = "https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json";
     
     if (type === 'specs') {
       const brand = document.getElementById('brandInput').value.trim();
