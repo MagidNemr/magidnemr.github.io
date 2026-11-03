@@ -107,7 +107,6 @@
             color: #fff;
         }
 
-        /* تنسيق الصندوق المدمج الفخم ليصبح هو البوت الفعلي بملء المساحة */
         .chat-section {
             border: 1px solid var(--primary-color);
             border-radius: 8px;
@@ -148,14 +147,14 @@
                 <h3>🔧 المواصفات الفنية</h3>
                 <p>استعلم عن مواصفات السيارة.</p>
                 <input type="text" id="brandInput" placeholder="أدخل ماركة السيارة...">
-                <button onclick="sendToBotpress('specs')">فحص المواصفات</button>
+                <button type="button" onclick="sendToBotpress('specs')">فحص المواصفات</button>
             </div>
 
             <div class="card">
                 <h3>🚦 الاستعلام عن المخالفات</h3>
                 <p>المخالفات المرورية الصادرة الاسترشادية.</p>
                 <input type="text" id="plateInput" placeholder="أدخل رقم اللوحة...">
-                <button onclick="sendToBotpress('violations')">عرض المخالفات</button>
+                <button type="button" onclick="sendToBotpress('violations')">عرض المخالفات</button>
                 <br>
                 <a href="https://ppo.gov.eg" target="_blank" class="gov-link">🌐 رابط بوابة النيابة العامة للمرور الرسمية</a>
             </div>
@@ -164,11 +163,10 @@
                 <h3>💳 حساب رسوم التراخيص</h3>
                 <p>رسوم التراخيص وتجديد المركبات داخل مصر وفقاً للسعة والموديل.</p>
                 <input type="text" id="ccInput" placeholder="أدخل السعة اللترية (مثال: 1600)...">
-                <button onclick="sendToBotpress('fees')">حساب الرسوم</button>
+                <button type="button" onclick="sendToBotpress('fees')">حساب الرسوم</button>
             </div>
         </div>
 
-        <!-- الصندوق الأسود المدمج بالأسفل تم ربطه برابط البوتبريس الجديد -->
         <div class="chat-section">
             <div class="chat-header">
                 مستشار السيارات وموسوعة المخالفات الذكي (مدعوم بـ Botpress AI)
@@ -200,9 +198,9 @@
     }
 
     if (textQuery) {
-      // إرسال النص المدخل وتحديث الـ iframe تلقائياً ليقرا النص الجديد داخل الشات
       const baseUrl = "https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json";
-      const finalUrl = baseUrl + "&query=" + encodeURIComponent(textQuery);
+      // تعديل الرابط ليمرر النص مباشرة إلى البوت بريس دون تحديث الصفحة بالكامل
+      const finalUrl = baseUrl + "&chatIntoView=true&query=" + encodeURIComponent(textQuery);
       document.getElementById('botFrame').src = finalUrl;
     }
   }
