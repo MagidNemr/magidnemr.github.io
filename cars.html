@@ -4,11 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مستشار وموسوعة السيارات الذكي</title>
-    
-    <!-- السكريبت الرسمي لـ Botpress لتشغيل الشات المدمج والآمن خلف الكواليس -->
-    <script src="https://botpress.cloud"></script>
-    <script src="https://botpress.cloud" defer></script>
-
     <style>
         :root {
             --bg-color: #0b1116; 
@@ -131,16 +126,15 @@
             text-align: right;
         }
 
-        /* حاوية الشات الفاخرة المدمجة */
         .chat-body {
             height: 500px; 
             background-color: #0a0a0a;
-            position: relative;
         }
-        
-        #bp-webchat {
+
+        iframe {
             width: 100%;
             height: 100%;
+            border: none;
         }
     </style>
 </head>
@@ -175,24 +169,16 @@
 
         <div class="chat-section">
             <div class="chat-header">
-                مستشار السيارات وموسوعة المخالفات الذكي (مدعوم بـ Botpress API الثابت)
+                مستشار السيارات وموسوعة المخالفات الذكي (مدعوم بـ Botpress AI)
             </div>
             <div class="chat-body">
-                <!-- الصندوق الأسود المدمج بداخله واجهة الشات بشكل ثابت ومباشر -->
-                <div id="bp-webchat"></div>
+                <!-- هنا تم وضع رابط البوت الخاص بك داخل الـ iframe ليعمل بملء الصندوق فورا -->
+                <iframe id="botFrame" src="https://botpress.cloud"></iframe>
             </div>
         </div>
     </div>
 
 <script>
-  // تهيئة وربط الشات بوت برمجياً في الصندوق ليثبت ولا يعيد التحميل
-  window.botpressWebChat.init({
-      "container": "#bp-webchat",
-      "layoutWidth": "100%",
-      "hideWidget": true,
-      "disableAnimations": true
-  });
-
   function sendToBotpress(type) {
     let textQuery = "";
     
@@ -213,11 +199,10 @@
     }
 
     if (textQuery) {
-      // إرسال النص مباشرة إلى نفس المحادثة المستمرة خلف الكواليس دون تحديث واجهة البوت
-      window.botpressWebChat.sendPayload({
-        type: 'text',
-        text: textQuery
-      });
+      // الرابط الأساسي الخاص بك مضاف إليه ميزة التمرير الذكي دون تحديث الصفحة
+      const baseUrl = "https://botpress.cloud";
+      const finalUrl = baseUrl + "&query=" + encodeURIComponent(textQuery);
+      document.getElementById('botFrame').src = finalUrl;
     }
   }
 </script>
