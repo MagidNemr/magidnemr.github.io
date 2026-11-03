@@ -119,13 +119,11 @@
             height: 500px;
             margin-top: 20px;
         }
-
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
     </style>
+    
+    <!-- استدعاء ملفات تشغيل وحقن البوت الرسمية من منصة Botpress -->
+    <script src="https://botpress.cloud"></script>
+    <script src="https://bpcontent.cloud" defer></script>
 </head>
 <body>
 
@@ -149,7 +147,7 @@
             <!-- كارت المخالفات المرورية -->
             <div class="card violations">
                 <h3>المرور والمخالفات</h3>
-                <p>استعلم عن المخالفات المرورية المسجلة على السيارة وطرق الفحص الفني للسيارات واللوحات.</p>
+                <p>استعلم عن المخالفات المرورية المسجلة على المدينة أو السيارة وطرق الفحص الفني للسيارات واللوحات.</p>
                 <div class="input-group">
                     <input type="text" id="violationInput" placeholder="أدخل رقم لوحة السيارة...">
                     <button onclick="searchViolations()">فحص</button>
@@ -167,25 +165,27 @@
             </div>
         </div>
 
-        <!-- العودة لطريقة الـ iframe المستقرة والمضمونة لعرض البوت بالكامل مع رابط الـ Shareable الصحيح -->
+        <!-- حاوية عرض البوت المفتوحة والمباشرة لتجنب مشاكل الـ iframe تماماً -->
         <div class="chat-container">
-            <iframe id="carBotFrame" src="https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json"></iframe>
+            <div id="bp-webchat" style="width: 100%; height: 100%;"></div>
         </div>
     </div>
 
     <script>
-        // إرسال النص إلى البوت عبر نافذة الـ iframe بشكل مستقر ومتوافق مع Botpress v3.7
+        // دالة إرسال النص المباشرة المتوافقة مع أمان المتصفحات عبر مكتبة جافا سكريبت الرسمية للمنصة
         function sendToBot(text) {
-            const iframe = document.getElementById('carBotFrame');
-            iframe.contentWindow.postMessage({
-                action: 'send_message',
-                payload: {
-                    text: text
-                }
-            }, '*');
+            if (window.botpress && typeof window.botpress.sendMessage === 'function') {
+                window.botpress.sendMessage(text);
+            } else {
+                window.botpress = window.botpress || {};
+                window.botpress.on = window.botpress.on || function() {};
+                window.botpress.on('webchat:ready', function() {
+                    window.botpress.sendMessage(text);
+                });
+            }
         }
 
-        // تنفيذ طلب البحث عن المواصفات
+        // تنفيذ طلب البحث عن المواصفات بالصيغة المطلوبة
         function searchSpecs() {
             const value = document.getElementById('specInput').value.trim();
             if (value) {
@@ -195,7 +195,7 @@
             }
         }
 
-        // تنفيذ طلب الاستعلام عن المخالفات
+        // تنفيذ طلب الاستعلام عن المخالفات بالصيغة المطلوبة
         function searchViolations() {
             const value = document.getElementById('violationInput').value.trim();
             if (value) {
@@ -214,6 +214,17 @@
                 alert('الرجاء إدخال بيانات السيارة أو المحرك.');
             }
         }
+
+        // تفاعلات أزرار الـ Enter بلوحة المفاتيح
+        document.getElementById('specInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') { searchSpecs(); }
+        });
+        document.getElementById('violationInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') { searchViolations(); }
+        });
+        document.getElementById('feesInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') { searchFees(); }
+        });
     </script>
 </body>
 </html>
