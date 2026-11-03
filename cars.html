@@ -239,9 +239,9 @@
     appendMessage('bot', "جاري التفكير وتجهيز الإجابة النموذجية الحية...");
 
     try {
-      // 3. الاتصال المباشر والآمن بسيرفرات Google Gemini الرسمية باستخدام المفتاح الجديد
-    const google_server = "https://" + "generativelanguage." + "googleapis.com" + "/v1beta/models/gemini-pro:generateContent?key=";
-        const response = await fetch(google_server + AI_API_KEY, {
+     const google_host = "https://" + "generativelanguage." + "googleapis.com";
+        const google_path = "/v1beta/models/gemini-2.5-flash:generateContent?key=";
+        const response = await fetch(google_host + google_path + AI_API_KEY);
         method: "POST",
         headers: {
           "Content-Type": "application/json"
