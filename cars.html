@@ -183,7 +183,7 @@
 
 <script>
   // مفتاح الـ API الجديد والآمن الخاص بك المربوط بـ Gemini AI مباشرة
-  const AI_API_KEY = "AQ.Ab8RN6IJRyjQPdoQYgpCwCTQmdFemueE06-4CDXl8Mag6vnosw";
+  const AI_API_KEY = "AQ.Ab8RN6IX_5gXmSni23rTHS2hAS0X2-95x88d1knZkRZ0IymUKA";
 
   // دالة لإضافة الرسائل داخل الصندوق الأسود مباشرة
   function appendMessage(sender, text) {
@@ -240,7 +240,8 @@
 
     try {
       // 3. الاتصال المباشر والآمن بسيرفرات Google Gemini الرسمية باستخدام المفتاح الجديد
-     const response = await fetch("https://googleapis.com" + AI_API_KEY, {
+    const google_server = "https://" + "generativelanguage." + "googleapis.com" + "/v1beta/models/gemini-pro:generateContent?key=";
+        const response = await fetch(google_server + AI_API_KEY, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -278,6 +279,16 @@
       appendMessage('bot', "فشل الاتصال المباشر بالذكاء الاصطناعي، يرجى إعادة المحاولة.");
     }
   }
+    // تفعيل الإرسال بالضغط على زر Enter من لوحة المفاتيح
+        document.getElementById('brandInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') { e.preventDefault(); sendToBotpress('specs'); }
+        });
+        document.getElementById('plateInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') { e.preventDefault(); sendToBotpress('violations'); }
+        });
+        document.getElementById('ccInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') { e.preventDefault(); sendToBotpress('fees'); }
+        });
 </script> 
         
 </body>
