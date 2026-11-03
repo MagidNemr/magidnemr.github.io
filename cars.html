@@ -172,8 +172,8 @@
                 مستشار السيارات وموسوعة المخالفات الذكي (مدعوم بـ Botpress AI)
             </div>
             <div class="chat-body">
-                <!-- هنا تم وضع رابط البوت الخاص بك داخل الـ iframe ليعمل بملء الصندوق فورا -->
-                <iframe id="botFrame" src="https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json"></iframe>
+                <!-- تم تعيين اسم للـ iframe ليكون هدفاً ثابتاً ومستقراً لإرسال البيانات دون اختفاء -->
+                <iframe id="botFrame" name="botChatTarget" src="https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json"></iframe>
             </div>
         </div>
     </div>
@@ -199,10 +199,10 @@
     }
 
     if (textQuery) {
-      // الرابط الأساسي الخاص بك مضاف إليه ميزة التمرير الذكي دون تحديث الصفحة
-      const baseUrl = "https://botpress.cloud";
+      const baseUrl = "https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json";
+      // دمج آمن ومحمي ومجرب يفصل الرابط عن النص لضمان بقاء البوت ظاهراً باستمرار
       const finalUrl = baseUrl + "&query=" + encodeURIComponent(textQuery);
-      document.getElementById('botFrame').src = finalUrl;
+      window.open(finalUrl, 'botChatTarget');
     }
   }
 </script>
