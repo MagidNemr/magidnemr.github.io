@@ -178,7 +178,7 @@
     </div>
 
 <script>
-  // مفتاح جوجل المخصص والآمن الخاص بك شغال ومحقون 100%
+  // مفتاحك الشخصي والمجاني المستقر من جوجل
   const AI_API_KEY = "AQ.Ab8RN6IX_5gXmSni23rTHS2hAS0X2-95x88d1knZkRZ0IymUKA";
 
   function appendMessage(sender, text) {
@@ -227,40 +227,41 @@
 
     if (!textQuery) return;
 
-    // 1. عرض سؤال المستخدم في الشات
+    // 1. عرض سؤالك في الشات
     appendMessage('user', textQuery);
     
-    // 2. عرض رسالة التفكير والانتظار
+    // 2. عرض رسالة الانتظار والتحميل
     const loadingDiv = appendMessage('bot', "جاري التفكير وتجهيز الإجابة النموذجية الفنية الحية...");
 
     try {
-      // 3. الاتصال المباشر والنهائي بسيرفرات Google Generative Language الرسمية لـ Gemini
+      // 3. مسار استدعاء سيرفرات جوجل جينيريتيف آي الرسمي والكامل
       const response = await fetch(`https://googleapis.com{AI_API_KEY}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          contents: [{ parts: [{ text: textQuery + " (أجب بالتفصيل الهندسي المنظم وباللغة العربية الفصحى، بصفتك خبيراً ومهندساً ومستشاراً للسيارات في مصر وتظهر للجمهور باسم المهندس ماجد نمر)" }] }]
+          contents: [{ parts: [{ text: textQuery + " (أجب بالتفصيل الهندسي المنظم المنسق، واجعل لغتك عربية فصحى مبسطة بصفتك مهندس سيارات خبير ومستشار ذكي في المرور المصري وتظهر للجمهور باسم المهندس ماجد نمر)" }] }]
         })
       });
 
       const data = await response.json();
       
+      // 4. قراءة رد جوجل النظيف وعرضه في الشات
       if(data.candidates && data.candidates[0].content.parts[0].text) {
          let aiReply = data.candidates[0].content.parts[0].text;
          
-         // تنظيف علامات النجوم البرمجية لتخرج بشكل مريح للعين
-         aiReply = aiReply.replace(/\*\*(.*?)\*\/g, '<strong>$1</strong>');
+         // تنظيف نجوم البرمجة لجعل العناوين عريضة ومريحة
+         aiReply = aiReply.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
          aiReply = aiReply.replace(/\*(.*?)/g, '• $1');
          
          loadingDiv.remove();
          appendMessage('bot', aiReply.replace(/\n/g, '<br>'));
       } else {
-         throw new Error("استجابة غير مكتملة");
+         throw new Error("رد مكسور");
       }
 
     } catch (error) {
       loadingDiv.remove();
-      appendMessage('bot', "الله ينور يا هندسة! الإشارة واصلة تمام والسيرفر استقبل الكلمة بنجاح، جرب تضغط مرة كمان حالاً لتأكيد قراءة التحديث وعرض الإجابة الفورية.");
+      appendMessage('bot', "عذراً يا هندسة، حدث خطأ مؤقت في جلب البيانات من السيرفر المباشر، يرجى إعادة الضغط مجدداً لتحديث القراءة الحية.");
     }
   }
 </script>
