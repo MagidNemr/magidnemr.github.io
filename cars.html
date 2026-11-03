@@ -107,6 +107,7 @@
             color: #fff;
         }
 
+        /* تنسيق الصندوق المدمج الفخم ليصبح هو البوت الفعلي بملء المساحة */
         .chat-section {
             border: 1px solid var(--primary-color);
             border-radius: 8px;
@@ -127,14 +128,14 @@
         }
 
         .chat-body {
-            height: 400px; 
-            overflow-y: auto; 
-            padding: 15px; 
-            background: #0a0a0a; 
-            color: #fff; 
-            line-height: 1.6; 
-            text-align: right; 
-            direction: rtl;
+            height: 480px; 
+            background-color: #0a0a0a;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
     </style>
 </head>
@@ -167,46 +168,19 @@
             </div>
         </div>
 
+        <!-- الصندوق الأسود المدمج بالأسفل تم ربطه برابط البوتبريس الجديد -->
         <div class="chat-section">
             <div class="chat-header">
-                <span class="status-dot"></span> مستشار السيارات وموسوعة المخالفات الذكي (مدعوم بـ Magid Nemr AI)
+                مستشار السيارات وموسوعة المخالفات الذكي (مدعوم بـ Botpress AI)
             </div>
-            <div class="chat-body" id="chatBody">
-                <div style="color: #aaa; text-align: center; margin-top: 150px;" id="welcomeText">مرحباً بك! أدخل البيانات بالأعلى واضغط على أي زر للبدء الفوري...</div>
+            <div class="chat-body">
+                <iframe id="botFrame" src="https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json"></iframe>
             </div>
         </div>
     </div>
 
 <script>
-  // مفتاح الـ API المجاني والشغال دائماً والمستقر من Google AI Studio
-  const AI_API_KEY = "AIzaSy" + "D2_YOUR_KEY_SEGMENT_HERE"; // سيتم تعديله تلقائياً ليعمل بمفتاحك المستقر
-
-  function appendMessage(sender, text) {
-    const chatBody = document.getElementById('chatBody');
-    const welcomeText = document.getElementById('welcomeText');
-    if (welcomeText) welcomeText.remove();
-
-    const msgDiv = document.createElement('div');
-    msgDiv.style.marginBottom = "15px";
-    msgDiv.style.padding = "10px";
-    msgDiv.style.borderRadius = "5px";
-    
-    if (sender === 'user') {
-      msgDiv.style.background = "#222";
-      msgDiv.style.borderLeft = "4px solid #00ffcc";
-      msgDiv.innerHTML = `<strong>أنت:</strong> ${text}`;
-    } else {
-      msgDiv.style.background = "#111c24";
-      msgDiv.style.borderLeft = "4px solid #ff2a74";
-      msgDiv.innerHTML = `<strong>الذكاء الاصطناعي:</strong> ${text}`;
-    }
-    
-    chatBody.appendChild(msgDiv);
-    chatBody.scrollTop = chatBody.scrollHeight;
-    return msgDiv;
-  }
-
-  async function sendToBotpress(type) {
+  function sendToBotpress(type) {
     let textQuery = "";
     
     if (type === 'specs') {
@@ -225,34 +199,11 @@
       textQuery = "حساب رسوم تجديد ترخيص سيارة سعة " + cc + " سي سي في مصر";
     }
 
-    if (!textQuery) return;
-
-    // 1. عرض سؤالك في الشات
-    appendMessage('user', textQuery);
-    
-    // 2. عرض رسالة الانتظار والتحميل
-    const loadingDiv = appendMessage('bot', "جاري التفكير وتجهيز الإجابة النموذجية الفنية...");
-
-    try {
-      // 3. الاتصال المباشر والمجاني بالكامل بسيرفرات جوجل جينيريتيف إيه آي
-      const response = await fetch(`https://googleapis.com{document.getElementById('brandInput').dataset.key || 'AIzaSyD-' + 'YOUR_ACTUAL_KEY'}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: textQuery + " (أجب باختصار وباللغة العربية الفصحى وبصفتك مهندس سيارات خبير ومستشار ذكي)" }] }]
-        })
-      });
-
-      const data = await response.json();
-      const aiReply = data.candidates[0].content.parts[0].text;
-      
-      // مسح رسالة التحميل ووضع الرد النهائي المتناسق
-      loadingDiv.remove();
-      appendMessage('bot', aiReply.replace(/\n/g, '<br>'));
-
-    } catch (error) {
-      loadingDiv.remove();
-      appendMessage('bot', "عذراً يا هندسة، حدثت مشكلة في جلب الرد الفوري، يرجى التحقق من الاتصال بالشبكة وتكرار المحاولة.");
+    if (textQuery) {
+      // إرسال النص المدخل وتحديث الـ iframe تلقائياً ليقرا النص الجديد داخل الشات
+      const baseUrl = "https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json";
+      const finalUrl = baseUrl + "&query=" + encodeURIComponent(textQuery);
+      document.getElementById('botFrame').src = finalUrl;
     }
   }
 </script>
