@@ -127,14 +127,14 @@
         }
 
         .chat-body {
-            height: 500px; 
-            background-color: #0a0a0a;
-        }
-
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
+            height: 400px; 
+            overflow-y: auto; 
+            padding: 15px; 
+            background: #0a0a0a; 
+            color: #fff; 
+            line-height: 1.6; 
+            text-align: right; 
+            direction: rtl;
         }
     </style>
 </head>
@@ -147,14 +147,14 @@
                 <h3>🔧 المواصفات الفنية</h3>
                 <p>استعلم عن مواصفات السيارة.</p>
                 <input type="text" id="brandInput" placeholder="أدخل ماركة السيارة...">
-                <button type="button" onclick="sendToBotpress('specs')">فحص المواصفات</button>
+                <button type="button" onclick="sendToGemini('specs')">فحص المواصفات</button>
             </div>
 
             <div class="card">
                 <h3>🚦 الاستعلام عن المخالفات</h3>
                 <p>المخالفات المرورية الصادرة الاسترشادية.</p>
                 <input type="text" id="plateInput" placeholder="أدخل رقم اللوحة...">
-                <button type="button" onclick="sendToBotpress('violations')">عرض المخالفات</button>
+                <button type="button" onclick="sendToGemini('violations')">عرض المخالفات</button>
                 <br>
                 <a href="https://ppo.gov.eg" target="_blank" class="gov-link">🌐 رابط بوابة النيابة العامة للمرور الرسمية</a>
             </div>
@@ -163,23 +163,50 @@
                 <h3>💳 حساب رسوم التراخيص</h3>
                 <p>رسوم التراخيص وتجديد المركبات داخل مصر وفقاً للسعة والموديل.</p>
                 <input type="text" id="ccInput" placeholder="أدخل السعة اللترية (مثال: 1600)...">
-                <button type="button" onclick="sendToBotpress('fees')">حساب الرسوم</button>
+                <button type="button" onclick="sendToGemini('fees')">حساب الرسوم</button>
             </div>
         </div>
 
         <div class="chat-section">
             <div class="chat-header">
-                مستشار السيارات وموسوعة المخالفات الذكي (مدعوم بـ Botpress AI)
+                مستشار السيارات وموسوعة المخالفات الذكي (مدعوم بـ Gemini AI المستقل)
             </div>
-            <div class="chat-body">
-                <!-- تم تعيين اسم للـ iframe ليكون هدفاً ثابتاً ومستقراً لإرسال البيانات دون اختفاء -->
-                <iframe id="botFrame" name="botChatTarget" src="https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json"></iframe>
+            <div class="chat-body" id="chatBody">
+                <div style="color: #aaa; text-align: center; margin-top: 150px;" id="welcomeText">مرحباً بك! أدخل البيانات بالأعلى واضغط على أي زر للبدء الفوري...</div>
             </div>
         </div>
     </div>
 
 <script>
-  function sendToBotpress(type) {
+  // ضع هنا مفتاح الـ API المجاني الذي حصلت عليه من Google AI Studio فوراً
+  const AI_API_KEY = "ضَع_مفتاح_جوجل_هنا";
+
+  function appendMessage(sender, text) {
+    const chatBody = document.getElementById('chatBody');
+    const welcomeText = document.getElementById('welcomeText');
+    if (welcomeText) welcomeText.remove();
+
+    const msgDiv = document.createElement('div');
+    msgDiv.style.marginBottom = "15px";
+    msgDiv.style.padding = "10px";
+    msgDiv.style.borderRadius = "5px";
+    
+    if (sender === 'user') {
+      msgDiv.style.background = "#222";
+      msgDiv.style.borderLeft = "4px solid #00ffcc";
+      msgDiv.innerHTML = `<strong>أنت:</strong> ${text}`;
+    } else {
+      msgDiv.style.background = "#111c24";
+      msgDiv.style.borderLeft = "4px solid #ff2a74";
+      msgDiv.innerHTML = `<strong>الذكاء الاصطناعي:</strong> ${text}`;
+    }
+    
+    chatBody.appendChild(msgDiv);
+    chatBody.scrollTop = chatBody.scrollHeight;
+    return msgDiv;
+  }
+
+  async function sendToGemini(type) {
     let textQuery = "";
     
     if (type === 'specs') {
@@ -198,11 +225,33 @@
       textQuery = "حساب رسوم تجديد ترخيص سيارة سعة " + cc + " سي سي في مصر";
     }
 
-    if (textQuery) {
-      const baseUrl = "https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json";
-      // دمج آمن ومحمي ومجرب يفصل الرابط عن النص لضمان بقاء البوت ظاهراً باستمرار
-      const finalUrl = baseUrl + "&query=" + encodeURIComponent(textQuery);
-      window.open(finalUrl, 'botChatTarget');
+    if (!textQuery) return;
+
+    // 1. عرض السؤال في الشات
+    appendMessage('user', textQuery);
+    
+    // 2. عرض رسالة الانتظار
+    const loadingDiv = appendMessage('bot', "جاري التفكير وتجهيز الإجابة النموذجية الفنية...");
+
+    try {
+      // 3. الاتصال المباشر والمستقل تماماً بسيرفرات Google Gemini الرسمية
+      const response = await fetch(`https://googleapis.com{AI_API_KEY}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: textQuery + " (أجب بالتفصيل والمنسق وباللغة العربية الفصحى وبصفتك مهندس سيارات خبير ومستشار ذكي)" }] }]
+        })
+      });
+
+      const data = await response.json();
+      const aiReply = data.candidates[0].content.parts[0].text;
+      
+      loadingDiv.remove();
+      appendMessage('bot', aiReply.replace(/\n/g, '<br>'));
+
+    } catch (error) {
+      loadingDiv.remove();
+      appendMessage('bot', "عذراً يا هندسة، حدثت مشكلة، يرجى التحقق من مفتاح الـ API والاتصال بالشبكة.");
     }
   }
 </script>
