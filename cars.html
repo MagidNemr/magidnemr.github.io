@@ -177,8 +177,12 @@
         // دالة إرسال النص إلى الـ iframe الخاص بالبوت
         function sendToBot(text) {
             const iframe = document.getElementById('carBotFrame');
-            // تأمين إرسال البيانات وربطها بالـ iframe بشكل صحيح لتوليد استجابة جينوم حقيقية
-            iframe.contentWindow.postMessage({ type: 'SEND_MESSAGE', text: text }, '*');
+            iframe.contentWindow.postMessage({
+                action: 'send_message',
+                payload: {
+                    text: text
+                }
+            }, '*');
         }
 
         // تنفيذ طلب البحث عن المواصفات بالصيغة المطلوبة
@@ -210,6 +214,16 @@
                 alert('الرجاء إدخال بيانات السيارة أو المحرك.');
             }
         }
+        // تفعيل الإرسال بالضغط على زر Enter في الكيبورد
+        document.getElementById('specInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') { searchSpecs(); }
+        });
+        document.getElementById('violationInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') { searchViolations(); }
+        });
+        document.getElementById('feesInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') { searchFees(); }
+        });
     </script>
 </body>
 </html>
