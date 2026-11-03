@@ -174,7 +174,8 @@
     </div>
 
     <script>
-     function sendToBot(text) {
+        // دالة إرسال النص الرسمية والمحدثة لمنصة Botpress v3.7
+        function sendToBot(text) {
             const iframe = document.getElementById('carBotFrame');
             iframe.contentWindow.postMessage({
                 action: 'send_message',
@@ -183,6 +184,7 @@
                 }
             }, '*');
         }
+
         // تنفيذ طلب البحث عن المواصفات بالصيغة المطلوبة
         function searchSpecs() {
             const value = document.getElementById('specInput').value.trim();
