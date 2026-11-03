@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مستشار وموسوعة السيارات الذكي</title>
+    <!-- استدعاء سكريبتات البوتبريس الرسمية لتشغيل التمرير المباشر بدون تحديث -->
+    <script src="https://botpress.cloud"></script>
     <style>
         :root {
             --bg-color: #0b1116; 
@@ -127,7 +129,7 @@
         }
 
         .chat-body {
-            height: 480px; 
+            height: 520px; 
             background-color: #0a0a0a;
         }
 
@@ -142,19 +144,20 @@
 
     <div class="container">
         
+        <!-- فصل الأزرار تماماً عن أي نموذج قديم لمنع الاستجابة الافتراضية للتحديث -->
         <div class="cards-grid">
             <div class="card">
                 <h3>🔧 المواصفات الفنية</h3>
                 <p>استعلم عن مواصفات السيارة.</p>
                 <input type="text" id="brandInput" placeholder="أدخل ماركة السيارة...">
-                <button type="button" onclick="sendToBotpress('specs')">فحص المواصفات</button>
+                <button type="button" onclick="sendToBotpress(event, 'specs')">فحص المواصفات</button>
             </div>
 
             <div class="card">
                 <h3>🚦 الاستعلام عن المخالفات</h3>
                 <p>المخالفات المرورية الصادرة الاسترشادية.</p>
                 <input type="text" id="plateInput" placeholder="أدخل رقم اللوحة...">
-                <button type="button" onclick="sendToBotpress('violations')">عرض المخالفات</button>
+                <button type="button" onclick="sendToBotpress(event, 'violations')">عرض المخالفات</button>
                 <br>
                 <a href="https://ppo.gov.eg" target="_blank" class="gov-link">🌐 رابط بوابة النيابة العامة للمرور الرسمية</a>
             </div>
@@ -163,7 +166,7 @@
                 <h3>💳 حساب رسوم التراخيص</h3>
                 <p>رسوم التراخيص وتجديد المركبات داخل مصر وفقاً للسعة والموديل.</p>
                 <input type="text" id="ccInput" placeholder="أدخل السعة اللترية (مثال: 1600)...">
-                <button type="button" onclick="sendToBotpress('fees')">حساب الرسوم</button>
+                <button type="button" onclick="sendToBotpress(event, 'fees')">حساب الرسوم</button>
             </div>
         </div>
 
@@ -172,13 +175,19 @@
                 مستشار السيارات وموسوعة المخالفات الذكي (مدعوم بـ Botpress AI)
             </div>
             <div class="chat-body">
-                <iframe id="botFrame" src="https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json"></iframe>
+                <iframe id="botFrame" src="https://botpress.cloud"></iframe>
             </div>
         </div>
     </div>
 
 <script>
-  function sendToBotpress(type) {
+  function sendToBotpress(e, type) {
+    // كسر ومنع الحركة الافتراضية للمتصفح (يمنع تحديث الصفحة نهائياً وأولياً)
+    if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
     let textQuery = "";
     
     if (type === 'specs') {
@@ -198,11 +207,12 @@
     }
 
     if (textQuery) {
-      const baseUrl = "https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json";
-      // تعديل الرابط ليمرر النص مباشرة إلى البوت بريس دون تحديث الصفحة بالكامل
-      const finalUrl = baseUrl + "&chatIntoView=true&query=" + encodeURIComponent(textQuery);
+      const baseUrl = "https://botpress.cloud";
+      // التمرير البرمي المباشر والأمن والمانع للتحديث
+      const finalUrl = baseUrl + "&query=" + encodeURIComponent(textQuery);
       document.getElementById('botFrame').src = finalUrl;
     }
+    return false;
   }
 </script>
 
