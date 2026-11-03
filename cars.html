@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مستشار وموسوعة السيارات الذكي</title>
+    
+    <!-- السكريبت الرسمي لـ Botpress لتشغيل الشات المدمج والآمن خلف الكواليس -->
+    <script src="https://botpress.cloud"></script>
+    <script src="https://botpress.cloud" defer></script>
+
     <style>
         :root {
             --bg-color: #0b1116; 
@@ -126,15 +131,16 @@
             text-align: right;
         }
 
+        /* حاوية الشات الفاخرة المدمجة */
         .chat-body {
             height: 500px; 
             background-color: #0a0a0a;
+            position: relative;
         }
-
-        iframe {
+        
+        #bp-webchat {
             width: 100%;
             height: 100%;
-            border: none;
         }
     </style>
 </head>
@@ -169,15 +175,24 @@
 
         <div class="chat-section">
             <div class="chat-header">
-                مستشار السيارات وموسوعة المخالفات الذكي (مدعوم بـ Botpress AI)
+                مستشار السيارات وموسوعة المخالفات الذكي (مدعوم بـ Botpress API الثابت)
             </div>
             <div class="chat-body">
-                <iframe id="botFrame" src="https://botpress.cloud"></iframe>
+                <!-- الصندوق الأسود المدمج بداخله واجهة الشات بشكل ثابت ومباشر -->
+                <div id="bp-webchat"></div>
             </div>
         </div>
     </div>
 
 <script>
+  // تهيئة وربط الشات بوت برمجياً في الصندوق ليثبت ولا يعيد التحميل
+  window.botpressWebChat.init({
+      "container": "#bp-webchat",
+      "layoutWidth": "100%",
+      "hideWidget": true,
+      "disableAnimations": true
+  });
+
   function sendToBotpress(type) {
     let textQuery = "";
     
@@ -198,9 +213,11 @@
     }
 
     if (textQuery) {
-      const baseUrl = "https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json";
-      const finalUrl = baseUrl + "&chatIntoView=true&query=" + encodeURIComponent(textQuery);
-      document.getElementById('botFrame').src = finalUrl;
+      // إرسال النص مباشرة إلى نفس المحادثة المستمرة خلف الكواليس دون تحديث واجهة البوت
+      window.botpressWebChat.sendPayload({
+        type: 'text',
+        text: textQuery
+      });
     }
   }
 </script>
