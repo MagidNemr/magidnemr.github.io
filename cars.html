@@ -156,7 +156,7 @@
                 <h3>🚦 الاستعلام عن المخالفات</h3>
                 <p>المخالفات المرورية الصادرة الاسترشادية.</p>
                 <input type="text" id="plateInput" placeholder="أدخل رقم اللوحة...">
-                <button onclick="https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json('violations')">عرض المخالفات</button>
+                <button onclick="chatBody('violations')">عرض المخالفات</button>
                 <br>
                 <a href="https://ppo.gov.eg" target="_blank" class="gov-link">🌐 رابط بوابة النيابة العامة للمرور الرسمية</a>
             </div>
@@ -183,11 +183,10 @@
 
 <script>
   // مفتاح الـ API الجديد والآمن الخاص بك المربوط بـ Gemini AI مباشرة
-   <iframe src="https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json"></iframe>
-
+   const AI_API_KEY = "AQ.Ab8RN6IX_5gXmSni23rTHS2hAS0X2-95x88d1knZkRZ0IymUKA";
   // دالة لإضافة الرسائل داخل الصندوق الأسود مباشرة
   function appendMessage(sender, text) {
-    const chatBody = document.getElementById('chatBody');
+    const chatBody = document.getElementById('AQ.Ab8RN6IX_5gXmSni23rTHS2hAS0X2-95x88d1knZkRZ0IymUKA');
     const welcomeText = document.getElementById('welcomeText');
     if (welcomeText) welcomeText.remove();
 
