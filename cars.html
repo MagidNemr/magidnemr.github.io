@@ -19,14 +19,14 @@
             width: 100%;
             max-width: 600px;
             background-color: #161b22;
-            border: 1px solid #30363d;
+            border: 1px solid #2ea44f; /* إطار أخضر ممتد من هويتك */
             border-radius: 10px;
             padding: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 15px rgba(46, 164, 79, 0.2);
         }
         h2 {
             text-align: center;
-            color: #58a6ff;
+            color: #2ea44f; /* لون أخضر جذاب */
             margin-top: 0;
         }
         .chat-box {
@@ -44,9 +44,10 @@
             border-radius: 6px;
             line-height: 1.5;
             max-width: 85%;
+            word-wrap: break-word;
         }
         .user-msg {
-            background-color: #1f6feb;
+            background-color: #238636; /* لون الرسالة للمستخدم أخضر غامق */
             color: white;
             margin-right: auto;
             text-align: right;
@@ -72,7 +73,7 @@
         }
         input[type="text"]:focus {
             outline: none;
-            border-color: #58a6ff;
+            border-color: #2ea44f;
         }
         button {
             padding: 12px 20px;
@@ -109,20 +110,14 @@
 </div>
 
 <script>
-      // ⚠️ ضَع مفتاح الـ API الفعلي الخاص بك هنا بين علامتي التنصيص
-    const API_KEY = "AQ.Ab8RN6IX_5gXmSni23rTHS2hAS0X2-95x88d1knZkRZ0IymUKAا"; 
+    // ⚠️ ضَع مفتاح الـ API الفعلي الخاص بك هنا بين علامتي التنصيص
+    const API_KEY = "AQ.Ab8RN6IX_5gXmSni23rTHS2hAS0X2-95x88d1knZkRZ0IymUKA"; 
 
-    // الرابط الصحيح والمباشر لاستدعاء نموذج Gemini 1.5 Flash
+    // رابط الـ API المحدث للنسخة المستقرة
     const API_URL = `https://googleapis.com{API_KEY}`;
 
     // التعليمات البرمجية لتوجيه الذكاء الاصطناعي (System Instructions)
-    const SYSTEM_INSTRUCTION = "أنت مساعد ذكي خبير ومتخصص حصرياً وفقط في عالم السيارات، الأعطال الميكانيكية والكهربائية، الصيانات، المواصفات الفنية لجميع الموديلات، وقوانين وإجراءات المرور. وظيفتك هي تقديم إجابات دقيقة وسريعة ومختصرة للمستخدم. إذا قام المستخدم بسؤالك عن أي شيء خارج نطاق السيارات والمرور (مثل الطبخ، الرياضة العامة، الأسئلة العامة غير المتعلقة بالسيارات)، يجب عليك الاعتذار منه بلطف بعبارة: 'عذراً، أنا هنا لمساعدتك في كل ما يخص السيارات والمرور فقط!'.";
-
-    // رابط استدعاء نموذج Gemini 2.5 Flash السريع والموفر
-    const API_URL = `https://googleapis.com{API_KEY}`;
-
-    // التعليمات البرمجية لتوجيه الذكاء الاصطناعي (System Instructions)
-    const SYSTEM_INSTRUCTION = "أنت مساعد ذكي خبير ومتخصص حصرياً وفقط في عالم السيارات، الأعطال الميكانيكية والكهربائية، الصيانات، المواصفات الفنية لجميع الموديلات، وقوانين وإجراءات المرور. وظيفتك هي تقديم إجابات دقيقة وسريعة ومختصرة للمستخدم. إذا قام المستخدم بسؤالك عن أي شيء خارج نطاق السيارات والمرور (مثل الطبخ، الرياضة العامة، الأسئلة العامة غير المتعلقة بالسيارات)، يجب عليك الاعتذار منه بلطف بعبارة: 'عذراً، أنا هنا لمساعدتك في كل ما يخص السيارات والمرور فقط!'.";
+    const SYSTEM_INSTRUCTION = "أنت مساعد ذكي خبير ومتخصص حصرياً وفقط في عالم السيارات، الأعطال الميكانيكية والكهربائية، الصيانات، المواصفات الفنية لجميع الموديلات، وقوانين وإجراءات المرور. وظيفتك هي تقديم إجابات دقيقة وسريعة ومختصرة للمستخدم باللغة العربية. إذا قام المستخدم بسؤالك عن أي شيء خارج نطاق السيارات والمرور، يجب عليك الاعتذار منه بلطف بعبارة: 'عذراً، أنا هنا لمساعدتك في كل ما يخص السيارات والمرور فقط!'.";
 
     async function sendMessage() {
         const inputField = document.getElementById("userInput");
@@ -140,7 +135,7 @@
         sendBtn.disabled = true;
         
         // إضافة مؤشر الانتظار
-        const loadingDiv = appendMessage("جاري التفكير...", "ai-msg");
+        const loadingDiv = appendMessage("جاري كتابة الرد...", "ai-msg");
 
         try {
             const response = await fetch(API_URL, {
@@ -150,14 +145,14 @@
                 },
                 body: JSON.stringify({
                     contents: [
-                        { role: "user", parts: [{ text: userText }] }
+                        { parts: [{ text: userText }] }
                     ],
                     systemInstruction: {
                         parts: [{ text: SYSTEM_INSTRUCTION }]
                     },
                     generationConfig: {
-                        maxOutputTokens: 500, // تحديد طول الرد ليكون سريعاً ومباشراً
-                        temperature: 0.3 // تقليل التشتت لزيادة الدقة الفنية
+                        maxOutputTokens: 600,
+                        temperature: 0.3
                     }
                 })
             });
@@ -167,17 +162,20 @@
             // إزالة مؤشر الانتظار
             loadingDiv.remove();
 
-            if (data.candidates && data.candidates[0].content.parts[0].text) {
+            // فحص واستخراج النص بالطريقة الصحيحة لـ Gemini
+            if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0]) {
                 let aiResponse = data.candidates[0].content.parts[0].text;
                 appendMessage(aiResponse, "ai-msg");
+            } else if (data.error) {
+                appendMessage(`خطأ من الخادم: ${data.error.message}`, "ai-msg");
             } else {
-                appendMessage("عذراً، حدث خطأ أثناء معالجة الطلب.", "ai-msg");
+                appendMessage("عذراً، لم أتمكن من معالجة الرد بالشكل الصحيح.", "ai-msg");
             }
 
         } catch (error) {
             console.error("Error:", error);
-            loadingDiv.remove();
-            appendMessage("فشل الاتصال بالخادم، يرجى التحقق من مفتاح الـ API أو اتصال الإنترنت.", "ai-msg");
+            if(loadingDiv) loadingDiv.remove();
+            appendMessage("حدث خطأ في الاتصال، تأكد من صحة مفتاح الـ API والإنترنت.", "ai-msg");
         } finally {
             sendBtn.disabled = false;
             chatBox.scrollTop = chatBox.scrollHeight;
