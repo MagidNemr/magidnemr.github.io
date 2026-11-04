@@ -1,99 +1,199 @@
-// مفتاحك السليم والجاهز للاستخدام الفوري
-const AI_API_KEY = "AQ.Ab8RN6IX_5gXmSni23rTHS2hAS0X2-95x88d1knZkRZ0IymUKA";
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مستشار وموسوعة السيارات الشامل</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        h2 {
+            text-align: center;
+            color: #58a6ff;
+            margin-top: 0;
+        }
+        .chat-box {
+            height: 350px;
+            overflow-y: auto;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 10px;
+            background-color: #0d1117;
+            margin-bottom: 15px;
+        }
+        .message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 6px;
+            line-height: 1.5;
+            max-width: 85%;
+        }
+        .user-msg {
+            background-color: #1f6feb;
+            color: white;
+            margin-right: auto;
+            text-align: right;
+        }
+        .ai-msg {
+            background-color: #21262d;
+            color: #c9d1d9;
+            margin-left: auto;
+            border: 1px solid #30363d;
+        }
+        .input-area {
+            display: flex;
+            gap: 10px;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #30363d;
+            background-color: #0d1117;
+            color: white;
+            font-size: 16px;
+        }
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #58a6ff;
+        }
+        button {
+            padding: 12px 20px;
+            background-color: #238636;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #2ea44f;
+        }
+        button:disabled {
+            background-color: #21262d;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
 
-function appendMessage(sender, text) {
-  const chatBody = document.getElementById('chatBody');
-  const welcomeText = document.getElementById('welcomeText');
-  if (welcomeText) welcomeText.remove();
-
-  const msgDiv = document.createElement('div');
-  msgDiv.style.marginBottom = "15px";
-  msgDiv.style.padding = "10px";
-  msgDiv.style.borderRadius = "5px";
-  
-  if (sender === 'user') {
-    msgDiv.style.background = "#222";
-    msgDiv.style.borderLeft = "4px solid #00ffcc";
-    msgDiv.innerHTML = `<strong>أنت:</strong> ${text}`;
-  } else {
-    msgDiv.style.background = "#111c24";
-    msgDiv.style.borderLeft = "4px solid #ff2a74";
-    msgDiv.innerHTML = `<strong>الذكاء الاصطناعي:</strong> ${text}`;
-  }
-  
-  chatBody.appendChild(msgDiv);
-  chatBody.scrollTop = chatBody.scrollHeight;
-  return msgDiv;
-}
-
-async function sendToGemini(type) {
-  let textQuery = "";
-  
-  if (type === 'specs') {
-    const brand = document.getElementById('brandInput').value.trim();
-    if (!brand) return alert("من فضلك أدخل ماركة السيارة أولاً");
-    textQuery = "مواصفات السياره ماركه " + brand;
-  } 
-  else if (type === 'violations') {
-    const plate = document.getElementById('plateInput').value.trim();
-    if (!plate) return alert("من فضلك أدخل رقم اللوحة أولاً");
-    textQuery = "استعلام عن مخالفات السياره رقم " + plate;
-  } 
-  else if (type === 'fees') {
-    const cc = document.getElementById('ccInput').value.trim();
-    if (!cc) return alert("من فضلك أدخل السعة اللترية أولاً");
-    textQuery = "حساب رسوم تجديد ترخيص سيارة سعة " + cc + " سي سي في مصر";
-  }
-
-  if (!textQuery) return;
-
-  // 1. عرض سؤالك في الشات
-  appendMessage('user', textQuery);
-  
-  // 2. عرض رسالة الانتظار والتحميل
-  const loadingDiv = appendMessage('bot', "جاري التفكير وتجهيز الإجابة الفنية الحية...");
-
-  try {
-    // 3. الاتصال بسيرفر Coze المتوافق تماماً مع مفتاحك الحالي عبر نفق أمني لمنع كسر CORS
-    const url = "https://allorigins.win" + encodeURIComponent("https://coze.com");
+<div class="container">
+    <h2>🏎️ مستشار وموسوعة السيارات الشامل</h2>
     
-    const response = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        headers: {
-          "Authorization": `Bearer ${AI_API_KEY}`,
-          "Content-Type": "application/json"
-        },
-        method: "POST",
-        data: JSON.stringify({
-          bot_id: "7428945409130725394", // معرّف مشروعك لمستشار السيارات
-          user_id: "maged_engineer",
-          query: textQuery,
-          stream: false
-        })
-      })
-    });
+    <div class="chat-box" id="chatBox">
+        <div class="message ai-msg">مرحباً بك! أنا مستشارك الذكي المتخصص في السيارات، قوانين المرور والمواصفات الفنية. كيف يمكنني مساعدتك اليوم؟</div>
+    </div>
 
-    const result = await response.json();
-    const data = JSON.parse(result.contents);
-    
-    // 4. قراءة الرد وعرضه داخل الصندوق الأسود
-    if (data && data.messages) {
-       let answerMessage = data.messages.find(m => m.type === 'answer');
-       let aiReply = answerMessage ? answerMessage.content : "تم معالجة الطلب بنجاح، يرجى مراجعة نافذة التحكم الخاص بك.";
-       
-       aiReply = aiReply.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-       aiReply = aiReply.replace(/\*(.*?)/g, '• $1');
-       
-       loadingDiv.remove();
-       appendMessage('bot', aiReply.replace(/\n/g, '<br>'));
-    } else {
-       throw new Error("رد مكسور");
+    <div class="input-area">
+        <input type="text" id="userInput" placeholder="اسأل عن أي سيارة، عطل، أو تفاصيل مرور..." onkeypress="handleKeyPress(event)">
+        <button id="sendBtn" onclick="sendMessage()">إرسال</button>
+    </div>
+</div>
+
+<script>
+    // ⚠️ ضَع مفتاح الـ API الخاص بك هنا بين علامتي التنصيص
+    const API_KEY = "AQ.Ab8RN6IX_5gXmSni23rTHS2hAS0X2-95x88d1knZkRZ0IymUKA"; 
+
+    // رابط استدعاء نموذج Gemini 2.5 Flash السريع والموفر
+    const API_URL = `https://googleapis.com{API_KEY}`;
+
+    // التعليمات البرمجية لتوجيه الذكاء الاصطناعي (System Instructions)
+    const SYSTEM_INSTRUCTION = "أنت مساعد ذكي خبير ومتخصص حصرياً وفقط في عالم السيارات، الأعطال الميكانيكية والكهربائية، الصيانات، المواصفات الفنية لجميع الموديلات، وقوانين وإجراءات المرور. وظيفتك هي تقديم إجابات دقيقة وسريعة ومختصرة للمستخدم. إذا قام المستخدم بسؤالك عن أي شيء خارج نطاق السيارات والمرور (مثل الطبخ، الرياضة العامة، الأسئلة العامة غير المتعلقة بالسيارات)، يجب عليك الاعتذار منه بلطف بعبارة: 'عذراً، أنا هنا لمساعدتك في كل ما يخص السيارات والمرور فقط!'.";
+
+    async function sendMessage() {
+        const inputField = document.getElementById("userInput");
+        const sendBtn = document.getElementById("sendBtn");
+        const chatBox = document.getElementById("chatBox");
+        const userText = inputField.value.trim();
+
+        if (!userText) return;
+
+        // إضافة رسالة المستخدم للشاشة
+        appendMessage(userText, "user-msg");
+        inputField.value = "";
+        
+        // تعطيل الإرسال مؤقتاً أثناء الرد
+        sendBtn.disabled = true;
+        
+        // إضافة مؤشر الانتظار
+        const loadingDiv = appendMessage("جاري التفكير...", "ai-msg");
+
+        try {
+            const response = await fetch(API_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    contents: [
+                        { role: "user", parts: [{ text: userText }] }
+                    ],
+                    systemInstruction: {
+                        parts: [{ text: SYSTEM_INSTRUCTION }]
+                    },
+                    generationConfig: {
+                        maxOutputTokens: 500, // تحديد طول الرد ليكون سريعاً ومباشراً
+                        temperature: 0.3 // تقليل التشتت لزيادة الدقة الفنية
+                    }
+                })
+            });
+
+            const data = await response.json();
+            
+            // إزالة مؤشر الانتظار
+            loadingDiv.remove();
+
+            if (data.candidates && data.candidates[0].content.parts[0].text) {
+                let aiResponse = data.candidates[0].content.parts[0].text;
+                appendMessage(aiResponse, "ai-msg");
+            } else {
+                appendMessage("عذراً، حدث خطأ أثناء معالجة الطلب.", "ai-msg");
+            }
+
+        } catch (error) {
+            console.error("Error:", error);
+            loadingDiv.remove();
+            appendMessage("فشل الاتصال بالخادم، يرجى التحقق من مفتاح الـ API أو اتصال الإنترنت.", "ai-msg");
+        } finally {
+            sendBtn.disabled = false;
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
     }
 
-  } catch (error) {
-    loadingDiv.remove();
-    appendMessage('bot', "الله ينور يا هندسة! الإشارة واصلة تمام، جرب تضغط مرة كمان حالاً لتأكيد عرض الإجابة الفنية الفورية.");
-  }
-}
+    function appendMessage(text, className) {
+        const chatBox = document.getElementById("chatBox");
+        const msgDiv = document.createElement("div");
+        msgDiv.className = `message ${className}`;
+        msgDiv.innerText = text;
+        chatBox.appendChild(msgDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+        return msgDiv;
+    }
+
+    function handleKeyPress(event) {
+        if (event.key === "Enter") {
+            sendMessage();
+        }
+    }
+</script>
+
+</body>
+</html>
