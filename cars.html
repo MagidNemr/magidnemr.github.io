@@ -3,201 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مستشار وموسوعة السيارات الشامل</title>
+    <title>مستشار وموسوعة السيارات الشامل - Botpress Chat</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #0d1117;
-            color: #c9d1d9;
+        html, body {
             margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .container {
+            padding: 0;
             width: 100%;
-            max-width: 600px;
-            background-color: #161b22;
-            border: 1px solid #2ea44f; /* إطار أخضر ممتد من هويتك */
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 15px rgba(46, 164, 79, 0.2);
-        }
-        h2 {
-            text-align: center;
-            color: #2ea44f; /* لون أخضر جذاب */
-            margin-top: 0;
-        }
-        .chat-box {
-            height: 350px;
-            overflow-y: auto;
-            border: 1px solid #30363d;
-            border-radius: 6px;
-            padding: 10px;
+            height: 100%;
+            overflow: hidden;
             background-color: #0d1117;
-            margin-bottom: 15px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        .message {
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 6px;
-            line-height: 1.5;
-            max-width: 85%;
-            word-wrap: break-word;
-        }
-        .user-msg {
-            background-color: #238636; /* لون الرسالة للمستخدم أخضر غامق */
-            color: white;
-            margin-right: auto;
-            text-align: right;
-        }
-        .ai-msg {
-            background-color: #21262d;
-            color: #c9d1d9;
-            margin-left: auto;
-            border: 1px solid #30363d;
-        }
-        .input-area {
-            display: flex;
-            gap: 10px;
-        }
-        input[type="text"] {
-            flex: 1;
-            padding: 12px;
-            border-radius: 6px;
-            border: 1px solid #30363d;
-            background-color: #0d1117;
-            color: white;
-            font-size: 16px;
-        }
-        input[type="text"]:focus {
-            outline: none;
-            border-color: #2ea44f;
-        }
-        button {
-            padding: 12px 20px;
-            background-color: #238636;
-            color: white;
+        /* تنسيق إطار الشات بوت ليعرض بملء الشاشة بشكل احترافي */
+        iframe {
+            width: 100%;
+            height: 100%;
             border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-        }
-        button:hover {
-            background-color: #2ea44f;
-        }
-        button:disabled {
-            background-color: #21262d;
-            cursor: not-allowed;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>🏎️ مستشار وموسوعة السيارات الشامل</h2>
-    
-    <div class="chat-box" id="chatBox">
-        <div class="message ai-msg">مرحباً بك! أنا مستشارك الذكي المتخصص في السيارات، قوانين المرور والمواصفات الفنية. كيف يمكنني مساعدتك اليوم؟</div>
-    </div>
-
-    <div class="input-area">
-        <input type="text" id="userInput" placeholder="اسأل عن أي سيارة، عطل، أو تفاصيل مرور..." onkeypress="handleKeyPress(event)">
-        <button id="sendBtn" onclick="sendMessage()">إرسال</button>
-    </div>
-</div>
-
-<script>
-    // ⚠️ ضَع مفتاح الـ API الفعلي الخاص بك هنا بين علامتي التنصيص
-    const API_KEY = "AQ.Ab8RN6IrnGAZiVQUszEYTOEnuCRyU_ceWkKEjAWuEahvy53iRw"; 
-
-    // رابط الـ API المحدث للنسخة المستقرة
-    const API_URL = `https://googleapis.com{API_KEY}`;
-
-    // التعليمات البرمجية لتوجيه الذكاء الاصطناعي (System Instructions)
-    const SYSTEM_INSTRUCTION = "أنت مساعد ذكي خبير ومتخصص حصرياً وفقط في عالم السيارات، الأعطال الميكانيكية والكهربائية، الصيانات، المواصفات الفنية لجميع الموديلات، وقوانين وإجراءات المرور. وظيفتك هي تقديم إجابات دقيقة وسريعة ومختصرة للمستخدم باللغة العربية. إذا قام المستخدم بسؤالك عن أي شيء خارج نطاق السيارات والمرور، يجب عليك الاعتذار منه بلطف بعبارة: 'عذراً، أنا هنا لمساعدتك في كل ما يخص السيارات والمرور فقط!'.";
-
-    async function sendMessage() {
-        const inputField = document.getElementById("userInput");
-        const sendBtn = document.getElementById("sendBtn");
-        const chatBox = document.getElementById("chatBox");
-        const userText = inputField.value.trim();
-
-        if (!userText) return;
-
-        // إضافة رسالة المستخدم للشاشة
-        appendMessage(userText, "user-msg");
-        inputField.value = "";
-        
-        // تعطيل الإرسال مؤقتاً أثناء الرد
-        sendBtn.disabled = true;
-        
-        // إضافة مؤشر الانتظار
-        const loadingDiv = appendMessage("جاري كتابة الرد...", "ai-msg");
-
-        try {
-            const response = await fetch(API_URL, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    contents: [
-                        { parts: [{ text: userText }] }
-                    ],
-                    systemInstruction: {
-                        parts: [{ text: SYSTEM_INSTRUCTION }]
-                    },
-                    generationConfig: {
-                        maxOutputTokens: 600,
-                        temperature: 0.3
-                    }
-                })
-            });
-
-            const data = await response.json();
-            
-            // إزالة مؤشر الانتظار
-            loadingDiv.remove();
-
-            // فحص واستخراج النص بالطريقة الصحيحة لـ Gemini
-            if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0]) {
-                let aiResponse = data.candidates[0].content.parts[0].text;
-                appendMessage(aiResponse, "ai-msg");
-            } else if (data.error) {
-                appendMessage(`خطأ من الخادم: ${data.error.message}`, "ai-msg");
-            } else {
-                appendMessage("عذراً، لم أتمكن من معالجة الرد بالشكل الصحيح.", "ai-msg");
-            }
-
-        } catch (error) {
-            console.error("Error:", error);
-            if(loadingDiv) loadingDiv.remove();
-            appendMessage("حدث خطأ في الاتصال، تأكد من صحة مفتاح الـ API والإنترنت.", "ai-msg");
-        } finally {
-            sendBtn.disabled = false;
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }
-    }
-
-    function appendMessage(text, className) {
-        const chatBox = document.getElementById("chatBox");
-        const msgDiv = document.createElement("div");
-        msgDiv.className = `message ${className}`;
-        msgDiv.innerText = text;
-        chatBox.appendChild(msgDiv);
-        chatBox.scrollTop = chatBox.scrollHeight;
-        return msgDiv;
-    }
-
-    function handleKeyPress(event) {
-        if (event.key === "Enter") {
-            sendMessage();
-        }
-    }
-</script>
+    <!-- استدعاء شات بوت Botpress الخاص بك مباشرة داخل الصفحة -->
+    <iframe 
+        src="https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json" 
+        allow="microphone; geolocation;">
+    </iframe>
 
 </body>
 </html>
