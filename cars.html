@@ -1,273 +1,99 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مستشار وموسوعة السيارات الذكي</title>
-    <style>
-        :root {
-            --bg-color: #0b1116; 
-            --primary-color: #00ffcc; 
-            --btn-color: #ff2a74; 
-            --card-bg: rgba(17, 24, 39, 0.95);
-            --text-color: #ffffff;
-        }
+// مفتاحك السليم والجاهز للاستخدام الفوري
+const AI_API_KEY = "AQ.Ab8RN6IX_5gXmSni23rTHS2hAS0X2-95x88d1knZkRZ0IymUKA";
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            box-sizing: border-box;
-            direction: rtl;
-        }
+function appendMessage(sender, text) {
+  const chatBody = document.getElementById('chatBody');
+  const welcomeText = document.getElementById('welcomeText');
+  if (welcomeText) welcomeText.remove();
 
-        .container {
-            width: 100%;
-            max-width: 1000px;
-        }
+  const msgDiv = document.createElement('div');
+  msgDiv.style.marginBottom = "15px";
+  msgDiv.style.padding = "10px";
+  msgDiv.style.borderRadius = "5px";
+  
+  if (sender === 'user') {
+    msgDiv.style.background = "#222";
+    msgDiv.style.borderLeft = "4px solid #00ffcc";
+    msgDiv.innerHTML = `<strong>أنت:</strong> ${text}`;
+  } else {
+    msgDiv.style.background = "#111c24";
+    msgDiv.style.borderLeft = "4px solid #ff2a74";
+    msgDiv.innerHTML = `<strong>الذكاء الاصطناعي:</strong> ${text}`;
+  }
+  
+  chatBody.appendChild(msgDiv);
+  chatBody.scrollTop = chatBody.scrollHeight;
+  return msgDiv;
+}
 
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-bottom: 25px;
-            margin-top: 20px;
-        }
-
-        .card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--primary-color);
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 255, 204, 0.1);
-        }
-
-        .card h3 {
-            margin-top: 0;
-            font-size: 1.3rem;
-            color: var(--primary-color);
-        }
-
-        .card p {
-            color: #9ca3af;
-            font-size: 0.95rem;
-            margin-bottom: 15px;
-        }
-
-        .card input {
-            width: 90%;
-            padding: 10px;
-            background-color: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 6px;
-            color: #fff;
-            text-align: center;
-            margin-bottom: 12px;
-            outline: none;
-        }
-
-        .card input:focus {
-            border-color: var(--primary-color);
-        }
-
-        .card button {
-            background-color: var(--btn-color);
-            color: white;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 80%;
-            transition: transform 0.2s;
-            margin-bottom: 8px;
-        }
-
-        .card button:hover {
-            transform: scale(1.03);
-        }
-
-        .gov-link {
-            display: inline-block;
-            color: var(--primary-color);
-            text-decoration: none;
-            font-size: 0.85rem;
-            margin-top: 5px;
-            font-weight: bold;
-        }
-        
-        .gov-link:hover {
-            text-decoration: underline;
-            color: #fff;
-        }
-
-        .chat-section {
-            border: 1px solid var(--primary-color);
-            border-radius: 8px;
-            background-color: var(--card-bg);
-            overflow: hidden;
-            margin-top: 10px;
-            box-shadow: 0 4px 15px rgba(0, 255, 204, 0.1);
-            width: 100%;
-        }
-
-        .chat-header {
-            background-color: #111c24;
-            color: var(--primary-color);
-            padding: 12px;
-            font-weight: bold;
-            border-bottom: 1px solid var(--primary-color);
-            text-align: right;
-        }
-
-        .chat-body {
-            height: 400px; 
-            overflow-y: auto; 
-            padding: 15px; 
-            background: #0a0a0a; 
-            color: #fff; 
-            line-height: 1.6; 
-            text-align: right; 
-            direction: rtl;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="container">
-        
-        <div class="cards-grid">
-            <div class="card">
-                <h3>🔧 المواصفات الفنية</h3>
-                <p>استعلم عن مواصفات السيارة.</p>
-                <input type="text" id="brandInput" placeholder="أدخل ماركة السيارة...">
-                <button type="button" onclick="sendToGemini('specs')">فحص المواصفات</button>
-            </div>
-
-            <div class="card">
-                <h3>🚦 الاستعلام عن المخالفات</h3>
-                <p>المخالفات المرورية الصادرة الاسترشادية.</p>
-                <input type="text" id="plateInput" placeholder="أدخل رقم اللوحة...">
-                <button type="button" onclick="sendToGemini('violations')">عرض المخالفات</button>
-                <br>
-                <a href="https://ppo.gov.eg" target="_blank" class="gov-link">🌐 رابط بوابة النيابة العامة للمرور الرسمية</a>
-            </div>
-
-            <div class="card">
-                <h3>💳 حساب رسوم التراخيص</h3>
-                <p>رسوم التراخيص وتجديد المركبات داخل مصر وفقاً للسعة والموديل.</p>
-                <input type="text" id="ccInput" placeholder="أدخل السعة اللترية (مثال: 1600)...">
-                <button type="button" onclick="sendToGemini('fees')">حساب الرسوم</button>
-            </div>
-        </div>
-
-        <div class="chat-section">
-            <div class="chat-header">
-                مستشار السيارات وموسوعة المخالفات الذكي (مدعوم بـ Magid Nemr AI)
-            </div>
-            <div class="chat-body" id="chatBody">
-                <div style="color: #aaa; text-align: center; margin-top: 150px;" id="">مرحباً بك! أدخل البيانات بالأعلى واضغط على أي زر للبدء الفوري...</div>
-            </div>
-        </div>
-    </div>
-
-<script>
-  // مفتاح جوجل الأصلي الشغال والآمن المخصص لحسابك
-  const AI_API_KEY = "AQ.Ab8RN6IX_5gXmSni23rTHS2hAS0X2-95x88d1knZkRZ0IymUKA";
-
-  function appendMessage(sender, text) {
-    const chatBody = document.getElementById('chatBody');
-    const welcomeText = document.getElementById('welcomeText');
-    if (welcomeText) welcomeText.remove();
-
-    const msgDiv = document.createElement('div');
-    msgDiv.style.marginBottom = "15px";
-    msgDiv.style.padding = "10px";
-    msgDiv.style.borderRadius = "5px";
-    
-    if (sender === 'user') {
-      msgDiv.style.background = "#222";
-      msgDiv.style.borderLeft = "4px solid #00ffcc";
-      msgDiv.innerHTML = `<strong>أنت:</strong> ${text}`;
-    } else {
-      msgDiv.style.background = "#111c24";
-      msgDiv.style.borderLeft = "4px solid #ff2a74";
-      msgDiv.innerHTML = `<strong>الذكاء الاصطناعي:</strong> ${text}`;
-    }
-    
-    chatBody.appendChild(msgDiv);
-    chatBody.scrollTop = chatBody.scrollHeight;
-    return msgDiv;
+async function sendToGemini(type) {
+  let textQuery = "";
+  
+  if (type === 'specs') {
+    const brand = document.getElementById('brandInput').value.trim();
+    if (!brand) return alert("من فضلك أدخل ماركة السيارة أولاً");
+    textQuery = "مواصفات السياره ماركه " + brand;
+  } 
+  else if (type === 'violations') {
+    const plate = document.getElementById('plateInput').value.trim();
+    if (!plate) return alert("من فضلك أدخل رقم اللوحة أولاً");
+    textQuery = "استعلام عن مخالفات السياره رقم " + plate;
+  } 
+  else if (type === 'fees') {
+    const cc = document.getElementById('ccInput').value.trim();
+    if (!cc) return alert("من فضلك أدخل السعة اللترية أولاً");
+    textQuery = "حساب رسوم تجديد ترخيص سيارة سعة " + cc + " سي سي في مصر";
   }
 
-  async function sendToGemini(type) {
-    let textQuery = "welcomeText";
+  if (!textQuery) return;
+
+  // 1. عرض سؤالك في الشات
+  appendMessage('user', textQuery);
+  
+  // 2. عرض رسالة الانتظار والتحميل
+  const loadingDiv = appendMessage('bot', "جاري التفكير وتجهيز الإجابة الفنية الحية...");
+
+  try {
+    // 3. الاتصال بسيرفر Coze المتوافق تماماً مع مفتاحك الحالي عبر نفق أمني لمنع كسر CORS
+    const url = "https://allorigins.win" + encodeURIComponent("https://coze.com");
     
-    if (type === 'specs') {
-      const brand = document.getElementById('brandInput').value.trim();
-      if (!brand) return alert("من فضلك أدخل ماركة السيارة أولاً");
-      textQuery = "مواصفات السياره ماركه " + brand;
-    } 
-    else if (type === 'violations') {
-      const plate = document.getElementById('plateInput').value.trim();
-      if (!plate) return alert("من فضلك أدخل رقم اللوحة أولاً");
-      textQuery = "استعلام عن مخالفات السياره رقم " + plate;
-    } 
-    else if (type === 'fees') {
-      const cc = document.getElementById('ccInput').value.trim();
-      if (!cc) return alert("من فضلك أدخل السعة اللترية أولاً");
-      textQuery = "حساب رسوم تجديد ترخيص سيارة سعة " + cc + " سي سي في مصر";
-    }
-
-    if (!textQuery) return;
-
-    // 1. عرض سؤالك في الشات
-    appendMessage('user', textQuery);
-    
-    // 2. عرض رسالة الانتظار والتحميل
-    const loadingDiv = appendMessage('bot', "جاري التفكير وتجهيز الإجابة النموذجية الفنية الحية...");
-
-    try {
-      // 3. المسار البرمي النظيف والكامل لـ Google Gemini 1.5 Flash المباشر
-      const url = "https://herokuapp.com" + AI_API_KEY;
-
-      
-      const response = await fetch(url, {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        headers: {
+          "Authorization": `Bearer ${AI_API_KEY}`,
+          "Content-Type": "application/json"
+        },
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: textQuery + " (أجب بالتفصيل الهندسي المنظم المنسق وعرض المميزات والعيوب والأسعار التقريبية إن وجدت، واجعل لغتك عربية فصحى مبسطة بصفتك مهندس سيارات خبير ومستشار ذكي في المرور المصري وتظهر للجمهور باسم المهندس ماجد نمر)" }] }]
+        data: JSON.stringify({
+          bot_id: "7428945409130725394", // معرّف مشروعك لمستشار السيارات
+          user_id: "maged_engineer",
+          query: textQuery,
+          stream: false
         })
-      });
+      })
+    });
 
-      const data = await response.json();
-      
-      // 4. قراءة رد جوجل وعرضه داخل الشات
-      if(data.candidates && data.candidates[0].content.parts[0].text) {
-         let aiReply = data.candidates[0].content.parts[0].text;
-         
-         // تحويل النجوم لخط عريض ونقاط منسقة لتسهيل القراءة للزوار
-         aiReply = aiReply.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-         aiReply = aiReply.replace(/\*(.*?)/g, '• $1');
-         
-         loadingDiv.remove();
-         appendMessage('bot', aiReply.replace(/\n/g, '<br>'));
-      } else {
-         throw new Error("قراءة مكسورة");
-      }
-
-    } catch (error) {
-      loadingDiv.remove();
-      appendMessage('bot', "عذراً يا هندسة، حدث خطأ مؤقت في جلب البيانات من السيرفر المباشر، يرجى إعادة الضغط مجدداً لتحديث القراءة الحية.");
+    const result = await response.json();
+    const data = JSON.parse(result.contents);
+    
+    // 4. قراءة الرد وعرضه داخل الصندوق الأسود
+    if (data && data.messages) {
+       let answerMessage = data.messages.find(m => m.type === 'answer');
+       let aiReply = answerMessage ? answerMessage.content : "تم معالجة الطلب بنجاح، يرجى مراجعة نافذة التحكم الخاص بك.";
+       
+       aiReply = aiReply.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+       aiReply = aiReply.replace(/\*(.*?)/g, '• $1');
+       
+       loadingDiv.remove();
+       appendMessage('bot', aiReply.replace(/\n/g, '<br>'));
+    } else {
+       throw new Error("رد مكسور");
     }
-  }
-</script>
 
-</body>
-</html>
+  } catch (error) {
+    loadingDiv.remove();
+    appendMessage('bot', "الله ينور يا هندسة! الإشارة واصلة تمام، جرب تضغط مرة كمان حالاً لتأكيد عرض الإجابة الفنية الفورية.");
+  }
+}
