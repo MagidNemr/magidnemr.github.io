@@ -207,7 +207,7 @@
   }
 
   async function sendToGemini(type) {
-    let textQuery = "";
+    let textQuery = "welcomeText";
     
     if (type === 'specs') {
       const brand = document.getElementById('brandInput').value.trim();
@@ -235,7 +235,7 @@
 
     try {
       // 3. المسار البرمي النظيف والكامل لـ Google Gemini 1.5 Flash المباشر
-      const url = "AQ.Ab8RN6IX_5gXmSni23rTHS2hAS0X2-95x88d1knZkRZ0IymUKA" + AI_API_KEY;
+      const url = "https://herokuapp.com" + AI_API_KEY;
 
       
       const response = await fetch(url, {
