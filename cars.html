@@ -3,32 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مستشار وموسوعة السيارات الشامل - Botpress Chat</title>
+    <title>مستشار وموسوعة السيارات الشامل</title>
     <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background-color: #0d1117;
+        body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        /* تنسيق إطار الشات بوت ليعرض بملء الشاشة بشكل احترافي */
-        iframe {
+        .container {
             width: 100%;
-            height: 100%;
+            max-width: 600px;
+            background-color: #161b22;
+            border: 1px solid #2ea44f;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(46, 164, 79, 0.2);
+        }
+        h2 {
+            text-align: center;
+            color: #2ea44f;
+            margin-top: 0;
+        }
+        .chat-box {
+            height: 380px;
+            overflow-y: auto;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 10px;
+            background-color: #0d1117;
+            margin-bottom: 15px;
+        }
+        .message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 6px;
+            line-height: 1.6;
+            max-width: 85%;
+            word-wrap: break-word;
+            white-space: pre-line;
+        }
+        .user-msg {
+            background-color: #238636;
+            color: white;
+            margin-right: auto;
+            text-align: right;
+        }
+        .ai-msg {
+            background-color: #21262d;
+            color: #c9d1d9;
+            margin-left: auto;
+            border: 1px solid #30363d;
+        }
+        .input-area {
+            display: flex;
+            gap: 10px;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #30363d;
+            background-color: #0d1117;
+            color: white;
+            font-size: 16px;
+        }
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #2ea44f;
+        }
+        button {
+            padding: 12px 20px;
+            background-color: #238636;
+            color: white;
             border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #2ea44f;
+        }
+        button:disabled {
+            background-color: #21262d;
+            cursor: not-allowed;
         }
     </style>
 </head>
 <body>
 
-    <!-- استدعاء شات بوت Botpress الخاص بك مباشرة داخل الصفحة -->
-    <iframe 
-        src="https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json" 
-        allow="microphone; geolocation;">
-    </iframe>
+<div class="container">
+    <h2>🏎️ مستشار وموسوعة السيارات الشامل</h2>
+    
+    <div class="chat-box" id="chatBox">
+        <div class="message ai-msg">مرحباً بك! أنا مستشارك الذكي المتخصص في السيارات. اسألني عن مواصفات أي سيارة أو عطل وسأجيبك فوراً بدقة واختصار.</div>
+    </div>
+
+    <div class="input-area">
+        <input type="text" id="userInput" placeholder="اكتب سؤالك هنا عن مواصفات السيارات..." onkeypress="handleKeyPress(event)">
+        <button id="sendBtn" onclick="sendMessage()">إرسال</button>
+    </div>
+</div>
+
+<script>
+    // تم ربطه بمعرف الـ Bot الخاص بك مباشرة لإرسال واستقبال الرسائل السريعة
+    const BOT_ID = "20261023124213-5N6Q06MP"; 
+    const API_URL = `https://botpress.cloud{BOT_ID}/converse`;
+
+    // توليد معرف جلسة فريد لكل مستخدم لمنع تداخل الإجابات
+    const CHAT_SESSION_ID = "user_" + Math.random().toString(36).substring(2, 15);
+
+    async function sendMessage() {
+        const inputField = document.getElementById("userInput");
+        const sendBtn = document.getElementById("sendBtn");
+        const chatBox = document.getElementById("chatBox");
+        const userText = inputField.value.trim();
+
+        if (!userText) return;
+
+        appendMessage(userText, "user-msg");
+        inputField.value = "";
+        sendBtn.disabled = true;
+        
+        const loadingDiv = appendMessage("جاري إحضار المواصفات بدقة...", "ai-msg");
+
+        try {
+            const response = await fetch(API_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "accept": "application/json"
+                },
+                body: JSON.stringify({
+                    text: userText,
+                    userId: CHAT_SESSION_ID
+                })
+            });
+
+            const data = await response.json();
+            loadingDiv.remove();
+
+            if (data.responses && data.responses.length > 0) {
+                // فلترة الأجوبة لأخذ النصوص الصافية فقط الموجهة لسؤالك مباشرة
+                let finalReply = "";
+                data.responses.forEach(res => {
+                    if (res.text) {
+                        finalReply += res.text + "\n";
+                    }
+                });
+                
+                if (finalReply.trim()) {
+                    appendMessage(finalReply.trim(), "ai-msg");
+                } else {
+                    appendMessage("لم أتمكن من العثور على رد مباشر، يرجى إعادة صياغة السؤال.", "ai-msg");
+                }
+            } else {
+                appendMessage("عذراً، لم يتم العثور على مواصفات دقيقة لهذا الموديل حالياً.", "ai-msg");
+            }
+
+        } catch (error) {
+            console.error("Error:", error);
+            if(loadingDiv) loadingDiv.remove();
+            appendMessage("حدث خطأ في الاتصال بالخادم، يرجى المحاولة مرة أخرى.", "ai-msg");
+        } finally {
+            sendBtn.disabled = false;
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    }
+
+    function appendMessage(text, className) {
+        const chatBox = document.getElementById("chatBox");
+        const msgDiv = document.createElement("div");
+        msgDiv.className = `message ${className}`;
+        msgDiv.innerText = text;
+        chatBox.appendChild(msgDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+        return msgDiv;
+    }
+
+    function handleKeyPress(event) {
+        if (event.key === "Enter") {
+            sendMessage();
+        }
+    }
+</script>
 
 </body>
 </html>
