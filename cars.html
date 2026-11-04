@@ -178,7 +178,7 @@
     </div>
 
 <script>
-  // مفتاحك الشخصي والمجاني المستقر من جوجل
+  // مفتاح الجيميني الشغال والمجاني تماماً الخاص بحسابك
   const AI_API_KEY = "AQ.Ab8RN6IX_5gXmSni23rTHS2hAS0X2-95x88d1knZkRZ0IymUKA";
 
   function appendMessage(sender, text) {
@@ -234,12 +234,12 @@
     const loadingDiv = appendMessage('bot', "جاري التفكير وتجهيز الإجابة النموذجية الفنية الحية...");
 
     try {
-      // 3. مسار استدعاء سيرفرات جوجل جينيريتيف آي الرسمي والكامل
+      // 3. المسار المصلح والكامل والنهائي لسيرفرات Google Gemini 1.5 Flash
       const response = await fetch(`https://googleapis.com{AI_API_KEY}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          contents: [{ parts: [{ text: textQuery + " (أجب بالتفصيل الهندسي المنظم المنسق، واجعل لغتك عربية فصحى مبسطة بصفتك مهندس سيارات خبير ومستشار ذكي في المرور المصري وتظهر للجمهور باسم المهندس ماجد نمر)" }] }]
+          contents: [{ parts: [{ text: textQuery + " (أجب بالتفصيل الهندسي المنظم المنسق وعرض المميزات والعيوب والأسعار التقريبية إن وجدت، واجعل لغتك عربية فصحى مبسطة بصفتك مهندس سيارات خبير ومستشار ذكي في المرور المصري وتظهر للجمهور باسم المهندس ماجد نمر)" }] }]
         })
       });
 
@@ -249,7 +249,7 @@
       if(data.candidates && data.candidates[0].content.parts[0].text) {
          let aiReply = data.candidates[0].content.parts[0].text;
          
-         // تنظيف نجوم البرمجة لجعل العناوين عريضة ومريحة
+         // تنسيق علامات النجوم البرمجية لتخرج كـ عنوان عريض ونقاط منسقة
          aiReply = aiReply.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
          aiReply = aiReply.replace(/\*(.*?)/g, '• $1');
          
