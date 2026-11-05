@@ -97,7 +97,7 @@
 </head>
 <body>
 
-<!-- واجهة حاسبة تراخيص السيارات المحدثة والمستقرة تماماً -->
+<!-- الواجهة الفخمة والمكتملة بالكامل لمستشار السيارات الشامل -->
 <div class="main-dashboard-container" style="max-width: 600px; margin: 0 auto; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; direction: rtl; text-align: right;">
     
     <div class="services-grid" style="display: grid; grid-template-columns: 1fr; gap: 15px; margin-bottom: 20px;">
@@ -114,7 +114,7 @@
             <span style="font-size: 18px; color: #10b981;">←</span>
         </a>
 
-        <!-- الخيار الثاني: حاسبة التراخيص الشاملة لعدة سنوات (تعمل داخلياً بسرعة وموثوقية 100%) -->
+        <!-- الخيار الثاني: حاسبة التراخيص الشاملة لعدة سنوات (مستقرة وسريعة 100%) -->
         <div style="background: linear-gradient(135deg, #1e293b, #0f172a); border: 1px solid #334155; padding: 20px; border-radius: 12px; color: #ffffff; box-shadow: 0 4px 6px rgba(0,0,0,0.15);">
             <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
                 <span style="font-size: 24px;">💵</span>
@@ -139,11 +139,33 @@
             <div id="calcResult" style="font-size: 14px; font-weight: bold; color: #e2e8f0; text-align: right; margin-top: 15px; line-height: 1.6; background: #0f172a; padding: 15px; border-radius: 8px; border: 1px solid #334155; display: none;"></div>
         </div>
 
+        <!-- الخيار الثالث: بوت مستشار السيارات المباشر والخاص بك لمواصفات السيارات وفحصها -->
+        <div style="background: linear-gradient(135deg, #1e293b, #0f172a); border: 1px solid #334155; padding: 20px; border-radius: 12px; color: #ffffff; box-shadow: 0 4px 6px rgba(0,0,0,0.15);">
+            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                <span style="font-size: 24px;">🔍</span>
+                <div>
+                    <strong style="display: block; font-size: 16px; color: #10b981;">معرفة مواصفات وفحص أي سيارة</strong>
+                    <span style="font-size: 12px; color: #94a3b8;">تصفح مواصفات سيارتك والكماليات والأعطال مباشرة عبر البوت الذكي</span>
+                </div>
+            </div>
+
+            <!-- إطار البوت الرسمي المباشر والشغال لبوت السيارات الخاص بك من Botpress -->
+            <div style="width: 100%; height: 450px; border-radius: 8px; overflow: hidden; border: 1px solid #334155;">
+                <iframe
+                    src="https://botpress.cloud"
+                    width="100%"
+                    height="100%"
+                    style="border: none;"
+                    allow="microphone; geolocation; clipboard-write">
+                </iframe>
+            </div>
+        </div>
+
     </div>
 </div>
 
 <script>
-    // حاسبة التراخيص التلقائية الشغالة فوراً طبقاً لأحدث جداول المرور والتخفيضات الرسمية لوزارة الداخلية
+    // حاسبة التراخيص المدمجة والسريعة والمحدثة تلقائياً لعام 2026 طوال العمر
     function calculateLicenseFull() {
         const cc = parseInt(document.getElementById('ccInput').value);
         const years = parseInt(document.getElementById('yearsInput').value);
@@ -157,7 +179,7 @@
             return;
         }
 
-        // 1. حساب الضريبة السنوية الرسمية بحسب الشريحة اللترية بوحدات المرور
+        // 1. حساب الضريبة السنوية الرسمية بحسب الشريحة اللترية بوحدات المرور في مصر
         let annualTax = 0;
         let categoryName = "";
 
@@ -178,14 +200,14 @@
 
         let totalTax = annualTax * years;
 
-        // 2. تطبيق بند رسم التسيير الموحد الإلكتروني الجديد الشامل لوزارة الداخلية (شباك واحد)
+        // 2. تطبيق بند رسم التسيير الموحد الإلكتروني الجديد لوزارة الداخلية بعد التخفيضات الرسمية الشاملة
         const officialBaseServiceFee = 1650; 
         
-        // التأمين الإجباري السنوي للمركبة (615 جنيه لكل سنة ترخيص)
+        // التأمين الإجباري السنوي للمركبة (615 جنيه لكل سنة ترخيص ملاكي)
         const compulsoryInsurancePerYear = 615; 
         let totalInsurance = compulsoryInsurancePerYear * years;
 
-        // حساب الرسوم الكلية الإجمالية فوراً داخل الجهاز بدون إنترنت
+        // حساب الرسوم الكلية النهائية الشاملة
         const totalCostFinal = totalTax + officialBaseServiceFee + totalInsurance;
 
         resultDiv.style.display = "block";
