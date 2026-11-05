@@ -104,10 +104,15 @@
         <div class="message ai-msg">مرحباً بك! أنا مستشارك الذكي المتخصص في السيارات. اسألني عن مواصفات أي سيارة أو عطل وسأجيبك فوراً بدقة واختصار.</div>
     </div>
 
-    <div class="input-area">
-        <input type="text" id="userInput" placeholder="اكتب سؤالك هنا عن مواصفات السيارات..." onkeypress="handleKeyPress(event)">
-        <button id="sendBtn" onclick="sendMessage()">إرسال</button>
-    </div>
+  <!-- استبدال صندوق الكتابة ببوت شات Botpress -->
+<div class="input-area" style="height: 500px; padding: 0; overflow: hidden; background: transparent;">
+    <iframe
+        src="https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json"
+        width="100%"
+        height="100%"
+        style="border: none; border-radius: 8px;"
+        allow="microphone; geolocation; clipboard-write">
+    </iframe>
 </div>
 
 <script>
