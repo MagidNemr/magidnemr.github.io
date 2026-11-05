@@ -97,19 +97,16 @@
 </head>
 <body>
 
-<div class="container">
-    <h2>🏎️ مستشار وموسوعة السيارات الشامل</h2>
-    
-    <div class="chat-box" id="chatBox">
-        <div class="message ai-msg">مرحباً بك! أنا مستشارك الذكي المتخصص في السيارات. اسألني عن مواصفات أي سيارة أو عطل وسأجيبك فوراً بدقة واختصار.</div>
-    </div>
- <div class="input-area">
-        <input type="text" id="userInput" placeholder="اكتب سؤالك هنا عن مواصفات السيارات..." onkeypress="handleKeyPress(event)">
-        <button id="sendBtn" onclick="sendMessage()">إرسال</button>
-    </div>
+<!-- الصندوق الرئيسي المحدث يحتوي على البوت مباشرة -->
+<div class="chat-box" id="chatBox" style="height: 480px; padding: 0; overflow: hidden; background: transparent;">
+    <iframe
+        src="https://botpress.cloud"
+        width="100%"
+        height="100%"
+        style="border: none; border-radius: 8px;"
+        allow="microphone; geolocation; clipboard-write">
+    </iframe>
 </div>
-  <!-- استبدال صندوق الكتابة ببوت شات Botpress -->
-<div class="input-area" style="height: 500px; padding: 0; overflow: hidden; background: transparent;">
   <!-- كود تشغيل وربط بوت السيارات من Botpress -->
 <script src="https://botpress.cloud"></script>
 <script>
