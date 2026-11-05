@@ -103,7 +103,11 @@
     <div class="chat-box" id="chatBox">
         <div class="message ai-msg">مرحباً بك! أنا مستشارك الذكي المتخصص في السيارات. اسألني عن مواصفات أي سيارة أو عطل وسأجيبك فوراً بدقة واختصار.</div>
     </div>
-
+ <div class="input-area">
+        <input type="text" id="userInput" placeholder="اكتب سؤالك هنا عن مواصفات السيارات..." onkeypress="handleKeyPress(event)">
+        <button id="sendBtn" onclick="sendMessage()">إرسال</button>
+    </div>
+</div>
   <!-- استبدال صندوق الكتابة ببوت شات Botpress -->
 <div class="input-area" style="height: 500px; padding: 0; overflow: hidden; background: transparent;">
     <iframe
