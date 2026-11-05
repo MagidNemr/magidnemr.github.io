@@ -110,13 +110,11 @@
 </div>
   <!-- استبدال صندوق الكتابة ببوت شات Botpress -->
 <div class="input-area" style="height: 500px; padding: 0; overflow: hidden; background: transparent;">
-   <script>
-    // المعرف الخاص بالبوت الخاص بك
-    const BOT_ID = "20261023124213-5N6Q06MP"; 
-    // رابط استدعاء المحادثات السريع والمباشر مع خوادم Botpress API
-    const API_URL = `https://botpress.cloud{BOT_ID}/converse`;
+  <script>
+    // الرابط الكامل لـ API المحادثة الخاص بالبوت الخاص بك من Botpress
+    const API_URL = "https://bpcontent.cloud";
 
-    // إنشاء معرف عشوائي فريد لكل مستخدم للحفاظ على سياق المحادثة
+    // توليد معرف عشوائي فريد للمستخدم للحفاظ على الجلسة
     const CHAT_SESSION_ID = "user_" + Math.random().toString(36).substring(2, 15);
 
     async function sendMessage() {
@@ -126,26 +124,26 @@
 
         if (messageText === "") return;
 
-        // 1. عرض رسالة المستخدم في الأعلى (مكان كلمة لانوس)
-        // نقوم بمسح الرسائل السابقة وإضافة رسالة المستخدم الجديدة وتنسيقها بلون أخضر
+        // تحديث واجهة المحادثة وعرض رسالة المستخدم في الأعلى مكان "لانوس"
         chatBox.innerHTML = `
-            <div class="message" style="background-color: #10b981; color: white; padding: 10px; margin-bottom: 10px; border-radius: 5px;">
+            <div class="message" style="background-color: #10b981; color: white; padding: 10px; margin-bottom: 10px; border-radius: 5px; text-align: right;">
                 ${messageText}
             </div>
-            <div class="message u1-msg" id="botResponse" style="background-color: #262626; color: #a3a3a3; padding: 10px; border-radius: 5px;">
+            <div class="message u1-msg" id="botResponse" style="background-color: #262626; color: #a3a3a3; padding: 10px; border-radius: 5px; text-align: right;">
                 جاري التفكير والرد...
             </div>
         `;
 
-        // تفريغ حقل الكتابة بعد الإرسال
+        // تفريغ حقل الكتابة
         userInput.value = "";
 
         try {
-            // 2. إرسال السؤال إلى سيرفر Botpress الشغال عبر الـ API
-            const response = await fetch(API_URL, {
+            // إرسال الطلب إلى السيرفر الخاص بالبوت
+            const response = await fetch("https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": "Bearer " + API_URL, // يتم تمرير الرابط أو التوكن المخصص هنا بناء على إعدادات حسابك
                     "x-user-id": CHAT_SESSION_ID
                 },
                 body: JSON.stringify({
@@ -156,30 +154,31 @@
             const data = await response.json();
             const botResponseDiv = document.getElementById("botResponse");
 
-            // 3. استقبال الرد من البوت وعرضه مباشرة مكان جملة "حدث خطأ"
-            if (data.responses && data.responses.length > 0) {
-                // جلب النص الراجع من البوت
+            // جلب نص الرد وعرضه مكان رسالة الخطأ
+            if (data && data.text) {
+                botResponseDiv.innerText = data.text;
+                botResponseDiv.style.color = "#ffffff";
+            } else if (data.responses && data.responses[0]) {
                 botResponseDiv.innerText = data.responses[0].text;
-                botResponseDiv.style.color = "#ffffff"; // تغيير اللون للأبيض ليصبح واضحاً
+                botResponseDiv.style.color = "#ffffff";
             } else {
-                botResponseDiv.innerText = "لم يتمكن البوت من الرد على هذا السؤال.";
+                botResponseDiv.innerText = "تلقيت رداً فارغاً من البوت، يرجى التحقق من إعدادات Botpress.";
             }
 
         } catch (error) {
             console.error("Error:", error);
             const botResponseDiv = document.getElementById("botResponse");
             botResponseDiv.innerText = "عذراً، فشل الاتصال بالبوت الذكي. يرجى المحاولة لاحقاً.";
-            botResponseDiv.style.color = "#ef4444"; // لون أحمر للإشارة إلى الخطأ
+            botResponseDiv.style.color = "#ef4444";
         }
     }
 
-    // دالة لتشغيل الإرسال عند الضغط على زر Enter من لوحة المفاتيح
+    // لتفعيل الإرسال عند الضغط على زر Enter
     function handleKeyPress(event) {
         if (event.key === "Enter") {
             sendMessage();
         }
     }
 </script>
-
 </body>
 </html>
