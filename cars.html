@@ -153,7 +153,7 @@
             <!-- تضمين الرابط الرسمي والمباشر لبوتك لمنع الشاشة البيضاء والتعليق -->
             <div style="width: 100%; height: 450px; border-radius: 8px; overflow: hidden; border: 1px solid #334155;">
                 <iframe
-                    src="AQ.Ab8RN6IrnGAZiVQUszEYTOEnuCRyU_ceWkKEjAWuEahvy53iRw"
+                    src="https://botpress.cloud"
                     width="100%"
                     height="100%"
                     style="border: none;"
@@ -166,7 +166,7 @@
 </div>
 
 <script>
-    // حاسبة التراخيص الديناميكية المحدثة بالكامل طبقاً لقرارات المرور الصادرة
+    // حاسبة التراخيص الديناميكية المحدثة بالكامل طبقاً لقرارات المرور الصادرة لعام 2026
     function calculateLicenseFull() {
         const cc = parseInt(document.getElementById('ccInput').value);
         const years = parseInt(document.getElementById('yearsInput').value);
@@ -193,16 +193,14 @@
             annualTax = 3000;
             categoryName = "سيارة فوق المتوسطة (من 1631 إلى 2030 CC)";
         } else {
-            annualTax = cc * 2.5; // الحساب النسبي للسيارات الفارهة (بحد أدنى 2000 جنيه للضريبة)
+            annualTax = cc * 2.5; 
             if(annualTax < 2000) annualTax = 2000;
             categoryName = "سيارة فارهة / سعة عالية (أعلى من 2030 CC)";
         }
 
-        // إجمالي الضريبة للمدة كاملة
         let totalTax = annualTax * years;
 
-        // 2. تطبيق بند رسوم تسيير المركبة الموحد الجديد بعد التخفيضات الرسمية لوزارة الداخلية
-        // الرسوم الإدارية ورسم التسيير الموحد الإلكتروني الشامل (بدون مبالغ إضافية) = 1650 جنيهاً للدورة
+        // 2. تطبيق بند رسوم تسيير المركبة الموحد الجديد بعد التخفيضات الرسمية لوزارة الداخلية لعام 2026
         const officialBaseServiceFee = 1650; 
         
         // التأمين الإجباري السنوي للمركبة (615 جنيه لكل سنة ترخيص)
