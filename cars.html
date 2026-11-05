@@ -150,10 +150,10 @@
                 </div>
             </div>
 
-            <!-- تضمين الرابط الرسمي والمباشر لبوتك لمنع الشاشة البيضاء والتعليق -->
+            <!-- تضمين الرابط المباشر والشغال لبوت السيارات الخاص بك -->
             <div style="width: 100%; height: 450px; border-radius: 8px; overflow: hidden; border: 1px solid #334155;">
                 <iframe
-                    src="https://botpress.cloud"
+                    src="https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json"
                     width="100%"
                     height="100%"
                     style="border: none;"
@@ -166,7 +166,7 @@
 </div>
 
 <script>
-    // دالة الاتصال المباشر والذكي بالسحابة لحساب التراخيص فوراً بأرقام محدثة دائماً وبدون أرقام ثابتة بالكود
+    // دالة الاتصال المباشر والذكي بالسحابة لحساب التراخيص فوراً بأرقام محدثة دائماً
     async function calculateLicenseOnline() {
         const cc = document.getElementById('ccInput').value.trim();
         const years = document.getElementById('yearsInput').value;
@@ -184,7 +184,7 @@
         resultDiv.innerHTML = `<div style="text-align:center;">🔄 جاري جلب وقراءة أحدث الأسعار والرسوم الرسمية من المرور حالياً...</div>`;
 
         try {
-            // إرسال البيانات فوراً إلى خادم البوت ليقوم بعملية الفحص والبحث في الويب تلقائياً وإرجاع الحسبة المحدثة
+            // إرسال الطلب مباشرة لـ API البوت الشغال الخاص بك لحساب التكلفة ديناميكياً بالـ Web Search
             const response = await fetch("https://botpress.cloud", {
                 method: "POST",
                 headers: {
@@ -199,9 +199,8 @@
             const data = await response.json();
 
             if (data.responses && data.responses.length > 0) {
-                // عرض الحسبة والرد النصي القادم مباشرة من السيرفر بشكل منسق وواضح للمستعمل باللون الأبيض
                 resultDiv.style.color = "#ffffff";
-                resultDiv.innerHTML = `<div style="color: #10b981; font-weight: bold; margin-bottom: 8px; border-bottom: 1px solid #334155; padding-bottom: 5px;">📊 بيان الرسوم الرسمي والمحدث تلقائياً:</div>` + data.responses.text.replace(/\n/g, "<br>");
+                resultDiv.innerHTML = `<div style="color: #10b981; font-weight: bold; margin-bottom: 8px; border-bottom: 1px solid #334155; padding-bottom: 5px;">📊 بيان الرسوم الرسمي والمحدث تلقائياً:</div>` + data.responses[0].text.replace(/\n/g, "<br>");
             } else {
                 resultDiv.style.color = "#ef4444";
                 resultDiv.innerHTML = "⚠️ لم نتمكن من حساب التكلفة إلكترونياً حالياً، يرجى سؤال البوت المباشر في الأسفل.";
@@ -213,6 +212,6 @@
         }
     }
 </script>
-</script>
+
 </body>
 </html>
