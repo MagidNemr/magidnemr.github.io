@@ -110,89 +110,70 @@
 </div>
   <!-- استبدال صندوق الكتابة ببوت شات Botpress -->
 <div class="input-area" style="height: 500px; padding: 0; overflow: hidden; background: transparent;">
-    <iframe
-        src="https://cdn.botpress.cloud/webchat/v3.7/shareable.html?configUrl=https://files.bpcontent.cloud/2026/10/23/12/20261023124213-5N6Q06MP.json"
-        width="100%"
-        height="100%"
-        style="border: none; border-radius: 8px;"
-        allow="microphone; geolocation; clipboard-write">
-    </iframe>
-</div>
-
-<script>
+   <script>
     // المعرف الخاص بالبوت الخاص بك
     const BOT_ID = "20261023124213-5N6Q06MP"; 
-    // رابط استدعاء المحادثات السريع والمتوافق مع المتصفحات لـ Botpress
-    const API_URL = `https://botpress.cloud{BOT_ID}/webconverse`;
-    
+    // رابط استدعاء المحادثات السريع والمباشر مع خوادم Botpress API
+    const API_URL = `https://botpress.cloud{BOT_ID}/converse`;
+
+    // إنشاء معرف عشوائي فريد لكل مستخدم للحفاظ على سياق المحادثة
     const CHAT_SESSION_ID = "user_" + Math.random().toString(36).substring(2, 15);
 
     async function sendMessage() {
-        const inputField = document.getElementById("userInput");
-        const sendBtn = document.getElementById("sendBtn");
+        const userInput = document.getElementById("userInput");
         const chatBox = document.getElementById("chatBox");
-        const userText = inputField.value.trim();
+        const messageText = userInput.value.trim();
 
-        if (!userText) return;
+        if (messageText === "") return;
 
-        appendMessage(userText, "user-msg");
-        inputField.value = "";
-        sendBtn.disabled = true;
-        
-        const loadingDiv = appendMessage("جاري إحضار المواصفات بدقة...", "ai-msg");
+        // 1. عرض رسالة المستخدم في الأعلى (مكان كلمة لانوس)
+        // نقوم بمسح الرسائل السابقة وإضافة رسالة المستخدم الجديدة وتنسيقها بلون أخضر
+        chatBox.innerHTML = `
+            <div class="message" style="background-color: #10b981; color: white; padding: 10px; margin-bottom: 10px; border-radius: 5px;">
+                ${messageText}
+            </div>
+            <div class="message u1-msg" id="botResponse" style="background-color: #262626; color: #a3a3a3; padding: 10px; border-radius: 5px;">
+                جاري التفكير والرد...
+            </div>
+        `;
+
+        // تفريغ حقل الكتابة بعد الإرسال
+        userInput.value = "";
 
         try {
+            // 2. إرسال السؤال إلى سيرفر Botpress الشغال عبر الـ API
             const response = await fetch(API_URL, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "x-user-id": CHAT_SESSION_ID
                 },
                 body: JSON.stringify({
-                    text: userText,
-                    userId: CHAT_SESSION_ID
+                    text: messageText
                 })
             });
 
             const data = await response.json();
-            loadingDiv.remove();
+            const botResponseDiv = document.getElementById("botResponse");
 
+            // 3. استقبال الرد من البوت وعرضه مباشرة مكان جملة "حدث خطأ"
             if (data.responses && data.responses.length > 0) {
-                let finalReply = "";
-                data.responses.forEach(res => {
-                    if (res.text) {
-                        finalReply += res.text + "\n";
-                    }
-                });
-                
-                if (finalReply.trim()) {
-                    appendMessage(finalReply.trim(), "ai-msg");
-                } else {
-                    appendMessage("لم أتمكن من العثور على رد مباشر، يرجى إعادة صياغة السؤال.", "ai-msg");
-                }
+                // جلب النص الراجع من البوت
+                botResponseDiv.innerText = data.responses[0].text;
+                botResponseDiv.style.color = "#ffffff"; // تغيير اللون للأبيض ليصبح واضحاً
             } else {
-                appendMessage("عذراً، لم يتم العثور على مواصفات دقيقة لهذا الموديل حالياً.", "ai-msg");
+                botResponseDiv.innerText = "لم يتمكن البوت من الرد على هذا السؤال.";
             }
 
         } catch (error) {
             console.error("Error:", error);
-            if(loadingDiv) loadingDiv.remove();
-            appendMessage("حدث خطأ في الاتصال بالخادم، يرجى المحاولة مرة أخرى.", "ai-msg");
-        } finally {
-            sendBtn.disabled = false;
-            chatBox.scrollTop = chatBox.scrollHeight;
+            const botResponseDiv = document.getElementById("botResponse");
+            botResponseDiv.innerText = "عذراً، فشل الاتصال بالبوت الذكي. يرجى المحاولة لاحقاً.";
+            botResponseDiv.style.color = "#ef4444"; // لون أحمر للإشارة إلى الخطأ
         }
     }
 
-    function appendMessage(text, className) {
-        const chatBox = document.getElementById("chatBox");
-        const msgDiv = document.createElement("div");
-        msgDiv.className = `message ${className}`;
-        msgDiv.innerText = text;
-        chatBox.appendChild(msgDiv);
-        chatBox.scrollTop = chatBox.scrollHeight;
-        return msgDiv;
-    }
-
+    // دالة لتشغيل الإرسال عند الضغط على زر Enter من لوحة المفاتيح
     function handleKeyPress(event) {
         if (event.key === "Enter") {
             sendMessage();
