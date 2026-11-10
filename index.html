@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-<head>
+<head
+   <script src="https://minepi.com"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Tech Aide | اللوحة الهندسية</title>
-   <script src="https://minepi.com"></script>
-  <script>
-  Pi.init({ version: "2.0" });
-  </script>
+    <script>
+      if (window.Pi) {
+        window.Pi.init({ version: "2.0", sandbox: true });
+      }
+    </script>
     <style>
         :root {
             --dark-bg: #090d16;
@@ -375,6 +377,10 @@ function executeActualFeature(actionName) {
     // هنا تضع الأكواد الخاصة بك لفتح الـ PDF أو إظهار نتائج حاسبة الأحمال
 }
                 </script>
-    
+<script>
+  if (window.Pi) {
+    window.Pi.init({ version: "2.0", sandbox: true });
+  }
+</script>
 </body>
 </html>
