@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head
-   <script src="https://sandbox.minepi.com/app/smart-tech-aide-7w92"></script>
+   <!-- استدعاء مكتبة Pi SDK الرسمية -->
+<script src="https://minepi.com"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Tech Aide | اللوحة الهندسية</title>
@@ -194,7 +195,12 @@
     <h2>⚡ SMART TECH AIDE ⚡</h2>
     <p>« المنصة البرمجية المعتمدة لهندسة القوى والتحكم الآلي »</p>
 </header>
-
+<!-- ضع الزر هنا كالتالي -->
+<div style="text-align: center; margin: 20px 0;">
+    <button onclick="authWithPi()" style="background-color: #622d86; color: white; padding: 12px 24px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">
+        تسجيل الدخول باستخدام Pi
+    </button>
+</div>
 <div class="container">
 
     <div class="card">
@@ -380,6 +386,34 @@ function executeActualFeature(actionName) {
 <script>
   if (window.Pi) {
     window.Pi.init({ version: "2.0", sandbox: true });
+  }
+</script>
+   <!-- كود تهيئة وتشغيل Pi Sign-In -->
+<script>
+  // تهيئة المكتبة برقم الـ Client ID الخاص بك وتفعيل بيئة الـ Testnet
+  Pi.init({ version: "2.0", sandbox: true });
+
+  // دالة تسجيل الدخول التي سيتم تشغيلها عند الضغط على الزر
+  async function authWithPi() {
+    try {
+      const scopes = ['username', 'payments'];
+      
+      // بدء عملية التحقق
+      const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
+      
+      // عند نجاح تسجيل الدخول، سيظهر تنبيه باسم المستخدم
+      alert(`أهلاً بك يا بطل: ${auth.user.username}`);
+      console.log(`تم تسجيل الدخول بنجاح للمستخدم: ${auth.user.username}`);
+      
+    } catch (error) {
+      console.error("فشلت عملية تسجيل الدخول:", error);
+      alert("عذراً، حدث خطأ أثناء تسجيل الدخول باستخدام Pi.");
+    }
+  }
+
+  // دالة إلزامية للتعامل مع أي مدفوعات معلقة أو غير مكتملة
+  function onIncompletePaymentFound(payment) {
+    console.log("تم العثور على معالجة دفع غير مكتملة:", payment);
   }
 </script>
 </body>
