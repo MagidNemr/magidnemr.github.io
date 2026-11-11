@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Tech Aide | اللوحة الهندسية</title>
    <!-- الرسمية Pi SDK استدعاء مكتبة -->
-<script src="https://smarttechaide0914.pinet.com"></script>
+
     <style>
         :root {
     <style>
@@ -312,87 +312,24 @@ function searchInNimerBlog() {
         alert("جاري تجهيز رابط التحميل المباشر لـ (" + bookName + ") أونلاين على سيرفر المطورين.. يرجى المحاولة لاحقاً!");
     }
 </script>
-    <!-- استدعاء مكتبة Pi الرسمية -->
-<script src="https://magidnemr.github.io/"></script>
 
-<!-- استدعاء ملف الأزرار الخارجي الآمن الذي أنشأناه -->
-    <script src="pi-payments.js"></script>
-    <script>
-// 1. تعريف المتغيرات الأساسية
-const MAX_FREE_ATTEMPTS = 3; // عدد المحاولات المجانية
-
-// 2. دالة لفحص ومعالجة محاولات المستخدم عند الضغط على أي زر
-function handleAppAction(actionName, price) {
-    // جلب عدد المحاولات الحالية للمستخدم من ذاكرة المتصفح
-    let attempts = parseInt(localStorage.getItem('free_attempts_count')) || 0;
-
-    // التحقق مما إذا كان المستخدم قد استنفد محاولاته المجانية
-    if (attempts >= MAX_FREE_ATTEMPTS) {
-        // إذا انتهت المحاولات، نتوجه فوراً لنظام الدفع بـ Pi
-        triggerPiPayment(actionName, price);
-    } else {
-        // إذا كان لا يزال يمتلك محاولات مجانية
-        attempts++;
-        localStorage.setItem('free_attempts_count', attempts);
-        
-        // حساب المحاولات المتبقية وعرضها للمستخدم لتشجيعه
-        let remaining = MAX_FREE_ATTEMPTS - attempts;
-        alert(`تمت العملية مجاناً بنجاح! متبقي لك ${remaining} محاولات مجانية لتجربة التطبيق.`);
-        
-        // تنفيذ الأداة المطلوبة (حساب الأحمال، تحميل، إلخ)
-        executeActualFeature(actionName);
-    }
-}
-
-// 3. دالة معالجة الدفع الرسمية عبر Pi Network SDK
-function triggerPiPayment(actionName, amount) {
-    // إشعار المستخدم بانتهاء الفترة المجانية وبدء الدفع
-    alert(`لقد استنفدت محاولاتك المجانية الـ 3. لاستخدام ميزة (${actionName})، يرجى دفع ${amount} Pi.`);
-    
-    Pi.createPayment({
-        amount: amount,
-        memo: `رسوم استخدام: ${actionName}`,
-        metadata: { action: actionName },
-    }, {
-        onReadyForServerApproval: function(paymentId) {
-            console.log("تم إنشاء الطلب، المعرف: ", paymentId);
-            // هنا يرسل التطبيق المعرف إلى السيرفر للموافقة
-        },
-        onReadyForServerCompletion: function(paymentId, txid) {
-            console.log("اكتملت المعاملة بنجاح، رقم التحويل: ", txid);
-            alert("تم الدفع بنجاح! تم فتح الميزة لك الآن.");
-            // تنفيذ الأداة للمستخدم بعد الدفع
-            executeActualFeature(actionName);
-        },
-        onCancel: function(paymentId) {
-            alert("تم إلغاء عملية الدفع، لن تتمكن من استخدام الميزة بدون دفع.");
-        },
-        onError: function(error, paymentId) {
-            console.error("خطأ في الدفع: ", error);
-            alert("حدث خطأ أثناء معالجة الدفع، يرجى المحاولة لاحقاً.");
-        }
-    });
-}
-
-<!-- كود تشغيل دخول Pi النظيف والمعتمد بدون أي أخطاء برمجية -->
+<!-- كود تهيئة وتشغيل دخول شبكة Pi المعتمد -->
 <script>
-  // تهيئة وتفعيل المكتبة برقم الـ Client ID الخاص بك
+  // تهيئة المكتبة وربطها بالـ Client ID الخاص بتطبيقك
   Pi.init({ 
     version: "2.0", 
     sandbox: true, 
     client_id: "6aCxa_MvLH9mgIA9y7EHBDszfOX8T" 
   });
 
-  // دالة تسجيل الدخول التي سيتم تشغيلها عند الضغط على الزر
+  // دالة تسجيل الدخول التي يستدعيها زر موقعك عند الضغط عليه
   async function authWithPi() {
     try {
       const scopes = ['username', 'payments'];
       console.log("جاري بدء الاتصال بشبكة Pi...");
       
-      // بدء عملية التحقق
       const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
       
-      // عند نجاح تسجيل الدخول، سيظهر تنبيه باسم المستخدم
       alert("أهلاً بك يا بطل: " + auth.user.username);
       console.log("تم تسجيل الدخول بنجاح للمستخدم: " + auth.user.username);
       
@@ -402,9 +339,23 @@ function triggerPiPayment(actionName, amount) {
     }
   }
 
-  // دالة التعامل مع المدفوعات غير المكتملة المعلقة
   function onIncompletePaymentFound(payment) {
     console.log("تم العثور على معالجة دفع غير مكتملة:", payment);
+  }
+
+  // الدوال الفرعية الخاصة بموقعك لإبقائها تعمل بنجاح
+  function searchInNimerBlog() {
+    var query = document.getElementById('bookSearchInput').value.trim();
+    if (query) {
+      var blogUrl = "https://blogspot.com";
+      window.open(blogUrl + "index.html?q=" + encodeURIComponent(query), '_blank');
+    } else {
+      alert('برجاء كتابة اسم الكتاب أولاً يا هندسة!');
+    }
+  }
+
+  function showBookAlert(bookName) {
+    alert(bookName + " - جاري تجهيز رابط التحميل المباشر لـ ");
   }
 </script>
 </body>
