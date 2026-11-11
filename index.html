@@ -374,37 +374,35 @@ function triggerPiPayment(actionName, amount) {
     });
 }
 
-// 4. الدالة المسؤولية عن تشغيل وظائف الموقع الفعلية
-function executeActualFeature(actionName) {
-    console.log("تشغيل الميزة الفنية: " + actionName);
-    // هنا تضع الأكواد الخاصة بك لفتح الـ PDF أو إظهار نتائج حاسبة الأحمال
-}
-               <script>
-  // تهيئة المكتبة وتمرير الـ Client ID الخاص بتطبيقك مع تفعيل الـ Sandbox
-
-                   Pi.init({ 
+<!-- كود تشغيل دخول Pi النظيف والمعتمد بدون أي أخطاء برمجية -->
+<script>
+  // تهيئة وتفعيل المكتبة برقم الـ Client ID الخاص بك
+  Pi.init({ 
     version: "2.0", 
     sandbox: true, 
     client_id: "6aCxa_MvLH9mgIA9y7EHBDszfOX8T" 
   });
 
+  // دالة تسجيل الدخول التي سيتم تشغيلها عند الضغط على الزر
   async function authWithPi() {
     try {
       const scopes = ['username', 'payments'];
       console.log("جاري بدء الاتصال بشبكة Pi...");
       
-      // بدء عملية التحقق البرمجي لشاشة الدخول
+      // بدء عملية التحقق
       const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
       
+      // عند نجاح تسجيل الدخول، سيظهر تنبيه باسم المستخدم
       alert("أهلاً بك يا بطل: " + auth.user.username);
-      console.log("تم تسجيل الدخول بنجاح", auth);
+      console.log("تم تسجيل الدخول بنجاح للمستخدم: " + auth.user.username);
       
     } catch (error) {
-      console.error("تفاصيل الخطأ الدقيقة من شبكة Pi:", error);
+      console.error("فشلت عملية تسجيل الدخول:", error);
       alert("حدث خطأ أثناء تسجيل الدخول: " + (error.message || error));
     }
   }
 
+  // دالة التعامل مع المدفوعات غير المكتملة المعلقة
   function onIncompletePaymentFound(payment) {
     console.log("تم العثور على معالجة دفع غير مكتملة:", payment);
   }
