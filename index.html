@@ -1,17 +1,8 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head
-   <!-- استدعاء مكتبة Pi SDK الرسمية -->
-<script src=" https://sandbox.minepi.com/app/smart-tech-aide-7w92"></script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Tech Aide | اللوحة الهندسية</title>
-    <script>
-      if (window.Pi) {
-       Pi.init({ version: "2.0",: true, client_id: "6aCxa_MvLH9mgIA9y7EHBDszfOX8T" });
-      }
-       
-    </script>
+  <!-- استدعاء مكتبة Pi SDK الرسمية -->
+<script src="https://minepi.com"></script>
     <style>
         :root {
             --dark-bg: #090d16;
@@ -391,28 +382,29 @@ function executeActualFeature(actionName) {
 </script>
    <!-- كود تهيئة وتشغيل Pi Sign-In -->
 <script>
-  // تهيئة المكتبة برقم الـ Client ID الخاص بك وتفعيل بيئة الـ Testnet
- Pi.init({ version: "2.0", sandbox: true, client_id: "6aCxa_MvLH9mgIA9y7EHBDszfOX8T" });
+ <!-- كود تهيئة وتشغيل Pi Sign-In المحدث للـ Sandbox -->
+<script>
+  // تهيئة المكتبة بالـ Client ID الخاص بك وتفعيل بيئة الـ Sandbox التجريبية
+  Pi.init({ version: "2.0", sandbox: true, client_id: "6aCxa_MvLH9mgIA9y7EHBDszfOX8T" });
 
-  // دالة تسجيل الدخول التي سيتم تشغيلها عند الضغط على الزر
   async function authWithPi() {
     try {
       const scopes = ['username', 'payments'];
+      console.log("جاري بدء الاتصال بشبكة Pi...");
       
       // بدء عملية التحقق
       const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
       
-      // عند نجاح تسجيل الدخول، سيظهر تنبيه باسم المستخدم
+      // عند النجاح
       alert(`أهلاً بك يا بطل: ${auth.user.username}`);
-      console.log(`تم تسجيل الدخول بنجاح للمستخدم: ${auth.user.username}`);
+      console.log(`تم تسجيل الدخول بنجاح:`, auth);
       
     } catch (error) {
-      console.error("فشلت عملية تسجيل الدخول:", error);
-      alert("عذراً، حدث خطأ أثناء تسجيل الدخول باستخدام Pi.");
+      console.error("تفاصيل الخطأ الدقيقة من شبكة Pi:", error);
+      alert("حدث خطأ أثناء تسجيل الدخول. تفاصيل الخطأ: " + (error.message || error));
     }
   }
 
-  // دالة إلزامية للتعامل مع أي مدفوعات معلقة أو غير مكتملة
   function onIncompletePaymentFound(payment) {
     console.log("تم العثور على معالجة دفع غير مكتملة:", payment);
   }
