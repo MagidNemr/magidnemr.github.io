@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head
-  <!-- استدعاء مكتبة Pi SDK الرسمية -->
-<script src="https://sdk.minepi.com/pi-sdk.js);"></script>
+<!-- الرسمية Pi SDK استدعاء مكتبة -->
+<script src="https://sdk.minepi.com/pi-sdk.js"></script>
     <style>
         :root {
             --dark-bg: #090d16;
@@ -180,7 +180,6 @@
         }
         .footer { text-align: center; padding: 25px; font-size: 12px; color: var(--text-muted); }
     </style>
-<script src="https://sdk.minepi.com/pi-sdk.js);"></script>
 </head>
 <body>
 
@@ -377,32 +376,27 @@ function executeActualFeature(actionName) {
 }
                 </script>
 <script>
-  if (window.Pi) {
-    window.Pi.init({ version: "2.0", sandbox: true });
-  }
-</script>
-   <!-- كود تهيئة وتشغيل Pi Sign-In -->
-<script>
- <!-- كود تهيئة وتشغيل Pi Sign-In المحدث للـ Sandbox -->
-<script>
-  // تهيئة المكتبة بالـ Client ID الخاص بك وتفعيل بيئة الـ Sandbox التجريبية
-  Pi.init({ version: "2.0", sandbox: true, client_id: "https://sandbox.minepi.com/app/smart-tech-aide-7w92" });
+  // تهيئة المكتبة وتمرير الـ Client ID الخاص بتطبيقك مع تفعيل الـ Sandbox
+  Pi.init({ 
+    version: "2.0", 
+    sandbox: true, 
+    client_id: "6aCxa_MvLH9mgIA9y7EHBDszfOX8T" 
+  });
 
   async function authWithPi() {
     try {
       const scopes = ['username', 'payments'];
       console.log("جاري بدء الاتصال بشبكة Pi...");
       
-      // بدء عملية التحقق
+      // بدء عملية التحقق البرمجي لشاشة الدخول
       const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
       
-      // عند النجاح
-      alert(`أهلاً بك يا بطل: ${auth.user.username}`);
-      console.log(`تم تسجيل الدخول بنجاح:`, auth);
+      alert("أهلاً بك يا بطل: " + auth.user.username);
+      console.log("تم تسجيل الدخول بنجاح", auth);
       
     } catch (error) {
       console.error("تفاصيل الخطأ الدقيقة من شبكة Pi:", error);
-      alert("حدث خطأ أثناء تسجيل الدخول. تفاصيل الخطأ: " + (error.message || error));
+      alert("حدث خطأ أثناء تسجيل الدخول: " + (error.message || error));
     }
   }
 
