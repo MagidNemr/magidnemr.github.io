@@ -418,20 +418,21 @@
         inviteContainer.style.textAlign = 'center';
         inviteContainer.style.marginTop = '14px';
 
-        inviteContainer.innerHTML =
-          '<div style="background: rgba(17, 24, 39, 0.92); border: 1px solid #00f5d4; border-radius: 14px; padding: 12px 16px; max-width: 340px; margin: 0 auto 10px auto; box-shadow: 0 4px 15px rgba(0, 245, 212, 0.15);">' +
-            '<div style="color: #e5e7eb; font-size: 13px; font-weight: bold; margin-bottom: 6px;">ليس لديك حساب في شبكة Pi بعد؟</div>' +
-            '<div style="display: flex; align-items: center; justify-content: space-between; background: #090d16; padding: 8px 12px; border-radius: 10px; border: 1px dashed #ffd700;">' +
-              '<span style="color: #ffd700; font-size: 12px; direction: ltr;">تطبيق Pi Network الرسمي</span>' +
-              '<button type="button" onclick="copyReferralLink()" style="background: #00f5d4; color: #090d16; border: none; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; flex-shrink: 0;">نسخ رابط الدعوة 🔗</button>' +
+       inviteContainer.innerHTML =
+          '<div style="background: rgba(17, 24, 39, 0.95); border: 1px solid #00f5d4; border-radius: 14px; padding: 14px; max-width: 340px; margin: 0 auto 12px auto; box-shadow: 0 4px 15px rgba(0, 245, 212, 0.15);">' +
+            '<div style="color: #e5e7eb; font-size: 13px; font-weight: bold; margin-bottom: 8px;">ليس لديك حساب في شبكة Pi بعد؟</div>' +
+            '<div style="background: #090d16; padding: 8px 10px; border-radius: 8px; border: 1px dashed #ffd700; margin-bottom: 10px; direction: ltr; text-align: center;">' +
+              '<a href="' + MY_PI_INVITE_LINK + '" target="_blank" style="color: #ffd700; font-size: 13px; font-weight: bold; text-decoration: none; display: inline-block; width: auto; padding: 0; margin: 0; background: transparent; border: none; box-shadow: none;">' +
+                'https://minepi.com' +
+              '</a>' +
             '</div>' +
-            '<div style="color: #9ca3af; font-size: 11px; margin-top: 6px;">انسخ الرابط لتحميل التطبيق الرسمي والانضمام فوراً</div>' +
+            '<button type="button" onclick="copyReferralLink()" style="background: linear-gradient(135deg, #00f5d4, #00bbf9); color: #090d16; border: none; padding: 10px 16px; border-radius: 10px; font-size: 13px; font-weight: bold; cursor: pointer; width: 100%; margin: 0; box-shadow: 0 2px 10px rgba(0, 245, 212, 0.3);">' +
+              'نسخ رابط الدعوة وتحميل التطبيق 🔗' +
+            '</button>' +
           '</div>' +
-          '<button type="button" id="pi-pay-btn" onclick="payWithPi(1, \'فتح الاستخدام غير المحدود - Smart Tech Aide\')" style="background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%); color: #090d16; padding: 13px 24px; border: none; border-radius: 12px; font-size: 15px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 20px rgba(255, 215, 0, 0.35); width: 100%; max-width: 340px;">' +
+          '<button type="button" id="pi-pay-btn" onclick="payWithPi(1, \'فتح الاستخدام غير المحدود - Smart Tech Aide\')" style="background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%); color: #090d16; padding: 13px 24px; border: none; border-radius: 12px; font-size: 15px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 20px rgba(255, 215, 0, 0.35); width: 100%; max-width: 340px; margin: 0 auto; display: block;">' +
             '⚡ الدفع بعملة Pi للاستخدام الكامل (1 Pi)' +
           '</button>';
-
-        loginBtn.parentNode.insertBefore(inviteContainer, loginBtn.nextSibling);
       }
 
       // 2. تطبيق نظام التجربة لمرة واحدة على جميع الأزرار والروابط في التطبيق تلقائياً
