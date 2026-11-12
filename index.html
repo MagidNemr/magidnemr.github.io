@@ -322,13 +322,76 @@
       console.log("تم العثور على معاملة دفع غير مكتملة:", payment);
     }
 
+   // إنشاء وتنسيق بطاقة الترحيب الفخمة تلقائياً
+    function showVIPWelcome(username) {
+      // إزالة أي إشعار سابق إن وجد
+      const oldToast = document.getElementById('vip-pi-toast');
+      if (oldToast) oldToast.remove();
+
+      const toast = document.createElement('div');
+      toast.id = 'vip-pi-toast';
+      toast.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="background: linear-gradient(135deg, #ffd700, #ff8c00); color: #090d16; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold; box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);">
+            ⚡
+          </div>
+          <div style="text-align: right;">
+            <div style="color: #ffd700; font-size: 13px; font-weight: bold; letter-spacing: 0.5px;">تم التوثيق بنجاح عبر شبكة Pi</div>
+            <div style="color: #ffffff; font-size: 16px; font-weight: bold; margin-top: 2px;">أهلاً بك يا هندسة <span style="color: #00f5d4;">@${username}</span></div>
+          </div>
+        </div>
+      `;
+
+      Object.assign(toast.style, {
+        position: 'fixed',
+        top: '-100px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        background: 'rgba(17, 24, 39, 0.96)',
+        backdropFilter: 'blur(10px)',
+        border: '1.5px solid #ffd700',
+        borderRadius: '16px',
+        padding: '14px 22px',
+        boxShadow: '0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.25)',
+        zIndex: '9999',
+        transition: 'top 0.6s cubic-bezier(0.22, 1, 0.36, 1)',
+        minWidth: '290px',
+        maxWidth: '90%'
+      });
+
+      document.body.appendChild(toast);
+
+      // حركة نزول ناعمة من الأعلى
+      setTimeout(() => {
+        toast.style.top = '20px';
+      }, 50);
+
+      // اختفاء تلقائي بعد 5 ثوانٍ
+      setTimeout(() => {
+        toast.style.top = '-120px';
+        setTimeout(() => toast.remove(), 600);
+      }, 5000);
+    }
+
     async function authWithPi() {
       try {
         const scopes = ['username', 'payments'];
         const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
-        alert("أهلاً بك يا هندسة " + auth.user.username + " ✅");
+        const username = auth.user.username;
+
+        // عرض رسالة الترحيب الفخمة
+        showVIPWelcome(username);
+
+        // تحديث شكل الزر في الصفحة ليصبح شارة ترحيب دائمة
+        const loginBtn = document.querySelector('button[onclick="authWithPi()"]');
+        if (loginBtn) {
+          loginBtn.innerHTML = `✅ متصل بحساب: <span style="color: #ffd700; margin-right: 5px;">@${username}</span>`;
+          loginBtn.style.background = 'linear-gradient(135deg, #064e3b, #047857)';
+          loginBtn.style.border = '1px solid #00f5d4';
+          loginBtn.style.boxShadow = '0 0 15px rgba(0, 245, 212, 0.3)';
+        }
       } catch (error) {
-        alert("حدث خطأ أثناء تسجيل الدخول: " + (error.message || error));
+        alert("تعذر إتمام تسجيل الدخول: " + (error.message || error));
       }
     }
   </script>
