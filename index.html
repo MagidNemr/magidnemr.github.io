@@ -444,7 +444,8 @@
           itemOnClick.includes('authWithPi') ||
           itemOnClick.includes('copyReferral') ||
           itemOnClick.includes('payWithPi') ||
-          itemOnClick.includes('pro-upgrade-modal')
+          itemOnClick.includes('pro-upgrade-modal') ||
+            (item.href && item.href.includes('minepi.com'))
         ) {
           return;
         }
