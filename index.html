@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Tech Aide | اللوحة الهندسية</title>
-   <!-- الرسمية Pi SDK استدعاء مكتبة -->
-
-    <style>
-        :root {
+   <script src="https://minepi.com"></script>
+  <script>
+  Pi.init({ version: "2.0" });
+  </script>
     <style>
         :root {
             --dark-bg: #090d16;
@@ -192,12 +192,7 @@
     <h2>⚡ SMART TECH AIDE ⚡</h2>
     <p>« المنصة البرمجية المعتمدة لهندسة القوى والتحكم الآلي »</p>
 </header>
-<!-- ضع الزر هنا كالتالي -->
-<div style="text-align: center; margin: 20px 0;">
-    <button onclick="authWithPi()" style="background-color: #622d86; color: white; padding: 12px 24px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">
-        تسجيل الدخول باستخدام Pi
-    </button>
-</div>
+
 <div class="container">
 
     <div class="card">
@@ -241,22 +236,18 @@
    <a href="medicine.html" class="btn-card" style="display: flex; align-items: center; justify-content: space-between;background: linear-gradient(135deg, #005f73, #0a9396);color: white; text-decoration: none; padding: 15px; margin: 10px; border-radius: 12px; text-decoration: none; font-size: 15px; border: 1px solid #00ffcc;">
        <span>💊 مستشار الأدوية وبدائلها الذكي</span>             
               <span style="color: #00ffcc;">➔</span>
-      
-            <a href="ai.html" style=" display: flex; align-items: center; justify-content: space-between;background: linear-gradient(135deg, #005f73, #0a9396);color: white; text-decoration: none; padding: 15px; margin: 10px; border-radius: 12px; text-decoration: none; font-size: 15px; border: 1px solid #00ffcc;">
-    <span>⚡ المستشار الكهربائي الذكي </span>
-                <span style="color: #00ffcc;">➔</span>
-         </a> 
-            <!-- الزر الجديد: مستشار السيارات والمرور -->                
- <a href="cars.html" style=" display: flex; align-items: center; justify-content: space-between;background: linear-gradient(135deg, #005f73, #0a9396);color: white; text-decoration: none; padding: 15px; margin: 10px; border-radius: 12px; text-decoration: none; font-size: 15px; border: 1px solid #00ffcc;">
-    <span> 🚗 مستشار وموسوعة السيارات الشامل </span>
-                <span style="color: #00ffcc;">➔</span>
-         </a>  
-        <!-- زر مدونة النمر الفيروزي المميز -->
+       <!-- زر مدونة النمر الفيروزي المميز -->
                         <a href="https://magid-nemr.blogspot.com/"style="display: flex; align-items: center; justify-content: space-between;background: linear-gradient(135deg, #005f73, #0a9396);color: white; text-decoration: none; padding: 15px; margin: 10px; border-radius: 12px; text-decoration: none; font-size: 15px; border: 1px solid #00ffcc;">
             <span>🌐 مدونة النمر للمعلوميات</span>
             <span style="color: #00ffcc;">➔</span>
 
-           <!-- زر حاسبة أقطار المواسير -->
+            
+            <a href="ai.html" style=" display: flex; align-items: center; justify-content: space-between;background: linear-gradient(135deg, #005f73, #0a9396);color: white; text-decoration: none; padding: 15px; margin: 10px; border-radius: 12px; text-decoration: none; font-size: 15px; border: 1px solid #00ffcc;">
+    <span>⚡ المستشار الكهربائي الذكي (AI)</span>
+                <span style="color: #00ffcc;">➔</span>
+         </a>     
+
+        <!-- زر حاسبة أقطار المواسير -->
         <a href="conduit.html" style="display: flex; align-items: center; justify-content: space-between;background: linear-gradient(135deg, #005f73, #0a9396);color: white; text-decoration: none; padding: 15px; margin: 10px; border-radius: 12px; text-decoration: none; font-size: 15px; border: 1px solid #00ffcc;">
             <span>📐 حاسبة أقطار مواسير التمديد </span>
             <span style="color: #00ffcc;">➔</span>
@@ -312,51 +303,74 @@ function searchInNimerBlog() {
         alert("جاري تجهيز رابط التحميل المباشر لـ (" + bookName + ") أونلاين على سيرفر المطورين.. يرجى المحاولة لاحقاً!");
     }
 </script>
+    <!-- استدعاء مكتبة Pi الرسمية -->
+<script src="https://minepi.com"></script>
 
-<!-- كود تهيئة وتشغيل دخول شبكة Pi المعتمد -->
-<script>
-  // تهيئة المكتبة وربطها بالـ Client ID الخاص بتطبيقك
-  Pi.init({ 
-    version: "2.0", 
-    sandbox: true, 
-    client_id: "6aCxa_MvLH9mgIA9y7EHBDszfOX8T" 
-  });
+<!-- استدعاء ملف الأزرار الخارجي الآمن الذي أنشأناه -->
+    <script src="pi-payments.js"></script>
+    <script>
+// 1. تعريف المتغيرات الأساسية
+const MAX_FREE_ATTEMPTS = 3; // عدد المحاولات المجانية
 
-  // دالة تسجيل الدخول التي يستدعيها زر موقعك عند الضغط عليه
-  async function authWithPi() {
-    try {
-      const scopes = ['username', 'payments'];
-      console.log("جاري بدء الاتصال بشبكة Pi...");
-      
-      const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
-      
-      alert("أهلاً بك يا بطل: " + auth.user.username);
-      console.log("تم تسجيل الدخول بنجاح للمستخدم: " + auth.user.username);
-      
-    } catch (error) {
-      console.error("فشلت عملية تسجيل الدخول:", error);
-      alert("حدث خطأ أثناء تسجيل الدخول: " + (error.message || error));
-    }
-  }
+// 2. دالة لفحص ومعالجة محاولات المستخدم عند الضغط على أي زر
+function handleAppAction(actionName, price) {
+    // جلب عدد المحاولات الحالية للمستخدم من ذاكرة المتصفح
+    let attempts = parseInt(localStorage.getItem('free_attempts_count')) || 0;
 
-  function onIncompletePaymentFound(payment) {
-    console.log("تم العثور على معالجة دفع غير مكتملة:", payment);
-  }
-
-  // الدوال الفرعية الخاصة بموقعك لإبقائها تعمل بنجاح
-  function searchInNimerBlog() {
-    var query = document.getElementById('bookSearchInput').value.trim();
-    if (query) {
-      var blogUrl = "https://blogspot.com";
-      window.open(blogUrl + "index.html?q=" + encodeURIComponent(query), '_blank');
+    // التحقق مما إذا كان المستخدم قد استنفد محاولاته المجانية
+    if (attempts >= MAX_FREE_ATTEMPTS) {
+        // إذا انتهت المحاولات، نتوجه فوراً لنظام الدفع بـ Pi
+        triggerPiPayment(actionName, price);
     } else {
-      alert('برجاء كتابة اسم الكتاب أولاً يا هندسة!');
+        // إذا كان لا يزال يمتلك محاولات مجانية
+        attempts++;
+        localStorage.setItem('free_attempts_count', attempts);
+        
+        // حساب المحاولات المتبقية وعرضها للمستخدم لتشجيعه
+        let remaining = MAX_FREE_ATTEMPTS - attempts;
+        alert(`تمت العملية مجاناً بنجاح! متبقي لك ${remaining} محاولات مجانية لتجربة التطبيق.`);
+        
+        // تنفيذ الأداة المطلوبة (حساب الأحمال، تحميل، إلخ)
+        executeActualFeature(actionName);
     }
-  }
+}
 
-  function showBookAlert(bookName) {
-    alert(bookName + " - جاري تجهيز رابط التحميل المباشر لـ ");
-  }
-</script>
+// 3. دالة معالجة الدفع الرسمية عبر Pi Network SDK
+function triggerPiPayment(actionName, amount) {
+    // إشعار المستخدم بانتهاء الفترة المجانية وبدء الدفع
+    alert(`لقد استنفدت محاولاتك المجانية الـ 3. لاستخدام ميزة (${actionName})، يرجى دفع ${amount} Pi.`);
+    
+    Pi.createPayment({
+        amount: amount,
+        memo: `رسوم استخدام: ${actionName}`,
+        metadata: { action: actionName },
+    }, {
+        onReadyForServerApproval: function(paymentId) {
+            console.log("تم إنشاء الطلب، المعرف: ", paymentId);
+            // هنا يرسل التطبيق المعرف إلى السيرفر للموافقة
+        },
+        onReadyForServerCompletion: function(paymentId, txid) {
+            console.log("اكتملت المعاملة بنجاح، رقم التحويل: ", txid);
+            alert("تم الدفع بنجاح! تم فتح الميزة لك الآن.");
+            // تنفيذ الأداة للمستخدم بعد الدفع
+            executeActualFeature(actionName);
+        },
+        onCancel: function(paymentId) {
+            alert("تم إلغاء عملية الدفع، لن تتمكن من استخدام الميزة بدون دفع.");
+        },
+        onError: function(error, paymentId) {
+            console.error("خطأ في الدفع: ", error);
+            alert("حدث خطأ أثناء معالجة الدفع، يرجى المحاولة لاحقاً.");
+        }
+    });
+}
+
+// 4. الدالة المسؤولية عن تشغيل وظائف الموقع الفعلية
+function executeActualFeature(actionName) {
+    console.log("تشغيل الميزة الفنية: " + actionName);
+    // هنا تضع الأكواد الخاصة بك لفتح الـ PDF أو إظهار نتائج حاسبة الأحمال
+}
+                </script>
+    
 </body>
 </html>
