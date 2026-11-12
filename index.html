@@ -394,20 +394,79 @@
         alert("تعذر إتمام تسجيل الدخول: " + (error.message || error));
       }
     }
-  // 1. حقن زر الدفع الذهبي الفخم تحت زر تسجيل الدخول مباشرة بشكل تلقائي
+ // بيانات الدعوة الخاصة بك
+    const MY_PI_USERNAME = "MagidNemr123456789";
+
+    // دالة نسخ كود الدعوة وإظهار إشعار فخم
+    function copyReferralCode() {
+      navigator.clipboard.writeText(MY_PI_USERNAME).then(() => {
+        showVIPWelcome("تم نسخ كود الدعوة: " + MY_PI_USERNAME);
+      }).catch(() => {
+        alert("كود الدعوة الخاص بك هو: " + MY_PI_USERNAME);
+      });
+    }
+
+    // 1. حقن بطاقة الدعوة الخاصة بك وزر الترقية تحت زر تسجيل الدخول مباشرة
     window.addEventListener('DOMContentLoaded', () => {
       const loginBtn = document.querySelector('button[onclick="authWithPi()"]');
-      if (loginBtn && !document.getElementById('pi-pay-btn')) {
-        const payContainer = document.createElement('div');
-        payContainer.style.textAlign = 'center';
-        payContainer.style.marginTop = '12px';
-        payContainer.innerHTML = `
-          <button id="pi-pay-btn" onclick="payWithPi(1, 'الترقية للنسخة الاحترافية - Smart Tech Aide')" style="background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%); color: #090d16; padding: 14px 26px; border: none; border-radius: 12px; font-size: 15px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 20px rgba(255, 215, 0, 0.35); width: 100%; max-width: 340px; transition: transform 0.2s;">
+      if (loginBtn && !document.getElementById('pi-invite-box')) {
+        const inviteContainer = document.createElement('div');
+        inviteContainer.id = 'pi-invite-box';
+        inviteContainer.style.textAlign = 'center';
+        inviteContainer.style.marginTop = '14px';
+        inviteContainer.innerHTML = `
+          <div style="background: rgba(17, 24, 39, 0.9); border: 1px solid #00f5d4; border-radius: 14px; padding: 12px 16px; max-width: 340px; margin: 0 auto 10px auto; box-shadow: 0 4px 15px rgba(0, 245, 212, 0.15);">
+            <div style="color: #9ca3af; font-size: 12px; margin-bottom: 4px;">بدعوة رسمية من المهندس / المطور</div>
+            <div style="display: flex; align-items: center; justify-content: space-between; background: #090d16; padding: 8px 12px; border-radius: 10px; border: 1px dashed #ffd700;">
+              <span style="color: #ffd700; font-weight: bold; font-size: 14px; letter-spacing: 0.5px;">@${MY_PI_USERNAME}</span>
+              <button onclick="copyReferralCode()" style="background: #00f5d4; color: #090d16; border: none; padding: 5px 12px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer;">
+                نسخ الكود 📋
+              </button>
+            </div>
+            <div style="color: #6b7280; font-size: 11px; margin-top: 6px;">استخدم هذا الكود عند التسجيل في شبكة Pi للانضمام لفريقنا</div>
+          </div>
+
+          <button id="pi-pay-btn" onclick="payWithPi(1, 'الترقية للنسخة الاحترافية - Smart Tech Aide')" style="background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%); color: #090d16; padding: 13px 24px; border: none; border-radius: 12px; font-size: 15px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 20px rgba(255, 215, 0, 0.35); width: 100%; max-width: 340px;">
             👑 الترقية للنسخة الاحترافية (1 Pi)
           </button>
         `;
-        loginBtn.parentNode.insertBefore(payContainer, loginBtn.nextSibling);
+        loginBtn.parentNode.insertBefore(inviteContainer, loginBtn.nextSibling);
       }
+
+      // 2. تفعيل نظام التجربة لمرة واحدة (Paywall) على جميع أزرار الأدوات
+      const toolLinks = document.querySelectorAll('a.btn-card');
+      toolLinks.forEach((link, index) => {
+        const toolId = 'smart_tech_tool_' + index;
+        link.addEventListener('click', function(e) {
+          const isPro = localStorage.getItem('smart_tech_pro_unlocked') === 'true';
+          if (isPro) return;
+
+          const usedCount = parseInt(localStorage.getItem(toolId) || '0');
+          if (usedCount >= 1) {
+            e.preventDefault();
+            showUpgradeModal();
+          } else {
+            localStorage.setItem(toolId, '1');
+          }
+        });
+      });
+
+      // 3. حماية زر حاسبة المحركات الرئيسية
+      const calcBtn = document.querySelector('button[onclick="calculateIndustrial()"]');
+      if (calcBtn) {
+        calcBtn.removeAttribute('onclick');
+        calcBtn.addEventListener('click', function() {
+          const isPro = localStorage.getItem('smart_tech_pro_unlocked') === 'true';
+          const calcUsed = parseInt(localStorage.getItem('smart_tech_calc_used') || '0');
+          if (!isPro && calcUsed >= 1) {
+            showUpgradeModal();
+            return;
+          }
+          localStorage.setItem('smart_tech_calc_used', '1');
+          calculateIndustrial();
+        });
+      }
+    });
 
       // 2. تفعيل نظام التجربة لمرة واحدة (Paywall) على جميع أزرار الأدوات والصفحات
       const toolLinks = document.querySelectorAll('a.btn-card');
