@@ -280,83 +280,57 @@
 </div>
 
 <script>
-    Pi.init({ version: "2.0", sandbox: true });
-    
     function calculateIndustrial() {
-        var power = parseFloat(document.getElementById('indPower').value);
-        var unit = document.getElementById('indUnit').value;
-        if (isNaN(power) || power <= 0) { alert("برجاء إدخال قيمة صحيحة."); return; }
-        var kw = unit === 'hp' ? power * 0.746 : power;
-        var fli = kw / (1.732 * 0.38 * 0.84 * 0.85);
-        var breaker = Math.ceil(fli * 1.6);
-        var contactor = Math.ceil(fli * 1.25);
-        var olMin = (fli * 0.9).toFixed(1); var olMax = (fli * 1.15).toFixed(1);
-        var cable = (fli / 2.8).toFixed(1); if(cable < 2.5) cable = 2.5;
-        document.getElementById('indCurrentRes').innerText = fli.toFixed(2);
-        document.getElementById('indBreakerRes').innerText = breaker;
-        document.getElementById('indContactorRes').innerText = contactor;
-        document.getElementById('indOverloadRes').innerText = olMin + " - " + olMax;
-        document.getElementById('indCableRes').innerText = cable;
-        document.getElementById('indResult').style.display = 'block';
+      var power = parseFloat(document.getElementById('indPower').value);
+      var unit = document.getElementById('indUnit').value;
+      if (isNaN(power) || power <= 0) {
+        alert("يرجى إدخال قيمة صحيحة");
+        return;
+      }
+      var kw = unit === 'hp' ? power * 0.746 : power;
+      var fli = kw / (1.732 * 0.38 * 0.84 * 0.85);
+      var breaker = Math.ceil(fli * 1.6);
+      var contactor = Math.ceil(fli * 1.25);
+      var olMin = (fli * 0.9).toFixed(1);
+      var olMax = (fli * 1.15).toFixed(1);
+      var cable = (fli / 2.8).toFixed(1);
+      if (cable < 2.5) cable = 2.5;
+
+      document.getElementById('indCurrentRes').innerText = fli.toFixed(1) + " A";
+      document.getElementById('indBreakerRes').innerText = breaker + " A";
+      document.getElementById('indContactorRes').innerText = contactor + " A";
+      document.getElementById('indOverloadRes').innerText = olMin + " - " + olMax + " A";
+      document.getElementById('indCableRes').innerText = cable + " mm²";
+      document.getElementById('indResult').style.display = "block";
     }
-function searchInNimerBlog() {
-    var query = document.getElementById('bookSearchInput').value.trim();
-    if (query) {
+
+    function searchInNimerBlog() {
+      var query = document.getElementById('bookSearchInput').value.trim();
+      if (query) {
         var blogUrl = "https://blogspot.com";
-        window.open(blogUrl + encodeURIComponent(query), '_blank');
-    } else {
-        alert('برجاء كتابة اسم الكتاب أولاً يا هندسة!');
+        window.open(blogUrl + "/search?q=" + encodeURIComponent(query), '_blank');
+      } else {
+        alert("الرجاء كتابة اسم الكتاب أولاً يا هندسة");
+      }
     }
-}
+
     function showBookAlert(bookName) {
-        alert("جاري تجهيز رابط التحميل المباشر لـ (" + bookName + ") أونلاين على سيرفر المطورين.. يرجى المحاولة لاحقاً!");
+      alert("جاري تجهيز رابط التحميل المباشر لـ (" + bookName + ") يرجى المحاولة لاحقاً");
     }
-</script>
 
-<!-- كود تهيئة وتشغيل دخول شبكة Pi المعتمد -->
-<script>
-  // تهيئة المكتبة وربطها بالـ Client ID الخاص بتطبيقك
-  Pi.init({ 
-    version: "2.0", 
-    sandbox: true, 
-    client_id: "6aCxa_MvLH9mgIA9y7EHBDszfOX8T" 
-  });
-
-  // دالة تسجيل الدخول التي يستدعيها زر موقعك عند الضغط عليه
-  async function authWithPi() {
-    try {
-      const scopes = ['username', 'payments'];
-      console.log("جاري بدء الاتصال بشبكة Pi...");
-      
-      const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
-      
-      alert("أهلاً بك يا بطل: " + auth.user.username);
-      console.log("تم تسجيل الدخول بنجاح للمستخدم: " + auth.user.username);
-      
-    } catch (error) {
-      console.error("فشلت عملية تسجيل الدخول:", error);
-      alert("حدث خطأ أثناء تسجيل الدخول: " + (error.message || error));
+    function onIncompletePaymentFound(payment) {
+      console.log("تم العثور على معاملة دفع غير مكتملة:", payment);
     }
-  }
 
-  function onIncompletePaymentFound(payment) {
-    console.log("تم العثور على معالجة دفع غير مكتملة:", payment);
-  }
-
-  // الدوال الفرعية الخاصة بموقعك لإبقائها تعمل بنجاح
-  function searchInNimerBlog() {
-    var query = document.getElementById('bookSearchInput').value.trim();
-    if (query) {
-      var blogUrl = "https://blogspot.com";
-      window.open(blogUrl + "index.html?q=" + encodeURIComponent(query), '_blank');
-    } else {
-      alert('برجاء كتابة اسم الكتاب أولاً يا هندسة!');
+    async function authWithPi() {
+      try {
+        const scopes = ['username', 'payments'];
+        const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
+        alert("أهلاً بك يا هندسة " + auth.user.username + " ✅");
+      } catch (error) {
+        alert("حدث خطأ أثناء تسجيل الدخول: " + (error.message || error));
+      }
     }
-  }
-
-  function showBookAlert(bookName) {
-    alert(bookName + " - جاري تجهيز رابط التحميل المباشر لـ ");
-  }
-</script>
+  </script>
 </body>
 </html>
