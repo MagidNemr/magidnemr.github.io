@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Magid Shop - متجر المعدات الكهربائية</title>
+  <!-- استدعاء مكتبة Pi SDK الرسمية -->
+  <script src="https://minepi.com"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f9;
+      margin: 0;
+      padding: 0;
+      color: #222;
+    }
+    header {
+      background: linear-gradient(135deg, #4b1d70, #622d86);
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    .nav-bar {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 10px 18px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .btn-back { background-color: #ffffff; color: #4b1d70; }
+    .btn-auth { background-color: #f39c12; color: #000; }
+    .container {
+      max-width: 1000px;
+      margin: 25px auto;
+      padding: 0 15px;
+    }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .product-card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      text-align: center;
+      border-top: 4px solid #622d86;
+    }
+    .product-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin: 10px 0;
+      color: #333;
+    }
+    .product-desc {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 15px;
+    }
+    .product-price {
+      font-size: 20px;
+      font-weight: bold;
+      color: #622d86;
+      margin-bottom: 15px;
+    }
+    .btn-buy {
+      background-color: #622d86;
+      color: white;
+      width: 100%;
+      padding: 12px;
+      font-size: 15px;
+    }
+    .btn-buy:hover { background-color: #4b1d70; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>⚡ MAGID SHOP ⚡</h1>
+    <p>متجر المعدات الكهربائية ولوحات القوى والتحكم الآلي</p>
+    <div class="nav-bar">
+      <!-- زر العودة للتطبيق الهندسي -->
+      <a href="index.html" class="btn btn-back">🔙 العودة لحاسبة الأحمال</a>
+      <!-- زر تسجيل الدخول -->
+      <button onclick="authWithPi()" class="btn btn-auth" id="user-status">تسجيل الدخول بـ Pi</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="products-grid">
+      
+      <!-- المنتج الأول -->
+      <div class="product-card">
+        <div style="font-size: 40px;">🔌</div>
+        <div class="product-title">قاطع كهربائي ثلاثي الفاز 63A</div>
+        <div class="product-desc">قاطع حماية صناعي عالي التحمل للوحات التوزيع والمحركات.</div>
+        <div class="product-price">5 Pi</div>
+        <button onclick="buyProductWithPi(5, 'قاطع كهربائي ثلاثي الفاز 63A', 'CB-63A')" class="btn btn-buy">شراء الآن بـ Pi 🛒</button>
+      </div>
+
+      <!-- المنتج الثاني -->
+      <div class="product-card">
+        <div style="font-size: 40px;">〰️</div>
+        <div class="product-title">كابل نحاس معزول 16 مم (لفة)</div>
+        <div class="product-desc">كابل طاقة عالي الجودة مقاوم للحرارة ومطابق للمواصفات القياسية.</div>
+        <div class="product-price">12 Pi</div>
+        <button onclick="buyProductWithPi(12, 'كابل نحاس معزول 16 مم', 'CABLE-16MM')" class="btn btn-buy">شراء الآن بـ Pi 🛒</button>
+      </div>
+
+      <!-- المنتج الثالث -->
+      <div class="product-card">
+        <div style="font-size: 40px;">🎛️</div>
+        <div class="product-title">كونتاكتور تحكم صناعي 32A</div>
+        <div class="product-desc">مخصص لدوائر التحكم الآلي وتشغيل المحركات الثلاثية.</div>
+        <div class="product-price">4 Pi</div>
+        <button onclick="buyProductWithPi(4, 'كونتاكتور تحكم صناعي 32A', 'CONT-32A')" class="btn btn-buy">شراء الآن بـ Pi 🛒</button>
+      </div>
+
+      <!-- المنتج الرابع -->
+      <div class="product-card">
+        <div style="font-size: 40px;">🛡️</div>
+        <div class="product-title">جهاز حماية من انخفاض وارتفاع الجهد</div>
+        <div class="product-desc">حماية كاملة للأجهزة والمعدات ضد تذبذب التيار الكهربائي.</div>
+        <div class="product-price">3 Pi</div>
+        <button onclick="buyProductWithPi(3, 'جهاز حماية الجهد', 'PROT-V1')" class="btn btn-buy">شراء الآن بـ Pi 🛒</button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // تهيئة مكتبة Pi SDK
+    Pi.init({ 
+      version: "2.0", 
+      sandbox: true, 
+      client_id: "6aCxa_MvLH9mgIA9y7EHBDszfOX8T" 
+    });
+
+    // دالة تسجيل الدخول
+    async function authWithPi() {
+      try {
+        const auth = await Pi.authenticate(['username', 'payments'], onIncompletePaymentFound);
+        document.getElementById('user-status').innerText = "أهلاً: " + auth.user.username;
+      } catch (error) {
+        alert("تعذر تسجيل الدخول: " + (error.message || error));
+      }
+    }
+
+    // دالة الشراء والدفع بعملة Pi
+    async function buyProductWithPi(priceInPi, productName, productCode) {
+      try {
+        const auth = await Pi.authenticate(['username', 'payments'], onIncompletePaymentFound);
+        
+        const paymentData = {
+          amount: parseFloat(priceInPi),
+          memo: "شراء من Magid Shop: " + productName,
+          metadata: { store: "MagidShop", code: productCode, buyer: auth.user.username }
+        };
+
+        const paymentCallbacks = {
+          onReadyForServerApproval: function(paymentId) {
+            fetch('https://vercel.app', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ paymentId: paymentId })
+            });
+          },
+          onReadyForServerCompletion: function(paymentId, txid) {
+            fetch('https://vercel.app', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ paymentId: paymentId, txid: txid })
+            }).then(() => {
+              alert("تم الدفع بنجاح! تم تأكيد طلبك لـ (" + productName + ")");
+            });
+          },
+          onCancel: function(paymentId) {
+            alert("تم إلغاء عملية الشراء.");
+          },
+          onError: function(error) {
+            alert("حدث خطأ أثناء الدفع: " + (error.message || error));
+          }
+        };
+
+        Pi.createPayment(paymentData, paymentCallbacks);
+      } catch (error) {
+        alert("يرجى فتح المتجر من داخل متصفح Pi Browser وتسجيل الدخول أولاً.");
+      }
+    }
+
+    function onIncompletePaymentFound(payment) {
+      console.log("معاملة معلقة:", payment);
+    }
+  </script>
+
+</body>
+</html>
