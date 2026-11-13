@@ -465,16 +465,28 @@
         const storageKey = 'smart_tech_usage_item_' + index;
 
         if (item.tagName === 'BUTTON' && itemOnClick) {
-          item.removeAttribute('onclick');
-          item.addEventListener('click', function(e) {
-            const isPro = localStorage.getItem('smart_tech_pro_unlocked') === 'true';
-            const used = parseInt(localStorage.getItem(storageKey) || '0');
-            if (!isPro && used >= 1) {
-              e.preventDefault();
-              e.stopPropagation();
-              showUpgradeModal();
-              return;
-            }
+    item.removeAttribute('onclick');
+    item.addEventListener('click', function(e) {
+      const isPro = localStorage.getItem('smart_tech_pro_unlocked') === 'true';
+      const used = parseInt(localStorage.getItem(storageKey) || '0');
+
+      // إذا لم يدفع المستخدم واستهلك تجربته المجانية الواحدة
+      if (!isPro && used >= 1) {
+        e.preventDefault();
+        e.stopPropagation();
+        showUpgradeModal(); // فتح نافذة الدفع بالباي
+        return;
+      }
+
+      // تسجيل استهلاك التجربة الأولى في ذاكرة المتصفح
+      if (!isPro) {
+        localStorage.setItem(storageKey, (used + 1).toString());
+      }
+
+      // تنفيذ وظيفة الزر الأصلية في المرة الأولى
+      eval(itemOnClick);
+    });
+  }
             localStorage.setItem(storageKey, '1');
             new Function(itemOnClick)();
           });
