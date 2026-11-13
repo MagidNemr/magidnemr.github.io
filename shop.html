@@ -17,7 +17,6 @@
       min-height: 100vh;
     }
 
-    /* الهيدر الفاخر */
     header {
       background: linear-gradient(180deg, #1b0b33 0%, #070a12 100%);
       border-bottom: 2px solid #d97706;
@@ -53,7 +52,6 @@
       line-height: 1.6;
     }
 
-    /* الأزرار الفخمة */
     .nav-bar {
       display: flex;
       justify-content: center;
@@ -92,7 +90,6 @@
       box-shadow: 0 6px 22px rgba(245, 158, 11, 0.55);
     }
 
-    /* شريط البحث مع زر بحث فخم */
     .controls {
       max-width: 1220px;
       margin: 25px auto 15px;
@@ -133,7 +130,6 @@
       background: linear-gradient(135deg, #9333ea, #c084fc);
     }
 
-    /* أزرار الأقسام */
     .filter-bar {
       display: flex;
       justify-content: center;
@@ -158,7 +154,6 @@
       box-shadow: 0 4px 15px rgba(126, 34, 206, 0.45);
     }
 
-    /* شبكة المنتجات */
     .container {
       max-width: 1220px;
       margin: 20px auto 50px;
@@ -312,12 +307,11 @@
     <div class="products-grid" id="productsGrid"></div>
   </div>
 
-  <footer id="storeFooter">
+  <footer>
     ⚡ MAGID SHOP & SMART TECH AIDE | متجر محدث تلقائياً ومؤمّن بالكامل عبر شبكة Pi Network ⚡
   </footer>
 
   <script>
-    // تهيئة مكتبة Pi بأمان
     try {
       if (typeof Pi !== 'undefined') {
         Pi.init({ version: "2.0", sandbox: true, client_id: "6aCxa_MvLH9mgIA9y7EHBDszfOX8T" });
@@ -326,9 +320,8 @@
       console.log("Pi SDK init info:", e);
     }
 
-    // قاعدة بيانات المنتجات المحدثة
     const products = [
-      // لوحات القوى
-      { cat: 'power', badge: '🏭 لوحات القوى', sku: 'MCCB-250A', title: 'قاطع رئيسي مقولب MCCB 250A', desc: 'قاطع عمومي للوحات التوزيع الرئيسية بالمصانع مع معايرة حرارية ومغناطيسية.', s1: ['التيار:', '250A (3P)'], s2: ['سعة القطع:', '50 kA'], price: 28 },
-      { cat: 'power', badge: '🏭 لوحات القوى', sku: 'CONT-65A', title: 'كونتاكتور صناعي ثقيل 65 أمبير', desc: 'لتشغيل المحركات الكبيرة والأحمال الحثية الشاقة مع نقاط مساعدة.', s1: ['القدرة:', '30 kW (40 HP)'], s2: ['الملف:', '220V/380V'], price: 11 },
-      { cat: 'power', badge: '🏭 لوحات القوى', sku: 'OVL-65A', title: 'أوفرلود حراري للمحركات (48-65A)', desc: 'حماية المحركات ثلاثية الفاز ضد زيادة الحمل وسقوط الفازات.', s1: ['المعايرة:', '48 - 65 أمبير'], s2: ['الفصل:', 'Class 10A'], price: 7 },
+      { cat: 'power', badge: '🏭 لوحات القوى', sku: 'MCCB-250A', title: 'قاطع رئيسي مقولب MCCB 250A', desc: 'قاطع عمومي للوحات التوزيع الرئيسية بالمصانع مع معايرة حرارية ومغناطيسية.', s1k: 'التيار:', s1v: '250A (3P)', s2k: 'سعة القطع:', s2v: '50 kA', price: 28 },
+      { cat: 'power', badge: '🏭 لوحات القوى', sku: 'CONT-65A', title: 'كونتاكتور صناعي ثقيل 65 أمبير', desc: 'لتشغيل المحركات الكبيرة والأحمال الحثية الشاقة مع نقاط مساعدة.', s1k: 'القدرة:', s1v: '30 kW (40 HP)', s2k: 'الملف:', s2v: '220V/380V', price: 11 },
+      { cat: 'power', badge: '🏭 لوحات القوى', sku: 'OVL-65A', title: 'أوفرلود حراري للمحركات (48-65A)', desc: 'حماية المحركات ثلاثية الفاز ضد زيادة الحمل وسقوط الفازات.', s1k: 'المعايرة:', s1v: '48 - 65 أمبير', s2k: 'الفصل:', s2v: 'Class 10A', price: 7 },
+      { cat: 'power', badge: '🏭 لوحات القوى', sku: 'PHASE-PRO', title: 'ريلاي حماية تتابع وانعكاس الفازات', desc: 'شاشة رقمية لمراقبة فولت الفازات والحماية من الانعكاس والسقوط.', s1k: 'الشبكة:', s1v: '380V (3P+N)', s2k: 'الخرج:', s2v: 'Relay 8A', price: 8 },
