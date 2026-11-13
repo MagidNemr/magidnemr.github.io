@@ -38,6 +38,34 @@
     .price { font-size: 20px; font-weight: bold; color: #e879f9; }
     .btn-buy { background: #7e22ce; color: white; border: none; padding: 10px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; flex-grow: 1; }
     footer { text-align: center; padding: 20px; background: #05070d; border-top: 1px solid #1e293b; color: #94a3b8; font-size: 13px; }
+ .search-wrapper { position: relative; }
+    .search-dropdown {
+      position: absolute;
+      top: 105%;
+      right: 0;
+      left: 0;
+      background: #141c2e;
+      border: 1px solid #fbbf24;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.85);
+      z-index: 1000;
+      max-height: 280px;
+      overflow-y: auto;
+      display: none;
+    }
+    .dropdown-item {
+      padding: 12px 16px;
+      border-bottom: 1px solid #1e293b;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: 0.2s;
+    }
+    .dropdown-item:last-child { border-bottom: none; }
+    .dropdown-item:hover { background: #283548; }
+    .dropdown-title { color: #fff; font-weight: bold; font-size: 14px; }
+    .dropdown-price { color: #fbbf24; font-weight: bold; font-size: 13px; }
   </style>
 </head>
 <body>
@@ -51,8 +79,9 @@
   </header>
   <div class="controls">
     <div class="search-wrapper">
-      <input type="text" id="searchInput" onkeyup="render()" placeholder="ابحث عن معدة (مثال: إنفرتر، قاطع، سلك، كونتاكتور...)">
+      <input type="text" id="searchInput" onkeyup="handleSearch()" onfocus="handleSearch()" placeholder="ابحث عن معدة (مثال: إنفرتر، قاطع، سلك، كونتاكتور...)">
       <button onclick="render()" class="btn-search">🔍 بحث</button>
+      <div id="searchDropdown" class="search-dropdown"></div>
     </div>
     <div class="filter-bar">
       <button class="filter-btn active" onclick="setCat('all', this)">📦 الكل (12)</button>
@@ -87,6 +116,30 @@
       btn.classList.add('active');
       render();
     }
+    function handleSearch() {
+      render();
+      var q = document.getElementById('searchInput').value.toLowerCase().trim();
+      var dropdown = document.getElementById('searchDropdown');
+      if (q === '') { dropdown.style.display = 'none'; return; }
+      var matches = '';
+      for (var i = 0; i < items.length; i++) {
+        var x = items[i];
+        if (x.t.toLowerCase().indexOf(q) !== -1 || x.d.toLowerCase().indexOf(q) !== -1 || x.s.toLowerCase().indexOf(q) !== -1) {
+          matches += '<div class="dropdown-item" onclick="selectFromDropdown(\'' + x.t + '\')"><span class="dropdown-title">⚡ ' + x.t + '</span><span class="dropdown-price">' + x.p + ' Pi</span></div>';
+        }
+      }
+      dropdown.innerHTML = matches || '<div class="dropdown-item" style="color:#94a3b8; justify-content:center;">⚠️ لا توجد نتائج مطابقة</div>';
+      dropdown.style.display = 'block';
+    }
+    function selectFromDropdown(t) {
+      document.getElementById('searchInput').value = t;
+      document.getElementById('searchDropdown').style.display = 'none';
+      curCat = 'all';
+      render();
+    }
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.search-wrapper')) { document.getElementById('searchDropdown').style.display = 'none'; }
+    });
     function render() {
       var q = document.getElementById('searchInput').value.toLowerCase().trim();
       var g = document.getElementById('grid');
