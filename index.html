@@ -564,59 +564,6 @@
         alert("يرجى فتح التطبيق داخل متصفح Pi Browser لإتمام عملية الدفع.");
       }
     }
-    // 1. دالة إظهار نافذة الترقية عند انتهاء التجربة المجانية
-function showUpgradeModal() {
-  const confirmPay = confirm("لقد استنفدت تجربتك المجانية الواحدة لهذه الأداة. هل تود تفعيل النسخة الكاملة الآن مقابل 1 Pi؟");
-  if (confirmPay) {
-    payForAppPro();
-  }
-}
-
-// 2. دالة الدفع لتفعيل النسخة الكاملة للتطبيق الهندسي
-async function payForAppPro() {
-  try {
-    const auth = await Pi.authenticate(['username', 'payments'], onIncompletePaymentFound);
-    
-    const paymentData = {
-      amount: 1, // سعر تفعيل التطبيق بعملة Pi
-      memo: "تفعيل النسخة الكاملة لتطبيق Smart Tech Aide",
-      metadata: { app: "SmartTechAide", user: auth.user.username }
-    };
-
-    const paymentCallbacks = {
-      onReadyForServerApproval: function(paymentId) {
-        console.log("جاهز لموافقة السيرفر:", paymentId);
-        // استدعاء رابط السيرفر الخلفي للموافقة (سيتم توضيحه في الخطوة الثالثة)
-        fetch('https://vercel.app', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ paymentId: paymentId })
-        });
-      },
-      onReadyForServerCompletion: function(paymentId, txid) {
-        fetch('https://vercel.app', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ paymentId: paymentId, txid: txid })
-        }).then(() => {
-          localStorage.setItem('smart_tech_pro_unlocked', 'true');
-          alert("تم الدفع بنجاح! تم فتح جميع الأدوات الهندسية لك بلا حدود.");
-          location.reload();
-        });
-      },
-      onCancel: function(paymentId) {
-        alert("تم إلغاء عملية الدفع.");
-      },
-      onError: function(error, payment) {
-        alert("حدث خطأ أثناء الدفع: " + (error.message || error));
-      }
-    };
-
-    Pi.createPayment(paymentData, paymentCallbacks);
-  } catch (error) {
-    alert("يرجى تسجيل الدخول بحساب Pi أولاً.");
-  }
-}
 </script>
 </body>
 </html>
