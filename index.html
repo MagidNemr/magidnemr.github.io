@@ -441,22 +441,29 @@
           loginBtn.parentNode.insertBefore(inviteContainer, loginBtn.nextSibling);
       }
 
-      // 2. تطبيق نظام التجربة لمرة واحدة على جميع الأزرار والروابط في التطبيق تلقائياً
-      const allInteractiveItems = document.querySelectorAll('a, button');
-      allInteractiveItems.forEach(function(item, index) {
-        const itemIdAttr = item.id || '';
-        const itemOnClick = item.getAttribute('onclick') || '';
-        if (
-          itemIdAttr === 'pi-pay-btn' ||
-          itemOnClick.includes('authWithPi') ||
-          itemOnClick.includes('copyReferral') ||
-          itemOnClick.includes('payWithPi') ||
-          itemOnClick.includes('pro-upgrade-modal') ||
-           (item.href && item.href.includes('minepi.com')) 
-          (item.href && item.href.includes('magidshop'))
-        ) {
-          return;
-        }
+     const allInteractiveItems = document.querySelectorAll('a, button');
+  allInteractiveItems.forEach(function(item, index) {
+    const itemIdAttr = item.id || '';
+    const itemOnClick = item.getAttribute('onclick') || '';
+    const itemHref = item.getAttribute('href') || '';
+    const itemText = item.innerText || '';
+
+    // استثناء الأزرار العلوية (تسجيل الدخول، المتجر، تحميل التطبيق، والدفع) لكي لا تُقفل أبداً
+    if (
+      itemIdAttr === 'pi-pay-btn' ||
+      itemOnClick.includes('authWithPi') ||
+      itemOnClick.includes('copyReferral') ||
+      itemOnClick.includes('payWithPi') ||
+      itemOnClick.includes('pro-upgrade-modal') ||
+      itemHref.includes('minepi.com') ||
+      itemHref.includes('magidshop') ||
+      itemText.includes('تسجيل الدخول') ||
+      itemText.includes('المتجر') ||
+      itemText.includes('تحميل') ||
+      itemText.includes('Magid Shop')
+    ) {
+      return; // تجاهل هذه الأزرار واتركها مجانية دائماً
+    }
 
         const storageKey = 'smart_tech_usage_item_' + index;
 
