@@ -9,113 +9,298 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #090d16;
+      background-color: #070a12;
+      background-image: 
+        radial-gradient(circle at 20% 10%, rgba(126, 34, 206, 0.18) 0%, transparent 45%),
+        radial-gradient(circle at 80% 90%, rgba(245, 158, 11, 0.12) 0%, transparent 45%);
       color: #f8fafc;
       min-height: 100vh;
     }
+
+    /* الهيدر الفاخر */
     header {
-      background: linear-gradient(180deg, #1e0e36 0%, #090d16 100%);
+      background: linear-gradient(180deg, #1b0b33 0%, #070a12 100%);
       border-bottom: 2px solid #d97706;
-      padding: 25px 15px;
+      padding: 30px 15px;
       text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.7);
     }
     .brand-tag {
       display: inline-block;
-      background: rgba(251, 191, 36, 0.15);
+      background: rgba(251, 191, 36, 0.12);
       color: #fbbf24;
       border: 1px solid #d97706;
-      padding: 4px 14px;
-      border-radius: 20px;
+      padding: 5px 16px;
+      border-radius: 30px;
       font-size: 12px;
       font-weight: bold;
-      margin-bottom: 10px;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
     }
-    header h1 { font-size: 30px; color: #fbbf24; margin-bottom: 8px; }
-    header p { color: #cbd5e1; font-size: 14px; margin-bottom: 18px; }
-    .nav-bar { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
-    .btn {
-      padding: 10px 20px;
+    header h1 {
+      font-size: 34px;
+      background: linear-gradient(90deg, #fde68a, #f59e0b, #fde68a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+    header p {
+      color: #cbd5e1;
+      font-size: 14.5px;
+      max-width: 650px;
+      margin: 0 auto 20px;
+      line-height: 1.6;
+    }
+
+    /* الأزرار الفخمة */
+    .nav-bar {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .btn-lux {
+      padding: 12px 24px;
       border: none;
-      border-radius: 8px;
+      border-radius: 12px;
       font-weight: bold;
       cursor: pointer;
       text-decoration: none;
       font-size: 14px;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
     }
-    .btn-back { background: #1e293b; color: #fff; border: 1px solid #475569; }
-    .btn-auth { background: #f59e0b; color: #000; }
-    .controls { max-width: 1200px; margin: 20px auto; padding: 0 15px; }
-    .search-box { max-width: 500px; margin: 0 auto 15px; }
-    .search-box input {
-      width: 100%;
-      padding: 12px 18px;
-      border-radius: 10px;
+    .btn-back {
+      background: rgba(30, 41, 59, 0.85);
+      color: #fff;
+      border: 1px solid #475569;
+    }
+    .btn-back:hover {
+      background: #334155;
+      border-color: #94a3b8;
+    }
+    .btn-auth {
+      background: linear-gradient(135deg, #f59e0b, #b45309);
+      color: #000;
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.35);
+    }
+    .btn-auth:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 22px rgba(245, 158, 11, 0.55);
+    }
+
+    /* شريط البحث مع زر بحث فخم */
+    .controls {
+      max-width: 1220px;
+      margin: 25px auto 15px;
+      padding: 0 15px;
+    }
+    .search-wrapper {
+      max-width: 600px;
+      margin: 0 auto 20px;
+      display: flex;
+      gap: 8px;
+      background: #111827;
+      padding: 6px;
+      border-radius: 14px;
       border: 1px solid #334155;
-      background: #131b2e;
-      color: white;
-      font-size: 14px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
     }
-    .filter-bar { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+    .search-wrapper input {
+      flex-grow: 1;
+      padding: 12px 16px;
+      border: none;
+      background: transparent;
+      color: white;
+      font-size: 14.5px;
+      outline: none;
+    }
+    .btn-search {
+      background: linear-gradient(135deg, #7e22ce, #a855f7);
+      color: white;
+      border: none;
+      padding: 0 22px;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 14px;
+      transition: 0.25s;
+    }
+    .btn-search:hover {
+      background: linear-gradient(135deg, #9333ea, #c084fc);
+    }
+
+    /* أزرار الأقسام */
+    .filter-bar {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
     .filter-btn {
-      background: #131b2e;
+      background: #111827;
       color: #94a3b8;
       border: 1px solid #283548;
-      padding: 8px 16px;
-      border-radius: 20px;
+      padding: 10px 18px;
+      border-radius: 25px;
       cursor: pointer;
       font-weight: bold;
-      font-size: 13px;
+      font-size: 13.5px;
+      transition: all 0.25s ease;
     }
-    .filter-btn.active { background: #7e22ce; color: white; border-color: #a855f7; }
-    .container { max-width: 1200px; margin: 20px auto 40px; padding: 0 15px; }
+    .filter-btn.active, .filter-btn:hover {
+      background: linear-gradient(135deg, #7e22ce, #581c87);
+      color: white;
+      border-color: #c084fc;
+      box-shadow: 0 4px 15px rgba(126, 34, 206, 0.45);
+    }
+
+    /* شبكة المنتجات */
+    .container {
+      max-width: 1220px;
+      margin: 20px auto 50px;
+      padding: 0 15px;
+    }
     .products-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 22px;
     }
     .product-card {
-      background: #141c2e;
-      border-radius: 14px;
-      padding: 18px;
+      background: linear-gradient(160deg, #161f33 0%, #0f1524 100%);
+      border-radius: 16px;
+      padding: 20px;
       border: 1px solid #283548;
       border-top: 3px solid #a855f7;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+      transition: all 0.3s ease;
     }
-    .card-top { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 11px; }
-    .badge { padding: 3px 10px; border-radius: 12px; font-weight: bold; background: rgba(168, 85, 247, 0.2); color: #e9d5ff; }
-    .sku { color: #94a3b8; font-family: monospace; }
-    .p-title { font-size: 17px; font-weight: bold; color: #fff; margin-bottom: 8px; }
-    .p-desc { font-size: 13px; color: #cbd5e1; margin-bottom: 12px; line-height: 1.5; }
-    .specs { background: #090d16; padding: 10px; border-radius: 8px; margin-bottom: 15px; font-size: 12px; }
-    .spec-row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px dashed #1e293b; }
+    .product-card:hover {
+      transform: translateY(-5px);
+      border-color: #fbbf24;
+      box-shadow: 0 14px 32px rgba(126, 34, 206, 0.3);
+    }
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      font-size: 11.5px;
+    }
+    .badge {
+      padding: 4px 12px;
+      border-radius: 14px;
+      font-weight: bold;
+      background: rgba(168, 85, 247, 0.18);
+      color: #e9d5ff;
+      border: 1px solid rgba(168, 85, 247, 0.35);
+    }
+    .sku {
+      color: #94a3b8;
+      font-family: monospace;
+      background: #090d16;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+    .p-title {
+      font-size: 17.5px;
+      font-weight: bold;
+      color: #fff;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+    .p-desc {
+      font-size: 13px;
+      color: #cbd5e1;
+      margin-bottom: 14px;
+      line-height: 1.55;
+    }
+    .specs {
+      background: #080b12;
+      padding: 10px 12px;
+      border-radius: 10px;
+      margin-bottom: 16px;
+      font-size: 12.5px;
+      border: 1px solid #1e293b;
+    }
+    .spec-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 0;
+      border-bottom: 1px dashed #1e293b;
+    }
     .spec-row:last-child { border-bottom: none; }
     .spec-k { color: #94a3b8; }
     .spec-v { color: #fbbf24; font-weight: bold; }
-    .card-foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; border-top: 1px solid #1e293b; padding-top: 12px; }
-    .price { font-size: 20px; font-weight: bold; color: #e879f9; }
-    .btn-buy { background: #7e22ce; color: white; padding: 10px 16px; border-radius: 8px; flex-grow: 1; text-align: center; }
+
+    .card-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      border-top: 1px solid #1e293b;
+      padding-top: 14px;
+    }
+    .price {
+      font-size: 21px;
+      font-weight: 900;
+      color: #e879f9;
+    }
+    .btn-buy {
+      background: linear-gradient(135deg, #7e22ce, #9333ea);
+      color: white;
+      border: none;
+      padding: 11px 18px;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      flex-grow: 1;
+      text-align: center;
+      font-size: 14px;
+      box-shadow: 0 4px 12px rgba(126, 34, 206, 0.4);
+      transition: 0.25s;
+    }
+    .btn-buy:hover {
+      background: linear-gradient(135deg, #9333ea, #c084fc);
+      transform: scale(1.02);
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      background: #05070d;
+      border-top: 1px solid #1e293b;
+      color: #94a3b8;
+      font-size: 13px;
+    }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="brand-tag">⚡ INDUSTRIAL & HOME ELECTRICAL STORE ⚡</div>
+    <div class="brand-tag">⚡ CERTIFIED INDUSTRIAL & HOME ELECTRICAL STORE ⚡</div>
     <h1>MAGID SHOP</h1>
     <p>متجر معدات القوى، لوحات التحكم الآلي، ومستلزمات التأسيس المنزلي بالدفع المباشر عبر شبكة Pi</p>
     <div class="nav-bar">
-      <a href="index.html" class="btn btn-back">🔙 العودة لمنصة Smart Tech Aide</a>
-      <button onclick="authWithPi()" class="btn btn-auth" id="user-status">🔐 تسجيل الدخول بحساب Pi</button>
+      <a href="index.html" class="btn-lux btn-back">🔙 العودة لمنصة Smart Tech Aide</a>
+      <button onclick="authWithPi()" class="btn-lux btn-auth" id="user-status">🔐 تسجيل الدخول بحساب Pi</button>
     </div>
   </header>
 
   <div class="controls">
-    <div class="search-box">
-      <input type="text" id="searchInput" onkeyup="renderProducts()" placeholder="🔍 ابحث عن معدة (مثال: إنفرتر، قاطع، سلك، كونتاكتور...)">
+    <div class="search-wrapper">
+      <input type="text" id="searchInput" onkeyup="renderProducts()" placeholder="اكتب اسم القطعة أو الأمبير (مثال: إنفرتر، قاطع 250، سلك 4 مم...)">
+      <button onclick="renderProducts()" class="btn-search">🔍 بحث</button>
     </div>
+
     <div class="filter-bar">
-      <button class="filter-btn active" onclick="setCategory('all', this)">📦 الكل (24)</button>
+      <button class="filter-btn active" onclick="setCategory('all', this)" id="btn-all">📦 الكل</button>
       <button class="filter-btn" onclick="setCategory('power', this)">🏭 لوحات القوى</button>
       <button class="filter-btn" onclick="setCategory('auto', this)">⚙️ الأتمتة والمحركات</button>
       <button class="filter-btn" onclick="setCategory('home', this)">🏠 كهرباء المنازل</button>
@@ -127,28 +312,23 @@
     <div class="products-grid" id="productsGrid"></div>
   </div>
 
-  <script>
-    Pi.init({ version: "2.0", sandbox: true, client_id: "6aCxa_MvLH9mgIA9y7EHBDszfOX8T" });
+  <footer id="storeFooter">
+    ⚡ MAGID SHOP & SMART TECH AIDE | متجر محدث تلقائياً ومؤمّن بالكامل عبر شبكة Pi Network ⚡
+  </footer>
 
+  <script>
+    // تهيئة مكتبة Pi بأمان
+    try {
+      if (typeof Pi !== 'undefined') {
+        Pi.init({ version: "2.0", sandbox: true, client_id: "6aCxa_MvLH9mgIA9y7EHBDszfOX8T" });
+      }
+    } catch (e) {
+      console.log("Pi SDK init info:", e);
+    }
+
+    // قاعدة بيانات المنتجات المحدثة
     const products = [
       // لوحات القوى
       { cat: 'power', badge: '🏭 لوحات القوى', sku: 'MCCB-250A', title: 'قاطع رئيسي مقولب MCCB 250A', desc: 'قاطع عمومي للوحات التوزيع الرئيسية بالمصانع مع معايرة حرارية ومغناطيسية.', s1: ['التيار:', '250A (3P)'], s2: ['سعة القطع:', '50 kA'], price: 28 },
       { cat: 'power', badge: '🏭 لوحات القوى', sku: 'CONT-65A', title: 'كونتاكتور صناعي ثقيل 65 أمبير', desc: 'لتشغيل المحركات الكبيرة والأحمال الحثية الشاقة مع نقاط مساعدة.', s1: ['القدرة:', '30 kW (40 HP)'], s2: ['الملف:', '220V/380V'], price: 11 },
       { cat: 'power', badge: '🏭 لوحات القوى', sku: 'OVL-65A', title: 'أوفرلود حراري للمحركات (48-65A)', desc: 'حماية المحركات ثلاثية الفاز ضد زيادة الحمل وسقوط الفازات.', s1: ['المعايرة:', '48 - 65 أمبير'], s2: ['الفصل:', 'Class 10A'], price: 7 },
-      { cat: 'power', badge: '🏭 لوحات القوى', sku: 'PHASE-PRO', title: 'ريلاي حماية تتابع وانعكاس الفازات', desc: 'شاشة رقمية لمراقبة فولت الفازات والحماية من الانعكاس والسقوط.', s1: ['الشبكة:', '380V (3P+N)'], s2: ['الخرج:', 'Relay 8A'], price: 8 },
-      { cat: 'power', badge: '🏭 لوحات القوى', sku: 'CAP-25KVAR', title: 'مكثف تحسين معامل القدرة 25 KVAR', desc: 'لتقليل القدرة غير الفعالة وتجنب غرامات شركة الكهرباء بالمصانع.', s1: ['القدرة:', '25 KVAR'], s2: ['الجهد:', '400V AC'], price: 16 },
-      { cat: 'power', badge: '🏭 لوحات القوى', sku: 'CBL-4X35', title: 'كابل باور نحاس مسلح 4×35 مم (10م)', desc: 'كابل تغذية رئيسي للمصانع مع تسليح صلب لتحمل الدفن المباشر.', s1: ['المقطع:', '4×35 مم²'], s2: ['التحمل:', '135 أمبير'], price: 35 },
-      // الأتمتة والمحركات
-      { cat: 'auto', badge: '⚙️ الأتمتة', sku: 'VFD-11KW', title: 'إنفرتر مغير سرعة VFD 11 كيلو وات', desc: 'تحكم دقيق في سرعة وعزم المحركات مع واجهة برمجة ذكية.', s1: ['القدرة:', '11 kW (15 HP)'], s2: ['الاتصال:', 'Modbus RS485'], price: 65 },
-      { cat: 'auto', badge: '⚙️ الأتمتة', sku: 'SOFT-22KW', title: 'جهاز بدء ناعم Soft Starter 22kW', desc: 'يمنع تيار البدء العالي والصدمات الميكانيكية للطلمبات والضواغط.', s1: ['القدرة:', '22 kW (30 HP)'], s2: ['التيار:', '45 أمبير'], price: 55 },
-      { cat: 'auto', badge: '⚙️ الأتمتة', sku: 'PLC-24IO', title: 'وحدة تحكم منطقي مبرمج PLC 24 نقطة', desc: 'وحدة PLC صناعية لأتمتة خطوط الإنتاج والماكينات بسرعة عالية.', s1: ['النقاط:', '14 DI / 10 DO'], s2: ['التغذية:', '24V DC'], price: 40 },
-      { cat: 'auto', badge: '⚙️ الأتمتة', sku: 'HMI-7INCH', title: 'شاشة تحكم صناعية لمس HMI 7 بوصة', desc: 'شاشة ملونة لمراقبة وتشغيل الماكينات والربط مع وحدات PLC.', s1: ['المقاس:', '7 بوصة TFT'], s2: ['الحماية:', 'IP65'], price: 38 },
-      { cat: 'auto', badge: '⚙️ الأتمتة', sku: 'PSU-24V10A', title: 'باور سبلاي صناعي 24 فولت 10 أمبير', desc: 'محول تغذية مستمر يركب على مجرى أوميجا لتشغيل دوائر الكنترول.', s1: ['الخرج:', '24V DC / 10A'], s2: ['القدرة:', '240 وات'], price: 9 },
-      { cat: 'auto', badge: '⚙️ الأتمتة', sku: 'SENS-M18', title: 'حساس تقاربي حثي صناعي M18', desc: 'حساس استشعار المعادن عن بُعد لخطوط التعبئة والماكينات الآلية.', s1: ['المسافة:', '8 مم'], s2: ['الخرج:', 'PNP NO'], price: 4 },
-      // كهرباء المنازل
-      { cat: 'home', badge: '🏠 المنازل', sku: 'DB-24MOD', title: 'لوحة توزيع منزلية فاخرة 24 خط', desc: 'لوحة دفن داخل الحائط بباب شفاف وبارات نحاس للأرضي والنيوترال.', s1: ['السعة:', '24 موديول'], s2: ['الحماية:', 'IP40'], price: 10 },
-      { cat: 'home', badge: '🏠 المنازل', sku: 'RCCB-63A', title: 'قاطع الحماية من الصعق الكهربائي 63A', desc: 'يفصل الكهرباء فوراً عند حدوث تسريب أرضي أو تلامس بشري.', s1: ['الحساسية:', '30 مللي أمبير'], s2: ['التيار:', '63 أمبير'], price: 11 },
-      { cat: 'home', badge: '🏠 المنازل', sku: 'SPD-40KA', title: 'مانع الصواعق والنبضات المفاجئة SPD', desc: 'يحمي الأجهزة الإلكترونية والشاشات من ارتفاع الجهد الناتج عن البرق.', s1: ['التفريغ:', '40 كيلو أمبير'], s2: ['النوع:', 'Type 2'], price: 9 },
-      { cat: 'home', badge: '🏠 المنازل', sku: 'ATS-63A', title: 'مفتاح تحويل أوتوماتيك ATS 63A', desc: 'تحويل تلقائي بين شبكة الحكومة والمولد أو الطاقة الشمسية.', s1: ['التيار:', '63 أمبير (2P)'], s2: ['التحويل:', '< 50 مللي ثانية'], price: 14 },
-      { cat: 'home', badge: '🏠 المنازل', sku: 'WIRE-4MM', title: 'لفة سلك نحاس معزول 4 مم (100 متر)', desc: 'سلك نحاس نقي لتغذية التكييفات والسخانات والأحمال الثقيلة.', s1: ['المقطع:', '4 مم² (100م)'], s2: ['التحمل:', '32 أمبير'], price: 19 },
-      { cat: 'home', badge: '🏠 المنازل', sku: 'MCB-SET6', title: 'باقة 6 مفاتيح أوتوماتيك منزلية', desc: 'مجموعة حماية دوائر الإنارة والبرايز والتكييفات داخل الشقة.', s1: ['المحتوى:', '10A / 16A / 25A'], s2: ['القطع:', '6 kA'], price: 8 },
