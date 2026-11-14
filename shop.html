@@ -93,13 +93,12 @@
 </div>
 
 <script>
-// قاعدة البيانات الشاملة مدمجة مباشرة لضمان العمل الفوري بنسبة 100% بدون أي أخطاء تحميل
 var db = [];
 
-// 1. الكونتاكتورات (9A إلى 1000A)
-var cList =;
+// 1. الكونتاكتورات (9A إلى 1000A) - مكتوبة بأرقام نصية آمنة تماماً
+var cList = "9,12,18,25,32,40,50,65,80,95,115,150,185,225,265,330,400,500,630,800,1000".split(",");
 for (var i = 0; i < cList.length; i++) {
-  var a = cList[i];
+  var a = Number(cList[i]);
   db.push({
     c: 'power', b: 'كونتاكتورات صناعية', s: 'CONT-' + a + 'A',
     t: 'كونتاكتور صناعي 3 فاز قدرة ' + a + ' أمبير (AC3)',
@@ -109,9 +108,9 @@ for (var i = 0; i < cList.length; i++) {
 }
 
 // 2. قواطع MCCB و ACB (16A إلى 4000A)
-var bList =;
+var bList = "16,25,32,40,50,63,80,100,125,160,200,250,315,400,500,630,800,1000,1250,1600,2000,2500,3200,4000".split(",");
 for (var j = 0; j < bList.length; j++) {
-  var ba = bList[j];
+  var ba = Number(bList[j]);
   var isACB = ba >= 1000;
   db.push({
     c: 'power', b: isACB ? 'قواطع ACB هوائية' : 'قواطع MCCB مقولبة', s: (isACB ? 'ACB-' : 'MCCB-') + ba + 'A',
@@ -122,9 +121,9 @@ for (var j = 0; j < bList.length; j++) {
 }
 
 // 3. أجهزة البدء الناعم (Soft Starters)
-var softList = [7.5, 11, 15, 18.5, 22, 30, 37, 45, 55, 75, 90, 110, 132, 160, 200, 250];
+var softList = "7.5,11,15,18.5,22,30,37,45,55,75,90,110,132,160,200,250".split(",");
 for (var k = 0; k < softList.length; k++) {
-  var kw = softList[k];
+  var kw = Number(softList[k]);
   db.push({
     c: 'power', b: 'سوفت ستارتر', s: 'SOFT-' + kw + 'KW',
     t: 'جهاز بدء ناعم للمحركات (Soft Starter) ' + kw + ' كيلووات',
@@ -134,18 +133,17 @@ for (var k = 0; k < softList.length; k++) {
 }
 
 // 4. أسلاك التأسيس النحاس (1 مم إلى 35 مم)
-var wires = [
-  {m:'1 مم', a:'11A', p:6}, {m:'1.5 مم', a:'15A', p:8}, {m:'2 مم', a:'20A', p:11},
-  {m:'3 مم', a:'25A', p:15}, {m:'4 مم', a:'32A', p:19}, {m:'6 مم', a:'42A', p:28},
-  {m:'10 مم', a:'58A', p:42}, {m:'16 مم', a:'78A', p:65}, {m:'25 مم', a:'102A', p:98}, {m:'35 مم', a:'125A', p:135}
-];
-for (var w = 0; w < wires.length; w++) {
+var wireSizes = "1,1.5,2,3,4,6,10,16,25,35".split(",");
+var wireAmps = "11A,15A,20A,25A,32A,42A,58A,78A,102A,125A".split(",");
+var wirePrices = "6,8,11,15,19,28,42,65,98,135".split(",");
+for (var w = 0; w < wireSizes.length; w++) {
   db.push({
-    c: 'cables', b: 'أسلاك تأسيس', s: 'WIRE-' + wires[w].m,
-    t: 'سلك نحاس معزول للتأسيس مقطع ' + wires[w].m + ' (لفة 100م)',
+    c: 'cables', b: 'أسلاك تأسيس', s: 'WIRE-' + wireSizes[w] + 'MM',
+    t: 'سلك نحاس معزول للتأسيس مقطع ' + wireSizes[w] + ' مم (لفة 100م)',
     d: 'نحاس أحمر نقي 99.9% معزول PVC ومطابق للمواصفات القياسية IEC.',
-    k1: 'المقطع:', v1: wires[w].m, k2: 'أقصى تحمل:', v2: wires[w].a, p: wires[w].p
+    k1: 'المقطع:', v1: wireSizes[w] + ' مم', k2: 'أقصى تحمل:', v2: wireAmps[w], p: Number(wirePrices[w])
   });
 }
 
 // 5. كابلات الباور المسلحة XLPE (4 أطراف)
+var cblSizes = "4x10,4x16,4x25,4x35,4x50,4x70,4x95,4x120,4x150,4x185,4x240,4x300,4x400".split(",");
