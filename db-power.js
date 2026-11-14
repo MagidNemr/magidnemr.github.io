@@ -1,44 +1,35 @@
 window.storeDatabase = window.storeDatabase || [];
 
-// 1. جميع أمبيرات الكونتاكتورات الصناعية (9A إلى 1000A)
-[9, 12, 18, 25, 32, 40, 50, 65, 80, 95, 115, 150, 185, 225, 265, 330, 400, 500, 630, 800, 1000].forEach(function(a) {
+var contactorAmps =;
+for (var i = 0; i < contactorAmps.length; i++) {
+  var a = contactorAmps[i];
   window.storeDatabase.push({
     c: 'power', b: 'كونتاكتورات صناعية', s: 'CONT-' + a + 'A',
     t: 'كونتاكتور صناعي 3 فاز قدرة ' + a + ' أمبير (AC3)',
     d: 'كونتاكتور للخدمة الشاقة للمحركات والأحمال الصناعية، بوبينة 220V/380V مع نقاط مساعدة NO+NC.',
     k1: 'التيار المقنن:', v1: a + ' أمبير', k2: 'جهد التشغيل:', v2: '220V / 380V / 690V', p: Math.ceil(a * 0.45)
   });
-});
+}
 
-// 2. قواطع MCCB المقولبة وقواطع ACB الهوائية (16A إلى 4000A)
-[16, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1000, 1250, 1600, 2000, 2500, 3200, 4000].forEach(function(a) {
-  const isACB = a >= 1000;
+var breakerAmps =;
+for (var j = 0; j < breakerAmps.length; j++) {
+  var ba = breakerAmps[j];
+  var isACB = ba >= 1000;
   window.storeDatabase.push({
-    c: 'power', b: isACB ? 'قواطع ACB هوائية' : 'قواطع MCCB مقولبة', s: (isACB ? 'ACB-' : 'MCCB-') + a + 'A',
-    t: (isACB ? 'قاطع هوائي رئيسي ACB ' : 'قاطع مقولب MCCB ') + a + ' أمبير (3P/4P)',
+    c: 'power', b: isACB ? 'قواطع ACB هوائية' : 'قواطع MCCB مقولبة', s: (isACB ? 'ACB-' : 'MCCB-') + ba + 'A',
+    t: (isACB ? 'قاطع هوائي رئيسي ACB ' : 'قاطع مقولب MCCB ') + ba + ' أمبير (3P/4P)',
     d: 'قاطع عمومي للوحات التوزيع الرئيسية بالمصانع والمنشآت مع وحدة فصل حراري ومغناطيسي/إلكتروني.',
-    k1: 'التيار:', v1: a + ' أمبير', k2: 'سعة القطع:', v2: isACB ? '65kA - 100kA' : '36kA - 85kA', p: Math.ceil(a * 0.8)
+    k1: 'التيار:', v1: ba + ' أمبير', k2: 'سعة القطع:', v2: isACB ? '65kA - 100kA' : '36kA - 85kA', p: Math.ceil(ba * 0.8)
   });
-});
+}
 
-// 3. أجهزة البدء الناعم (Soft Starters)
-[7.5, 11, 15, 18.5, 22, 30, 37, 45, 55, 75, 90, 110, 132, 160, 200, 250].forEach(function(kw) {
+var softKw = [7.5, 11, 15, 18.5, 22, 30, 37, 45, 55, 75, 90, 110, 132, 160, 200, 250];
+for (var k = 0; k < softKw.length; k++) {
+  var kw = softKw[k];
   window.storeDatabase.push({
     c: 'power', b: 'سوفت ستارتر', s: 'SOFT-' + kw + 'KW',
     t: 'جهاز بدء ناعم للمحركات (Soft Starter) ' + kw + ' كيلووات',
     d: 'تقليل تيار البدء للمحركات الكبيرة وحماية المضخات والضواغط من الصدمات الميكانيكية.',
     k1: 'القدرة:', v1: kw + ' kW', k2: 'الجهد:', v2: '380V - 415V 3Ph', p: Math.ceil(kw * 1.8)
   });
-});
-
-// 4. أجهزة الحماية والريليهات الصناعية
-[
-  { s: 'PHASE-SEQ', b: 'حماية فاز', t: 'جهاز حماية سقوط وانعكاس الفازات (Phase Sequence Relay)', d: 'حماية المحركات واللوحات من انعكاس الفازات أو ارتفاع وانخفاض الجهد.', k1: 'الجهد:', v1: '380V 3Ph', k2: 'الخرج:', v2: '1 C/O Relay 5A', p: 12 },
-  { s: 'TIMER-STAR', b: 'تايمر ستار دلتا', t: 'تايمر تشغيل محركات ستار دلتا (Star-Delta Timer)', d: 'ضبط زمن التحويل بين توصيلة النجمة والدلتا بدقة من 0.1 ثانية حتى 60 ثانية.', k1: 'التغذية:', v1: '24-240V AC/DC', k2: 'زمن التحويل:', v2: '50ms ثابت', p: 14 },
-  { s: 'ATS-CTRL', b: 'متحكم ATS', t: 'وحدة تحكم تحويل أوتوماتيكي للمولدات (ATS Controller)', d: 'إدارة وتشغيل المولد الاحتياطي تلقائياً عند انقطاع التيار العمومي.', k1: 'الشاشة:', v1: 'LCD رقمية', k2: 'القياس:', v2: '3Ph Voltage & Freq', p: 45 }
-].forEach(function(item) {
-  window.storeDatabase.push({
-    c: 'power', b: item.b, s: item.s, t: item.t, d: item.d,
-    k1: item.k1, v1: item.v1, k2: item.k2, v2: item.v2, p: item.p
-  });
-});
+}
