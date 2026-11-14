@@ -146,14 +146,13 @@
       (item.d && item.d.toLowerCase().includes(q)) ||
       (item.v1 && item.v1.toLowerCase().includes(q))
     );
-    dropdown.innerHTML = matches.slice(0, 8).map(m => `
-      <div class="dropdown-item" onclick="selectItem('${m.t.replace(/'/g, "\\'")}')">
-        <span class="dropdown-title">${m.t} (${m.s})</span>
-        <span class="dropdown-price">${m.p} π</span>
-      </div>
-    `).join('');
-    dropdown.style.display = matches.length ? 'block' : 'none';
-    renderProducts(matches);
+    dropdown.innerHTML = `<div style="padding:8px 14px; background:#0f172a; color:#fbbf24; font-size:12px; font-weight:bold;">تم العثور على (${matches.length}) منتج ومقاس مطابق:</div>` +
+  matches.map(m => `
+    <div class="dropdown-item" onclick="selectItem('${m.t.replace(/'/g, "\\'")}')">
+      <span class="dropdown-title">${m.t} (${m.s})</span>
+      <span class="dropdown-price">${m.p} π</span>
+    </div>
+  `).join('');
   }
 
   function selectItem(title) {
