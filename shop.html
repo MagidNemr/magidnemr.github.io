@@ -22,7 +22,7 @@
   .search-wrapper input:focus { border-color: #a855f7; }
   .btn-search { background: #7e22ce; color: white; border: none; padding: 0 24px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 15px; }
   .btn-search:hover { background: #9333ea; }
-  .search-dropdown { position: absolute; top: 106%; right: 0; left: 0; background: #111827; border-radius: 10px; z-index: 200; display: none; max-height: 380px; overflow-y: auto; border: 1px solid #7e22ce; box-shadow: 0 14px 30px rgba(0,0,0,0.8); }
+  .search-dropdown { position: absolute; top: 106%; right: 0; left: 0; background: #111827; border-radius: 10px; z-index: 9999; display: none; max-height: 380px; overflow-y: auto; border: 1px solid #7e22ce; box-shadow: 0 14px 30px rgba(0,0,0,0.85); }
   .dropdown-header { padding: 10px 15px; background: #1e1b4b; color: #fbbf24; font-size: 13px; font-weight: bold; position: sticky; top: 0; border-bottom: 1px solid #4c1d95; display: flex; justify-content: space-between; align-items: center; }
   .btn-show-all-drop { background: #7e22ce; color: #fff; border: none; padding: 4px 10px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; }
   .dropdown-item { padding: 11px 16px; border-bottom: 1px solid #1e293b; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; }
@@ -107,11 +107,12 @@
 <script src="pi-payments.js"></script>
 
 <script>
-  const db = window.storeDatabase || [];
-  const grid = document.getElementById('products-grid');
+  function getDB() {
+    return window.storeDatabase || [];
+  }
 
   function getMatches(q) {
-    return db.filter(item =>
+    return getDB().filter(item =>
       (item.t && item.t.toLowerCase().includes(q)) ||
       (item.s && item.s.toLowerCase().includes(q)) ||
       (item.b && item.b.toLowerCase().includes(q)) ||
@@ -122,6 +123,7 @@
   }
 
   function renderProducts(list) {
+    const grid = document.getElementById('products-grid');
     document.getElementById('showing-count').innerText = `عدد النتائج المعروضة: ${list.length} منتج ومقاس`;
     grid.innerHTML = '';
     if (!list.length) {
@@ -154,5 +156,3 @@
       grid.appendChild(card);
     });
   }
-
-  function openSearchDropdown() {
