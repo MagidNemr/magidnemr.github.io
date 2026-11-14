@@ -95,7 +95,7 @@
   <div id="products-grid" class="products-grid"></div>
 </div>
 
-<!-- ربط ملفات قواعد البيانات الثمانية + ملف الدفع -->
+<script>window.storeDatabase = window.storeDatabase || [];</script>
 <script src="db-power.js"></script>
 <script src="db-cables.js"></script>
 <script src="db-transformers-mv.js"></script>
@@ -112,47 +112,40 @@
   }
 
   function getMatches(q) {
-    return getDB().filter(item =>
-      (item.t && item.t.toLowerCase().includes(q)) ||
-      (item.s && item.s.toLowerCase().includes(q)) ||
-      (item.b && item.b.toLowerCase().includes(q)) ||
-      (item.d && item.d.toLowerCase().includes(q)) ||
-      (item.v1 && item.v1.toLowerCase().includes(q)) ||
-      (item.v2 && item.v2.toLowerCase().includes(q))
-    );
+    return getDB().filter(function(item) {
+      return (item.t && item.t.toLowerCase().indexOf(q) !== -1) ||
+             (item.s && item.s.toLowerCase().indexOf(q) !== -1) ||
+             (item.b && item.b.toLowerCase().indexOf(q) !== -1) ||
+             (item.d && item.d.toLowerCase().indexOf(q) !== -1) ||
+             (item.v1 && item.v1.toLowerCase().indexOf(q) !== -1) ||
+             (item.v2 && item.v2.toLowerCase().indexOf(q) !== -1);
+    });
   }
 
   function renderProducts(list) {
-    const grid = document.getElementById('products-grid');
-    document.getElementById('showing-count').innerText = `عدد النتائج المعروضة: ${list.length} منتج ومقاس`;
+    var grid = document.getElementById('products-grid');
+    document.getElementById('showing-count').innerText = 'عدد النتائج المعروضة: ' + list.length + ' منتج ومقاس';
     grid.innerHTML = '';
     if (!list.length) {
       grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; color:#94a3b8; padding:30px;">لا توجد معدات مطابقة لعبارة البحث.</p>';
       return;
     }
-    list.forEach(item => {
-      const card = document.createElement('div');
+    for (var i = 0; i < list.length; i++) {
+      var item = list[i];
+      var card = document.createElement('div');
       card.className = 'product-card';
-      card.innerHTML = `
-        <div>
-          <div class="card-top">
-            <span class="badge">${item.b || ''}</span>
-            <span class="sku">${item.s || ''}</span>
-          </div>
-          <div class="p-title">${item.t}</div>
-          <div class="p-desc">${item.d}</div>
-        </div>
-        <div>
-          <div class="specs">
-            <div class="spec-row"><span class="spec-k">${item.k1 || ''}</span><span class="spec-v">${item.v1 || ''}</span></div>
-            <div class="spec-row"><span class="spec-k">${item.k2 || ''}</span><span class="spec-v">${item.v2 || ''}</span></div>
-          </div>
-          <div class="card-foot">
-            <span class="price">${item.p} π</span>
-            <button class="btn-buy" onclick="buyNow('${item.t.replace(/'/g, "\\'")}', ${item.p}, '${item.s}')">شراء بـ Pi</button>
-          </div>
-        </div>
-      `;
-      grid.appendChild(card);
-    });
-  }
+      card.innerHTML =
+        '<div>' +
+          '<div class="card-top">' +
+            '<span class="badge">' + (item.b || '') + '</span>' +
+            '<span class="sku">' + (item.s || '') + '</span>' +
+          '</div>' +
+          '<div class="p-title">' + item.t + '</div>' +
+          '<div class="p-desc">' + item.d + '</div>' +
+        '</div>' +
+        '<div>' +
+          '<div class="specs">' +
+            '<div class="spec-row"><span class="spec-k">' + (item.k1 || '') + '</span><span class="spec-v">' + (item.v1 || '') + '</span></div>' +
+            '<div class="spec-row"><span class="spec-k">' + (item.k2 || '') + '</span><span class="spec-v">' + (item.v2 || '') + '</span></div>' +
+          '</div>' +
+          '<div class="card-foot">' +
