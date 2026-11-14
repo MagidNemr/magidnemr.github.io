@@ -21,8 +21,8 @@ window.storeDatabase = window.storeDatabase || [];
   });
 });
 
-// 3. مكثفات تحسين معامل القدرة (KVAR) ومحولات التيار (CT)
-[10, 15, 20, 25, 30, 40, 50, 60].forEach(function(kvar) {
+// 3. مكثفات تحسين معامل القدرة (KVAR)
+[5, 10, 12.5, 15, 20, 25, 30, 40, 50, 60].forEach(function(kvar) {
   window.storeDatabase.push({
     c: 'transformers', b: 'مكثفات معامل القدرة', s: 'CAP-' + kvar + 'KVAR',
     t: 'مكثف تحسين معامل القدرة الأسطواني الجاف ' + kvar + ' KVAR',
@@ -31,7 +31,8 @@ window.storeDatabase = window.storeDatabase || [];
   });
 });
 
-[100, 150, 200, 300, 400, 600, 800, 1000, 1600, 2500].forEach(function(ct) {
+// 4. محولات التيار (CT)
+[50, 100, 150, 200, 250, 300, 400, 500, 600, 800, 1000, 1200, 1500, 2000, 3000].forEach(function(ct) {
   window.storeDatabase.push({
     c: 'transformers', b: 'محولات تيار CT', s: 'CT-' + ct + '-5A',
     t: 'محول تيار قياس وحماية (Current Transformer) ' + ct + '/5A',
