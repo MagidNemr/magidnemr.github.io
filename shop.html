@@ -1,148 +1,169 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Magid Shop | الموسوعة الهندسية الشاملة للكهرباء</title>
-<script src="https://minepi.com"></script>
-<style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #070a12; color: #f8fafc; line-height: 1.6; }
-  header { background: linear-gradient(180deg, #1b0b33 0%, #070a12 100%); border-bottom: 1px solid #2e1065; padding: 30px 20px; text-align: center; }
-  header h1 { font-size: 28px; color: #fbbf24; margin-bottom: 8px; }
-  header p { color: #cbd5e1; font-size: 14px; margin-bottom: 14px; }
-  .stats-pill { display: inline-block; background: rgba(251, 191, 36, 0.15); color: #fbbf24; border: 1px solid #fbbf24; padding: 5px 16px; border-radius: 20px; font-size: 13px; font-weight: bold; margin-bottom: 18px; }
-  .nav-bar { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
-  .btn-lux { padding: 11px 22px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 14px; transition: 0.3s; text-decoration: none; display: inline-block; }
-  .btn-back { background: #1e293b; color: #fff; border: 1px solid #475569; }
-  .btn-auth { background: linear-gradient(135deg, #f59e0b, #b45309); color: #000; border: none; }
-  .controls { max-width: 1280px; margin: 20px auto; padding: 0 15px; }
-  .search-wrapper { max-width: 750px; margin: 0 auto 18px; display: flex; gap: 8px; position: relative; }
-  .search-wrapper input { flex-grow: 1; padding: 13px 16px; border: 1px solid #334155; border-radius: 10px; background: #1e293b; color: #fff; outline: none; font-size: 15px; }
-  .btn-search { background: #7e22ce; color: white; border: none; padding: 0 24px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 15px; }
-  .search-dropdown { position: absolute; top: 106%; right: 0; left: 0; background: #111827; border-radius: 10px; z-index: 99999; display: none; max-height: 380px; overflow-y: auto; border: 1px solid #7e22ce; box-shadow: 0 14px 30px rgba(0,0,0,0.9); }
-  .dropdown-header { padding: 10px 15px; background: #1e1b4b; color: #fbbf24; font-size: 13px; font-weight: bold; position: sticky; top: 0; border-bottom: 1px solid #4c1d95; display: flex; justify-content: space-between; align-items: center; }
-  .btn-show-all-drop { background: #7e22ce; color: #fff; border: none; padding: 4px 10px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; }
-  .dropdown-item { padding: 11px 16px; border-bottom: 1px solid #1e293b; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-  .dropdown-item:hover { background: #2e1065; }
-  .dropdown-info { display: flex; flex-direction: column; text-align: right; }
-  .dropdown-title { color: #fff; font-weight: bold; font-size: 13.5px; }
-  .dropdown-sub { color: #94a3b8; font-size: 11.5px; }
-  .dropdown-price { color: #fbbf24; font-weight: bold; font-size: 14px; white-space: nowrap; margin-right: 12px; }
-  .filter-bar { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
-  .filter-btn { background: #111827; color: #94a3b8; border: 1px solid #283548; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 13px; transition: 0.3s; font-weight: 600; }
-  .filter-btn.active { background: #7e22ce; color: white; border-color: #c084fc; }
-  .container { max-width: 1280px; margin: 20px auto 50px; padding: 0 15px; }
-  .result-info { margin-bottom: 15px; color: #94a3b8; font-size: 14px; }
-  .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
-  .product-card { background: #141c2e; border-radius: 14px; padding: 18px; border: 1px solid #1e293b; display: flex; flex-direction: column; justify-content: space-between; }
-  .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 12px; }
-  .badge { padding: 3px 10px; border-radius: 12px; font-weight: bold; background: rgba(126, 34, 206, 0.25); color: #d8b4fe; }
-  .sku { color: #94a3b8; font-family: monospace; }
-  .p-title { font-size: 16px; font-weight: bold; color: #fff; margin-bottom: 8px; }
-  .p-desc { font-size: 12.5px; color: #cbd5e1; margin-bottom: 12px; line-height: 1.5; flex-grow: 1; }
-  .specs { background: #080b12; padding: 9px; border-radius: 8px; margin-bottom: 14px; font-size: 12px; }
-  .spec-row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #1e293b; }
-  .spec-row:last-child { border-bottom: none; }
-  .spec-k { color: #94a3b8; }
-  .spec-v { color: #fbbf24; font-weight: bold; }
-  .card-foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding-top: 10px; border-top: 1px solid #1e293b; }
-  .price { font-size: 19px; font-weight: bold; color: #e879f9; }
-  .btn-buy { background: linear-gradient(135deg, #7e22ce, #581c87); color: #fff; border: none; padding: 9px 18px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 13px; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magid Shop | الموسوعة الهندسية للمعدات الكهربائية</title>
+    <script src="https://minepi.com"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #0b0f19; color: #f8fafc; line-height: 1.6; }
+        header { background: linear-gradient(180deg, #1b0b33 0%, #070a12 100%); padding: 30px 20px; text-align: center; border-bottom: 1px solid #2e1065; }
+        header h1 { font-size: 32px; color: #fbbf24; margin-bottom: 8px; }
+        header p { color: #cbd5e1; font-size: 14px; margin-bottom: 18px; }
+        .nav-bar { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+        .btn-lux { padding: 11px 22px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 14px; transition: 0.3s; text-decoration: none; display: inline-block; }
+        .btn-back { background: #1e293b; color: #fff; border: 1px solid #475569; }
+        .btn-back:hover { background: #334155; }
+        .btn-auth { background: linear-gradient(135deg, #f59e0b, #b45309); color: #fff; }
+        .btn-auth:hover { opacity: 0.9; }
+        .controls { max-width: 1220px; margin: 20px auto; padding: 0 15px; }
+        .search-wrapper { max-width: 650px; margin: 0 auto 18px; display: flex; position: relative; }
+        .search-wrapper input { flex-grow: 1; padding: 11px 14px; border: 1px solid #334155; border-radius: 0 8px 8px 0; background: #1e293b; color: #fff; outline: none; }
+        .btn-search { background: #7e22ce; color: white; border: none; padding: 0 20px; border-radius: 8px 0 0 8px; cursor: pointer; font-weight: bold; }
+        .search-dropdown { position: absolute; top: 105%; right: 0; left: 0; background: #1e293b; border-radius: 8px; z-index: 100; display: none; max-height: 250px; overflow-y: auto; border: 1px solid #475569; }
+        .dropdown-item { padding: 11px 16px; border-bottom: 1px solid #1e293b; cursor: pointer; display: flex; justify-content: space-between; }
+        .dropdown-item:hover { background: #283548; }
+        .dropdown-title { color: #fff; font-weight: bold; font-size: 13.5px; }
+        .dropdown-price { color: #fbbf24; font-weight: bold; font-size: 13px; }
+        .filter-bar { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+        .filter-btn { background: #111827; color: #94a3b8; border: 1px solid #283548; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 13px; transition: 0.3s; }
+        .filter-btn.active { background: #7e22ce; color: white; border-color: #a855f7; }
+        .container { max-width: 1220px; margin: 20px auto 40px; padding: 0 15px; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+        .product-card { background: #141c2f; border-radius: 14px; padding: 18px; border: 1px solid #1e293b; display: flex; flex-direction: column; justify-content: space-between; transition: 0.3s; }
+        .product-card:hover { transform: translateY(-4px); border-color: #7e22ce; }
+        .product-img { width: 100%; height: 170px; object-fit: cover; border-radius: 10px; margin-bottom: 12px; background: #0f172a; }
+        .product-title { font-size: 16px; font-weight: bold; color: #f8fafc; margin-bottom: 6px; }
+        .product-desc { font-size: 13px; color: #94a3b8; margin-bottom: 14px; flex-grow: 1; }
+        .product-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #1e293b; padding-top: 12px; }
+        .price-tag { font-size: 16px; font-weight: bold; color: #fbbf24; }
+        .btn-buy { background: linear-gradient(135deg, #7e22ce, #581c87); color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 13px; }
+        .btn-buy:hover { opacity: 0.9; }
+    </style>
 </head>
 <body>
 
 <header>
-  <h1>Magid Shop | الموسوعة الهندسية الشاملة للكهرباء</h1>
-  <p>كتالوج ومتجر المعدات الكهربائية الصناعية والمنزلية والجهد المتوسط والطاقة الشمسية والمحركات</p>
-  <div id="total-badge" class="stats-pill">جاري التجهيز...</div>
-  <div class="nav-bar">
-    <a href="index.html" class="btn-lux btn-back">العودة للرئيسية</a>
-    <button id="auth-btn" class="btn-lux btn-auth" onclick="loginWithPi()">تسجيل الدخول بمحفظة Pi</button>
-  </div>
+    <h1>Magid Shop | الموسوعة الهندسية للمعدات الكهربائية</h1>
+    <p>متجر المعدات الكهربائية والأوتوميشن والكابلات المدعوم بالدفع عبر شبكة Pi Network</p>
+    <div class="nav-bar">
+        <a href="index.html" class="btn-lux btn-back">العودة للرئيسية</a>
+        <button id="auth-btn" class="btn-lux btn-auth" onclick="authenticateUser()">تسجيل الدخول بمحفظة Pi</button>
+    </div>
 </header>
 
 <div class="controls">
-  <div class="search-wrapper">
-    <input type="text" id="search-input" placeholder="اكتب اسم أي منتج (مثل: كونتاكتور، كابل، محرك، لوحة، محول)..." oninput="openSearchDropdown()" onfocus="openSearchDropdown()">
-    <button class="btn-search" onclick="executeFullSearch()">بحث</button>
-    <div id="search-dropdown" class="search-dropdown"></div>
-  </div>
+    <div class="search-wrapper">
+        <input type="text" id="search-input" placeholder="ابحث عن معدة، كابل، قاطع، أو أداة..." oninput="handleSearch()">
+        <button class="btn-search" onclick="handleSearch()">بحث</button>
+        <div id="search-dropdown" class="search-dropdown"></div>
+    </div>
 
-  <div class="filter-bar">
-    <button class="filter-btn active" onclick="filterProducts('all', this)">الكل</button>
-    <button class="filter-btn" onclick="filterProducts('power', this)">الباور والكونتاكتورات</button>
-    <button class="filter-btn" onclick="filterProducts('cables', this)">الكابلات والأسلاك</button>
-    <button class="filter-btn" onclick="filterProducts('transformers', this)">المحولات والجهد المتوسط</button>
-    <button class="filter-btn" onclick="filterProducts('auto', this)">الأوتوميشن و PLC</button>
-    <button class="filter-btn" onclick="filterProducts('motors', this)">المحركات والمضخات</button>
-    <button class="filter-btn" onclick="filterProducts('solar', this)">الطاقة الشمسية</button>
-    <button class="filter-btn" onclick="filterProducts('panels', this)">اللوحات والتأريض والإنارة</button>
-    <button class="filter-btn" onclick="filterProducts('home', this)">القواطع المنزلية</button>
-    <button class="filter-btn" onclick="filterProducts('tools', this)">أجهزة القياس والعدد</button>
-  </div>
+    <div class="filter-bar">
+        <button class="filter-btn active" onclick="filterProducts('all', this)">الكل</button>
+        <button class="filter-btn" onclick="filterProducts('power', this)">معدات القوى (Power)</button>
+        <button class="filter-btn" onclick="filterProducts('auto', this)">التحكم والأوتوميشن (Auto)</button>
+        <button class="filter-btn" onclick="filterProducts('cables', this)">الكابلات والأسلاك</button>
+        <button class="filter-btn" onclick="filterProducts('tools', this)">العدد والأدوات</button>
+    </div>
 </div>
 
 <div class="container">
-  <div class="result-info"><span id="showing-count">عرض جميع المعدات</span></div>
-  <div id="products-grid" class="products-grid"></div>
+    <div id="products-grid" class="products-grid"></div>
 </div>
 
+<!-- استدعاء ملفات قواعد البيانات وملف الدفع الموجودة في المستودع -->
+<script src="db-power.js"></script>
+<script src="db-auto.js"></script>
+<script src="db-cables.js"></script>
+<script src="db-home-tools.js"></script>
+<script src="pi-payments.js"></script>
+
 <script>
-var db = new Array();
+    // تجميع المنتجات من الملفات الأربعة تلقائياً مهما كانت أسماء المتغيرات بداخلها
+    let allProducts = [];
+    if (typeof powerProducts !== 'undefined') allProducts = allProducts.concat(powerProducts.map(p => ({...p, cat: 'power'})));
+    if (typeof autoProducts !== 'undefined') allProducts = allProducts.concat(autoProducts.map(p => ({...p, cat: 'auto'})));
+    if (typeof cablesProducts !== 'undefined') allProducts = allProducts.concat(cablesProducts.map(p => ({...p, cat: 'cables'})));
+    if (typeof homeToolsProducts !== 'undefined') allProducts = allProducts.concat(homeToolsProducts.map(p => ({...p, cat: 'tools'})));
 
-// 1. الكونتاكتورات (9A إلى 1000A)
-var cList = "9,12,18,25,32,40,50,65,80,95,115,150,185,225,265,330,400,500,630,800,1000".split(",");
-for (var i = 0; i < cList.length; i++) {
-  var a = Number(cList.item ? cList.item(i) : cList.slice(i, i + 1).join(""));
-  db.push({
-    c: 'power', b: 'كونتاكتورات صناعية', s: 'CONT-' + a + 'A',
-    t: 'كونتاكتور صناعي 3 فاز قدرة ' + a + ' أمبير (AC3)',
-    d: 'كونتاكتور للخدمة الشاقة للمحركات والأحمال الصناعية، بوبينة 220V/380V مع نقاط مساعدة NO+NC.',
-    k1: 'التيار المقنن:', v1: a + ' أمبير', k2: 'جهد التشغيل:', v2: '220V / 380V / 690V', p: Math.ceil(a * 0.45)
-  });
-}
+    const grid = document.getElementById('products-grid');
 
-// 2. قواطع MCCB و ACB (16A إلى 4000A)
-var bList = "16,25,32,40,50,63,80,100,125,160,200,250,315,400,500,630,800,1000,1250,1600,2000,2500,3200,4000".split(",");
-for (var j = 0; j < bList.length; j++) {
-  var ba = Number(bList.slice(j, j + 1).join(""));
-  var isACB = ba >= 1000;
-  db.push({
-    c: 'power', b: isACB ? 'قواطع ACB هوائية' : 'قواطع MCCB مقولبة', s: (isACB ? 'ACB-' : 'MCCB-') + ba + 'A',
-    t: (isACB ? 'قاطع هوائي رئيسي ACB ' : 'قاطع مقولب MCCB ') + ba + ' أمبير (3P/4P)',
-    d: 'قاطع عمومي للوحات التوزيع الرئيسية بالمصانع والمنشآت مع وحدة فصل حراري ومغناطيسي.',
-    k1: 'التيار:', v1: ba + ' أمبير', k2: 'سعة القطع:', v2: isACB ? '65kA - 100kA' : '36kA - 85kA', p: Math.ceil(ba * 0.8)
-  });
-}
+    function renderProducts(list) {
+        grid.innerHTML = '';
+        if (list.length === 0) {
+            grid.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color:#94a3b8;">جاري تحميل المنتجات أو تأكد من أسماء المصفوفات في ملفات db...</p>';
+            return;
+        }
+        list.forEach(item => {
+            const title = item.name || item.title || 'منتج كهربائي';
+            const desc = item.description || item.desc || '';
+            const price = item.price || 1;
+            const img = item.image || item.img || 'https://placeholder.com';
 
-// 3. أجهزة البدء الناعم (Soft Starters)
-var softList = "7.5,11,15,18.5,22,30,37,45,55,75,90,110,132,160,200,250".split(",");
-for (var k = 0; k < softList.length; k++) {
-  var kw = Number(softList.slice(k, k + 1).join(""));
-  db.push({
-    c: 'power', b: 'سوفت ستارتر', s: 'SOFT-' + kw + 'KW',
-    t: 'جهاز بدء ناعم للمحركات (Soft Starter) ' + kw + ' كيلووات',
-    d: 'تقليل تيار البدء للمحركات الكبيرة وحماية المضخات والضواغط من الصدمات.',
-    k1: 'القدرة:', v1: kw + ' kW', k2: 'الجهد:', v2: '380V - 415V 3Ph', p: Math.ceil(kw * 1.8)
-  });
-}
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.innerHTML = `
+                <img src="${img}" alt="${title}" class="product-img">
+                <div class="product-title">${title}</div>
+                <div class="product-desc">${desc}</div>
+                <div class="product-footer">
+                    <span class="price-tag">${price} π</span>
+                    <button class="btn-buy" onclick="triggerPiPayment('${title}', ${price})">شراء الآن</button>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+    }
 
-// 4. أسلاك التأسيس النحاس (1 مم إلى 35 مم)
-var wireSizes = "1,1.5,2,3,4,6,10,16,25,35".split(",");
-var wireAmps = "11A,15A,20A,25A,32A,42A,58A,78A,102A,125A".split(",");
-var wirePrices = "6,8,11,15,19,28,42,65,98,135".split(",");
-for (var w = 0; w < wireSizes.length; w++) {
-  var ws = wireSizes.slice(w, w + 1).join("");
-  var wa = wireAmps.slice(w, w + 1).join("");
-  var wp = Number(wirePrices.slice(w, w + 1).join(""));
-  db.push({
-    c: 'cables', b: 'أسلاك تأسيس', s: 'WIRE-' + ws + 'MM',
-    t: 'سلك نحاس معزول للتأسيس مقطع ' + ws + ' مم (لفة 100م)',
-    d: 'نحاس أحمر نقي 99.9% معزول PVC ومطابق للمواصفات القياسية IEC.',
-    k1: 'المقطع:', v1: ws + ' مم', k2: 'أقصى تحمل:', v2: wa, p: wp
-  });
-}
+    function filterProducts(category, btn) {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        if (category === 'all') {
+            renderProducts(allProducts);
+        } else {
+            renderProducts(allProducts.filter(p => p.cat === category));
+        }
+    }
 
-// 5. كابلات الباور المسلحة XLPE (4 أطراف)
+    function handleSearch() {
+        const q = document.getElementById('search-input').value.trim().toLowerCase();
+        const dropdown = document.getElementById('search-dropdown');
+        if (!q) {
+            dropdown.style.display = 'none';
+            renderProducts(allProducts);
+            return;
+        }
+        const matches = allProducts.filter(p => (p.name || p.title || '').toLowerCase().includes(q));
+        dropdown.innerHTML = matches.map(m => `
+            <div class="dropdown-item" onclick="selectSearchItem('${m.name || m.title}')">
+                <span class="dropdown-title">${m.name || m.title}</span>
+                <span class="dropdown-price">${m.price} π</span>
+            </div>
+        `).join('');
+        dropdown.style.display = matches.length ? 'block' : 'none';
+        renderProducts(matches);
+    }
+
+    function selectSearchItem(name) {
+        document.getElementById('search-input').value = name;
+        document.getElementById('search-dropdown').style.display = 'none';
+        handleSearch();
+    }
+
+    function triggerPiPayment(productName, amount) {
+        if (typeof buyProduct === 'function') {
+            buyProduct(productName, amount);
+        } else if (typeof createPayment === 'function') {
+            createPayment(amount, productName);
+        } else {
+            alert('تم اختيار: ' + productName + ' بسعر ' + amount + ' Pi. تأكد من اسم دالة الدفع في ملف pi-payments.js');
+        }
+    }
+
+    window.onload = () => renderProducts(allProducts);
+</script>
+
+</body>
+</html>
