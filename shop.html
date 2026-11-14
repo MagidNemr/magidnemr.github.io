@@ -1,169 +1,201 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Magid Shop | الموسوعة الهندسية للمعدات الكهربائية</title>
-    <script src="https://minepi.com"></script>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #0b0f19; color: #f8fafc; line-height: 1.6; }
-        header { background: linear-gradient(180deg, #1b0b33 0%, #070a12 100%); padding: 30px 20px; text-align: center; border-bottom: 1px solid #2e1065; }
-        header h1 { font-size: 32px; color: #fbbf24; margin-bottom: 8px; }
-        header p { color: #cbd5e1; font-size: 14px; margin-bottom: 18px; }
-        .nav-bar { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
-        .btn-lux { padding: 11px 22px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 14px; transition: 0.3s; text-decoration: none; display: inline-block; }
-        .btn-back { background: #1e293b; color: #fff; border: 1px solid #475569; }
-        .btn-back:hover { background: #334155; }
-        .btn-auth { background: linear-gradient(135deg, #f59e0b, #b45309); color: #fff; }
-        .btn-auth:hover { opacity: 0.9; }
-        .controls { max-width: 1220px; margin: 20px auto; padding: 0 15px; }
-        .search-wrapper { max-width: 650px; margin: 0 auto 18px; display: flex; position: relative; }
-        .search-wrapper input { flex-grow: 1; padding: 11px 14px; border: 1px solid #334155; border-radius: 0 8px 8px 0; background: #1e293b; color: #fff; outline: none; }
-        .btn-search { background: #7e22ce; color: white; border: none; padding: 0 20px; border-radius: 8px 0 0 8px; cursor: pointer; font-weight: bold; }
-        .search-dropdown { position: absolute; top: 105%; right: 0; left: 0; background: #1e293b; border-radius: 8px; z-index: 100; display: none; max-height: 250px; overflow-y: auto; border: 1px solid #475569; }
-        .dropdown-item { padding: 11px 16px; border-bottom: 1px solid #1e293b; cursor: pointer; display: flex; justify-content: space-between; }
-        .dropdown-item:hover { background: #283548; }
-        .dropdown-title { color: #fff; font-weight: bold; font-size: 13.5px; }
-        .dropdown-price { color: #fbbf24; font-weight: bold; font-size: 13px; }
-        .filter-bar { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
-        .filter-btn { background: #111827; color: #94a3b8; border: 1px solid #283548; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 13px; transition: 0.3s; }
-        .filter-btn.active { background: #7e22ce; color: white; border-color: #a855f7; }
-        .container { max-width: 1220px; margin: 20px auto 40px; padding: 0 15px; }
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
-        .product-card { background: #141c2f; border-radius: 14px; padding: 18px; border: 1px solid #1e293b; display: flex; flex-direction: column; justify-content: space-between; transition: 0.3s; }
-        .product-card:hover { transform: translateY(-4px); border-color: #7e22ce; }
-        .product-img { width: 100%; height: 170px; object-fit: cover; border-radius: 10px; margin-bottom: 12px; background: #0f172a; }
-        .product-title { font-size: 16px; font-weight: bold; color: #f8fafc; margin-bottom: 6px; }
-        .product-desc { font-size: 13px; color: #94a3b8; margin-bottom: 14px; flex-grow: 1; }
-        .product-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #1e293b; padding-top: 12px; }
-        .price-tag { font-size: 16px; font-weight: bold; color: #fbbf24; }
-        .btn-buy { background: linear-gradient(135deg, #7e22ce, #581c87); color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 13px; }
-        .btn-buy:hover { opacity: 0.9; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Magid Shop | الموسوعة الهندسية للمعدات الكهربائية</title>
+<script src="https://minepi.com"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #070a12; color: #f8fafc; line-height: 1.6; }
+  header { background: linear-gradient(180deg, #1b0b33 0%, #070a12 100%); border-bottom: 1px solid #2e1065; padding: 30px 20px; text-align: center; }
+  header h1 { font-size: 32px; color: #fbbf24; margin-bottom: 8px; }
+  header p { color: #cbd5e1; font-size: 14px; margin-bottom: 18px; }
+  .nav-bar { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+  .btn-lux { padding: 11px 22px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 14px; transition: 0.3s; text-decoration: none; display: inline-block; }
+  .btn-back { background: #1e293b; color: #fff; border: 1px solid #475569; }
+  .btn-auth { background: linear-gradient(135deg, #f59e0b, #b45309); color: #000; border: none; }
+  .controls { max-width: 1220px; margin: 20px auto; padding: 0 15px; }
+  .search-wrapper { max-width: 650px; margin: 0 auto 18px; display: flex; gap: 8px; position: relative; }
+  .search-wrapper input { flex-grow: 1; padding: 11px 14px; border: none; border-radius: 8px; background: #1e293b; color: #fff; outline: none; font-size: 14px; }
+  .btn-search { background: #7e22ce; color: white; border: none; padding: 0 22px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+  .search-dropdown { position: absolute; top: 105%; right: 0; left: 0; background: #1e293b; border-radius: 8px; z-index: 100; display: none; max-height: 260px; overflow-y: auto; border: 1px solid #475569; }
+  .dropdown-item { padding: 11px 16px; border-bottom: 1px solid #1e293b; cursor: pointer; display: flex; justify-content: space-between; }
+  .dropdown-item:hover { background: #283548; }
+  .dropdown-title { color: #fff; font-weight: bold; font-size: 13.5px; }
+  .dropdown-price { color: #fbbf24; font-weight: bold; font-size: 13px; }
+  .filter-bar { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+  .filter-btn { background: #111827; color: #94a3b8; border: 1px solid #283548; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 13px; transition: 0.3s; }
+  .filter-btn.active { background: #7e22ce; color: white; border-color: #c084fc; }
+  .container { max-width: 1220px; margin: 20px auto 40px; padding: 0 15px; }
+  .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(275px, 1fr)); gap: 18px; }
+  .product-card { background: #141c2e; border-radius: 14px; padding: 18px; border: 1px solid #1e293b; display: flex; flex-direction: column; justify-content: space-between; transition: 0.3s; }
+  .product-card:hover { transform: translateY(-4px); border-color: #7e22ce; }
+  .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 12px; }
+  .badge { padding: 3px 10px; border-radius: 12px; font-weight: bold; background: rgba(126, 34, 206, 0.25); color: #d8b4fe; }
+  .sku { color: #94a3b8; font-family: monospace; }
+  .p-title { font-size: 16.5px; font-weight: bold; color: #fff; margin-bottom: 8px; }
+  .p-desc { font-size: 12.5px; color: #cbd5e1; margin-bottom: 12px; line-height: 1.5; flex-grow: 1; }
+  .specs { background: #080b12; padding: 9px; border-radius: 8px; margin-bottom: 14px; font-size: 12px; }
+  .spec-row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #1e293b; }
+  .spec-row:last-child { border-bottom: none; }
+  .spec-k { color: #94a3b8; }
+  .spec-v { color: #fbbf24; font-weight: bold; }
+  .card-foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding-top: 10px; border-top: 1px solid #1e293b; }
+  .price { font-size: 19px; font-weight: bold; color: #e879f9; }
+  .btn-buy { background: linear-gradient(135deg, #7e22ce, #581c87); color: #fff; border: none; padding: 9px 18px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 13px; transition: 0.3s; }
+  .btn-buy:hover { opacity: 0.9; transform: scale(1.03); }
+</style>
 </head>
 <body>
 
 <header>
-    <h1>Magid Shop | الموسوعة الهندسية للمعدات الكهربائية</h1>
-    <p>متجر المعدات الكهربائية والأوتوميشن والكابلات المدعوم بالدفع عبر شبكة Pi Network</p>
-    <div class="nav-bar">
-        <a href="index.html" class="btn-lux btn-back">العودة للرئيسية</a>
-        <button id="auth-btn" class="btn-lux btn-auth" onclick="authenticateUser()">تسجيل الدخول بمحفظة Pi</button>
-    </div>
+  <h1>Magid Shop | الموسوعة الهندسية للمعدات الكهربائية</h1>
+  <p>متجر المعدات الكهربائية والأوتوميشن والكابلات المدعوم بالدفع عبر شبكة Pi Network</p>
+  <div class="nav-bar">
+    <a href="index.html" class="btn-lux btn-back">العودة للرئيسية</a>
+    <button id="auth-btn" class="btn-lux btn-auth" onclick="loginWithPi()">تسجيل الدخول بمحفظة Pi</button>
+  </div>
 </header>
 
 <div class="controls">
-    <div class="search-wrapper">
-        <input type="text" id="search-input" placeholder="ابحث عن معدة، كابل، قاطع، أو أداة..." oninput="handleSearch()">
-        <button class="btn-search" onclick="handleSearch()">بحث</button>
-        <div id="search-dropdown" class="search-dropdown"></div>
-    </div>
+  <div class="search-wrapper">
+    <input type="text" id="search-input" placeholder="ابحث بالاسم، الكود (SKU)، أو المواصفة..." oninput="handleSearch()">
+    <button class="btn-search" onclick="handleSearch()">بحث</button>
+    <div id="search-dropdown" class="search-dropdown"></div>
+  </div>
 
-    <div class="filter-bar">
-        <button class="filter-btn active" onclick="filterProducts('all', this)">الكل</button>
-        <button class="filter-btn" onclick="filterProducts('power', this)">معدات القوى (Power)</button>
-        <button class="filter-btn" onclick="filterProducts('auto', this)">التحكم والأوتوميشن (Auto)</button>
-        <button class="filter-btn" onclick="filterProducts('cables', this)">الكابلات والأسلاك</button>
-        <button class="filter-btn" onclick="filterProducts('tools', this)">العدد والأدوات</button>
-    </div>
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterProducts('all', this)">الكل</button>
+    <button class="filter-btn" onclick="filterProducts('power', this)">معدات القوى (Power)</button>
+    <button class="filter-btn" onclick="filterProducts('cables', this)">الكابلات والأسلاك</button>
+    <button class="filter-btn" onclick="filterProducts('auto', this)">التحكم والأوتوميشن</button>
+    <button class="filter-btn" onclick="filterProducts('home', this)">القواطع والتوزيع المنزلي</button>
+    <button class="filter-btn" onclick="filterProducts('tools', this)">أجهزة القياس والعدد</button>
+  </div>
 </div>
 
 <div class="container">
-    <div id="products-grid" class="products-grid"></div>
+  <div id="products-grid" class="products-grid"></div>
 </div>
 
-<!-- استدعاء ملفات قواعد البيانات وملف الدفع الموجودة في المستودع -->
-<script src="db-power.js"></script>
-<script src="db-auto.js"></script>
 <script src="db-cables.js"></script>
+<script src="db-auto.js"></script>
+<script src="db-power.js"></script>
 <script src="db-home-tools.js"></script>
 <script src="pi-payments.js"></script>
 
 <script>
-    // تجميع المنتجات من الملفات الأربعة تلقائياً مهما كانت أسماء المتغيرات بداخلها
-    let allProducts = [];
-    if (typeof powerProducts !== 'undefined') allProducts = allProducts.concat(powerProducts.map(p => ({...p, cat: 'power'})));
-    if (typeof autoProducts !== 'undefined') allProducts = allProducts.concat(autoProducts.map(p => ({...p, cat: 'auto'})));
-    if (typeof cablesProducts !== 'undefined') allProducts = allProducts.concat(cablesProducts.map(p => ({...p, cat: 'cables'})));
-    if (typeof homeToolsProducts !== 'undefined') allProducts = allProducts.concat(homeToolsProducts.map(p => ({...p, cat: 'tools'})));
+  const db = window.storeDatabase || [];
+  const grid = document.getElementById('products-grid');
 
-    const grid = document.getElementById('products-grid');
-
-    function renderProducts(list) {
-        grid.innerHTML = '';
-        if (list.length === 0) {
-            grid.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color:#94a3b8;">جاري تحميل المنتجات أو تأكد من أسماء المصفوفات في ملفات db...</p>';
-            return;
-        }
-        list.forEach(item => {
-            const title = item.name || item.title || 'منتج كهربائي';
-            const desc = item.description || item.desc || '';
-            const price = item.price || 1;
-            const img = item.image || item.img || 'https://placeholder.com';
-
-            const card = document.createElement('div');
-            card.className = 'product-card';
-            card.innerHTML = `
-                <img src="${img}" alt="${title}" class="product-img">
-                <div class="product-title">${title}</div>
-                <div class="product-desc">${desc}</div>
-                <div class="product-footer">
-                    <span class="price-tag">${price} π</span>
-                    <button class="btn-buy" onclick="triggerPiPayment('${title}', ${price})">شراء الآن</button>
-                </div>
-            `;
-            grid.appendChild(card);
-        });
+  function renderProducts(list) {
+    grid.innerHTML = '';
+    if (!list.length) {
+      grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; color:#94a3b8; padding:30px;">لا توجد منتجات مطابقة لبحثك حالياً.</p>';
+      return;
     }
+    list.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'product-card';
+      card.innerHTML = `
+        <div>
+          <div class="card-top">
+            <span class="badge">${item.b || ''}</span>
+            <span class="sku">${item.s || ''}</span>
+          </div>
+          <div class="p-title">${item.t}</div>
+          <div class="p-desc">${item.d}</div>
+        </div>
+        <div>
+          <div class="specs">
+            <div class="spec-row"><span class="spec-k">${item.k1 || ''}</span><span class="spec-v">${item.v1 || ''}</span></div>
+            <div class="spec-row"><span class="spec-k">${item.k2 || ''}</span><span class="spec-v">${item.v2 || ''}</span></div>
+          </div>
+          <div class="card-foot">
+            <span class="price">${item.p} π</span>
+            <button class="btn-buy" onclick="buyNow('${item.t.replace(/'/g, "\\'")}', ${item.p}, '${item.s}')">شراء بـ Pi</button>
+          </div>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  }
 
-    function filterProducts(category, btn) {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        if (category === 'all') {
-            renderProducts(allProducts);
-        } else {
-            renderProducts(allProducts.filter(p => p.cat === category));
-        }
+  function filterProducts(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    if (cat === 'all') {
+      renderProducts(db);
+    } else {
+      renderProducts(db.filter(item => item.c === cat));
     }
+  }
 
-    function handleSearch() {
-        const q = document.getElementById('search-input').value.trim().toLowerCase();
-        const dropdown = document.getElementById('search-dropdown');
-        if (!q) {
-            dropdown.style.display = 'none';
-            renderProducts(allProducts);
-            return;
-        }
-        const matches = allProducts.filter(p => (p.name || p.title || '').toLowerCase().includes(q));
-        dropdown.innerHTML = matches.map(m => `
-            <div class="dropdown-item" onclick="selectSearchItem('${m.name || m.title}')">
-                <span class="dropdown-title">${m.name || m.title}</span>
-                <span class="dropdown-price">${m.price} π</span>
-            </div>
-        `).join('');
-        dropdown.style.display = matches.length ? 'block' : 'none';
-        renderProducts(matches);
+  function handleSearch() {
+    const q = document.getElementById('search-input').value.trim().toLowerCase();
+    const dropdown = document.getElementById('search-dropdown');
+    if (!q) {
+      dropdown.style.display = 'none';
+      renderProducts(db);
+      return;
     }
+    const matches = db.filter(item =>
+      (item.t && item.t.toLowerCase().includes(q)) ||
+      (item.s && item.s.toLowerCase().includes(q)) ||
+      (item.d && item.d.toLowerCase().includes(q)) ||
+      (item.v1 && item.v1.toLowerCase().includes(q))
+    );
+    dropdown.innerHTML = matches.slice(0, 8).map(m => `
+      <div class="dropdown-item" onclick="selectItem('${m.t.replace(/'/g, "\\'")}')">
+        <span class="dropdown-title">${m.t} (${m.s})</span>
+        <span class="dropdown-price">${m.p} π</span>
+      </div>
+    `).join('');
+    dropdown.style.display = matches.length ? 'block' : 'none';
+    renderProducts(matches);
+  }
 
-    function selectSearchItem(name) {
-        document.getElementById('search-input').value = name;
-        document.getElementById('search-dropdown').style.display = 'none';
-        handleSearch();
+  function selectItem(title) {
+    document.getElementById('search-input').value = title;
+    document.getElementById('search-dropdown').style.display = 'none';
+    handleSearch();
+  }
+
+  function loginWithPi() {
+    if (typeof authenticateUser === 'function') {
+      authenticateUser();
+    } else if (window.Pi) {
+      Pi.init({ version: "2.0" });
+      Pi.authenticate(['payments'], function(payment) {}).then(function(auth) {
+        document.getElementById('auth-btn').innerText = 'مرحباً: ' + auth.user.username;
+      }).catch(function(err) {
+        alert('افتح المتجر من داخل متصفح Pi Browser لتسجيل الدخول.');
+      });
     }
+  }
 
-    function triggerPiPayment(productName, amount) {
-        if (typeof buyProduct === 'function') {
-            buyProduct(productName, amount);
-        } else if (typeof createPayment === 'function') {
-            createPayment(amount, productName);
-        } else {
-            alert('تم اختيار: ' + productName + ' بسعر ' + amount + ' Pi. تأكد من اسم دالة الدفع في ملف pi-payments.js');
-        }
+  function buyNow(title, amount, sku) {
+    if (typeof createPiPayment === 'function') {
+      createPiPayment(amount, title, sku);
+    } else if (typeof buyProduct === 'function') {
+      buyProduct(title, amount, sku);
+    } else if (window.Pi) {
+      Pi.init({ version: "2.0" });
+      Pi.createPayment({
+        amount: amount,
+        memo: 'شراء ' + title + ' (' + sku + ')',
+        metadata: { sku: sku, product: title }
+      }, {
+        onReadyForServerApproval: function(paymentId) {},
+        onReadyForServerCompletion: function(paymentId, txid) { alert('تم الدفع بنجاح!'); },
+        onCancel: function(paymentId) {},
+        onError: function(error, payment) { alert('حدث خطأ أثناء الدفع.'); }
+      });
     }
+  }
 
-    window.onload = () => renderProducts(allProducts);
+  window.onload = () => renderProducts(db);
 </script>
-
 </body>
 </html>
