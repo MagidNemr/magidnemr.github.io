@@ -171,6 +171,7 @@
  <script src="db-generators-ups.js?v=7"></script>
  <script src="db-global-brands.js?v=8"></script>
  <script src="db-essential-missing.js?v=9"></script>
+ <script src="db-catalog-pro.js?v=10"></script>
 <script src="pi-payments.js?v=6"></script>
 
 <script>
@@ -199,36 +200,39 @@ function searchDB(q) {
   return db.filter(x => (x.t && x.t.toLowerCase().includes(q)) || (x.s && x.s.toLowerCase().includes(q)) || (x.b && x.b.toLowerCase().includes(q)));
 }
 function getProductVisual(item) {
-  if (item.img) {
-    return '<div class="p-img-box"><img src="' + item.img + '" alt=""><span class="p-model-tag">' + (item.s || '') + '</span></div>';
-  }
   var title = (item.t || '') + ' ' + (item.b || '');
-  var prompt = 'industrial electrical equipment product photography';
+  var imgUrl = item.img || '';
+  var svgFallback = '';
 
   if (title.indexOf('كونتاكتور') !== -1) {
-    prompt = 'industrial 3 phase electrical contactor relay switch white background';
-  } else if (title.indexOf('ليمت سويتش') !== -1) {
-    prompt = 'industrial limit switch roller lever microswitch component';
-  } else if (title.indexOf('قاطع') !== -1 || title.indexOf('MCB') !== -1) {
-    prompt = 'electrical circuit breaker mcb din rail switch studio photo';
+    if (!imgUrl) imgUrl = 'https://wikimedia.org';
+    svgFallback = '<svg width="85" height="85" viewBox="0 0 80 80"><rect x="18" y="10" width="44" height="60" rx="5" fill="#1e293b" stroke="#a855f7" stroke-width="2.5"/><rect x="25" y="18" width="30" height="14" rx="2" fill="#475569"/><circle cx="28" cy="14" r="2.5" fill="#fbbf24"/><circle cx="40" cy="14" r="2.5" fill="#fbbf24"/><circle cx="52" cy="14" r="2.5" fill="#fbbf24"/><rect x="30" y="40" width="20" height="16" rx="2" fill="#7e22ce"/><text x="40" y="51" fill="#fff" font-size="8" text-anchor="middle" font-weight="bold">AC3</text></svg>';
+  } else if (title.indexOf('ليمت سويتش') !== -1 || title.indexOf('Limit') !== -1) {
+    if (!imgUrl) imgUrl = 'https://wikimedia.org';
+    svgFallback = '<svg width="85" height="85" viewBox="0 0 80 80"><rect x="26" y="30" width="28" height="40" rx="4" fill="#334155" stroke="#fbbf24" stroke-width="2.5"/><line x1="40" y1="30" x2="58" y2="12" stroke="#e2e8f0" stroke-width="3.5"/><circle cx="60" cy="11" r="6" fill="#ef4444"/><circle cx="40" cy="50" r="5" fill="#fbbf24"/></svg>';
+  } else if (title.indexOf('فوتوسيل') !== -1 || title.indexOf('حساس') !== -1) {
+    if (!imgUrl) imgUrl = 'https://wikimedia.org';
+    svgFallback = '<svg width="85" height="85" viewBox="0 0 80 80"><rect x="15" y="32" width="42" height="16" rx="3" fill="#94a3b8" stroke="#38bdf8" stroke-width="2"/><rect x="57" y="33" width="10" height="14" rx="2" fill="#f59e0b"/><path d="M68 25 Q76 40 68 55" stroke="#38bdf8" stroke-width="2" fill="none"/></svg>';
+  } else if (title.indexOf('قاطع') !== -1 || title.indexOf('MCB') !== -1 || title.indexOf('MCCB') !== -1 || title.indexOf('أوفرلود') !== -1) {
+    if (!imgUrl) imgUrl = 'https://wikimedia.org';
+    svgFallback = '<svg width="85" height="85" viewBox="0 0 80 80"><rect x="22" y="10" width="36" height="60" rx="4" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/><rect x="31" y="32" width="18" height="16" rx="2" fill="#ef4444"/><line x1="27" y1="20" x2="53" y2="20" stroke="#94a3b8" stroke-width="2"/><line x1="27" y1="60" x2="53" y2="60" stroke="#94a3b8" stroke-width="2"/></svg>';
   } else if (title.indexOf('كابل') !== -1 || title.indexOf('سلك') !== -1) {
-    prompt = 'armored copper electrical power cable wires roll photo';
+    if (!imgUrl) imgUrl = 'https://wikimedia.org';
+    svgFallback = '<svg width="85" height="85" viewBox="0 0 80 80"><circle cx="40" cy="40" r="25" fill="#0f172a" stroke="#475569" stroke-width="6"/><circle cx="33" cy="33" r="6" fill="#ef4444"/><circle cx="47" cy="33" r="6" fill="#3b82f6"/><circle cx="33" cy="47" r="6" fill="#eab308"/><circle cx="47" cy="47" r="6" fill="#22c55e"/></svg>';
   } else if (title.indexOf('محول') !== -1 || title.indexOf('مولد') !== -1) {
-    prompt = 'electrical power distribution transformer generator industrial photo';
-  } else if (title.indexOf('إنفرتر') !== -1 || title.indexOf('PLC') !== -1) {
-    prompt = 'industrial plc controller vfd frequency inverter automation';
-  } else if (title.indexOf('محرك') !== -1 || title.indexOf('طلمبة') !== -1) {
-    prompt = 'three phase electric induction motor industrial pump';
-  } else if (title.indexOf('شمسي') !== -1 || title.indexOf('بطارية') !== -1) {
-    prompt = 'solar panel lithium battery inverter energy photo';
-  } else if (title.indexOf('بوش بوتن') !== -1 || title.indexOf('سلكتور') !== -1) {
-    prompt = 'industrial push button switch emergency stop pilot light';
-  } else if (title.indexOf('قياس') !== -1 || title.indexOf('ميجر') !== -1) {
-    prompt = 'digital clamp multimeter electrical measurement tool';
+    if (!imgUrl) imgUrl = 'https://wikimedia.org';
+    svgFallback = '<svg width="85" height="85" viewBox="0 0 80 80"><rect x="18" y="25" width="44" height="40" rx="4" fill="#334155" stroke="#fbbf24" stroke-width="2.5"/><line x1="28" y1="12" x2="28" y2="25" stroke="#94a3b8" stroke-width="4"/><line x1="40" y1="12" x2="40" y2="25" stroke="#94a3b8" stroke-width="4"/><line x1="52" y1="12" x2="52" y2="25" stroke="#94a3b8" stroke-width="4"/><path d="M36 35 L43 45 L37 45 L44 56" stroke="#fbbf24" stroke-width="3" fill="none"/></svg>';
+  } else if (title.indexOf('إنفرتر') !== -1 || title.indexOf('PLC') !== -1 || title.indexOf('شاشة') !== -1) {
+    if (!imgUrl) imgUrl = 'https://wikimedia.org';
+    svgFallback = '<svg width="85" height="85" viewBox="0 0 80 80"><rect x="18" y="12" width="44" height="56" rx="5" fill="#0f172a" stroke="#22c55e" stroke-width="2.5"/><rect x="25" y="20" width="30" height="18" rx="2" fill="#14532d"/><text x="40" y="32" fill="#4ade80" font-size="10" text-anchor="middle" font-family="monospace">RUN</text><circle cx="30" cy="50" r="3.5" fill="#fbbf24"/><circle cx="40" cy="50" r="3.5" fill="#38bdf8"/><circle cx="50" cy="50" r="3.5" fill="#ef4444"/></svg>';
+  } else {
+    svgFallback = '<svg width="85" height="85" viewBox="0 0 80 80"><rect x="20" y="16" width="40" height="48" rx="5" fill="#1e293b" stroke="#fbbf24" stroke-width="2.5"/><path d="M43 24 L31 41 L40 41 L36 56 L50 38 L41 38 Z" fill="#fbbf24"/></svg>';
   }
 
-  var aiUrl = 'https://pollinations.ai' + encodeURIComponent(prompt) + '?width=400&height=260&nologo=true';
-  return '<div class="p-img-box"><img src="' + aiUrl + '" alt="" loading="lazy" onerror="this.style.display=\'none\'"><span class="p-model-tag">' + (item.s || '') + '</span></div>';
+  if (imgUrl) {
+    return '<div class="p-img-box">' + svgFallback + '<img src="' + imgUrl + '" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; background:#fff; padding:6px;" onerror="this.remove();"><span class="p-model-tag">' + (item.s || '') + '</span></div>';
+  }
+  return '<div class="p-img-box">' + svgFallback + '<span class="p-model-tag">' + (item.s || '') + '</span></div>';
 }
 function render(list) {
   var grid = document.getElementById('grid');
