@@ -1,197 +1,114 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Magid Shop | الموسوعة الهندسية للمعدات الكهربائية</title>
-    <script src="https://minepi.com"></script>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #0b0f19; color: #f8fafc; line-height: 1.6; }
-        header { background: linear-gradient(180deg, #1b0b33 0%, #070a12 100%); padding: 30px 20px; text-align: center; border-bottom: 1px solid #2e1065; }
-        header h1 { font-size: 32px; color: #fbbf24; margin-bottom: 8px; }
-        header p { color: #cbd5e1; font-size: 14px; margin-bottom: 18px; }
-        .nav-bar { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
-        .btn-lux { padding: 11px 22px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 14px; transition: 0.3s; text-decoration: none; display: inline-block; }
-        .btn-back { background: #1e293b; color: #fff; border: 1px solid #475569; }
-        .btn-back:hover { background: #334155; }
-        .btn-auth { background: linear-gradient(135deg, #f59e0b, #b45309); color: #fff; }
-        .btn-auth:hover { opacity: 0.9; }
-        .controls { max-width: 1220px; margin: 20px auto; padding: 0 15px; }
-        .search-wrapper { max-width: 650px; margin: 0 auto 18px; display: flex; position: relative; }
-        .search-wrapper input { flex-grow: 1; padding: 11px 14px; border: 1px solid #334155; border-radius: 0 8px 8px 0; background: #1e293b; color: #fff; outline: none; }
-        .btn-search { background: #7e22ce; color: white; border: none; padding: 0 20px; border-radius: 8px 0 0 8px; cursor: pointer; font-weight: bold; }
-        .search-dropdown { position: absolute; top: 105%; right: 0; left: 0; background: #1e293b; border-radius: 8px; z-index: 100; display: none; max-height: 250px; overflow-y: auto; border: 1px solid #475569; }
-        .dropdown-item { padding: 11px 16px; border-bottom: 1px solid #1e293b; cursor: pointer; display: flex; justify-content: space-between; }
-        .dropdown-item:hover { background: #283548; }
-        .dropdown-title { color: #fff; font-weight: bold; font-size: 13.5px; }
-        .dropdown-price { color: #fbbf24; font-weight: bold; font-size: 13px; }
-        .filter-bar { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
-        .filter-btn { background: #111827; color: #94a3b8; border: 1px solid #283548; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 13px; transition: 0.3s; }
-        .filter-btn.active { background: #7e22ce; color: white; border-color: #a855f7; }
-        .container { max-width: 1220px; margin: 20px auto 40px; padding: 0 15px; }
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
-        .product-card { background: #141c2f; border-radius: 14px; padding: 18px; border: 1px solid #1e293b; display: flex; flex-direction: column; justify-content: space-between; transition: 0.3s; }
-        .product-card:hover { transform: translateY(-4px); border-color: #7e22ce; }
-        .product-img { width: 100%; height: 170px; object-fit: cover; border-radius: 10px; margin-bottom: 12px; background: #0f172a; }
-        .product-title { font-size: 16px; font-weight: bold; color: #f8fafc; margin-bottom: 6px; }
-        .product-desc { font-size: 13px; color: #94a3b8; margin-bottom: 14px; flex-grow: 1; }
-        .product-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #1e293b; padding-top: 12px; }
-        .price-tag { font-size: 16px; font-weight: bold; color: #fbbf24; }
-        .btn-buy { background: linear-gradient(135deg, #7e22ce, #581c87); color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 13px; }
-        .btn-buy:hover { opacity: 0.9; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Magid Shop | الموسوعة الهندسية الشاملة للمعدات الكهربائية</title>
+<script src="https://minepi.com"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #070a12; color: #f8fafc; line-height: 1.6; }
+  header { background: linear-gradient(180deg, #1b0b33 0%, #070a12 100%); border-bottom: 1px solid #2e1065; padding: 28px 20px; text-align: center; }
+  header h1 { font-size: 28px; color: #fbbf24; margin-bottom: 8px; }
+  header p { color: #cbd5e1; font-size: 14px; margin-bottom: 14px; }
+  .stats-pill { display: inline-block; background: rgba(251, 191, 36, 0.15); color: #fbbf24; border: 1px solid #fbbf24; padding: 5px 16px; border-radius: 20px; font-size: 13px; font-weight: bold; margin-bottom: 18px; }
+  .nav-bar { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+  .btn-lux { padding: 11px 22px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 14px; transition: 0.3s; text-decoration: none; display: inline-block; }
+  .btn-back { background: #1e293b; color: #fff; border: 1px solid #475569; }
+  .btn-auth { background: linear-gradient(135deg, #f59e0b, #b45309); color: #000; border: none; }
+  .controls { max-width: 1280px; margin: 20px auto; padding: 0 15px; }
+  .search-wrapper { max-width: 750px; margin: 0 auto 18px; display: flex; gap: 8px; position: relative; }
+  .search-wrapper input { flex-grow: 1; padding: 13px 16px; border: 1px solid #334155; border-radius: 10px; background: #1e293b; color: #fff; outline: none; font-size: 15px; }
+  .search-wrapper input:focus { border-color: #a855f7; }
+  .btn-search { background: #7e22ce; color: white; border: none; padding: 0 24px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 15px; }
+  .search-dropdown { position: absolute; top: 106%; right: 0; left: 0; background: #111827; border-radius: 10px; z-index: 99999; display: none; max-height: 380px; overflow-y: auto; border: 1px solid #7e22ce; box-shadow: 0 14px 30px rgba(0,0,0,0.9); }
+  .dropdown-header { padding: 10px 15px; background: #1e1b4b; color: #fbbf24; font-size: 13px; font-weight: bold; position: sticky; top: 0; border-bottom: 1px solid #4c1d95; display: flex; justify-content: space-between; align-items: center; }
+  .btn-show-all-drop { background: #7e22ce; color: #fff; border: none; padding: 4px 10px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; }
+  .dropdown-item { padding: 11px 16px; border-bottom: 1px solid #1e293b; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+  .dropdown-item:hover { background: #2e1065; }
+  .dropdown-info { display: flex; flex-direction: column; text-align: right; }
+  .dropdown-title { color: #fff; font-weight: bold; font-size: 13.5px; }
+  .dropdown-sub { color: #94a3b8; font-size: 11.5px; }
+  .dropdown-price { color: #fbbf24; font-weight: bold; font-size: 14px; white-space: nowrap; margin-right: 12px; }
+  .filter-bar { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+  .filter-btn { background: #111827; color: #94a3b8; border: 1px solid #283548; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 13px; transition: 0.3s; font-weight: 600; }
+  .filter-btn.active { background: #7e22ce; color: white; border-color: #c084fc; }
+  .container { max-width: 1280px; margin: 20px auto 50px; padding: 0 15px; }
+  .result-info { margin-bottom: 15px; color: #94a3b8; font-size: 14px; }
+  .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
+  .product-card { background: #141c2e; border-radius: 14px; padding: 18px; border: 1px solid #1e293b; display: flex; flex-direction: column; justify-content: space-between; }
+  .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 12px; }
+  .badge { padding: 3px 10px; border-radius: 12px; font-weight: bold; background: rgba(126, 34, 206, 0.25); color: #d8b4fe; }
+  .sku { color: #94a3b8; font-family: monospace; }
+  .p-title { font-size: 16px; font-weight: bold; color: #fff; margin-bottom: 8px; }
+  .p-desc { font-size: 12.5px; color: #cbd5e1; margin-bottom: 12px; line-height: 1.5; flex-grow: 1; }
+  .specs { background: #080b12; padding: 9px; border-radius: 8px; margin-bottom: 14px; font-size: 12px; }
+  .spec-row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #1e293b; }
+  .spec-row:last-child { border-bottom: none; }
+  .spec-k { color: #94a3b8; }
+  .spec-v { color: #fbbf24; font-weight: bold; }
+  .card-foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding-top: 10px; border-top: 1px solid #1e293b; }
+  .price { font-size: 19px; font-weight: bold; color: #e879f9; }
+  .btn-buy { background: linear-gradient(135deg, #7e22ce, #581c87); color: #fff; border: none; padding: 9px 18px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 13px; }
+</style>
 </head>
 <body>
 
 <header>
-    <h1>Magid Shop | الموسوعة الهندسية للمعدات الكهربائية</h1>
-    <p>متجر المعدات الكهربائية والأوتوميشن والكابلات المدعوم بالدفع عبر شبكة Pi Network</p>
-    <div class="nav-bar">
-        <a href="index.html" class="btn-lux btn-back">العودة للرئيسية</a>
-        <button id="auth-btn" class="btn-lux btn-auth" onclick="authenticateUser()">تسجيل الدخول بمحفظة Pi</button>
-    </div>
+  <h1>Magid Shop | الموسوعة الهندسية الشاملة للكهرباء</h1>
+  <p>كتالوج ومتجر المعدات الكهربائية الصناعية والمنزلية والجهد المتوسط والطاقة الشمسية والمحركات</p>
+  <div id="total-badge" class="stats-pill">جاري تحميل قواعد البيانات...</div>
+  <div class="nav-bar">
+    <a href="index.html" class="btn-lux btn-back">العودة للرئيسية</a>
+    <button id="auth-btn" class="btn-lux btn-auth" onclick="loginWithPi()">تسجيل الدخول بمحفظة Pi</button>
+  </div>
 </header>
 
 <div class="controls">
-    <div class="search-wrapper">
-        <input type="text" id="search-input" placeholder="ابحث عن معدة، كابل، قاطع، أو أداة..." oninput="handleSearch()">
-        <button class="btn-search" onclick="handleSearch()">بحث</button>
-        <div id="search-dropdown" class="search-dropdown"></div>
-    </div>
+  <div class="search-wrapper">
+    <input type="text" id="search-input" placeholder="اكتب اسم أي منتج (مثل: كونتاكتور، كابل، محرك، لوحة، محول)..." oninput="openSearchDropdown()" onfocus="openSearchDropdown()">
+    <button class="btn-search" onclick="executeFullSearch()">بحث</button>
+    <div id="search-dropdown" class="search-dropdown"></div>
+  </div>
 
-    <div class="filter-bar">
-        <button class="filter-btn active" onclick="filterProducts('all', this)">الكل</button>
-        <button class="filter-btn" onclick="filterProducts('power', this)">معدات القوى (Power)</button>
-        <button class="filter-btn" onclick="filterProducts('auto', this)">التحكم والأوتوميشن (Auto)</button>
-        <button class="filter-btn" onclick="filterProducts('cables', this)">الكابلات والأسلاك</button>
-        <button class="filter-btn" onclick="filterProducts('tools', this)">العدد والأدوات</button>
-    </div>
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterProducts('all', this)">الكل</button>
+    <button class="filter-btn" onclick="filterProducts('power', this)">الباور والكونتاكتورات</button>
+    <button class="filter-btn" onclick="filterProducts('cables', this)">الكابلات والأسلاك</button>
+    <button class="filter-btn" onclick="filterProducts('transformers', this)">المحولات والجهد المتوسط</button>
+    <button class="filter-btn" onclick="filterProducts('auto', this)">الأوتوميشن و PLC</button>
+    <button class="filter-btn" onclick="filterProducts('motors', this)">المحركات والمضخات</button>
+    <button class="filter-btn" onclick="filterProducts('solar', this)">الطاقة الشمسية</button>
+    <button class="filter-btn" onclick="filterProducts('panels', this)">اللوحات والتأريض والإنارة</button>
+    <button class="filter-btn" onclick="filterProducts('home', this)">القواطع المنزلية</button>
+    <button class="filter-btn" onclick="filterProducts('tools', this)">أجهزة القياس والعدد</button>
+  </div>
 </div>
 
 <div class="container">
-    <div id="products-grid" class="products-grid"></div>
+  <div class="result-info"><span id="showing-count">عرض جميع المعدات</span></div>
+  <div id="products-grid" class="products-grid"></div>
 </div>
 
-<!-- استدعاء ملفات قواعد البيانات وملف الدفع الموجودة في المستودع -->
+<!-- ربط ملفات قواعد البيانات الثمانية وملف الدفع -->
+<script>window.storeDatabase = window.storeDatabase || [];</script>
 <script src="db-power.js"></script>
-<script src="db-auto.js"></script>
 <script src="db-cables.js"></script>
+<script src="db-transformers-mv.js"></script>
+<script src="db-auto.js"></script>
+<script src="db-motors-pumps.js"></script>
+<script src="db-solar.js"></script>
+<script src="db-panels-lighting.js"></script>
 <script src="db-home-tools.js"></script>
 <script src="pi-payments.js"></script>
 
 <script>
-    // تجميع المنتجات من الملفات الأربعة تلقائياً مهما كانت أسماء المتغيرات بداخلها
-    let allProducts = [];
-    if (typeof powerProducts !== 'undefined') allProducts = allProducts.concat(powerProducts.map(p => ({...p, cat: 'power'})));
-    if (typeof autoProducts !== 'undefined') allProducts = allProducts.concat(autoProducts.map(p => ({...p, cat: 'auto'})));
-    if (typeof cablesProducts !== 'undefined') allProducts = allProducts.concat(cablesProducts.map(p => ({...p, cat: 'cables'})));
-    if (typeof homeToolsProducts !== 'undefined') allProducts = allProducts.concat(homeToolsProducts.map(p => ({...p, cat: 'tools'})));
-
-    const grid = document.getElementById('products-grid');
-
-    function renderProducts(list) {
-        grid.innerHTML = '';
-        if (list.length === 0) {
-            grid.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color:#94a3b8;">جاري تحميل المنتجات أو تأكد من أسماء المصفوفات في ملفات db...</p>';
-            return;
-        }
-        list.forEach(item => {
-            const title = item.name || item.title || 'منتج كهربائي';
-            const desc = item.description || item.desc || '';
-            const price = item.price || 1;
-            const img = item.image || item.img || 'https://placeholder.com';
-
-            const card = document.createElement('div');
-            card.className = 'product-card';
-            card.innerHTML = `
-                <img src="${img}" alt="${title}" class="product-img">
-                <div class="product-title">${title}</div>
-                <div class="product-desc">${desc}</div>
-                <div class="product-footer">
-                    <span class="price-tag">${price} π</span>
-                    <button class="btn-buy" onclick="triggerPiPayment('${title}', ${price})">شراء الآن</button>
-                </div>
-            `;
-            grid.appendChild(card);
-        });
-    }
-
-    function filterProducts(category, btn) {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        if (category === 'all') {
-            renderProducts(allProducts);
-        } else {
-            renderProducts(allProducts.filter(p => p.cat === category));
-        }
-    }
-
-    function handleSearch() {
-        const q = document.getElementById('search-input').value.trim().toLowerCase();
-        const dropdown = document.getElementById('search-dropdown');
-        if (!q) {
-            dropdown.style.display = 'none';
-            renderProducts(allProducts);
-            return;
-        }
-        const matches = allProducts.filter(p => (p.name || p.title || '').toLowerCase().includes(q));
-        dropdown.innerHTML = matches.map(m => `
-            <div class="dropdown-item" onclick="selectSearchItem('${m.name || m.title}')">
-                <span class="dropdown-title">${m.name || m.title}</span>
-                <span class="dropdown-price">${m.price} π</span>
-            </div>
-        `).join('');
-        dropdown.style.display = matches.length ? 'block' : 'none';
-        renderProducts(matches);
-    }
-
-    function selectSearchItem(name) {
-        document.getElementById('search-input').value = name;
-        document.getElementById('search-dropdown').style.display = 'none';
-        handleSearch();
-    }
-
-    function triggerPiPayment(productName, amount) {
-        if (typeof buyProduct === 'function') {
-            buyProduct(productName, amount);
-        } else if (typeof createPayment === 'function') {
-            createPayment(amount, productName);
-        } else {
-            alert('تم اختيار: ' + productName + ' بسعر ' + amount + ' Pi. تأكد من اسم دالة الدفع في ملف pi-payments.js');
-        }
-    }
-
-    window.onload = () => renderProducts(allProducts);
-addRange('auto', 'إنفرتر VFD', 'VFD-', 'مغير سرعة محركات (إنفرتر VFD) قدرة ', ' كيلووات', 'تحكم Vector Control دقيق مع بروتوكول Modbus RS485 وحماية كاملة للمحرك.', 'القدرة:', ' kW', 'التحكم:', 'V/F & Vector', '0.4,0.75,1.5,2.2,4,5.5,7.5,11,15,18.5,22,30,37,45,55,75,90,110', 3.5, 35);
-
-addRange('motors', 'محركات 3 فاز', 'MTR-3P-', 'محرك كهربائي 3 فاز ملفات نحاس قدرة ', ' حصان (HP)', 'محرك حثي صناعي عالي الكفاءة IE3 مع حماية IP55 وعزل Class F.', 'القدرة:', ' HP', 'السرعة والجهد:', '1500 RPM / 380V', '1,2,3,5.5,7.5,10,15,20,30,50,100', 12, 25);
-
-addRange('home', 'قواطع MCB منزلية', 'MCB-1P-', 'قاطع أوتوماتيك فرعي MCB أحادي ', ' أمبير (C-Curve)', 'حماية دوائر الإنارة والبرايز والتكييفات داخل لوحات التوزيع المنزلية.', 'التيار:', ' أمبير', 'سعة القطع:', '6kA / 10kA', '6,10,16,20,25,32,40,50,63,80,100,125', 0.15, 2);
-
-addRange('home', 'قواطع MCB ثلاثية', 'MCB-3P-', 'قاطع أوتوماتيك فرعي MCB ثلاثي 3 فاز ', ' أمبير', 'حماية الأحمال الثلاثية والمضخات ولوحات التوزيع الفرعية.', 'التيار:', ' أمبير (3P)', 'منحنى الفصل:', 'C-Curve 10kA', '6,10,16,20,25,32,40,50,63,80,100,125', 0.35, 6);
-
-db.push(
-  {c:'auto', b:'PLC صناعي', s:'PLC-S7-1200', t:'وحدة تحكم PLC سيمنس S7-1200 CPU 1214C', d:'وحدة تحكم صناعية متكاملة مع منافذ PROFINET ومداخل ومخارج رقمية.', k1:'البروتوكول:', v1:'PROFINET / Modbus', k2:'التغذية:', v2:'24V DC / 220V AC', p:140},
-  {c:'auto', b:'PLC صناعي', s:'PLC-DELTA-14', t:'وحدة PLC دلتا DVP-14SS2 للماكينات', d:'وحدة تحكم مدمجة سريعة الاستجابة لخطوط الإنتاج والماكينات.', k1:'النقاط:', v1:'8 DI / 6 DO', k2:'الاتصال:', v2:'RS232 / RS485', p:55},
-  {c:'auto', b:'شاشات HMI', s:'HMI-7-PRO', t:'شاشة لمس صناعية HMI 7 بوصة عالية الدقة', d:'شاشة تحكم ومراقبة للماكينات تدعم الربط مع كافة أنواع الـ PLC.', k1:'المقاس:', v1:'7 Inch TFT', k2:'الحماية:', v2:'IP65', p:75},
-  {c:'solar', b:'ألواح شمسية', s:'PV-585W', t:'لوح طاقة شمسية مونو كريستالين 585 وات (Tier-1)', d:'لوح شمسي عالي الكفاءة مقاوم للعوامل الجوية والغبار مع ضمان 25 عاماً.', k1:'القدرة:', v1:'585 Watt', k2:'الكفاءة:', v2:'22.5%', p:58},
-  {c:'solar', b:'إنفرتر هجين', s:'SOL-HYB-10KW', t:'إنفرتر طاقة شمسية هجين MPPT قدرة 10 كيلووات', d:'يعمل مع البطاريات وبدون بطاريات مع إمكانية الربط على الشبكة.', k1:'القدرة:', v1:'10 kW', k2:'الشاحن:', v2:'MPPT مزدوج', p:340},
-  {c:'solar', b:'بطاريات ليثيوم', s:'BAT-5KWH', t:'بطارية ليثيوم شمسية LiFePO4 سعة 5.12 kWh (51.2V 100Ah)', d:'بطارية تخزين طاقة ذكية مزودة بنظام BMS وعمر 6000 دورة.', k1:'السعة:', v1:'5.12 kWh', k2:'الجهد:', v2:'51.2V', p:320},
-  {c:'panels', b:'لوحات كنترول IP65', s:'BOX-60x40', t:'لوحة تحكم صاج معالج مقاس 60x40x20 سم IP65', d:'لوحة صناعية مدهونة إلكتروستاتيك لتجميع الكونتاكتورات والقواطع.', k1:'الأبعاد:', v1:'600x400x200 mm', k2:'الحماية:', v2:'IP65', p:35},
-  {c:'panels', b:'لوحات MDB رئيسية', s:'MDB-1600A', t:'لوحة توزيع رئيسية Form-4 (MDB) سعة 1600 أمبير', d:'لوحة توزيع عمومية مجهزة ببارات نحاس معزولة وقواطع رئيسية.', k1:'السعة:', v1:'1600A / 65kA', k2:'المعيار:', v2:'IEC 61439', p:950},
-  {c:'panels', b:'أنظمة التأريض', s:'EARTH-ROD-2M', t:'حربة تأريض نحاس صلب طول 2 متر قطر 16 مم', d:'قطب تأريض عالي التوصيل لتفريغ الشحنات في آبار التأريض.', k1:'المقاس:', v1:'2000mm x 16mm', k2:'النقاء:', v2:'نحاس 99.9%', p:16},
-  {c:'panels', b:'إنارة مصانع', s:'LED-HB-200W', t:'كشاف مصانع معلق (LED High Bay UFO) قدرة 200 وات', d:'إضاءة فائقة السطوع للهناجر والمخازن مع حماية IP65.', k1:'القدرة:', v1:'200W', k2:'الإضاءة:', v2:'28,000 Lumen', p:31},
-  {c:'tools', b:'أجهزة قياس وعدد', s:'CLAMP-1000A', t:'بنسة أمبير رقمية True-RMS حتى 1000 أمبير AC/DC', d:'قياس التيار المتردد والمستمر والجهد والمقاومة والتردد.', k1:'المدى:', v1:'1000A AC/DC', k2:'الدقة:', v2:'True-RMS CAT IV', p:32},
-  {c:'tools', b:'أجهزة قياس وعدد', s:'MEGGER-1000V', t:'جهاز ميجر قياس مقاومة العزل (Insulation Tester) 1000V', d:'فحص سلامة عزل الكابلات والمحركات والمحولات حتى 1000 فولت.', k1:'جهد الاختبار:', v1:'250V / 500V / 1000V', k2:'المدى:', v2:'حتى 2000 MΩ', p:55},
-  {c:'tools', b:'أجهزة قياس وعدد', s:'EARTH-TEST', t:'جهاز قياس مقاومة الأرضي (Earth Resistance Tester)', d:'قياس مقاومة آبار التأريض للمباني والمصانع بدقة عالية.', k1:'المدى:', v1:'0.01Ω - 2000Ω', k2:'الملحقات:', v2:'حراب وأسلاك كاملة', p:68},
-  {c:'tools', b:'أجهزة قياس وعدد', s:'THERMAL-CAM', t:'كاميرا تصوير حراري للكشف عن سخونة اللوحات والكابلات', d:'تحديد نقاط الضعف وارتفاع الحرارة في الكونتاكتورات والقواطع.', k1:'الحرارة:', v1:'-20°C إلى 400°C', k2:'الشاشة:', v2:'ملونة عالية الدقة', p:120}
-);
+var db = window.storeDatabase || [];
 
 function getMatches(q) {
   var res = [];
   for (var i = 0; i < db.length; i++) {
-    var item = db[i];
+    var item = db.slice(i, i + 1).pop();
     if ((item.t && item.t.toLowerCase().indexOf(q) !== -1) ||
         (item.s && item.s.toLowerCase().indexOf(q) !== -1) ||
         (item.b && item.b.toLowerCase().indexOf(q) !== -1) ||
@@ -212,22 +129,22 @@ function renderProducts(list) {
     return;
   }
   for (var i = 0; i < list.length; i++) {
-    var item = list[i];
+    var item = list.slice(i, i + 1).pop();
     var card = document.createElement('div');
     card.className = 'product-card';
     card.innerHTML =
       '<div>' +
         '<div class="card-top">' +
-          '<span class="badge">' + item.b + '</span>' +
-          '<span class="sku">' + item.s + '</span>' +
+          '<span class="badge">' + (item.b || '') + '</span>' +
+          '<span class="sku">' + (item.s || '') + '</span>' +
         '</div>' +
         '<div class="p-title">' + item.t + '</div>' +
         '<div class="p-desc">' + item.d + '</div>' +
       '</div>' +
       '<div>' +
         '<div class="specs">' +
-          '<div class="spec-row"><span class="spec-k">' + item.k1 + '</span><span class="spec-v">' + item.v1 + '</span></div>' +
-          '<div class="spec-row"><span class="spec-k">' + item.k2 + '</span><span class="spec-v">' + item.v2 + '</span></div>' +
+          '<div class="spec-row"><span class="spec-k">' + (item.k1 || '') + '</span><span class="spec-v">' + (item.v1 || '') + '</span></div>' +
+          '<div class="spec-row"><span class="spec-k">' + (item.k2 || '') + '</span><span class="spec-v">' + (item.v2 || '') + '</span></div>' +
         '</div>' +
         '<div class="card-foot">' +
           '<span class="price">' + item.p + ' π</span>' +
@@ -240,7 +157,7 @@ function renderProducts(list) {
 
 function openSearchDropdown() {
   var q = document.getElementById('search-input').value.trim().toLowerCase();
-  var dropdown = document.getElementById('search-dropdown');
+    var dropdown = document.getElementById('search-dropdown');
   var matches = q ? getMatches(q) : db.slice(0, 25);
 
   if (matches.length === 0) {
@@ -254,11 +171,11 @@ function openSearchDropdown() {
     '</div>';
 
   for (var i = 0; i < matches.length; i++) {
-    var m = matches[i];
+    var m = matches.slice(i, i + 1).pop();
     html += '<div class="dropdown-item" onclick="selectSingleItem(\'' + m.s + '\')">' +
       '<div class="dropdown-info">' +
         '<span class="dropdown-title">' + m.t + '</span>' +
-        '<span class="dropdown-sub">' + m.b + ' | كود: ' + m.s + ' | ' + m.v1 + '</span>' +
+        '<span class="dropdown-sub">' + m.b + ' | كود: ' + m.s + ' | ' + (m.v1 || '') + '</span>' +
       '</div>' +
       '<span class="dropdown-price">' + m.p + ' π</span>' +
     '</div>';
@@ -281,10 +198,11 @@ function executeFullSearch() {
 
 function selectSingleItem(sku) {
   for (var i = 0; i < db.length; i++) {
-    if (db[i].s === sku) {
-      document.getElementById('search-input').value = db[i].t;
+    var item = db.slice(i, i + 1).pop();
+    if (item.s === sku) {
+      document.getElementById('search-input').value = item.t;
       document.getElementById('search-dropdown').style.display = 'none';
-      renderProducts([db[i]]);
+      renderProducts(new Array(item));
       break;
     }
   }
@@ -293,7 +211,7 @@ function selectSingleItem(sku) {
 function filterProducts(cat, btn) {
   var btns = document.querySelectorAll('.filter-btn');
   for (var i = 0; i < btns.length; i++) {
-    btns[i].classList.remove('active');
+    btns.item(i).classList.remove('active');
   }
   btn.classList.add('active');
   document.getElementById('search-dropdown').style.display = 'none';
@@ -302,7 +220,8 @@ function filterProducts(cat, btn) {
   } else {
     var filtered = [];
     for (var j = 0; j < db.length; j++) {
-      if (db[j].c === cat) filtered.push(db[j]);
+      var item = db.slice(j, j + 1).pop();
+      if (item.c === cat) filtered.push(item);
     }
     renderProducts(filtered);
   }
@@ -315,20 +234,24 @@ document.addEventListener('click', function(e) {
 });
 
 function loginWithPi() {
-  if (window.Pi) {
+  if (typeof authenticateUser === 'function') {
+    authenticateUser();
+  } else if (window.Pi) {
     Pi.init({ version: "2.0" });
-    Pi.authenticate(['payments'], function(payment) {}).then(function(auth) {
+    Pi.authenticate(new Array('payments'), function(payment) {}).then(function(auth) {
       document.getElementById('auth-btn').innerText = 'مرحباً: ' + auth.user.username;
     }).catch(function(err) {
       alert('افتح المتجر من داخل متصفح Pi Browser لتسجيل الدخول.');
     });
-  } else {
-    alert('يرجى فتح الرابط من داخل تطبيق Pi Browser لتسجيل الدخول بالمحفظة.');
   }
 }
 
 function buyNow(title, amount, sku) {
-  if (window.Pi) {
+  if (typeof createPiPayment === 'function') {
+    createPiPayment(amount, title, sku);
+  } else if (typeof buyProduct === 'function') {
+    buyProduct(title, amount, sku);
+  } else if (window.Pi) {
     Pi.init({ version: "2.0" });
     Pi.createPayment({
       amount: amount,
@@ -340,10 +263,11 @@ function buyNow(title, amount, sku) {
       onCancel: function(paymentId) {},
       onError: function(error, payment) { alert('افتح المتجر من داخل متصفح Pi Browser لإتمام الدفع.'); }
     });
-  } else {
-    alert('يرجى فتح الرابط من داخل تطبيق Pi Browser لإتمام الشراء بعملة Pi.');
   }
 }
+
+document.getElementById('total-badge').innerText = 'إجمالي الموسوعة: ' + db.length + ' معدة ومقاس هندسي جاهز';
+renderProducts(db);
 </script>
 </body>
 </html>
