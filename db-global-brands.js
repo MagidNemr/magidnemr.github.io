@@ -1,6 +1,6 @@
 window.storeDatabase = window.storeDatabase || [];
 
-// 1. تشكيلة شنايدر إلكتريك الشاملة (Schneider Electric)
+// 1. منتجات شنايدر إلكتريك (Schneider Electric)
 window.storeDatabase.push(
   { c: 'power', brand: 'schneider', b: 'شنايدر Schneider', s: 'LC1D-09M7', t: 'كونتاكتور شنايدر TeSys D قدرة 9 أمبير بوبينة 220V (LC1D09M7)', d: 'كونتاكتور صناعي أصلي للتحكم في المحركات الصغيرة ودوائر الكنترول.', k1: 'الماركة:', v1: 'Schneider Electric', k2: 'التيار:', v2: '9A AC-3 (4kW)', p: 16 },
   { c: 'power', brand: 'schneider', b: 'شنايدر Schneider', s: 'LC1D-18M7', t: 'كونتاكتور شنايدر TeSys D قدرة 18 أمبير بوبينة 220V (LC1D18M7)', d: 'كونتاكتور صناعي للخدمة الشاقة للمحركات والأحمال الصناعية.', k1: 'الماركة:', v1: 'Schneider Electric', k2: 'التيار:', v2: '18A AC-3 (7.5kW)', p: 20 },
@@ -17,7 +17,7 @@ window.storeDatabase.push(
   { c: 'auto', brand: 'schneider', b: 'شنايدر Schneider', s: 'TM221-CE16R', t: 'وحدة PLC شنايدر Modicon M221 16 نقطة مع منفذ Ethernet', d: 'وحدة تحكم مبرمجة سريعة للماكينات وخطوط التعبئة والتغليف.', k1: 'الماركة:', v1: 'Schneider Modicon', k2: 'الاتصال:', v2: 'Ethernet + RS485', p: 155 }
 );
 
-// 2. تشكيلة سيمنس الألمانية الشاملة (Siemens)
+// 2. منتجات سيمنس الألمانية (Siemens)
 window.storeDatabase.push(
   { c: 'auto', brand: 'siemens', b: 'سيمنس Siemens', s: '6ES7-214-1AG40', t: 'وحدة تحكم سيمنس الأصلية SIMATIC S7-1200 CPU 1214C DC/DC/DC', d: 'وحدة PLC ألمانية قياسية للأتمتة الصناعية مع منفذ PROFINET مدمج.', k1: 'الماركة:', v1: 'Siemens Germany', k2: 'النقاط:', v2: '14 DI / 10 DO / 2 AI', p: 245 },
   { c: 'auto', brand: 'siemens', b: 'سيمنس Siemens', s: '6ES7-212-1AE40', t: 'وحدة تحكم سيمنس SIMATIC S7-1200 CPU 1212C للماكينات المتوسطة', d: 'وحدة PLC مدمجة عالية الأداء تدعم التوسعة بالمداخل والمخارج.', k1: 'الماركة:', v1: 'Siemens Germany', k2: 'النقاط:', v2: '8 DI / 6 DO / 2 AI', p: 185 },
@@ -30,7 +30,7 @@ window.storeDatabase.push(
   { c: 'auto', brand: 'siemens', b: 'سيمنس Siemens', s: '6SL3210-G120C-11KW', t: 'إنفرتر سيمنس SINAMICS G120C قدرة 11 كيلووات (15 حصان) PROFINET', d: 'درايف صناعي متطور للتحكم الدقيق في السرعة والعزم.', k1: 'الماركة:', v1: 'Siemens SINAMICS', k2: 'القدرة:', v2: '11 kW (15 HP)', p: 380 }
 );
 
-// 3. تشكيلة إيه بي بي الشاملة (ABB)
+// 3. منتجات إيه بي بي (ABB)
 window.storeDatabase.push(
   { c: 'power', brand: 'abb', b: 'إيه بي بي ABB', s: 'AF16-30-10-13', t: 'كونتاكتور ABB سلسلة AF قدرة 16 أمبير بوبينة إلكترونية 100-250V', d: 'كونتاكتور ببوبينة إلكترونية واسعة الجهد تمنع الاحتراق عند تذبذب الكهرباء.', k1: 'الماركة:', v1: 'ABB Switzerland', k2: 'التيار:', v2: '16A AC-3 (7.5kW)', p: 21 },
   { c: 'power', brand: 'abb', b: 'إيه بي بي ABB', s: 'AF26-30-00-13', t: 'كونتاكتور ABB سلسلة AF قدرة 26 أمبير بوبينة إلكترونية 100-250V AC/DC', d: 'كونتاكتور مزود بملف إلكتروني يتحمل تذبذب الجهد بدون طنين.', k1: 'الماركة:', v1: 'ABB Switzerland', k2: 'جهد البوبينة:', v2: '100-250V AC/DC', p: 27 },
@@ -43,6 +43,7 @@ window.storeDatabase.push(
   { c: 'power', brand: 'abb', b: 'إيه بي بي ABB', s: 'PSR-45-600-70', t: 'سوفت ستارتر ABB سلسلة PSR قدرة 22 كيلووات (45 أمبير) 3 فاز', d: 'جهاز بدء ناعم مدمج للمحركات والمضخات والضواغط.', k1: 'الماركة:', v1: 'ABB Softstarters', k2: 'القدرة:', v2: '22 kW / 45A', p: 175 }
 );
 
-// 4. تشكيلة السويدي إلكتريك الشاملة (Elsewedy Electric)
+// 4. منتجات السويدي إلكتريك (Elsewedy Electric)
 window.storeDatabase.push(
   { c: 'cables', brand: 'elsewedy', b: 'السويدي Elsewedy', s: 'SWD-WIRE-1.5MM', t: 'لفة سلك السويدي الأصلي 100 متر مقطع 1.5 مم نحاس معزول PVC (للإنارة)', d: 'سلك تأسيس نحاس أحمر نقي 99.9% معتمد ومختوم بعلامة السويدي إلكتريك.', k1: 'الماركة:', v1: 'Elsewedy Electric', k2: 'المقطع والطول:', v2: '1.5 mm² × 100m', p: 10 },
+  { c: 'cables', brand: 'elsewedy', b: 'السويدي Elsewedy', s: 'SWD-WIRE-2MM', t: 'لفة سلك السويدي الأصلي 100 متر مقطع 2 مم نحاس معزول PVC', d: 'سلك تأسيس نحاس معتمد للإنارة والبرايز الخفيفة.', k1: 'الماركة:', v1: 'Elsewedy Electric', k2: 'المقطع والطول:', v2: '2.0 mm² × 100m', p: 13 },
