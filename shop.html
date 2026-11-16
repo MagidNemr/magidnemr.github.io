@@ -30,9 +30,14 @@
   .dropdown-header { padding: 10px 15px; background: #1e1b4b; color: #fbbf24; font-size: 12.5px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
   .dropdown-item { padding: 10px 15px; border-bottom: 1px solid #1e2538; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
   .dropdown-item:hover { background: #1f1438; }
-  .filter-bar { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; }
-  .filter-btn { background: #111625; color: #94a3b8; border: 1px solid #1e2538; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 12.5px; white-space: nowrap; }
-  .filter-btn.active { background: #fbbf24; color: #000; font-weight: bold; }
+  .filter-label { font-size: 13px; color: #fbbf24; margin: 14px 0 8px; font-weight: bold; }
+  .filter-bar { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-start; margin-bottom: 10px; }
+  .filter-btn { background: #161e31; color: #e2e8f0; border: 1px solid #2d3a54; padding: 8px 15px; border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: 600; transition: 0.2s; }
+  .filter-btn:hover { border-color: #fbbf24; background: #1e293b; }
+  .filter-btn.active { background: linear-gradient(135deg, #f59e0b, #d97706); color: #000; font-weight: bold; border-color: #fbbf24; }
+  .brand-btn { background: #1a1333; color: #e9d5ff; border: 1px solid #581c87; padding: 8px 16px; border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: bold; transition: 0.2s; }
+  .brand-btn:hover { border-color: #a855f7; background: #261a4a; }
+  .brand-btn.active { background: linear-gradient(135deg, #9333ea, #6b21a8); color: #fff; border-color: #c084fc; }
   .container { max-width: 1200px; margin: 15px auto 30px; padding: 0 15px; }
   .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(275px, 1fr)); gap: 16px; }
   .product-card { background: #111625; border-radius: 16px; padding: 16px; border: 1px solid #1e2538; display: flex; flex-direction: column; justify-content: space-between; }
