@@ -14,6 +14,9 @@
   .brand-box h1 { font-size: 19px; color: #fbbf24; }
   .brand-box span { font-size: 11px; color: #94a3b8; display: block; }
   .btn-auth { background: linear-gradient(135deg, #f59e0b, #b45309); color: #000; border: none; padding: 8px 14px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+ .top-actions { display: flex; gap: 8px; align-items: center; }
+  .btn-back-app { background: #1e293b; color: #fff; border: 1px solid #475569; padding: 8px 13px; border-radius: 8px; font-weight: bold; font-size: 12.5px; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; transition: 0.2s; }
+  .btn-back-app:hover { background: #334155; border-color: #fbbf24; }
   .hero { max-width: 1200px; margin: 18px auto; padding: 0 15px; }
   .hero-card { background: linear-gradient(135deg, #241042 0%, #120b24 100%); border: 1px solid #3b1d6e; border-radius: 18px; padding: 24px 20px; }
   .hero-card h2 { font-size: 24px; color: #fff; margin: 6px 0 10px; }
@@ -59,7 +62,10 @@
     <div class="brand-icon">⚡</div>
     <div><h1>Magid Shop</h1><span>الكهرباء • الطاقة • الضغط العالي</span></div>
   </div>
-  <button id="auth-btn" class="btn-auth" onclick="loginWithPi()">دخول محفظة Pi</button>
+  <div class="top-actions">
+    <a href="index.html" class="btn-back-app">⬅ العودة للتطبيق</a>
+    <button id="auth-btn" class="btn-auth" onclick="loginWithPi()">دخول محفظة Pi</button>
+  </div>
 </div>
 
 <div id="view-shop" class="view-section active">
