@@ -199,28 +199,42 @@ function searchDB(q) {
   return db.filter(x => (x.t && x.t.toLowerCase().includes(q)) || (x.s && x.s.toLowerCase().includes(q)) || (x.b && x.b.toLowerCase().includes(q)));
 }
 function getProductVisual(item) {
-  var title = (item.t || '') + ' ' + (item.b || '');
-  var imgUrl = item.img || '';
-
-  if (!imgUrl) {
-    if (title.indexOf('كونتاكتور') !== -1 || title.indexOf('قاطع') !== -1 || title.indexOf('MCB') !== -1 || title.indexOf('MCCB') !== -1) {
-      imgUrl = 'https://unsplash.com';
-    } else if (title.indexOf('كابل') !== -1 || title.indexOf('سلك') !== -1) {
-      imgUrl = 'https://unsplash.com';
-    } else if (title.indexOf('محول') !== -1 || title.indexOf('مولد') !== -1) {
-      imgUrl = 'https://unsplash.com';
-    } else if (title.indexOf('إنفرتر') !== -1 || title.indexOf('PLC') !== -1 || title.indexOf('شاشة') !== -1 || title.indexOf('لوحة') !== -1) {
-      imgUrl = 'https://unsplash.com';
-    } else if (title.indexOf('محرك') !== -1 || title.indexOf('طلمبة') !== -1) {
-      imgUrl = 'https://unsplash.com';
-    } else if (title.indexOf('شمسي') !== -1 || title.indexOf('بطارية') !== -1) {
-      imgUrl = 'https://unsplash.com';
-    } else if (title.indexOf('قياس') !== -1 || title.indexOf('ميجر') !== -1 || title.indexOf('بنسة') !== -1 || title.indexOf('كاميرا') !== -1) {
-      imgUrl = 'https://unsplash.com';
-    } else {
-      imgUrl = 'https://unsplash.com';
-    }
+  if (item.img) {
+    return `<div class="p-img-box"><img src="${item.img}" alt="${item.t}"><span class="p-model-tag">${item.s || ''}</span></div>`;
   }
+
+  var title = (item.t || '') + ' ' + (item.b || '');
+  var prompt = 'industrial electrical equipment product photography studio lighting';
+
+  if (title.indexOf('كونتاكتور') !== -1) {
+    prompt = 'industrial 3 phase electrical contactor relay switch on white background studio photo';
+  } else if (title.indexOf('ليمت سويتش') !== -1 || title.indexOf('Limit') !== -1) {
+    prompt = 'industrial limit switch roller lever microswitch electrical component photo';
+  } else if (title.indexOf('قاطع') !== -1 || title.indexOf('MCB') !== -1 || title.indexOf('MCCB') !== -1) {
+    prompt = 'electrical circuit breaker mcb mccb din rail switch studio product photo';
+  } else if (title.indexOf('كابل') !== -1 || title.indexOf('سلك') !== -1) {
+    prompt = 'armored copper electrical power cable xlpe wires roll industrial photo';
+  } else if (title.indexOf('محول') !== -1) {
+    prompt = 'high voltage electrical power distribution transformer substation photo';
+  } else if (title.indexOf('مولد') !== -1) {
+    prompt = 'silent diesel electric power generator canopy industrial equipment photo';
+  } else if (title.indexOf('إنفرتر') !== -1 || title.indexOf('PLC') !== -1 || title.indexOf('شاشة') !== -1) {
+    prompt = 'industrial plc controller vfd frequency inverter automation panel photo';
+  } else if (title.indexOf('محرك') !== -1 || title.indexOf('طلمبة') !== -1) {
+    prompt = 'three phase electric induction motor industrial pump blue metal photo';
+  } else if (title.indexOf('شمسي') !== -1 || title.indexOf('بطارية') !== -1) {
+    prompt = 'solar photovoltaic panel lithium battery inverter renewable energy photo';
+  } else if (title.indexOf('بوش بوتن') !== -1 || title.indexOf('سلكتور') !== -1 || title.indexOf('لمبة') !== -1) {
+    prompt = 'industrial push button switch emergency stop selector pilot light photo';
+  } else if (title.indexOf('قياس') !== -1 || title.indexOf('ميجر') !== -1 || title.indexOf('بنسة') !== -1) {
+    prompt = 'digital clamp multimeter insulation tester electrical measurement tool photo';
+  }
+
+  var aiUrl = 'https://pollinations.ai' + encodeURIComponent(prompt) + '?width=400&height=260&nologo=true';
+  var fallbackSvg = "data:image/svg+xml;utf8,<svg xmlns='http://w3.org' width='400' height='260' viewBox='0 0 400 260'><rect width='400' height='260' fill='%230f172a'/><text x='200' y='125' fill='%23fbbf24' font-family='sans-serif' font-size='22' font-weight='bold' text-anchor='middle'>" + encodeURIComponent(item.s || 'SMART TECH') + "</text><text x='200' y='155' fill='%2394a3b8' font-family='sans-serif' font-size='14' text-anchor='middle'>معدات كهرباء وطاقة</text></svg>";
+
+  return `<div class="p-img-box"><img src="${aiUrl}" alt="${item.t}" loading="lazy" onerror="this.onerror=null;this.src='${fallbackSvg}';"><span class="p-model-tag">${item.s || ''}</span></div>`;
+}
 
   return `<div class="p-img-box"><img src="${imgUrl}" alt="${item.t}" loading="lazy"><span class="p-model-tag">${item.s || ''}</span></div>`;
 }
