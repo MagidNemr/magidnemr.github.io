@@ -85,6 +85,7 @@
       <div id="search-dropdown" class="search-dropdown"></div>
     </div>
 
+    <div class="filter-label">📂 تصفية حسب نوع المعدات:</div>
     <div class="filter-bar">
       <button class="filter-btn active" onclick="filterCat('all', this)">الكل</button>
       <button class="filter-btn" onclick="filterCat('power', this)">الباور والكونتاكتورات</button>
@@ -94,8 +95,17 @@
       <button class="filter-btn" onclick="filterCat('motors', this)">المحركات والمضخات</button>
       <button class="filter-btn" onclick="filterCat('solar', this)">الطاقة الشمسية</button>
       <button class="filter-btn" onclick="filterCat('panels', this)">اللوحات والتأريض والإنارة</button>
-      <button class="filter-btn" onclick="filterCat('home', this)">القواطع المنزلية</button>
+      <button class="filter-btn" onclick="filterCat('home', this)">القواطع والمنازل</button>
       <button class="filter-btn" onclick="filterCat('tools', this)">أجهزة القياس والعدد</button>
+    </div>
+
+    <div class="filter-label">🏷️ تصفية حسب الماركة التجارية (اضغط لعرض كل منتجات الماركة):</div>
+    <div class="filter-bar">
+      <button class="brand-btn active" onclick="filterBrand('all', this)">جميع الماركات</button>
+      <button class="brand-btn" onclick="filterBrand('schneider', this)">⚡ شنايدر Schneider</button>
+      <button class="brand-btn" onclick="filterBrand('siemens', this)">⚙️ سيمنس Siemens</button>
+      <button class="brand-btn" onclick="filterBrand('abb', this)">🔌 إيه بي بي ABB</button>
+      <button class="brand-btn" onclick="filterBrand('elsewedy', this)">🇪🇬 السويدي Elsewedy</button>
     </div>
   </div>
 
@@ -145,7 +155,7 @@
  <script src="db-wiring-accessories.js?v=6"></script>
  <script src="db-smart-home.js?v=6"></script>
  <script src="db-generators-ups.js?v=7"></script>
- <script src="db-global-brands.js?v=7"></script>
+ <script src="db-global-brands.js?v=8"></script>
 <script src="pi-payments.js?v=6"></script>
 
 <script>
@@ -157,6 +167,17 @@ function switchTab(name, btn) {
   document.getElementById('view-' + name).classList.add('active');
   document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
   if(btn) btn.classList.add('active');
+}
+ function filterBrand(brandName, btn) {
+  document.querySelectorAll('.brand-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('search-dropdown').style.display = 'none';
+  if (brandName === 'all') {
+    render(db);
+  } else {
+    render(db.filter(x => x.brand === brandName || (x.b && x.b.toLowerCase().includes(brandName))));
+  }
 }
 
 function searchDB(q) {
