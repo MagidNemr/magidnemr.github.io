@@ -72,3 +72,162 @@
 </style>
 </head>
 <body>
+<script>window.storeDatabase = window.storeDatabase || [];</script>
+<script src="db-power.js?v=4"></script>
+<script src="db-cables.js?v=4"></script>
+<script src="db-transformers-mv.js?v=4"></script>
+<script src="db-auto.js?v=4"></script>
+<script src="db-motors-pumps.js?v=4"></script>
+<script src="db-solar.js?v=4"></script>
+<script src="db-panels-lighting.js?v=4"></script>
+<script src="db-home-tools.js?v=4"></script>
+<script src="pi-payments.js?v=4"></script>
+
+<script>
+var db = window.storeDatabase || [];
+var cart = new Array();
+var orders = new Array();
+
+function switchView(viewName, btn) {
+  var views = document.querySelectorAll('.view-section');
+  for (var i = 0; i < views.length; i++) views.item(i).classList.remove('active');
+  document.getElementById('view-' + viewName).classList.add('active');
+  var tabs = document.querySelectorAll('.nav-tab');
+  for (var j = 0; j < tabs.length; j++) tabs.item(j).classList.remove('active');
+  if (btn) btn.classList.add('active');
+}
+
+function getMatches(q) {
+  var res = new Array();
+  for (var i = 0; i < db.length; i++) {
+    var item = db.slice(i, i + 1).pop();
+    if ((item.t && item.t.toLowerCase().indexOf(q) !== -1) ||
+        (item.s && item.s.toLowerCase().indexOf(q) !== -1) ||
+        (item.b && item.b.toLowerCase().indexOf(q) !== -1) ||
+        (item.d && item.d.toLowerCase().indexOf(q) !== -1) ||
+        (item.v1 && item.v1.toLowerCase().indexOf(q) !== -1)) {
+      res.push(item);
+    }
+  }
+  return res;
+}
+
+function renderProducts(list) {
+  var grid = document.getElementById('products-grid');
+  document.getElementById('showing-count').innerText = list.length + ' منتج ومقاس';
+  grid.innerHTML = '';
+  if (list.length === 0) {
+    grid.innerHTML = '<p style="text-align:center; grid-column:1/-1; color:#94a3b8; padding:30px;">لا توجد معدات مطابقة لعبارة البحث.</p>';
+    return;
+  }
+  for (var i = 0; i < list.length; i++) {
+    var item = list.slice(i, i + 1).pop();
+    var card = document.createElement('div');
+    card.className = 'product-card';
+    card.innerHTML =
+      '<div><div class="card-top"><span class="badge">' + (item.b || '') + '</span><span class="sku">' + (item.s || '') + '</span></div>' +
+      '<div class="p-title">' + item.t + '</div><div class="p-desc">' + item.d + '</div></div>' +
+      '<div><div class="specs"><div class="spec-row"><span class="spec-k">' + (item.k1 || '') + '</span><span class="spec-v">' + (item.v1 || '') + '</span></div>' +
+      '<div class="spec-row"><span class="spec-k">' + (item.k2 || '') + '</span><span class="spec-v">' + (item.v2 || '') + '</span></div></div>' +
+      '<div class="card-foot"><span class="price">' + item.p + ' π</span><div class="card-btns">' +
+      '<button class="btn-cart-add" onclick="addToCart(\'' + item.s + '\')">+ السلة</button>' +
+      '<button class="btn-buy" onclick="buyNow(\'' + item.t.replace(/'/g, "\\'") + '\', ' + item.p + ', \'' + item.s + '\')">شراء</button></div></div></div>';
+    grid.appendChild(card);
+  }
+}
+
+function addToCart(sku) {
+  for (var i = 0; i < db.length; i++) {
+    var item = db.slice(i, i + 1).pop();
+    if (item.s === sku) { cart.push(item); updateCartUI(); break; }
+  }
+}
+
+function removeFromCart(index) { cart.splice(index, 1); updateCartUI(); }
+
+function updateCartUI() {
+  document.getElementById('cart-count').innerText = cart.length;
+  var listEl = document.getElementById('cart-items-list');
+  var footerEl = document.getElementById('cart-footer');
+  if (cart.length === 0) { listEl.innerHTML = '<p style="color:#94a3b8;">السلة فارغة حالياً.</p>'; footerEl.style.display = 'none'; return; }
+  var html = ''; var total = 0;
+  for (var i = 0; i < cart.length; i++) {
+    var item = cart.slice(i, i + 1).pop();
+    total += Number(item.p);
+    html += '<div class="cart-item"><div><strong style="color:#fff; font-size:13.5px;">' + item.t + '</strong><br><small style="color:#fbbf24;">' + item.p + ' π</small></div><button class="btn-del" onclick="removeFromCart(' + i + ')">حذف</button></div>';
+  }
+  listEl.innerHTML = html;
+  document.getElementById('cart-total-price').innerText = total + ' π';
+  footerEl.style.display = 'block';
+}
+
+function checkoutCart() {
+  var total = 0;
+  for (var i = 0; i < cart.length; i++) total += Number(cart.slice(i, i + 1).pop().p);
+  buyNow('طلب مجمع (' + cart.length + ' منتجات)', total, 'CART-' + Date.now());
+}
+
+function openSearchDropdown() {
+  var q = document.getElementById('search-input').value.trim().toLowerCase();
+  var dropdown = document.getElementById('search-dropdown');
+  var matches = q ? getMatches(q) : db.slice(0, 25);
+  if (matches.length === 0) { dropdown.innerHTML = '<div class="dropdown-header">لا توجد نتائج مطابقة</div>'; dropdown.style.display = 'block'; return; }
+  var html = '<div class="dropdown-header"><span>' + (q ? 'المطابق (' + matches.length + ' نوع):' : 'المعدات المتاحة (' + db.length + '):') + '</span><button class="btn-show-all-drop" onclick="executeFullSearch()">عرض الكل</button></div>';
+  for (var i = 0; i < matches.length; i++) {
+    var m = matches.slice(i, i + 1).pop();
+    html += '<div class="dropdown-item" onclick="selectSingleItem(\'' + m.s + '\')"><div><span class="dropdown-title">' + m.t + '</span><span class="dropdown-sub">' + m.b + ' | ' + m.s + '</span></div><span class="dropdown-price">' + m.p + ' π</span></div>';
+  }
+  dropdown.innerHTML = html;
+  dropdown.style.display = 'block';
+}
+
+function executeFullSearch() {
+  var q = document.getElementById('search-input').value.trim().toLowerCase();
+  document.getElementById('search-dropdown').style.display = 'none';
+  renderProducts(q ? getMatches(q) : db);
+}
+
+function selectSingleItem(sku) {
+  for (var i = 0; i < db.length; i++) {
+    var item = db.slice(i, i + 1).pop();
+    if (item.s === sku) { document.getElementById('search-input').value = item.t; document.getElementById('search-dropdown').style.display = 'none'; renderProducts(new Array(item)); break; }
+  }
+}
+
+function filterProducts(cat, btn) {
+  var btns = document.querySelectorAll('.filter-btn');
+  for (var i = 0; i < btns.length; i++) btns.item(i).classList.remove('active');
+  btn.classList.add('active');
+  document.getElementById('search-dropdown').style.display = 'none';
+  if (cat === 'all') { renderProducts(db); } else {
+    var filtered = new Array();
+    for (var j = 0; j < db.length; j++) { var item = db.slice(j, j + 1).pop(); if (item.c === cat) filtered.push(item); }
+    renderProducts(filtered);
+  }
+}
+
+document.addEventListener('click', function(e) { if (!e.target.closest('.search-wrapper')) document.getElementById('search-dropdown').style.display = 'none'; });
+
+function loginWithPi() {
+  if (typeof authenticateUser === 'function') { authenticateUser(); } else if (window.Pi) {
+    Pi.init({ version: "2.0" });
+    Pi.authenticate(new Array('payments'), function(p) {}).then(function(auth) { document.getElementById('auth-btn').innerText = 'مرحباً: ' + auth.user.username; }).catch(function() { alert('افتح المتجر من داخل Pi Browser لتسجيل الدخول.'); });
+  }
+}
+
+function buyNow(title, amount, sku) {
+  orders.push({ title: title, amount: amount, date: new Date().toLocaleTimeString('ar-EG') });
+  var ordHtml = '';
+  for (var i = 0; i < orders.length; i++) { var o = orders.slice(i, i + 1).pop(); ordHtml += '<div class="cart-item"><div><strong style="color:#fff;">' + o.title + '</strong><br><small style="color:#94a3b8;">' + o.date + '</small></div><span style="color:#fbbf24; font-weight:bold;">' + o.amount + ' π</span></div>'; }
+  document.getElementById('orders-list').innerHTML = ordHtml;
+  if (typeof createPiPayment === 'function') { createPiPayment(amount, title, sku); } else if (typeof buyProduct === 'function') { buyProduct(title, amount, sku); } else if (window.Pi) {
+    Pi.init({ version: "2.0" });
+    Pi.createPayment({ amount: amount, memo: 'شراء ' + title, metadata: { sku: sku } }, { onReadyForServerApproval: function() {}, onReadyForServerCompletion: function() { alert('تم الدفع بنجاح!'); }, onCancel: function() {}, onError: function() { alert('افتح المتجر من Pi Browser لإتمام الدفع.'); } });
+  }
+}
+
+document.getElementById('total-badge').innerText = 'متاح ' + db.length + ' معدة ومقاس';
+renderProducts(db);
+</script>
+</body>
+</html>
