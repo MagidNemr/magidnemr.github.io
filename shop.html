@@ -184,6 +184,7 @@
 </div>
 <script>window.storeDatabase = window.storeDatabase || [];</script>
 <script src="db-power.js?v=6"></script>
+ <script src="db-mega-catalog.js"></script>
 <script src="db-cables.js?v=6"></script>
 <script src="db-transformers-mv.js?v=6"></script>
 <script src="db-auto.js?v=6"></script>
@@ -226,16 +227,7 @@ function searchDB(q) {
   return db.filter(x => (x.t && x.t.toLowerCase().includes(q)) || (x.s && x.s.toLowerCase().includes(q)) || (x.b && x.b.toLowerCase().includes(q)));
 }
 // 1. دالة جلب الصورة الأصلية للموديل تلقائياً
-function getProductVisual(item) {
-  var modelCode = encodeURIComponent((item.b || '') + ' ' + (item.s || '') + ' ' + (item.t || '').split('(')[0]);
-  // استخدام محرك بحث الصور لجلب صورة المنتج الحقيقية بناءً على كود الموديل
-  var realImgUrl = "https://bing.net" + modelCode + "&w=250&h=250&c=7&rs=1&p=0";
 
-  return `<div class="p-img-box" style="background:#ffffff; border-radius:8px; padding:6px; display:flex; justify-content:center; align-items:center; height:120px; overflow:hidden;">
-    <img src="${realImgUrl}" alt="${item.t}" loading="lazy" style="max-height:100%; max-width:100%; object-fit:contain;" 
-         onerror="this.onerror=null; this.src='https://bing.net';">
-  </div>`;
-}
 
 // 2. دالة فتح المواصفات وتشغيل رابط الـ PDF بشكل مضمون
 function openProductSpecs(sku) {
