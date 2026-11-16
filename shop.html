@@ -227,35 +227,23 @@ function searchDB(q) {
 }
 function getProductVisual(item) {
   var title = ((item.t || '') + ' ' + (item.b || '') + ' ' + (item.c || '')).toLowerCase();
-  var imgUrl = item.img || '';
+  var svgIcon = '';
 
-  if (!imgUrl) {
-    if (title.indexOf('كونتاكتور') !== -1 || title.indexOf('contactor') !== -1) {
-      imgUrl = 'https://wikimedia.org';
-    } else if (title.indexOf('ليمت') !== -1 || title.indexOf('حساس') !== -1 || title.indexOf('sensor') !== -1) {
-      imgUrl = 'https://wikimedia.org';
-    } else if (title.indexOf('فوتوسيل') !== -1 || title.indexOf('خلية') !== -1) {
-      imgUrl = 'https://wikimedia.org';
-    } else if (title.indexOf('قاطع') !== -1 || title.indexOf('mcb') !== -1 || title.indexOf('mccb') !== -1) {
-      imgUrl = 'https://wikimedia.org';
-    } else if (title.indexOf('كابل') !== -1 || title.indexOf('سلك') !== -1 || title.indexOf('cable') !== -1) {
-      imgUrl = 'https://wikimedia.org';
-    } else if (title.indexOf('محول') !== -1 || title.indexOf('ترانس') !== -1 || title.indexOf('transformer') !== -1) {
-      imgUrl = 'https://wikimedia.org';
-    } else if (title.indexOf('انفرتر') !== -1 || title.indexOf('إنفرتر') !== -1 || title.indexOf('plc') !== -1) {
-      imgUrl = 'https://wikimedia.org';
-    } else if (title.indexOf('موتور') !== -1 || title.indexOf('محرك') !== -1 || title.indexOf('طلمبة') !== -1) {
-      imgUrl = 'https://wikimedia.org';
-    } else if (title.indexOf('شمسي') !== -1 || title.indexOf('طاقة') !== -1 || title.indexOf('solar') !== -1) {
-      imgUrl = 'https://wikimedia.org';
-    } else {
-      imgUrl = 'https://wikimedia.org';
-    }
+  if (title.indexOf('كونتاكتور') !== -1 || title.indexOf('contactor') !== -1) {
+    svgIcon = '<svg width="75" height="75" viewBox="0 0 64 64" fill="none"><rect x="14" y="8" width="36" height="48" rx="4" fill="#1e293b" stroke="#3b82f6" stroke-width="2.5"/><circle cx="22" cy="15" r="2.5" fill="#94a3b8"/><circle cx="32" cy="15" r="2.5" fill="#94a3b8"/><circle cx="42" cy="15" r="2.5" fill="#94a3b8"/><rect x="20" y="24" width="24" height="16" rx="2" fill="#3b82f6"/><circle cx="22" cy="49" r="2.5" fill="#94a3b8"/><circle cx="32" cy="49" r="2.5" fill="#94a3b8"/><circle cx="42" cy="49" r="2.5" fill="#94a3b8"/></svg>';
+  } else if (title.indexOf('ليمت') !== -1 || title.indexOf('حساس') !== -1 || title.indexOf('sensor') !== -1 || title.indexOf('فوتوسيل') !== -1) {
+    svgIcon = '<svg width="75" height="75" viewBox="0 0 64 64" fill="none"><rect x="22" y="22" width="20" height="32" rx="3" fill="#f59e0b" stroke="#b45309" stroke-width="2"/><path d="M32 22V10L44 14" stroke="#64748b" stroke-width="3" stroke-linecap="round"/><circle cx="44" cy="14" r="3" fill="#ef4444"/><rect x="28" y="54" width="8" height="6" fill="#475569"/></svg>';
+  } else if (title.indexOf('كابل') !== -1 || title.indexOf('سلك') !== -1 || title.indexOf('cable') !== -1) {
+    svgIcon = '<svg width="75" height="75" viewBox="0 0 64 64" fill="none"><path d="M12 48C12 24 52 40 52 16" stroke="#1e293b" stroke-width="10" stroke-linecap="round"/><path d="M12 48C12 24 52 40 52 16" stroke="#ef4444" stroke-width="4" stroke-linecap="round"/><circle cx="52" cy="16" r="3" fill="#f59e0b"/><circle cx="12" cy="48" r="3" fill="#f59e0b"/></svg>';
+  } else if (title.indexOf('محول') !== -1 || title.indexOf('ترانس') !== -1 || title.indexOf('transformer') !== -1) {
+    svgIcon = '<svg width="75" height="75" viewBox="0 0 64 64" fill="none"><rect x="14" y="16" width="36" height="36" rx="4" fill="#475569" stroke="#1e293b" stroke-width="2"/><path d="M20 16V10M32 16V10M44 16V10" stroke="#b45309" stroke-width="4"/><line x1="18" y1="26" x2="46" y2="26" stroke="#94a3b8" stroke-width="2"/><line x1="18" y1="34" x2="46" y2="34" stroke="#94a3b8" stroke-width="2"/><line x1="18" y1="42" x2="46" y2="42" stroke="#94a3b8" stroke-width="2"/></svg>';
+  } else if (title.indexOf('موتور') !== -1 || title.indexOf('محرك') !== -1 || title.indexOf('طلمبة') !== -1) {
+    svgIcon = '<svg width="75" height="75" viewBox="0 0 64 64" fill="none"><rect x="16" y="18" width="30" height="28" rx="4" fill="#0284c7" stroke="#0369a1" stroke-width="2"/><rect x="46" y="28" width="10" height="8" fill="#94a3b8"/><rect x="22" y="12" width="14" height="6" fill="#334155"/><path d="M20 46L16 52H46L42 46" fill="#334155"/></svg>';
+  } else {
+    svgIcon = '<svg width="75" height="75" viewBox="0 0 64 64" fill="none"><rect x="18" y="8" width="28" height="48" rx="3" fill="#f8fafc" stroke="#334155" stroke-width="2.5"/><rect x="25" y="24" width="14" height="12" rx="2" fill="#ef4444"/><line x1="18" y1="18" x2="46" y2="18" stroke="#cbd5e1" stroke-width="2"/><line x1="18" y1="46" x2="46" y2="46" stroke="#cbd5e1" stroke-width="2"/></svg>';
   }
 
-  return `<div class="p-img-box" style="background:#fff; border-radius:8px; padding:8px; display:flex; justify-content:center; align-items:center; height:110px; overflow:hidden;">
-    <img src="${imgUrl}" alt="${item.t}" style="max-height:100%; max-width:100%; object-fit:contain;" onerror="this.src='https://wikimedia.org'">
-  </div>`;
+  return `<div class="p-img-box" style="background:#f1f5f9; border-radius:8px; padding:8px; display:flex; justify-content:center; align-items:center; height:105px;">${svgIcon}</div>`;
 }
 function render(list) {
   var grid = document.getElementById('grid');
@@ -374,17 +362,41 @@ function openProductSpecs(sku) {
   `;
   document.getElementById('modalSpecsContent').innerHTML = details;
   
-  const catBtn = document.getElementById('modalCatalogLink');
+ function openProductSpecs(sku) {
+  var x = db.find(item => item.s === sku);
+  if (!x) return;
+
+  document.getElementById('modalTitle').innerText = x.t || "منتج كهربائي";
+  document.getElementById('modalBrand').innerText = "الماركة: " + (x.b || "عام") + " | الكود: " + x.s;
+  
+  var details = `
+    <p><strong>الوصف:</strong> ${x.d || '-'}</p>
+    <p><strong>المواصفة 1 (${x.k1 || 'القدرة'}):</strong> ${x.v1 || '-'}</p>
+    <p><strong>المواصفة 2 (${x.k2 || 'الجهد'}):</strong> ${x.v2 || '-'}</p>
+    <p><strong>القسم:</strong> ${x.c || '-'}</p>
+  `;
+  document.getElementById('modalSpecsContent').innerHTML = details;
+  
+  var brandName = (x.b || "").toLowerCase();
+  var searchUrl = "https://google.com" + encodeURIComponent((x.b || "") + " " + x.t + " " + x.s + " datasheet filetype:pdf");
+
   if (x.cat && x.cat !== "#") {
-    catBtn.href = x.cat;
-  } else {
-    catBtn.href = "https://google.com" + encodeURIComponent((x.b || "") + " " + x.t + " datasheet pdf");
+    searchUrl = x.cat;
+  } else if (brandName.indexOf('schneider') !== -1 || brandName.indexOf('شنايدر') !== -1) {
+    searchUrl = "https://se.com" + encodeURIComponent(x.s || x.t) + "/";
+  } else if (brandName.indexOf('abb') !== -1 || brandName.indexOf('اي بي بي') !== -1) {
+    searchUrl = "https://abb.com" + encodeURIComponent(x.s || x.t);
+  } else if (brandName.indexOf('siemens') !== -1 || brandName.indexOf('سيمنز') !== -1) {
+    searchUrl = "https://siemens.com" + encodeURIComponent(x.s || x.t);
+  } else if (brandName.indexOf('elsewedy') !== -1 || brandName.indexOf('السويدي') !== -1) {
+    searchUrl = "https://elsewedyelectric.com" + encodeURIComponent(x.t);
   }
+
+  const catBtn = document.getElementById('modalCatalogLink');
+  catBtn.href = searchUrl;
+  catBtn.setAttribute("target", "_blank");
   catBtn.style.display = "block";
   document.getElementById('specsModal').style.display = 'flex';
-}
-function closeSpecs() {
-  document.getElementById('specsModal').style.display = 'none';
 }
 </script>
 </body>
