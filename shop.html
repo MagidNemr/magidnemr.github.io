@@ -41,7 +41,10 @@
   .container { max-width: 1200px; margin: 15px auto 30px; padding: 0 15px; }
   .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(275px, 1fr)); gap: 16px; }
   .product-card { background: #111625; border-radius: 16px; padding: 16px; border: 1px solid #1e2538; display: flex; flex-direction: column; justify-content: space-between; }
- .p-img-box { width: 100%; height: 115px; background: linear-gradient(145deg, #0b0f19, #151c2f); border: 1px solid #1e293b; border-radius: 12px; margin-bottom: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+ .p-img-box { width: 100%; height: 150px; background: #0b0f19; border: 1px solid #1e293b; border-radius: 12px; margin-bottom: 12px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+  .p-img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
+  .product-card:hover .p-img-box img { transform: scale(1.06); }
+  .p-model-tag { position: absolute; bottom: 8px; left: 8px; background: rgba(7, 9, 16, 0.85); color: #fbbf24; font-size: 11px; padding: 3px 8px; border-radius: 6px; font-family: monospace; border: 1px solid rgba(251, 191, 36, 0.4); }
   .p-img-box img { width: 100%; height: 100%; object-fit: contain; padding: 6px; }
   .p-model-tag { position: absolute; bottom: 5px; left: 6px; background: rgba(0,0,0,0.75); color: #fbbf24; font-size: 10px; padding: 2px 7px; border-radius: 5px; font-family: monospace; border: 1px solid rgba(251,191,36,0.3); }
   .badge { padding: 3px 9px; border-radius: 8px; font-weight: bold; background: rgba(126, 34, 206, 0.25); color: #d8b4fe; font-size: 11px; }
