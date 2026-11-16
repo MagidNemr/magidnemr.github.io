@@ -226,39 +226,36 @@ function searchDB(q) {
   return db.filter(x => (x.t && x.t.toLowerCase().includes(q)) || (x.s && x.s.toLowerCase().includes(q)) || (x.b && x.b.toLowerCase().includes(q)));
 }
 function getProductVisual(item) {
-  var title = (item.t || '') + ' ' + (item.b || '');
+  var title = ((item.t || '') + ' ' + (item.b || '') + ' ' + (item.c || '')).toLowerCase();
   var imgUrl = item.img || '';
-  var svgFallback = '';
 
-  if (title.indexOf('كونتاكتور') !== -1) {
-    if (!imgUrl) imgUrl = 'https://wikimedia.org';
-    svgFallback = '<svg width="85" height="85" viewBox="0 0 80 80"><rect x="18" y="10" width="44" height="60" rx="5" fill="#1e293b" stroke="#a855f7" stroke-width="2.5"/><rect x="25" y="18" width="30" height="14" rx="2" fill="#475569"/><circle cx="28" cy="14" r="2.5" fill="#fbbf24"/><circle cx="40" cy="14" r="2.5" fill="#fbbf24"/><circle cx="52" cy="14" r="2.5" fill="#fbbf24"/><rect x="30" y="40" width="20" height="16" rx="2" fill="#7e22ce"/><text x="40" y="51" fill="#fff" font-size="8" text-anchor="middle" font-weight="bold">AC3</text></svg>';
-  } else if (title.indexOf('ليمت سويتش') !== -1 || title.indexOf('Limit') !== -1) {
-    if (!imgUrl) imgUrl = 'https://wikimedia.org';
-    svgFallback = '<svg width="85" height="85" viewBox="0 0 80 80"><rect x="26" y="30" width="28" height="40" rx="4" fill="#334155" stroke="#fbbf24" stroke-width="2.5"/><line x1="40" y1="30" x2="58" y2="12" stroke="#e2e8f0" stroke-width="3.5"/><circle cx="60" cy="11" r="6" fill="#ef4444"/><circle cx="40" cy="50" r="5" fill="#fbbf24"/></svg>';
-  } else if (title.indexOf('فوتوسيل') !== -1 || title.indexOf('حساس') !== -1) {
-    if (!imgUrl) imgUrl = 'https://wikimedia.org';
-    svgFallback = '<svg width="85" height="85" viewBox="0 0 80 80"><rect x="15" y="32" width="42" height="16" rx="3" fill="#94a3b8" stroke="#38bdf8" stroke-width="2"/><rect x="57" y="33" width="10" height="14" rx="2" fill="#f59e0b"/><path d="M68 25 Q76 40 68 55" stroke="#38bdf8" stroke-width="2" fill="none"/></svg>';
-  } else if (title.indexOf('قاطع') !== -1 || title.indexOf('MCB') !== -1 || title.indexOf('MCCB') !== -1 || title.indexOf('أوفرلود') !== -1) {
-    if (!imgUrl) imgUrl = 'https://wikimedia.org';
-    svgFallback = '<svg width="85" height="85" viewBox="0 0 80 80"><rect x="22" y="10" width="36" height="60" rx="4" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/><rect x="31" y="32" width="18" height="16" rx="2" fill="#ef4444"/><line x1="27" y1="20" x2="53" y2="20" stroke="#94a3b8" stroke-width="2"/><line x1="27" y1="60" x2="53" y2="60" stroke="#94a3b8" stroke-width="2"/></svg>';
-  } else if (title.indexOf('كابل') !== -1 || title.indexOf('سلك') !== -1) {
-    if (!imgUrl) imgUrl = 'https://wikimedia.org';
-    svgFallback = '<svg width="85" height="85" viewBox="0 0 80 80"><circle cx="40" cy="40" r="25" fill="#0f172a" stroke="#475569" stroke-width="6"/><circle cx="33" cy="33" r="6" fill="#ef4444"/><circle cx="47" cy="33" r="6" fill="#3b82f6"/><circle cx="33" cy="47" r="6" fill="#eab308"/><circle cx="47" cy="47" r="6" fill="#22c55e"/></svg>';
-  } else if (title.indexOf('محول') !== -1 || title.indexOf('مولد') !== -1) {
-    if (!imgUrl) imgUrl = 'https://wikimedia.org';
-    svgFallback = '<svg width="85" height="85" viewBox="0 0 80 80"><rect x="18" y="25" width="44" height="40" rx="4" fill="#334155" stroke="#fbbf24" stroke-width="2.5"/><line x1="28" y1="12" x2="28" y2="25" stroke="#94a3b8" stroke-width="4"/><line x1="40" y1="12" x2="40" y2="25" stroke="#94a3b8" stroke-width="4"/><line x1="52" y1="12" x2="52" y2="25" stroke="#94a3b8" stroke-width="4"/><path d="M36 35 L43 45 L37 45 L44 56" stroke="#fbbf24" stroke-width="3" fill="none"/></svg>';
-  } else if (title.indexOf('إنفرتر') !== -1 || title.indexOf('PLC') !== -1 || title.indexOf('شاشة') !== -1) {
-    if (!imgUrl) imgUrl = 'https://wikimedia.org';
-    svgFallback = '<svg width="85" height="85" viewBox="0 0 80 80"><rect x="18" y="12" width="44" height="56" rx="5" fill="#0f172a" stroke="#22c55e" stroke-width="2.5"/><rect x="25" y="20" width="30" height="18" rx="2" fill="#14532d"/><text x="40" y="32" fill="#4ade80" font-size="10" text-anchor="middle" font-family="monospace">RUN</text><circle cx="30" cy="50" r="3.5" fill="#fbbf24"/><circle cx="40" cy="50" r="3.5" fill="#38bdf8"/><circle cx="50" cy="50" r="3.5" fill="#ef4444"/></svg>';
-  } else {
-    svgFallback = '<svg width="85" height="85" viewBox="0 0 80 80"><rect x="20" y="16" width="40" height="48" rx="5" fill="#1e293b" stroke="#fbbf24" stroke-width="2.5"/><path d="M43 24 L31 41 L40 41 L36 56 L50 38 L41 38 Z" fill="#fbbf24"/></svg>';
+  if (!imgUrl) {
+    if (title.indexOf('كونتاكتور') !== -1 || title.indexOf('contactor') !== -1) {
+      imgUrl = 'https://wikimedia.org';
+    } else if (title.indexOf('ليمت') !== -1 || title.indexOf('حساس') !== -1 || title.indexOf('sensor') !== -1) {
+      imgUrl = 'https://wikimedia.org';
+    } else if (title.indexOf('فوتوسيل') !== -1 || title.indexOf('خلية') !== -1) {
+      imgUrl = 'https://wikimedia.org';
+    } else if (title.indexOf('قاطع') !== -1 || title.indexOf('mcb') !== -1 || title.indexOf('mccb') !== -1) {
+      imgUrl = 'https://wikimedia.org';
+    } else if (title.indexOf('كابل') !== -1 || title.indexOf('سلك') !== -1 || title.indexOf('cable') !== -1) {
+      imgUrl = 'https://wikimedia.org';
+    } else if (title.indexOf('محول') !== -1 || title.indexOf('ترانس') !== -1 || title.indexOf('transformer') !== -1) {
+      imgUrl = 'https://wikimedia.org';
+    } else if (title.indexOf('انفرتر') !== -1 || title.indexOf('إنفرتر') !== -1 || title.indexOf('plc') !== -1) {
+      imgUrl = 'https://wikimedia.org';
+    } else if (title.indexOf('موتور') !== -1 || title.indexOf('محرك') !== -1 || title.indexOf('طلمبة') !== -1) {
+      imgUrl = 'https://wikimedia.org';
+    } else if (title.indexOf('شمسي') !== -1 || title.indexOf('طاقة') !== -1 || title.indexOf('solar') !== -1) {
+      imgUrl = 'https://wikimedia.org';
+    } else {
+      imgUrl = 'https://wikimedia.org';
+    }
   }
 
-  if (imgUrl) {
-    return '<div class="p-img-box">' + svgFallback + '<img src="' + imgUrl + '" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; background:#fff; padding:6px;" onerror="this.remove();"><span class="p-model-tag">' + (item.s || '') + '</span></div>';
-  }
-  return '<div class="p-img-box">' + svgFallback + '<span class="p-model-tag">' + (item.s || '') + '</span></div>';
+  return `<div class="p-img-box" style="background:#fff; border-radius:8px; padding:8px; display:flex; justify-content:center; align-items:center; height:110px; overflow:hidden;">
+    <img src="${imgUrl}" alt="${item.t}" style="max-height:100%; max-width:100%; object-fit:contain;" onerror="this.src='https://wikimedia.org'">
+  </div>`;
 }
 function render(list) {
   var grid = document.getElementById('grid');
@@ -277,7 +274,7 @@ function render(list) {
         </div>
         <div class="card-foot">
           <span class="price">${x.p} π</span>
-          <div><button class="btn-cart" onclick="addCart('${x.s}')">+ السلة</button><button class="btn-buy" onclick="buy('${x.t.replace(/'/g,"\\'")}',${x.p},'${x.s}')">شراء</button></div>
+         <div style="display:flex; gap:6px; align-items:center;"><button onclick="openProductSpecs('${x.s}')" style="background:#3b82f6; color:#fff; border:none; padding:6px 10px; border-radius:6px; cursor:pointer; font-size:12px;">📋 مواصفات</button><button class="btn-cart" onclick="addCart('${x.s}')">🛒 أضف</button></div>
         </div>
       </div>
     </div>`).join('') : '<p style="text-align:center; grid-column:1/-1; color:#94a3b8; padding:30px;">لا توجد نتائج مطابقة.</p>';
@@ -347,6 +344,48 @@ function buy(title, amount, sku) {
 document.addEventListener('click', e => { if (!e.target.closest('.search-wrapper')) document.getElementById('search-dropdown').style.display = 'none'; });
 document.getElementById('total-badge').innerText = 'متاح ' + db.length + ' معدة ومقاس';
 render(db);
+</script>
+ <!-- نافذة عرض المواصفات والكتالوج -->
+<div id="specsModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999; justify-content:center; align-items:center; direction:rtl;">
+  <div style="background:#1e222d; color:#fff; width:90%; max-width:500px; border-radius:12px; padding:20px; border:1px solid #f59e0b; position:relative;">
+    <button onclick="closeSpecs()" style="position:absolute; top:15px; left:15px; background:#ef4444; color:#fff; border:none; border-radius:6px; padding:5px 10px; cursor:pointer;">إغلاق ✖</button>
+    <h3 id="modalTitle" style="color:#f59e0b; margin-top:0;">اسم المنتج</h3>
+    <p id="modalBrand" style="color:#9ca3af; font-size:14px;">الماركة: -</p>
+    <div id="modalSpecsContent" style="background:#131722; padding:15px; border-radius:8px; margin:15px 0; line-height:1.8; font-size:14px;">
+      <!-- ستظهر المواصفات هنا تلقائياً -->
+    </div>
+    <a id="modalCatalogLink" href="#" target="_blank" style="display:block; text-align:center; background:#10b981; color:#fff; padding:10px; border-radius:8px; text-decoration:none; font-weight:bold;">📄 فتح / تحميل الكتالوج الفني (PDF)</a>
+  </div>
+</div>
+
+<script>
+function openProductSpecs(sku) {
+  var x = db.find(item => item.s === sku);
+  if (!x) return;
+
+  document.getElementById('modalTitle').innerText = x.t || "منتج كهربائي";
+  document.getElementById('modalBrand').innerText = "الماركة: " + (x.b || "غير محدد") + " | الكود: " + x.s;
+  
+  var details = `
+    <p><strong>الوصف:</strong> ${x.d || '-'}</p>
+    <p><strong>المواصفة 1 (${x.k1 || 'عام'}):</strong> ${x.v1 || '-'}</p>
+    <p><strong>المواصفة 2 (${x.k2 || 'إضافي'}):</strong> ${x.v2 || '-'}</p>
+    <p><strong>التصنيف:</strong> ${x.c || '-'}</p>
+  `;
+  document.getElementById('modalSpecsContent').innerHTML = details;
+  
+  const catBtn = document.getElementById('modalCatalogLink');
+  if (x.cat && x.cat !== "#") {
+    catBtn.href = x.cat;
+  } else {
+    catBtn.href = "https://google.com" + encodeURIComponent((x.b || "") + " " + x.t + " datasheet pdf");
+  }
+  catBtn.style.display = "block";
+  document.getElementById('specsModal').style.display = 'flex';
+}
+function closeSpecs() {
+  document.getElementById('specsModal').style.display = 'none';
+}
 </script>
 </body>
 </html>
