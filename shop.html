@@ -375,7 +375,7 @@ function openProductSpecs(sku) {
   `;
   document.getElementById('modalSpecsContent').innerHTML = details;
   
- function openProductSpecs(sku) {
+function openProductSpecs(sku) {
   var x = db.find(item => item.s === sku);
   if (!x) return;
 
@@ -383,33 +383,28 @@ function openProductSpecs(sku) {
   document.getElementById('modalBrand').innerText = "الماركة: " + (x.b || "عام") + " | الكود: " + x.s;
   
   var details = `
-    <p><strong>الوصف:</strong> ${x.d || '-'}</p>
+    <p><strong>الوصف الفني:</strong> ${x.d || '-'}</p>
     <p><strong>المواصفة 1 (${x.k1 || 'القدرة'}):</strong> ${x.v1 || '-'}</p>
     <p><strong>المواصفة 2 (${x.k2 || 'الجهد'}):</strong> ${x.v2 || '-'}</p>
-    <p><strong>القسم:</strong> ${x.c || '-'}</p>
+    <p><strong>التصنيف:</strong> ${x.c || '-'}</p>
   `;
   document.getElementById('modalSpecsContent').innerHTML = details;
   
-  var brandName = (x.b || "").toLowerCase();
-  var searchUrl = "https://google.com" + encodeURIComponent((x.b || "") + " " + x.t + " " + x.s + " datasheet filetype:pdf");
-
-  if (x.cat && x.cat !== "#") {
-    searchUrl = x.cat;
-  } else if (brandName.indexOf('schneider') !== -1 || brandName.indexOf('شنايدر') !== -1) {
-    searchUrl = "https://se.com" + encodeURIComponent(x.s || x.t) + "/";
-  } else if (brandName.indexOf('abb') !== -1 || brandName.indexOf('اي بي بي') !== -1) {
-    searchUrl = "https://abb.com" + encodeURIComponent(x.s || x.t);
-  } else if (brandName.indexOf('siemens') !== -1 || brandName.indexOf('سيمنز') !== -1) {
-    searchUrl = "https://siemens.com" + encodeURIComponent(x.s || x.t);
-  } else if (brandName.indexOf('elsewedy') !== -1 || brandName.indexOf('السويدي') !== -1) {
-    searchUrl = "https://elsewedyelectric.com" + encodeURIComponent(x.t);
-  }
+  var pdfQuery = encodeURIComponent((x.b || "") + " " + (x.s || "") + " " + (x.t || "") + " datasheet filetype:pdf");
+  var finalPdfUrl = (x.cat && x.cat.startsWith("http")) ? x.cat : ("https://google.com" + pdfQuery);
 
   const catBtn = document.getElementById('modalCatalogLink');
-  catBtn.href = searchUrl;
-  catBtn.setAttribute("target", "_blank");
+  catBtn.href = finalPdfUrl;
+  catBtn.onclick = function(e) {
+    e.preventDefault();
+    window.open(finalPdfUrl, '_blank', 'noopener,noreferrer');
+  };
   catBtn.style.display = "block";
   document.getElementById('specsModal').style.display = 'flex';
+}
+
+function closeSpecs() {
+  document.getElementById('specsModal').style.display = 'none';
 }
 </script>
 </body>
